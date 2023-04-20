@@ -1,0 +1,1 @@
+{"version":3,"file":"index.vue2.cjs","sources":["../../../../packages/components/swiper/index.vue"],"sourcesContent":["<template>\n  <div>swiper</div>\n</template>\n\n<script setup lang=\"ts\">\nimport { defineComponent } from \"vue\";\n\ndefineComponent({\n  name: \"bl-swiper\",\n});\n</script>\n"],"names":["defineComponent"],"mappings":"uSAOgBA,OAAAA,kBAAA,CACd,KAAM,WAAA,CACP"}

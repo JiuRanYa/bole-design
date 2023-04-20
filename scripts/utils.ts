@@ -150,9 +150,10 @@ export function toCamelCase(value: string) {
   return capitalName.charAt(0).toLowerCase() + capitalName.slice(1);
 }
 
-export const componentsDir = resolve(rootDir, "./packages/components");
+export const componentsDir = resolve(rootDir, "packages/components");
 
 export const components = readdirSync(componentsDir).filter((f) => {
+  console.log(componentsDir);
   const path = resolve(componentsDir, f);
 
   if (!statSync(path).isDirectory()) {
