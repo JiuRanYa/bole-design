@@ -1,5 +1,22 @@
 # Bole-ui
 
+bole-ui library，计划提供 components、hooks、utils
+
+## Features:
+
+- 📦 High quality Vue 3 components
+- 📐 Intuitive, minimalistic Api design
+- 🔧 Configurable default value of props, quickly complete global/local modifications
+- ⚡ Composition Api, good performance base
+- 🔨 With TypeScript, fully types
+- 💪 900+ unit tests to provide good stability
+- 🎨 Support CSS variable, built-in dark theme
+- 🚩 Support i18n
+- 🛫 Provide resolver, support unplugin
+- 🚤 Support SSR
+- 🩹 Good a11n
+- 👀 Close to business code arrangement, low threshold for source code reading
+
 ## TODO:
 
 - [ ] 完善打包构建脚本
