@@ -2,10 +2,11 @@
   <div>swiper</div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { defineComponent } from "vue";
 
-defineComponent({
+export default defineComponent({
   name: "bl-swiper",
+  setup() {},
 });
 </script>

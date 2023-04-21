@@ -88,15 +88,6 @@ module.exports = {
       },
     },
     {
-      files: ["dev-server/**"],
-      globals: {
-        __DEMOS__: "readonly",
-        __TARGET__: "readonly",
-        __THEME__: "readonly",
-        __PORT__: "readonly",
-      },
-    },
-    {
       files: ["scripts/**"],
       rules: {
         "no-sequences": "off",

@@ -43,17 +43,49 @@ async function main() {
       .join("\n")}
   `;
 
+  const types = `
+    declare module 'vue' {
+      export interface GlobalComponents {
+        ${[...components]
+          .map(
+            (name) =>
+              `${toCapitalCase(
+                name
+              )}: typeof import('bole-ui')['${toCapitalCase(name)}']`
+          )
+          .join(",\n")}
+      }
+
+      interface ComponentCustomProperties {
+        ${plugins
+          .map(
+            (name) =>
+              `$${name}: typeof import('vexip-ui')['${toCapitalCase(name)}']`
+          )
+          .join(",\n")}
+      }
+    }
+
+    export {}
+  `;
+
   const eslint = new ESLint({ fix: true });
   const indexPath = resolve(rootDir, "packages/components/index.ts");
+  const typesPath = resolve(rootDir, "types.d.ts");
 
   await writeFile(
     indexPath,
     prettier.format(index, { ...prettierConfig, parser: "typescript" }),
     "utf-8"
   );
+  await writeFile(
+    typesPath,
+    prettier.format(types, { ...prettierConfig, parser: "typescript" }),
+    "utf-8"
+  );
 
   await ESLint.outputFixes(await eslint.lintFiles(indexPath));
-  // await ESLint.outputFixes(await eslint.lintFiles(typesPath));
+  await ESLint.outputFixes(await eslint.lintFiles(typesPath));
 
   // await runParallel(cpus().length, allComponents, async (component) => {
   //   const scssPath = resolve(rootDir, `style/${component}.scss`);
