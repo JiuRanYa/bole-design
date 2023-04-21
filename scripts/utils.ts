@@ -153,7 +153,6 @@ export function toCamelCase(value: string) {
 export const componentsDir = resolve(rootDir, "packages/components");
 
 export const components = readdirSync(componentsDir).filter((f) => {
-  console.log(componentsDir);
   const path = resolve(componentsDir, f);
 
   if (!statSync(path).isDirectory()) {

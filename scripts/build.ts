@@ -13,7 +13,7 @@ const env = devOnly ? "development" : "production";
 async function main() {
   logger.withBothLn(() => logger.successText("start building lib..."));
 
-  // await run("pnpm", ["bootstrap"]);
+  await run("pnpm", ["bootstrap"]);
   await run("vite", ["build", "--config", "vite.config.ts"], {
     env: {
       NODE_ENV: env,
