@@ -47,7 +47,7 @@ function animateWave() {
   canvasPen.lineWidth = lineWidth;
 
   const rootStyle = getComputedStyle(rootEl!);
-  const bgColor = rootStyle.getPropertyValue("--vxp-color-primary-opacity-8");
+  const bgColor = "#3387F0";
 
   // 创建静态的曲线
   function drawWave(offsetX = 0) {

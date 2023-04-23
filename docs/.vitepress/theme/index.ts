@@ -6,7 +6,7 @@ import MyLayout from "../pages/layout.vue";
 
 export default {
   ...DefaultTheme,
-  layout: MyLayout,
+  Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
     // ...
   },
