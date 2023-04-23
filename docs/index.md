@@ -1,6 +1,5 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
+title: Blogging Like a Hacker
+lang: en-US
 layout: home
 ---
-
-home

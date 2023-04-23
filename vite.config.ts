@@ -15,6 +15,15 @@ export default defineConfig(async () => {
 
   return {
     plugins: [vue()],
+    resolve: {
+      alias: [
+        { find: /^@\/(.+)/, replacement: resolve(__dirname, "$1") },
+        {
+          find: "@bole-ui/utils",
+          replacement: resolve(__dirname, "common/utils"),
+        },
+      ],
+    },
     build: {
       outDir: "es",
       sourcemap: true,

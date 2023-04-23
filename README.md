@@ -5,17 +5,16 @@ bole-ui library，计划提供 components、hooks、utils
 ## Features:
 
 - 📦 High quality Vue 3 components
-- 📐 Intuitive, minimalistic Api design
-- 🔧 Configurable default value of props, quickly complete global/local modifications
-- ⚡ Composition Api, good performance base
 - 🔨 With TypeScript, fully types
-- 💪 900+ unit tests to provide good stability
-- 🎨 Support CSS variable, built-in dark theme
-- 🚩 Support i18n
+- 📐 Intuitive, minimalistic Api design
 - 🛫 Provide resolver, support unplugin
-- 🚤 Support SSR
-- 🩹 Good a11n
+- ⚡ Composition Api, good performance base
 - 👀 Close to business code arrangement, low threshold for source code reading
+- 🔧 Configurable default value of props, quickly complete global/local modifications
+<!-- - 💪 900+ unit tests to provide good stability -->
+- 🚤 Support SSR
+- 🚩 Support i18n
+- 🎨 Support CSS variable, built-in dark theme
 
 ## TODO:
 
