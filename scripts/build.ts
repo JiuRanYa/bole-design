@@ -19,6 +19,12 @@ async function main() {
       NODE_ENV: env,
     },
   });
+
+  logger.ln();
+
+  if (!process.exitCode) {
+    logger.withEndLn(() => logger.success("all builds completed successfully"));
+  }
 }
 
 main().catch((error) => {

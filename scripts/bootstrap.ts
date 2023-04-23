@@ -9,6 +9,7 @@ import {
   prettierConfig,
   logger,
   componentsDir,
+  hooks as allHooks,
   components as allComponents,
   toCapitalCase,
   runParallel,
@@ -43,6 +44,12 @@ async function main() {
       .join("\n")}
   `;
 
+  const hooksIndex = `
+    ${allHooks.map((hook) => `import { ${hook} } from './${hook}'`).join("\n")}
+
+    ${allHooks.map((hook) => `export * from './${hook}'`).join("\n")}
+  `;
+
   const types = `
     declare module 'vue' {
       export interface GlobalComponents {
@@ -70,12 +77,18 @@ async function main() {
   `;
 
   const eslint = new ESLint({ fix: true });
+  const hookIndexPath = resolve(rootDir, "packages/hooks/index.ts");
   const indexPath = resolve(rootDir, "packages/components/index.ts");
   const typesPath = resolve(rootDir, "types.d.ts");
 
   await writeFile(
     indexPath,
     prettier.format(index, { ...prettierConfig, parser: "typescript" }),
+    "utf-8"
+  );
+  await writeFile(
+    hookIndexPath,
+    prettier.format(hooksIndex, { ...prettierConfig, parser: "typescript" }),
     "utf-8"
   );
   await writeFile(

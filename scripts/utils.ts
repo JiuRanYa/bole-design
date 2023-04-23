@@ -150,10 +150,20 @@ export function toCamelCase(value: string) {
   return capitalName.charAt(0).toLowerCase() + capitalName.slice(1);
 }
 
+export const hooksDir = resolve(rootDir, "packages/hooks");
 export const componentsDir = resolve(rootDir, "packages/components");
 
 export const components = readdirSync(componentsDir).filter((f) => {
   const path = resolve(componentsDir, f);
+
+  if (!statSync(path).isDirectory()) {
+    return false;
+  }
+
+  return existsSync(`${path}/index.ts`);
+});
+export const hooks = readdirSync(hooksDir).filter((f) => {
+  const path = resolve(hooksDir, f);
 
   if (!statSync(path).isDirectory()) {
     return false;
