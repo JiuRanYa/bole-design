@@ -5,7 +5,7 @@ import glob from "fast-glob";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
-  const input = await glob("packages/components/**/*.{ts,vue}", {
+  const input = await glob("packages/*/**/*.{ts,vue}", {
     cwd: __dirname,
     absolute: true,
     onlyFiles: true,

@@ -1,26 +1,18 @@
 {
-  "name": "docs",
+  "name": "@boleui/docs",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "vitepress": "1.0.0-alpha.73"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search"
-      ]
-    }
   },
   "dependencies": {
     "sass": "^1.62.0"
