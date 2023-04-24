@@ -16,7 +16,8 @@
     "rootDir": ".",
     "types": [],
     "paths": {
-      "@bole-design/*": ["packages/*"]
+      "@bole-design/*": ["packages/*"],
+      "bole-design": ["."]
     }
   }
 }

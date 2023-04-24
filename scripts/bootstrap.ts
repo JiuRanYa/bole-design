@@ -1,9 +1,9 @@
-import { resolve } from "node:path";
-import { readdir, readFile, writeFile } from "node:fs/promises";
-import { statSync, existsSync } from "node:fs";
-import { cpus } from "node:os";
-import prettier from "prettier";
-import { ESLint } from "eslint";
+import { resolve } from 'node:path'
+import { readdir, readFile, writeFile } from 'node:fs/promises'
+import { statSync, existsSync } from 'node:fs'
+import { cpus } from 'node:os'
+import prettier from 'prettier'
+import { ESLint } from 'eslint'
 import {
   rootDir,
   prettierConfig,
@@ -13,14 +13,14 @@ import {
   components as allComponents,
   toCapitalCase,
   runParallel,
-} from "./utils";
+} from './utils'
 
-const ignores: any[] = [];
-const plugins: any[] = [];
+const ignores: any[] = []
+const plugins: any[] = []
 
 async function main() {
-  const exportComponents = allComponents.filter((c) => !ignores.includes(c));
-  const components = exportComponents.filter((c) => !plugins.includes(c));
+  const exportComponents = allComponents.filter((c) => !ignores.includes(c))
+  const components = exportComponents.filter((c) => !plugins.includes(c))
 
   const index = `
     ${exportComponents
@@ -28,12 +28,12 @@ async function main() {
         (component) =>
           `import { ${toCapitalCase(component)} } from './${component}'`
       )
-      .join("\n")}
+      .join('\n')}
 
     import { buildInstall } from './create'
 
     const components = [
-      ${components.map(toCapitalCase).join(",\n")},
+      ${components.map(toCapitalCase).join(',\n')},
     ]
 
     export { buildInstall }
@@ -41,64 +41,65 @@ async function main() {
 
     ${allComponents
       .map((component) => `export * from './${component}'`)
-      .join("\n")}
-  `;
+      .join('\n')}
+  `
 
   const hooksIndex = `
-    ${allHooks.map((hook) => `import { ${hook} } from './${hook}'`).join("\n")}
+    ${allHooks.map((hook) => `import { ${hook} } from './${hook}'`).join('\n')}
 
-    ${allHooks.map((hook) => `export * from './${hook}'`).join("\n")}
-  `;
+    ${allHooks.map((hook) => `export * from './${hook}'`).join('\n')}
+  `
 
   const types = `
-    declare module 'vue' {
+    // GlobalComponents for Volar
+    declare module '@vue/runtime-core' {
       export interface GlobalComponents {
         ${[...components]
           .map(
             (name) =>
               `${toCapitalCase(
                 name
-              )}: typeof import('bole-ui')['${toCapitalCase(name)}']`
+              )}: typeof import('bole-design')['${toCapitalCase(name)}']`
           )
-          .join(",\n")}
+          .join(',\n')}
       }
 
       interface ComponentCustomProperties {
         ${plugins
           .map(
             (name) =>
-              `$${name}: typeof import('vexip-ui')['${toCapitalCase(name)}']`
+              `$${name}: typeof import('bole-design')['${toCapitalCase(name)}']`
           )
-          .join(",\n")}
+          .join(',\n')}
       }
     }
 
     export {}
-  `;
+  `
 
-  const eslint = new ESLint({ fix: true });
-  const hookIndexPath = resolve(rootDir, "packages/hooks/index.ts");
-  const indexPath = resolve(rootDir, "packages/components/index.ts");
-  const typesPath = resolve(rootDir, "types.d.ts");
+  const eslint = new ESLint({ fix: true })
+  const hookIndexPath = resolve(rootDir, 'packages/hooks/index.ts')
+  const indexPath = resolve(rootDir, 'packages/components/index.ts')
+  const typesPath = resolve(rootDir, 'types.d.ts')
 
   await writeFile(
     indexPath,
-    prettier.format(index, { ...prettierConfig, parser: "typescript" }),
-    "utf-8"
-  );
+    prettier.format(index, { ...prettierConfig, parser: 'typescript' }),
+    'utf-8'
+  )
   await writeFile(
     hookIndexPath,
-    prettier.format(hooksIndex, { ...prettierConfig, parser: "typescript" }),
-    "utf-8"
-  );
+    prettier.format(hooksIndex, { ...prettierConfig, parser: 'typescript' }),
+    'utf-8'
+  )
   await writeFile(
     typesPath,
-    prettier.format(types, { ...prettierConfig, parser: "typescript" }),
-    "utf-8"
-  );
+    prettier.format(types, { ...prettierConfig, parser: 'typescript' }),
+    'utf-8'
+  )
 
-  await ESLint.outputFixes(await eslint.lintFiles(indexPath));
-  await ESLint.outputFixes(await eslint.lintFiles(typesPath));
+  await ESLint.outputFixes(await eslint.lintFiles(indexPath))
+  await ESLint.outputFixes(await eslint.lintFiles(typesPath))
 
   // await runParallel(cpus().length, allComponents, async (component) => {
   //   const scssPath = resolve(rootDir, `style/${component}.scss`);
@@ -110,8 +111,8 @@ async function main() {
 }
 
 async function readDirectives() {
-  const componentRE = /import \{ (.+) \} from '@\/components\/.+'/;
-  const directivesDir = resolve(rootDir, "directives");
+  const componentRE = /import \{ (.+) \} from '@\/components\/.+'/
+  const directivesDir = resolve(rootDir, 'directives')
   const directives = await Promise.all(
     (
       await readdir(directivesDir)
@@ -119,91 +120,91 @@ async function readDirectives() {
       .filter((f) => statSync(resolve(directivesDir, f)).isDirectory())
       .map(async (directive) => {
         const content = await readFile(
-          resolve(directivesDir, directive, "index.ts"),
-          "utf-8"
-        );
-        const lines = content.split("\n");
-        const components: string[] = [];
+          resolve(directivesDir, directive, 'index.ts'),
+          'utf-8'
+        )
+        const lines = content.split('\n')
+        const components: string[] = []
 
         for (const line of lines) {
-          if (!line.startsWith("import")) break;
-          if (!line) continue;
+          if (!line.startsWith('import')) break
+          if (!line) continue
 
-          const matched = line.match(componentRE);
+          const matched = line.match(componentRE)
 
           if (matched?.[1]) {
-            components.push(...matched[1].split(",").map((s) => s.trim()));
+            components.push(...matched[1].split(',').map((s) => s.trim()))
           }
         }
 
-        return { name: directive, components };
+        return { name: directive, components }
       })
-  );
+  )
 
-  return directives;
+  return directives
 }
 
 async function topologicalStyle() {
-  const importRE = /import '@\/components\/(.+)\/style'/;
-  const depsMap = new Map<string, string[]>();
+  const importRE = /import '@\/components\/(.+)\/style'/
+  const depsMap = new Map<string, string[]>()
 
   await runParallel(cpus().length, allComponents, async (component) => {
-    const deps: string[] = [];
-    const path = resolve(componentsDir, component, "style.ts");
+    const deps: string[] = []
+    const path = resolve(componentsDir, component, 'style.ts')
 
-    depsMap.set(component, deps);
+    depsMap.set(component, deps)
 
     if (!existsSync(path)) {
-      return;
+      return
     }
 
-    let match: RegExpMatchArray | null;
+    let match: RegExpMatchArray | null
 
-    for (const line of (await readFile(path, "utf-8")).split("\n")) {
+    for (const line of (await readFile(path, 'utf-8')).split('\n')) {
       if (
         (match = line.match(importRE)) &&
-        match[1] !== "preset" &&
-        match[1] !== "icon"
+        match[1] !== 'preset' &&
+        match[1] !== 'icon'
       ) {
-        deps.push(match[1]);
+        deps.push(match[1])
       }
     }
-  });
+  })
 
-  const list: string[] = ["icon"];
-  const walkedSet = new Set<string>();
+  const list: string[] = ['icon']
+  const walkedSet = new Set<string>()
 
   const push = (deps: string[]) => {
     for (const dep of deps) {
       if (walkedSet.has(dep)) {
-        continue;
+        continue
       }
 
-      walkedSet.add(dep);
+      walkedSet.add(dep)
 
       if (depsMap.has(dep)) {
-        push(depsMap.get(dep)!);
+        push(depsMap.get(dep)!)
       }
 
-      list.push(dep);
-    }
-  };
-
-  walkedSet.add("icon");
-
-  for (const [component, deps] of depsMap) {
-    push(deps);
-
-    if (!walkedSet.has(component)) {
-      walkedSet.add(component);
-      list.push(component);
+      list.push(dep)
     }
   }
 
-  return list;
+  walkedSet.add('icon')
+
+  for (const [component, deps] of depsMap) {
+    push(deps)
+
+    if (!walkedSet.has(component)) {
+      walkedSet.add(component)
+      list.push(component)
+    }
+  }
+
+  return list
 }
 
 main().catch((error) => {
-  logger.error(error);
-  process.exit(1);
-});
+  logger.error(error)
+  process.exit(1)
+})
