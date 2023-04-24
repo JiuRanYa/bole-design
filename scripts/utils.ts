@@ -6,10 +6,8 @@ import {
   lstatSync,
   rmdirSync,
   unlinkSync,
-  readFileSync,
 } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { createServer } from 'node:net'
 import { execa } from 'execa'
 import {
   bgYellow,
@@ -291,5 +289,18 @@ export function emptyDir(dir: string) {
     } else {
       unlinkSync(abs)
     }
+  }
+}
+
+export const generateExternal = async () => {
+  // TODO: need to read package.json file
+  const peerDependencies = ['vue']
+
+  return (source: string) => {
+    const packages: string[] = peerDependencies
+
+    return [...new Set(packages)].some(
+      (pkg) => source === pkg || source.startsWith(`${pkg}/`)
+    )
   }
 }

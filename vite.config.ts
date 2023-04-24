@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'node:path'
 import glob from 'fast-glob'
 import { blOutput, excludeFiles, pkgRoot } from './common/path/index'
+import { generateExternal } from './scripts/utils'
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
@@ -13,6 +14,7 @@ export default defineConfig(async () => {
       onlyFiles: true,
     })
   )
+  const external = await generateExternal()
 
   return {
     plugins: [vue()],
@@ -38,7 +40,6 @@ export default defineConfig(async () => {
           {
             format: 'cjs',
             preserveModules: true,
-            // preserveModulesRoot: pkgRoot,
             preserveModulesRoot: resolve(pkgRoot, 'bole-design'),
             dir: resolve(blOutput, 'lib'),
             exports: 'named',
@@ -53,6 +54,7 @@ export default defineConfig(async () => {
             entryFileNames: '[name].mjs',
           },
         ],
+        external,
         treeshake: false,
       },
       commonjsOptions: {
