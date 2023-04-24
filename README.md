@@ -1,6 +1,6 @@
 # Bole-ui
 
-bole-ui library，计划提供 components、hooks、utils
+bole library
 
 ## Features:
 

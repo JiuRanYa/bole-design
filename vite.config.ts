@@ -19,8 +19,8 @@ export default defineConfig(async () => {
       alias: [
         { find: /^@\/(.+)/, replacement: resolve(__dirname, "$1") },
         {
-          find: "@bole-ui/utils",
-          replacement: resolve(__dirname, "common/utils"),
+          find: /^@bole\/(.+)/,
+          replacement: resolve(__dirname, "packages/$1"),
         },
       ],
     },
