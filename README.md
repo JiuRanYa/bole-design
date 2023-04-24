@@ -1,6 +1,6 @@
-# Bole-ui
+# Bole Design
 
-bole library
+Bole Design library
 
 ## Features:
 
@@ -11,10 +11,10 @@ bole library
 - ⚡ Composition Api, good performance base
 - 👀 Close to business code arrangement, low threshold for source code reading
 - 🔧 Configurable default value of props, quickly complete global/local modifications
-<!-- - 💪 900+ unit tests to provide good stability -->
 - 🚤 Support SSR
 - 🚩 Support i18n
 - 🎨 Support CSS variable, built-in dark theme
+<!-- - 💪 900+ unit tests to provide good stability -->
 
 ## TODO:
 

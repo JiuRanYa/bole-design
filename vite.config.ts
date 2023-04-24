@@ -21,7 +21,7 @@ export default defineConfig(async () => {
         { find: /^@\/(.+)/, replacement: resolve(__dirname, '$1') },
         {
           find: /^@bole-design\/(.+)/,
-          replacement: resolve(__dirname, 'packages/$1'),
+          replacement: resolve(pkgRoot, '$1'),
         },
       ],
     },
