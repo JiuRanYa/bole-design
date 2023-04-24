@@ -1,10 +1,10 @@
-declare module "vue" {
+declare module 'vue' {
   export interface GlobalComponents {
-    Avatar: typeof import("bole")["Avatar"];
-    Swiper: typeof import("bole")["Swiper"];
+    Avatar: typeof import('bole-ui')['Avatar']
+    Swiper: typeof import('bole-ui')['Swiper']
   }
 
   interface ComponentCustomProperties {}
 }
 
-export {};
+export {}
