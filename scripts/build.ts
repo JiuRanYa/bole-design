@@ -1,33 +1,34 @@
-import { logger, run } from "./utils";
-import minimist from "minimist";
+import { logger, run } from './utils'
+import minimist from 'minimist'
 
 const args = minimist<{
-  d?: boolean;
-  dev?: boolean;
-}>(process.argv.slice(2));
+  d?: boolean
+  dev?: boolean
+}>(process.argv.slice(2))
 
-const devOnly = args.dev || args.d;
+const devOnly = args.dev || args.d
 
-const env = devOnly ? "development" : "production";
+const env = devOnly ? 'development' : 'production'
 
 async function main() {
-  logger.withBothLn(() => logger.successText("start building lib..."));
+  logger.withBothLn(() => logger.successText('start building lib...'))
 
-  await run("pnpm", ["bootstrap"]);
-  await run("vite", ["build", "--config", "vite.config.ts"], {
+  await run('pnpm', ['bootstrap'])
+  await run('vite', ['build', '--config', 'vite.config.ts'], {
     env: {
       NODE_ENV: env,
     },
-  });
+  })
+  await run('pnpm', ['props'])
 
-  logger.ln();
+  logger.ln()
 
   if (!process.exitCode) {
-    logger.withEndLn(() => logger.success("all builds completed successfully"));
+    logger.withEndLn(() => logger.success('all builds completed successfully'))
   }
 }
 
 main().catch((error) => {
-  logger.error(error);
-  process.exit(1);
-});
+  logger.error(error)
+  process.exit(1)
+})

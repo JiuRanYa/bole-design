@@ -14,7 +14,6 @@ export default defineConfig(async () => {
       onlyFiles: true,
     })
   )
-  const external = await generateExternal()
 
   return {
     plugins: [vue()],
@@ -54,7 +53,7 @@ export default defineConfig(async () => {
             entryFileNames: '[name].mjs',
           },
         ],
-        external,
+        external: await generateExternal(),
         treeshake: false,
       },
       commonjsOptions: {
