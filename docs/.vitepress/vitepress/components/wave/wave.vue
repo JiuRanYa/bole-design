@@ -1,7 +1,5 @@
 <template>
-  <ResizeObserver throttle @resize="refresh">
-    <canvas ref="canvas" v-bind="$attrs" class="wave"></canvas>
-  </ResizeObserver>
+  <canvas ref="canvas" v-bind="$attrs" class="wave"></canvas>
 </template>
 
 <script setup lang="ts">

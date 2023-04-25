@@ -1,6 +1,9 @@
 <template>
-  <header :class="`${prefix}-header`">
-    <span :class="`${prefix}-logo`"> Bole UI </span>
+  <header class="bl-header">
+    <div class="bl-logo">
+      <img src="/bl-logo.png" />
+      <span class="bl-text"> Bole Design </span>
+    </div>
 
     <div class="bl-nav">Menu</div>
   </header>
@@ -8,8 +11,6 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-
-const prefix = 'bl'
 
 defineComponent({
   name: 'header',
@@ -33,7 +34,15 @@ defineComponent({
   }
 
   &-logo {
-    width: 200px;
+    margin-left: 100px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 50px;
+      height: 50px;
+      margin-right: 20px;
+    }
   }
 }
 </style>

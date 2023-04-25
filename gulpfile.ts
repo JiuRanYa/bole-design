@@ -1,10 +1,10 @@
-import { series, parallel, src, dest } from 'gulp'
 import fs from 'fs-extra'
 import dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import { resolve } from 'node:path'
 import cleanCss from 'gulp-clean-css'
 import autoPrefixer from 'gulp-autoprefixer'
+import { series, parallel, src, dest } from 'gulp'
 
 const { existsSync, mkdirSync, emptyDir } = fs
 
@@ -13,7 +13,7 @@ const cssDir = resolve(buildOutput, 'bole-design/css')
 
 function buildStyle() {
   ensureEmptyDir(cssDir)
-  // place code for your default task here
+
   const sass = gulpSass(dartSass)
 
   return src(resolve(__dirname, 'packages/styles/**/*.scss'))

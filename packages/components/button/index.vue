@@ -2,10 +2,10 @@
   <div></div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { defineComponent } from 'vue'
 
-defineComponent({
-  name: 'footer',
+export default defineComponent({
+  name: 'bl-button',
 })
 </script>

@@ -4,12 +4,7 @@ import { defineConfig } from 'vite'
 export default defineConfig(() => {
   return {
     resolve: {
-      alias: [
-        {
-          find: /^bole-design$/,
-          replacement: resolve(__dirname, '../packages'),
-        },
-      ],
+      alias: [{ find: /^@docs\/(.+)/, replacement: resolve(__dirname, '$1') }],
     },
   }
 })

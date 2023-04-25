@@ -13,7 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "vitepress": "1.0.0-alpha.73",
-    "@bole-design/styles": "workspace:*"
+    "@bole-design/styles": "workspace:*",
+    "@bole-design/components": "workspace:*"
   },
   "dependencies": {
     "sass": "^1.62.0"
