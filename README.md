@@ -2,7 +2,7 @@
 
 Bole Design library
 
-## Features:
+## Features
 
 - 📦 High quality Vue 3 components
 - 🔨 With TypeScript, fully types
@@ -16,7 +16,7 @@ Bole Design library
 - 🎨 Support CSS variable, built-in dark theme
 - 💪 Support unit tests to provide good stability
 
-## TODO:
+## TODO
 
 - [ ] 完善打包构建脚本
 - [ ] 基于 `vitest` 为组件添加单元测试
@@ -28,7 +28,7 @@ Bole Design library
 - [x] 基于 pnpn 的 `monorepo`,`components`,`hooks`,`sass`分包
 - [ ] 为开发环境增加 dev-serve,自动读取 docs 中的中英文 demo 文件
 
-## 构建脚本
+## Scripts
 
 - [x] 自动完善组件类型支持
 - [ ] packages 模块构建和全量构建
