@@ -1,12 +1,12 @@
 <template>
-  <div>swiper</div>
+  <div>avatar</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "bl-swiper",
+  name: 'bl-avatar',
   setup() {},
-});
+})
 </script>

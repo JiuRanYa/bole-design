@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
+  "description": "Bole design, A high quality Vue 3 components library",
   "scripts": {
     "build": "tsx scripts/build.ts",
     "props": "tsx scripts/props.ts",

@@ -22,6 +22,7 @@ Bole Design library
 - [ ] 完善打包构建脚本
 - [ ] 增加 `hooks`、`utils`
 - [ ] 组件增加自定义前缀功能，全局样式功能
+- [ ] 增加 dev-serve，方便 dev 环境调试和开发组件
 
 ## 构建脚本
 
