@@ -19,7 +19,7 @@ export default defineConfig(async () => {
     plugins: [vue()],
     resolve: {
       alias: [
-        { find: /^@\/(.+)/, replacement: resolve(__dirname, '$1') },
+        { find: /^@\//, replacement: resolve(__dirname) },
         {
           find: /^@bole-design\/(.+)/,
           replacement: resolve(pkgRoot, '$1'),

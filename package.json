@@ -1,15 +1,18 @@
 {
-  "name": "bole-ui",
+  "name": "bole-design",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
+  "main": "dist/lib/index.cjs",
+  "module": "dist/es/index.mjs",
   "description": "Bole design, A high quality Vue 3 components library",
   "scripts": {
     "build": "tsx scripts/build.ts",
     "props": "tsx scripts/props.ts",
     "bootstrap": "tsx scripts/bootstrap.ts",
-    "serve:docs": "pnpm -C docs serve"
+    "serve:docs": "pnpm -C docs serve",
+    "build:style": "gulp --require sucrase/register/ts"
   },
   "dependencies": {
     "vue": "^3.2.47"
@@ -17,6 +20,11 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",
     "@types/eslint": "^8.37.0",
+    "@types/fs-extra": "^11.0.1",
+    "@types/gulp": "^4.0.10",
+    "@types/gulp-autoprefixer": "^0.0.33",
+    "@types/gulp-clean-css": "^4.3.0",
+    "@types/gulp-sass": "^5.0.0",
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.14.1",
     "@types/prettier": "^2.7.2",
@@ -26,10 +34,16 @@
     "eslint": "^8.38.0",
     "execa": "^7.0.0",
     "fast-glob": "^3.2.12",
+    "fs-extra": "^11.1.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-sass": "^5.1.0",
     "kolorist": "^1.7.0",
     "minimist": "^1.2.8",
     "prettier": "^2.8.4",
     "prompts": "^2.4.2",
+    "sucrase": "^3.32.0",
     "tsx": "^3.12.3",
     "typescript": "^4.9.3",
     "vite": "^4.2.0",

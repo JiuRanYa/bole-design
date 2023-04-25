@@ -1,5 +1,15 @@
-import { defineConfig } from "vite";
+import { resolve } from 'node:path'
+import { defineConfig } from 'vite'
 
 export default defineConfig(() => {
-  return {};
-});
+  return {
+    resolve: {
+      alias: [
+        {
+          find: /^bole-design$/,
+          replacement: resolve(__dirname, '../packages'),
+        },
+      ],
+    },
+  }
+})

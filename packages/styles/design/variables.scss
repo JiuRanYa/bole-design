@@ -1,0 +1,55 @@
+@use 'sass:map';
+
+@use '../shared/variables.scss' as *;
+
+$namespace: 'bl' !default;
+
+$types: primary, info, success, warning, error;
+
+@mixin define-type-color($type) {
+  $colors: map.get($color-map, $type);
+
+  @each $name in map.keys($colors) {
+    @include define-css-var(('color', $type, $name), map.get($colors, $name));
+  }
+}
+
+$color-map: () !default;
+$color-map: map.deep-merge(
+  (
+    primary: (
+      base: #339af0,
+    ),
+    info: (
+      base: #3bc9db,
+    ),
+    success: (
+      base: #20c997,
+    ),
+    warning: (
+      base: #fab005,
+    ),
+    error: (
+      base: #f03e3e,
+    ),
+  ),
+  $color-map
+);
+
+$transition-duration: 250ms !default;
+$transition-timing: ease !default;
+$transition-base: get-css-var('transition-duration')
+  get-css-var('transition-timing') !default;
+
+$transition-map: () !default;
+$transition-map: map.merge(
+  (
+    color: color get-css-var('transition-base'),
+    background: background-color get-css-var('transition-base'),
+    border: border-color get-css-var('transition-base'),
+    shadow: box-shadow get-css-var('transition-base'),
+    opacity: opacity get-css-var('transition-base'),
+    transform: transform get-css-var('transition-base'),
+  ),
+  $transition-map
+);

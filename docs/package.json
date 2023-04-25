@@ -1,9 +1,9 @@
 {
-  "name": "@boleui/docs",
+  "name": "@bole-design/docs",
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.ts",
   "scripts": {
     "serve": "vitepress dev",
     "docs:build": "vitepress build docs",
@@ -12,7 +12,8 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
-    "vitepress": "1.0.0-alpha.73"
+    "vitepress": "1.0.0-alpha.73",
+    "bole-design": "workspace:*"
   },
   "dependencies": {
     "sass": "^1.62.0"

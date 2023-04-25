@@ -1,0 +1,23 @@
+@use 'sass:map';
+
+// as * 可以强制sass删除namespace
+@use './shared/variables.scss' as *;
+@use './design/variables.scss' as *;
+
+:root {
+  @each $type in $types {
+    @include define-type-color($type);
+  }
+
+  @include define-css-var('transition-duration', $transition-duration);
+  @include define-css-var('transition-timing', $transition-timing);
+  @include define-css-var('transition-base', $transition-base);
+
+  @include define-preset-values('transition', $transition-map);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
