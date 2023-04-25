@@ -71,13 +71,13 @@ importers:
 
   docs:
     specifiers:
-      bole-design: workspace:*
+      '@bole-design/styles': workspace:*
       sass: ^1.62.0
       vitepress: 1.0.0-alpha.73
     dependencies:
       sass: 1.62.0
     devDependencies:
-      bole-design: link:../packages/bole-design
+      '@bole-design/styles': link:../packages/styles
       vitepress: 1.0.0-alpha.73_sass@1.62.0
 
   packages/bole-design:
@@ -85,6 +85,15 @@ importers:
       vue: ^3.2.37
     devDependencies:
       vue: 3.2.47
+
+  packages/components:
+    specifiers: {}
+
+  packages/hooks:
+    specifiers: {}
+
+  packages/styles:
+    specifiers: {}
 
 packages:
 
