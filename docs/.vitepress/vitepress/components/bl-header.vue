@@ -2,7 +2,7 @@
   <header :class="`${prefix}-header`">
     <span :class="`${prefix}-logo`"> Bole UI </span>
 
-    <div class="bl-nav">123</div>
+    <div class="bl-nav">Menu</div>
   </header>
 </template>
 

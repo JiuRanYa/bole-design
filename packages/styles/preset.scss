@@ -1,12 +1,25 @@
 @use 'sass:map';
 
 // as * 可以强制sass删除namespace
-@use './shared/variables.scss' as *;
+@use './shared/mixins.scss' as *;
 @use './design/variables.scss' as *;
 
 :root {
   @each $type in $types {
     @include define-type-color($type);
+  }
+
+  @include define-preset-values('border-color', $border-color-map);
+
+  @include define-css-var('border-width', $border-width);
+  @include define-css-var('border-style', $border-style);
+  @include define-css-var('border-shape', $border-shape);
+
+  @each $name in map.keys($border-color-map) {
+    @include define-css-var(
+      ('border', $name),
+      get-css-var('border-shape') get-css-var('border-color', $name)
+    );
   }
 
   @include define-css-var('transition-duration', $transition-duration);

@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@use '../shared/variables.scss' as *;
+@use '../shared/mixins.scss' as *;
 
 $namespace: 'bl' !default;
 
@@ -14,6 +14,7 @@ $types: primary, info, success, warning, error;
   }
 }
 
+// colors-start
 $color-map: () !default;
 $color-map: map.deep-merge(
   (
@@ -35,7 +36,26 @@ $color-map: map.deep-merge(
   ),
   $color-map
 );
+// colors-end
 
+// border-end
+$border-color-map: () !default;
+$border-color-map: map.merge(
+  (
+    base: #ced4da,
+    light-1: #dee2e6,
+    light-2: #e9ecef,
+    dark-1: #adb5bd,
+    dark-2: #868e96,
+  ),
+  $border-color-map
+);
+$border-width: 1px !default;
+$border-style: solid !default;
+$border-shape: get-css-var('border-width') get-css-var('border-style') !default;
+// border-end
+
+//transition-start
 $transition-duration: 250ms !default;
 $transition-timing: ease !default;
 $transition-base: get-css-var('transition-duration')
@@ -53,3 +73,4 @@ $transition-map: map.merge(
   ),
   $transition-map
 );
+//transition-end
