@@ -1,5 +1,3 @@
-# Bole Design
-
 <p align="center">
   <a href="https://www.vexipui.com/" target="_blank" rel="noopener noreferrer">
     <img src="./docs/public/bl-logo.png" width="180" style="width: 180px;" />
