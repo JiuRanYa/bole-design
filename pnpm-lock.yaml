@@ -15,7 +15,6 @@ importers:
       '@types/node': ^18.14.1
       '@types/prettier': ^2.7.2
       '@types/prompts': ^2.4.2
-      '@types/sass': ^1.45.0
       '@vitejs/plugin-vue': ^4.1.0
       '@vitejs/plugin-vue-jsx': ^3.0.1
       eslint: ^8.38.0
@@ -50,7 +49,6 @@ importers:
       '@types/node': 18.15.12
       '@types/prettier': 2.7.2
       '@types/prompts': 2.4.4
-      '@types/sass': 1.45.0
       '@vitejs/plugin-vue': 4.1.0_vite@4.2.2+vue@3.2.47
       '@vitejs/plugin-vue-jsx': 3.0.1_vite@4.2.2+vue@3.2.47
       eslint: 8.38.0
@@ -71,14 +69,24 @@ importers:
       vite: 4.2.2_@types+node@18.15.12
       vue-tsc: 1.2.0_typescript@4.9.5
 
+  dev-serve:
+    specifiers:
+      vue-router: ^4.1.6
+    dependencies:
+      vue-router: 4.1.6
+
   docs:
     specifiers:
+      '@bole-design/components': workspace:*
       '@bole-design/styles': workspace:*
       sass: ^1.62.0
       vitepress: 1.0.0-alpha.73
+      vue-router: ^4.1.6
     dependencies:
       sass: 1.62.0
+      vue-router: 4.1.6
     devDependencies:
+      '@bole-design/components': link:../packages/components
       '@bole-design/styles': link:../packages/styles
       vitepress: 1.0.0-alpha.73_sass@1.62.0
 
@@ -1033,13 +1041,6 @@ packages:
       '@types/node': 18.15.12
     dev: true
 
-  /@types/sass/1.45.0:
-    resolution: {integrity: sha512-jn7qwGFmJHwUSphV8zZneO3GmtlgLsmhs/LQyVvQbIIa+fzGMUiHI4HXJZL3FT8MJmgXWbLGiVVY7ElvHq6vDA==}
-    deprecated: This is a stub types definition. sass provides its own type definitions, so you do not need this installed.
-    dependencies:
-      sass: 1.62.0
-    dev: true
-
   /@types/undertaker-registry/1.0.1:
     resolution: {integrity: sha512-Z4TYuEKn9+RbNVk1Ll2SS4x1JeLHecolIbM/a8gveaHsW0Hr+RQMraZACwTO2VD7JvepgA6UO1A1VrbktQrIbQ==}
     dev: true
@@ -1206,7 +1207,6 @@ packages:
 
   /@vue/devtools-api/6.5.0:
     resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
-    dev: true
 
   /@vue/reactivity-transform/3.2.47:
     resolution: {integrity: sha512-m8lGXw8rdnPVVIdIFhf0LeQ/ixyHkH5plYuS83yop5n7ggVJU+z5v0zecwEnX7fa7HNLBhh2qngJJkxpwEEmYA==}
@@ -4718,6 +4718,14 @@ packages:
     dependencies:
       vue: 3.2.47
     dev: true
+
+  /vue-router/4.1.6:
+    resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+    dev: false
 
   /vue-template-compiler/2.7.14:
     resolution: {integrity: sha512-zyA5Y3ArvVG0NacJDkkzJuPQDF8RFeRlzV2vLeSnhSpieO6LK2OVbdLPi5MPPs09Ii+gMO8nY4S3iKQxBxDmWQ==}

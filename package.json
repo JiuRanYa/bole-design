@@ -14,8 +14,9 @@
   "scripts": {
     "build": "tsx scripts/build.ts",
     "props": "tsx scripts/props.ts",
-    "bootstrap": "tsx scripts/bootstrap.ts",
+    "serve": "tsx scripts/serve.ts",
     "serve:docs": "pnpm -C docs serve",
+    "bootstrap": "tsx scripts/bootstrap.ts",
     "build:style": "gulp --require sucrase/register/ts"
   },
   "dependencies": {

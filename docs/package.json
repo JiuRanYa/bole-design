@@ -5,18 +5,19 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "serve": "vitepress dev",
+    "serve": "vite dev",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
-    "vitepress": "1.0.0-alpha.73",
+    "@bole-design/components": "workspace:*",
     "@bole-design/styles": "workspace:*",
-    "@bole-design/components": "workspace:*"
+    "vitepress": "1.0.0-alpha.73"
   },
   "dependencies": {
-    "sass": "^1.62.0"
+    "sass": "^1.62.0",
+    "vue-router": "^4.1.6"
   }
 }

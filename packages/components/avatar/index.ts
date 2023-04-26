@@ -1,3 +1,3 @@
-import Avatar from "./index.vue";
+import Avatar from './index.vue'
 
-export { Avatar };
+export { Avatar }

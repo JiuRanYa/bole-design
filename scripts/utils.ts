@@ -21,11 +21,11 @@ import {
   lightBlue,
 } from 'kolorist'
 import prompts from 'prompts'
-import { blRoot } from '../common/path'
 
 import type { Options } from 'execa'
 import type { ParsedArgs } from 'minimist'
 import type { Config } from 'prettier'
+import { createServer } from 'net'
 
 export const rootDir = resolve(fileURLToPath(import.meta.url), '../..')
 
@@ -303,4 +303,38 @@ export const generateExternal = async () => {
       (pkg) => source === pkg || source.startsWith(`${pkg}/`)
     )
   }
+}
+
+export const queryIdlePort = (
+  startPort: number,
+  host = 'localhost',
+  maxTry = 20
+) => {
+  const server = createServer()
+
+  return new Promise<number>((resolve, reject) => {
+    const close = () => {
+      server.off('error', onError)
+      server.close()
+    }
+
+    const onError = (error: Error & { code?: string }) => {
+      if (error.code === 'EADDRINUSE') {
+        if (maxTry-- <= 0) {
+          close()
+        }
+
+        server.listen(++startPort, host)
+      } else {
+        close()
+        reject(error)
+      }
+    }
+
+    server.on('error', onError)
+    server.listen(startPort, host, () => {
+      close()
+      resolve(startPort)
+    })
+  })
 }

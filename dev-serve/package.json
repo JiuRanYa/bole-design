@@ -1,0 +1,15 @@
+{
+  "name": "@bole-design/dev-serve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "serve": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue-router": "^4.1.6"
+  }
+}

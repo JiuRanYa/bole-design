@@ -1,3 +1,3 @@
-import Swiper from "./index.vue";
+import Swiper from './index.vue'
 
-export { Swiper };
+export { Swiper }
