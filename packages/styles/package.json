@@ -2,8 +2,8 @@
   "name": "@bole-design/styles",
   "version": "1.0.0",
   "description": "",
-  "main": "index.css",
-  "style": "index.css",
+  "main": "index.scss",
+  "style": "index.scss",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

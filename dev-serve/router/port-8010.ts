@@ -11,6 +11,11 @@ export const router = createRouter({
       component: () => import('../../docs/demos/button/basic/demo.zh-CN.vue')
     },
     {
+      path: '/primary',
+      name: 'primary',
+      component: () => import('../../docs/demos/button/primary/demo.zh-CN.vue')
+    },
+    {
       path: '/:catchAll(.*)',
       redirect: '/'
     }

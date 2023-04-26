@@ -71,8 +71,10 @@ importers:
 
   dev-serve:
     specifiers:
+      '@bole-design/styles': workspace:*
       vue-router: ^4.1.6
     dependencies:
+      '@bole-design/styles': link:../packages/styles
       vue-router: 4.1.6
 
   docs:

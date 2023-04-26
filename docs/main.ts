@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import { install } from '@bole-design/components'
 import App from './.vitepress/vitepress/components/bl-app.vue'
 
-console.log(install)
 const app = createApp(App)
 
 app.use(install)
