@@ -1,6 +1,26 @@
 # Bole Design
 
-Bole Design library
+<p align="center">
+  <a href="https://www.vexipui.com/" target="_blank" rel="noopener noreferrer">
+    <img src="./docs/public/bl-logo.png" width="180" style="width: 180px;" />
+  </a>
+</p>
+
+<h1 align="center">Bole Design</h1>
+
+<p align="center">
+  Highly customizability, full TypeScript, tool set for developer.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/vexip-ui" target="_blank">
+    <img src="https://img.shields.io/github/package-json/v/JiuRanYa/bole-design" alt="npm version"/>
+  </a>
+</p>
+
+<p align="center">
+  More components and features are currently under development.
+</p>
 
 ## Features
 
