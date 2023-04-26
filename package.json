@@ -9,7 +9,8 @@
   "description": "Bole design, A high quality Vue 3 components library",
   "workspaces": [
     "packages/*",
-    "docs"
+    "docs",
+    "dev-serve"
   ],
   "scripts": {
     "build": "tsx scripts/build.ts",
@@ -20,7 +21,8 @@
     "build:style": "gulp --require sucrase/register/ts"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "@bole-design/hooks": "workspace:*"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",
