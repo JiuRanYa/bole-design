@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "vue": "^3.2.47",
-    "@bole-design/hooks": "workspace:*"
+    "@bole-design/hooks": "workspace:*",
+    "@bole-design/common": "workspace:*"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",

@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@bole-design/common': workspace:*
       '@bole-design/hooks': workspace:*
       '@rollup/plugin-commonjs': ^24.1.0
       '@types/eslint': ^8.37.0
@@ -37,6 +38,7 @@ importers:
       vue: ^3.2.47
       vue-tsc: ^1.2.0
     dependencies:
+      '@bole-design/common': link:packages/common
       '@bole-design/hooks': link:packages/hooks
       vue: 3.2.47
     devDependencies:
@@ -101,6 +103,9 @@ importers:
       vue: ^3.2.37
     devDependencies:
       vue: 3.2.47
+
+  packages/common:
+    specifiers: {}
 
   packages/components:
     specifiers: {}

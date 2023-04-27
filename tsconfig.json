@@ -19,5 +19,6 @@
       "@/common/*": ["./common/*"],
       "bole-design": ["."]
     }
-  }
+  },
+  "include": ["packages/components", "dev-server", "index.ts", "types.d.ts"]
 }

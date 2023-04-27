@@ -18,13 +18,7 @@ export default defineConfig(async () => {
   return {
     plugins: [vue()],
     resolve: {
-      alias: [
-        { find: /^@\//, replacement: resolve(__dirname) },
-        {
-          find: /^@bole-design\/(.+)/,
-          replacement: resolve(pkgRoot, '$1'),
-        },
-      ],
+      alias: [{ find: /^@\//, replacement: resolve(__dirname) }],
     },
     build: {
       outDir: 'dist',
