@@ -9,6 +9,7 @@ export function buildInstall(components: any[] = []) {
       ) {
         app.use(component)
       } else {
+        console.log(component.name, component)
         app.component(`${component.name}`, component)
       }
     })

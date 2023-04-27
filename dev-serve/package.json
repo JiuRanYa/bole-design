@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue-router": "^4.1.6",
-    "@bole-design/styles": "workspace:*"
+    "@bole-design/styles": "workspace:*",
+    "unplugin-vue-components": "^0.24.1",
+    "vue-router": "^4.1.6"
   }
 }

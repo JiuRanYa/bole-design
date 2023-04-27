@@ -7,8 +7,8 @@ import { defineComponent, computed } from 'vue'
 import { useNamespace } from '@bole-design/hooks'
 
 export default defineComponent({
-  name: 'bl-button',
-  setup() {
+  name: 'Button',
+  setup(props) {
     const ns = useNamespace('button')
     const buttonStyle = computed(() => {
       return {
