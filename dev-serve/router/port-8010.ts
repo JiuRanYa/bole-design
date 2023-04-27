@@ -21,6 +21,11 @@ export const router = createRouter({
       component: () => import('../../docs/demos/button/disable/demo.zh-CN.vue')
     },
     {
+      path: '/size',
+      name: 'size',
+      component: () => import('../../docs/demos/button/size/demo.zh-CN.vue')
+    },
+    {
       path: '/:catchAll(.*)',
       redirect: '/'
     }

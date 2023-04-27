@@ -9,7 +9,7 @@ export type ButtonType =
   | 'info'
   | 'warning'
 
-export type ButtonSize = 'lg' | 'md' | 'sm'
+export type ButtonSize = 'large' | 'middle' | 'small'
 
 export const buttonProps = buildProps({
   disable: booleanProps,

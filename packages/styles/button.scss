@@ -7,8 +7,10 @@
 $button: () !default;
 $button: map.merge(
   (
-    bg-color: get-css-var('fill-color-base'),
+    color: get-css-var('content-color-base'),
+    color-disabled: get-css-var('content-color-disabled'),
     b-color: get-css-var('border-color-base'),
+    bg-color: get-css-var('fill-color-base'),
     color-hover: get-css-var('color-primary-light-2'),
     b-color-hover: get-css-var('border-color-light-2'),
     height: 32px,
@@ -69,5 +71,46 @@ $button: map.merge(
         );
       }
     }
+  }
+
+  &--small {
+    @include define-preset-values(
+      'button',
+      (
+        height: 24px,
+        h-padding: 10px,
+      )
+    );
+  }
+
+  &--large {
+    @include define-preset-values(
+      'button',
+      (
+        height: 40px,
+        h-padding: 20px,
+      )
+    );
+  }
+
+  $self: &;
+  @mixin disabled($selector) {
+    @at-root {
+      #{$self}--disabled#{$selector} {
+        &,
+        &:hover,
+        &:active,
+        &.active {
+          @content;
+        }
+      }
+    }
+  }
+
+  @include disabled('') {
+    color: get-css-var('button-color-disabled');
+    cursor: not-allowed;
+    background-color: get-css-var('button-bg-color-disabled');
+    border-color: get-css-var('button-b-color-disabled');
   }
 }

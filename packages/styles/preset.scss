@@ -32,7 +32,9 @@
   @include define-preset-values('transition', $transition-map);
 
   @include define-preset-values('radius', $radius-map);
+
   @include define-preset-values('fill-color', $fill-color-map);
+  @include define-preset-values('content-color', $content-color-map);
 }
 
 body {

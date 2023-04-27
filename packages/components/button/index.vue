@@ -16,6 +16,7 @@ export default defineComponent({
     const ns = useNamespace('button')
 
     const type = computed(() => props.type || 'default')
+    const size = computed(() => props.size || 'middle')
 
     const classNames = computed(() => {
       return {
@@ -23,6 +24,8 @@ export default defineComponent({
         [ns.bs('vars')]: true,
         [ns.bm('inherit')]: props.inherit,
         [ns.bm(type.value)]: type.value !== 'default',
+        [ns.bm(size.value)]: size.value !== 'middle',
+        [ns.bm('disabled')]: props.disable,
       }
     })
 

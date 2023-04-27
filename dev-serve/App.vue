@@ -11,9 +11,11 @@
       </router-link>
     </div>
     <main class="dev-main">
-      <router-view v-slot="{ Component }">
-        <component :is="Component"></component>
-      </router-view>
+      <section class="dev-main-content">
+        <router-view v-slot="{ Component }">
+          <component :is="Component"></component>
+        </router-view>
+      </section>
     </main>
   </div>
 </template>
@@ -39,16 +41,16 @@ defineComponent({
     height: 50px;
     display: flex;
     align-items: center;
-    jusitify-content: center;
     .router-link {
       text-decoration: none;
+      color: var(--bl-color-primary-base);
     }
 
     &-item {
       padding: 10px;
     }
     .router-link-active {
-      color: var(--bl-color-primary-base);
+      color: var(--bl-color-warning-base);
     }
   }
 
@@ -57,6 +59,11 @@ defineComponent({
     height: calc(100% - 50px);
     padding: 20px;
     border: 1px solid var(--bl-border-color-light-1);
+    &-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
   }
 }
 </style>
