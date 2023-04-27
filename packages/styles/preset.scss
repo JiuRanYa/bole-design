@@ -11,6 +11,9 @@
 
   @include define-preset-values('border-color', $border-color-map);
 
+  @include define-css-var('color-white', $color-white);
+  @include define-css-var('color-black', $color-black);
+
   @include define-css-var('border-width', $border-width);
   @include define-css-var('border-style', $border-style);
   @include define-css-var('border-shape', $border-shape);
@@ -27,6 +30,9 @@
   @include define-css-var('transition-base', $transition-base);
 
   @include define-preset-values('transition', $transition-map);
+
+  @include define-preset-values('radius', $radius-map);
+  @include define-preset-values('fill-color', $fill-color-map);
 }
 
 body {

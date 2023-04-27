@@ -1,9 +1,9 @@
 import { booleanProps } from './types'
 
-export const buildProps = (props: any) => {
+export function buildProps<T>(props: T) {
   const common = {
     inherit: booleanProps,
   }
 
-  return Object.freeze({ ...common, ...props })
+  return Object.freeze({ ...common, ...props }) as T
 }

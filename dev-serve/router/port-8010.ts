@@ -7,13 +7,18 @@ export const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'badge',
+      component: () => import('../../docs/demos/button/badge/demo.zh-CN.vue')
+    },
+    {
+      path: '/basic',
       name: 'basic',
       component: () => import('../../docs/demos/button/basic/demo.zh-CN.vue')
     },
     {
-      path: '/primary',
-      name: 'primary',
-      component: () => import('../../docs/demos/button/primary/demo.zh-CN.vue')
+      path: '/disable',
+      name: 'disable',
+      component: () => import('../../docs/demos/button/disable/demo.zh-CN.vue')
     },
     {
       path: '/:catchAll(.*)',

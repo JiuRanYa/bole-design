@@ -1,5 +1,7 @@
 <template>
-  <button type="button" :class="classNames">button</button>
+  <button type="button" :class="classNames">
+    <slot />
+  </button>
 </template>
 
 <script lang="ts">
@@ -18,6 +20,7 @@ export default defineComponent({
     const classNames = computed(() => {
       return {
         [ns.b()]: true,
+        [ns.bs('vars')]: true,
         [ns.bm('inherit')]: props.inherit,
         [ns.bm(type.value)]: type.value !== 'default',
       }

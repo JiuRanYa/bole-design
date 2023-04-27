@@ -4,6 +4,70 @@
 @use './shared' as *;
 @use './design' as *;
 
+$button: () !default;
+$button: map.merge(
+  (
+    bg-color: get-css-var('fill-color-base'),
+    b-color: get-css-var('border-color-base'),
+    color-hover: get-css-var('color-primary-light-2'),
+    b-color-hover: get-css-var('border-color-light-2'),
+    height: 32px,
+    v-padding: 0,
+    h-padding: 14px,
+    radius: get-css-var('radius-base'),
+  ),
+  $button
+);
+
 .#{$namespace}-button {
-  border: none;
+  &-vars {
+    @include define-preset-values('button', $button);
+  }
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  height: get-css-var('button-height');
+  color: get-css-var('button-color');
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  outline: 0;
+  border-radius: get-css-var('button-radius');
+  background-color: get-css-var('button-bg-color');
+  border: get-css-var('border-shape') get-css-var('button-b-color');
+  padding: get-css-var('button-v-padding') get-css-var('button-h-padding');
+
+  transition: get-css-var('transition-color'),
+    get-css-var('transition-background'), get-css-var('transition-border'),
+    get-css-var('transition-shadow');
+
+  &:hover {
+    color: get-css-var('button-color-hover');
+    border-color: get-css-var('button-b-color-hover');
+    background-color: get-css-var('button-bg-color-hover');
+  }
+
+  @mixin define-button-style($style-map) {
+    @include define-preset-style('button', $style-map);
+  }
+
+  @each $type in $types {
+    @at-root {
+      &--#{$type} {
+        @include define-button-style(
+          (
+            color: 'color-white',
+            color-hover: 'color-white',
+            color-focus: 'color-white',
+            color-active: 'color-white',
+            bg-color: 'color' $type 'base',
+            bg-color-hover: 'color' $type 'light-2',
+          )
+        );
+      }
+    }
+  }
 }

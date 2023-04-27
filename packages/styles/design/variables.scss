@@ -1,4 +1,6 @@
 @use 'sass:map';
+@use 'sass:color';
+@use 'sass:math';
 
 @use '../shared/mixins.scss' as *;
 
@@ -6,13 +8,8 @@ $namespace: 'bl' !default;
 
 $types: primary, info, success, warning, error;
 
-@mixin define-type-color($type) {
-  $colors: map.get($color-map, $type);
-
-  @each $name in map.keys($colors) {
-    @include define-css-var(('color', $type, $name), map.get($colors, $name));
-  }
-}
+$color-black: #000 !default;
+$color-white: #fff !default;
 
 // colors-start
 $color-map: () !default;
@@ -37,6 +34,54 @@ $color-map: map.deep-merge(
   $color-map
 );
 // colors-end
+
+@mixin define-type-color($type) {
+  $colors: map.get($color-map, $type);
+
+  @each $name in map.keys($colors) {
+    @include define-css-var(('color', $type, $name), map.get($colors, $name));
+  }
+}
+@mixin define-level-colors($type, $max-level, $mode, $mixed-color) {
+  @for $i from 1 through $max-level {
+    $color-map: map.deep-merge(
+      (
+        $type: (
+          '#{$mode}-#{$i}':
+            color.mix(
+              $mixed-color,
+              map.get($color-map, $type, 'base'),
+              math.percentage(math.div($i, 10))
+            ),
+        ),
+      ),
+      $color-map
+    ) !global;
+  }
+}
+
+@mixin define-opacity-colors($type, $max-level) {
+  @for $i from 1 through $max-level {
+    $color-map: map.deep-merge(
+      (
+        $type: (
+          'opacity-#{$i}':
+            rgba(
+              map.get($color-map, $type, 'base'),
+              math.percentage(math.div(10 - $i, 10))
+            ),
+        ),
+      ),
+      $color-map
+    ) !global;
+  }
+}
+
+@each $type in $types {
+  @include define-level-colors($type, 9, 'light', $color-white);
+  @include define-level-colors($type, 2, 'dark', $color-black);
+  @include define-opacity-colors($type, 9);
+}
 
 // border-end
 $border-color-map: () !default;
@@ -72,5 +117,29 @@ $transition-map: map.merge(
     transform: transform get-css-var('transition-base'),
   ),
   $transition-map
+);
+
+$radius-map: () !default;
+$radius-map: map.merge(
+  (
+    base: 4px,
+    large: 6px,
+    small: 2px,
+  ),
+  $radius-map
+);
+
+$fill-color-map: () !default;
+$fill-color-map: map.merge(
+  (
+    base: #fff,
+    secondary: #d9dfe2,
+    disabled: #dee2e6,
+    hover: #e9ecef,
+    humble: #f3f4f6,
+    background: #f8f9fa,
+    reverse: #131719,
+  ),
+  $fill-color-map
 );
 //transition-end

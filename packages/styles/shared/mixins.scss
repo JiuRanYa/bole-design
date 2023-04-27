@@ -35,3 +35,16 @@
     );
   }
 }
+
+@mixin define-preset-style($base-name, $style-map) {
+  @each $name in map.keys($style-map) {
+    $style-units: map.get($style-map, $name);
+
+    @if list.length($style-units) != 0 {
+      @include define-css-var(
+        ($base-name, $name),
+        get-css-var($style-units...)
+      );
+    }
+  }
+}
