@@ -1,12 +1,15 @@
 <template>
-  <header class="bl-header">
-    <div class="bl-logo">
-      <img src="/bl-logo.png" />
-      <span class="bl-text"> Bole Design </span>
-    </div>
-
-    <div class="bl-nav">Menu</div>
-  </header>
+  <Row class="bl-header">
+    <Col :span="8">
+      <div class="bl-logo">
+        <img src="/bl-logo.png" />
+        <span class="bl-text"> Bole Design </span>
+      </div>
+    </Col>
+    <Col :span="16">
+      <div class="bl-nav">Menu</div>
+    </Col>
+  </Row>
 </template>
 
 <script setup lang="ts">
@@ -39,8 +42,8 @@ defineComponent({
     display: flex;
     align-items: center;
     img {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       margin-right: 20px;
     }
   }

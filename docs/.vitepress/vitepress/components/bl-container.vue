@@ -10,14 +10,21 @@ defineComponent({
 <template>
   <div class="homepage">
     <div class="homepage-main">
-      <div class="homepage-title">Bole Design</div>
-      <div class="homepage-desc">
+      <!-- <div class="homepage-main-logo"> -->
+      <!--   <img src="/bl-logo.png" /> -->
+      <!-- </div> -->
+      <div class="homepage-main-title">Bole Design</div>
+      <div class="homepage-main-desc">
         高度可定制化，全量
         <span class="homepage-en"> Typescript </span>
         支持，面向开发者的工具集
       </div>
-      <div class="homepage-bg">
-        <img src="/bl-bg.svg" />
+      <div class="homepage-main-btn">
+        <Button type="primary" size="middle">开始使用</Button>
+        <Button size="small">浏览组件</Button>
+      </div>
+      <div class="homepage-main-bg">
+        <!-- <img src="/bl-bg.svg" /> -->
       </div>
     </div>
   </div>
@@ -37,21 +44,33 @@ defineComponent({
     align-items: center;
     flex-direction: column;
     padding-top: 100px;
-    .homepage-logo {
+    &-logo {
       img {
         width: 310px;
       }
     }
-    .homepage-title {
+    &-title {
       margin: 1rem 0;
       font-size: 3rem;
       font-weight: 400;
     }
-    .homepage-desc {
+    &-desc {
       font-size: 1.4rem;
       font-weight: 300;
     }
-    .homepage-bg {
+    &-btn {
+      display: flex;
+      margin-top: 50px;
+      gap: 40px;
+      .bl-button {
+        border-radius: 40px;
+        width: 220px;
+        height: 50px;
+      }
+    }
+    &-bg {
+      pointer-events: none;
+      position: absolute;
       img {
         width: 100%;
       }

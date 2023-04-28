@@ -3,7 +3,8 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Avatar: typeof import('bole-design')['Avatar']
     Button: typeof import('bole-design')['Button']
-    Swiper: typeof import('bole-design')['Swiper']
+    Col: typeof import('bole-design')['Col']
+    Row: typeof import('bole-design')['Row']
   }
 
   interface ComponentCustomProperties {}

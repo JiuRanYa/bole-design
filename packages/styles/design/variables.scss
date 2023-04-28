@@ -79,7 +79,7 @@ $color-map: map.deep-merge(
 
 @each $type in $types {
   @include define-level-colors($type, 9, 'light', $color-white);
-  @include define-level-colors($type, 2, 'dark', $color-black);
+  @include define-level-colors($type, 9, 'dark', $color-black);
   @include define-opacity-colors($type, 9);
 }
 

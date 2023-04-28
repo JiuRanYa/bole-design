@@ -32,7 +32,6 @@ async function main() {
       ${components.map(toCapitalCase).join(',\n')},
     ]
 
-    export { buildInstall }
     export const install = buildInstall(components)
 
     ${allComponents

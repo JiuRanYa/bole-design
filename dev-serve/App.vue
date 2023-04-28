@@ -59,11 +59,6 @@ defineComponent({
     height: calc(100% - 50px);
     padding: 20px;
     border: 1px solid var(--bl-border-color-light-1);
-    &-content {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
   }
 }
 </style>

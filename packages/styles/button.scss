@@ -4,6 +4,25 @@
 @use './shared' as *;
 @use './design' as *;
 
+$button-size-map: () !default;
+$button-size-map: map.merge(
+  (
+    lg: 40px,
+    md: 32px,
+    sm: 24px,
+  ),
+  $button-size-map
+);
+$button-padding-map: () !default;
+$button-padding-map: map.merge(
+  (
+    lg: 20px,
+    md: 14px,
+    sm: 10px,
+  ),
+  $button-padding-map
+);
+
 $button: () !default;
 $button: map.merge(
   (
@@ -13,9 +32,9 @@ $button: map.merge(
     bg-color: get-css-var('fill-color-base'),
     color-hover: get-css-var('color-primary-light-2'),
     b-color-hover: get-css-var('border-color-light-2'),
-    height: 32px,
+    height: map.get($button-size-map, 'md'),
     v-padding: 0,
-    h-padding: 14px,
+    h-padding: map.get($button-padding-map, 'md'),
     radius: get-css-var('radius-base'),
   ),
   $button
@@ -30,6 +49,7 @@ $button: map.merge(
   align-items: center;
   justify-content: center;
   font-weight: 400;
+  line-height: 1;
   height: get-css-var('button-height');
   color: get-css-var('button-color');
   white-space: nowrap;
@@ -77,8 +97,8 @@ $button: map.merge(
     @include define-preset-values(
       'button',
       (
-        height: 24px,
-        h-padding: 10px,
+        height: map.get($button-size-map, 'sm'),
+        h-padding: map.get($button-padding-map, 'sm'),
       )
     );
   }
@@ -87,8 +107,8 @@ $button: map.merge(
     @include define-preset-values(
       'button',
       (
-        height: 40px,
-        h-padding: 20px,
+        height: map.get($button-size-map, 'lg'),
+        h-padding: map.get($button-padding-map, 'lg'),
       )
     );
   }

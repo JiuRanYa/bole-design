@@ -1,0 +1,17 @@
+@use 'sass:math';
+@use './shared' as *;
+@use './design' as *;
+
+.#{$namespace}-col {
+  display: flex;
+
+  @for $i from 0 through 24 {
+    $size: (math.div(1, 24) * $i * 100) * 1%;
+
+    &--#{$i} {
+      display: block;
+      flex: 0 0 $size;
+      max-width: $size;
+    }
+  }
+}
