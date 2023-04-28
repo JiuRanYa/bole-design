@@ -11,9 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/vexip-ui" target="_blank">
     <img src="https://img.shields.io/github/package-json/v/JiuRanYa/bole-design" alt="npm version"/>
-  </a>
 </p>
 
 <p align="center">
