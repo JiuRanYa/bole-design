@@ -1,6 +1,6 @@
-import "./styles/vars/css-vars.scss";
-import "./styles/app.scss";
+import './styles/vars/css-vars.scss'
+import './styles/app.scss'
 
-import BLApp from "./components/bl-app.vue";
+import BLApp from './components/bl-app.vue'
 
-export default BLApp;
+export default BLApp

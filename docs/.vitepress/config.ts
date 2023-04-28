@@ -1,7 +1,13 @@
-import { defineConfig } from "vitepress";
+import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
-  title: "Bole UI",
-  description: "A VitePress Site",
-});
+const config = defineConfig({
+  title: 'Bole UI',
+  lang: 'zh-CN',
+  description: 'A VitePress Site',
+  themeConfig: {
+    repo: '../../docs',
+  },
+})
+
+export default config

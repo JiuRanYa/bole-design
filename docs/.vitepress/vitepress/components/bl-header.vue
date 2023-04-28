@@ -8,9 +8,9 @@
     </Col>
     <Col :span="16">
       <div class="bl-nav">
-        <router-link to="/">指南</router-link>
-        <router-link to="/components">组件</router-link>
-        <router-link to="/update">更新说明</router-link>
+        <a to="/">指南</a>
+        <a to="/components">组件</a>
+        <a to="/update">更新说明</a>
       </div>
     </Col>
   </Row>

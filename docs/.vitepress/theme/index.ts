@@ -1,10 +1,12 @@
 // https://vitepress.dev/guide/custom-theme
-import Layout from "../vitepress";
-import "./style.css";
+import Layout from '../vitepress'
+import './style.css'
+import { install } from '@bole-design/components'
 
 export default {
   Layout,
-  enhanceApp({ app, router, siteData }) {
+  enhanceApp({ app }) {
     // ...
+    app.use(install)
   },
-};
+}

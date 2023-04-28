@@ -5,7 +5,7 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "serve": "vite dev",
+    "serve": "vitepress dev .",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
