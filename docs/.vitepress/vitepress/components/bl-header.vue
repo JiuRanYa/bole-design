@@ -7,7 +7,11 @@
       </div>
     </Col>
     <Col :span="16">
-      <div class="bl-nav">Menu</div>
+      <div class="bl-nav">
+        <router-link to="/">指南</router-link>
+        <router-link to="/components">组件</router-link>
+        <router-link to="/update">更新说明</router-link>
+      </div>
     </Col>
   </Row>
 </template>
@@ -45,6 +49,23 @@ defineComponent({
       width: 40px;
       height: 40px;
       margin-right: 20px;
+    }
+  }
+
+  &-nav {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 100px;
+
+    a {
+      text-decoration: none;
+      padding: 20px;
+      color: var(--bl-content-color-base);
+    }
+    .router-link-active {
+      border-bottom: var(--bl-border-shape) var(--bl-color-primary-base);
     }
   }
 }

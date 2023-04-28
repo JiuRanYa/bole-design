@@ -10,7 +10,13 @@ export default defineComponent({
     const ns = useNamespace('row')
 
     const classNames = computed(() => {
-      return [ns.b(), [ns.bs('vars')]]
+      return [
+        ns.b(),
+        ns.bs('vars'),
+        {
+          [ns.bm(props.justify)]: props.justify,
+        },
+      ]
     })
 
     const styles = computed(() => {

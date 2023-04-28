@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
 import { install } from '@bole-design/components'
-import '@bole-design/styles'
+import './.vitepress/vitepress/styles/app.scss'
 import App from './App.vue'
+import { router } from './router/index'
 
 const app = createApp(App)
 
 app.use(install)
-
-console.log(App, install)
+app.use(router)
 
 app.mount('#app')

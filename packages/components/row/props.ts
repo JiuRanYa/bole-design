@@ -36,7 +36,7 @@ export const rowProps = buildProps({
     default: 'top',
     type: String as PropType<AlignType>,
   },
-  justify: booleanProps,
+  justify: String as PropType<JustifyType>,
   gap: [Number, Array] as PropType<Number | Number[]>,
   tag: String,
 })
