@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-document.title = 'row | Bole Design'
+document.title = 'menu | Bole Design'
 
 export const router = createRouter({
   history: createWebHistory('/'),
@@ -8,7 +8,7 @@ export const router = createRouter({
     {
       path: '/',
       name: 'basic',
-      component: () => import('../../docs/demos/row/basic/demo.zh-CN.vue')
+      component: () => import('../../docs/demos/menu/basic/demo.zh-CN.vue')
     },
     {
       path: '/:catchAll(.*)',
@@ -18,5 +18,5 @@ export const router = createRouter({
 })
 
 router.afterEach(to => {
-  document.title = `row - ${typeof to.name === 'string' ? to.name : 'dev'} | Bole Design`
+  document.title = `menu - ${typeof to.name === 'string' ? to.name : 'dev'} | Bole Design`
 })

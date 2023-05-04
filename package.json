@@ -21,9 +21,12 @@
     "build:style": "gulp --require sucrase/register/ts"
   },
   "dependencies": {
-    "vue": "^3.2.47",
+    "-": "^0.0.1",
+    "@bole-design/common": "workspace:*",
+    "@bole-design/components": "workspace:*",
     "@bole-design/hooks": "workspace:*",
-    "@bole-design/common": "workspace:*"
+    "D": "^1.0.0",
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",

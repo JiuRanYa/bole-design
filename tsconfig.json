@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "target": "es2018",
+    "target": "esnext",
     "module": "esnext",
+    "allowJs": false,
+    "strict": true,
+    "jsx": "preserve",
+    "outDir": "dist",
     "baseUrl": ".",
     "sourceMap": false,
     "moduleResolution": "node",
-    "allowJs": false,
-    "strict": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -20,5 +21,5 @@
       "bole-design": ["."]
     }
   },
-  "include": ["packages/components", "dev-server", "index.ts", "types.d.ts"]
+  "include": ["packages", "dev-server", "index.ts", "types.d.ts", "dev-server"]
 }

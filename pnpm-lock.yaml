@@ -4,7 +4,9 @@ importers:
 
   .:
     specifiers:
+      '-': ^0.0.1
       '@bole-design/common': workspace:*
+      '@bole-design/components': workspace:*
       '@bole-design/hooks': workspace:*
       '@rollup/plugin-commonjs': ^24.1.0
       '@types/eslint': ^8.37.0
@@ -19,6 +21,7 @@ importers:
       '@types/prompts': ^2.4.2
       '@vitejs/plugin-vue': ^4.1.0
       '@vitejs/plugin-vue-jsx': ^3.0.1
+      D: ^1.0.0
       eslint: ^8.38.0
       execa: ^7.0.0
       fast-glob: ^3.2.12
@@ -38,8 +41,11 @@ importers:
       vue: ^3.2.47
       vue-tsc: ^1.2.0
     dependencies:
+      '-': 0.0.1
       '@bole-design/common': link:packages/common
+      '@bole-design/components': link:packages/components
       '@bole-design/hooks': link:packages/hooks
+      D: 1.0.0
       vue: 3.2.47
     devDependencies:
       '@rollup/plugin-commonjs': 24.1.0
@@ -117,6 +123,10 @@ importers:
     specifiers: {}
 
 packages:
+
+  /-/0.0.1:
+    resolution: {integrity: sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==}
+    dev: false
 
   /@algolia/autocomplete-core/1.7.4:
     resolution: {integrity: sha512-daoLpQ3ps/VTMRZDEBfU8ixXd+amZcNJ4QSP3IERGyzqnL5Ch8uSRFt/4G8pUvW9c3o6GA4vtVv4I4lmnkdXyg==}
@@ -1280,6 +1290,11 @@ packages:
       - '@vue/composition-api'
       - vue
     dev: true
+
+  /D/1.0.0:
+    resolution: {integrity: sha512-nQvrCBu7K2pSSEtIM0EEF03FVjcczCXInMt3moLNFbjlWx6bZrX72uT6/1uAXDbnzGUAx9gTyDiQ+vrFi663oA==}
+    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
+    dev: false
 
   /acorn-jsx/5.3.2_acorn@8.8.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}

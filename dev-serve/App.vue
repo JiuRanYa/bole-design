@@ -25,7 +25,6 @@ import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-console.log(router.options)
 
 defineComponent({
   name: 'app',

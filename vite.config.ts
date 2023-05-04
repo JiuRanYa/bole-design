@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'node:path'
 import glob from 'fast-glob'
 import { blOutput, excludeFiles, pkgRoot } from './common/path/index'
@@ -16,7 +17,7 @@ export default defineConfig(async () => {
   )
 
   return {
-    plugins: [vue()],
+    plugins: [vue(), vueJsx()],
     resolve: {
       alias: [{ find: /^@\//, replacement: resolve(__dirname) }],
     },
