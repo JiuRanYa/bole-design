@@ -1,6 +1,6 @@
 <template>
   <Button>Default</Button>
-  <Button type="primary">Primary</Button>
+  <Button type="primary" @click="handleClick">Primary</Button>
   <Button type="info">Info</Button>
   <Button type="success">Success</Button>
   <Button type="error">Error</Button>
@@ -9,4 +9,8 @@
 
 <script setup lang="ts">
 import { Button } from '@bole-design/components'
+
+function handleClick() {
+  alert('123')
+}
 </script>
