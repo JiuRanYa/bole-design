@@ -5,5 +5,5 @@ lang: zh-CN
 ---
 
 <ClientOnly>
-<ParallaxHome />
+  <BlHomepage />
 </ClientOnly>

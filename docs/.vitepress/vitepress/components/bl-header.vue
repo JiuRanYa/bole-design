@@ -8,9 +8,7 @@
     </Col>
     <Col :span="16">
       <div class="bl-nav">
-        <a to="/">指南</a>
-        <a to="/components">组件</a>
-        <a to="/update">更新说明</a>
+        <a v-for="item in nav" :href="item.link">{{ item.text }}</a>
       </div>
     </Col>
   </Row>
@@ -18,10 +16,15 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
+import { useNav } from '../composables/index'
 
 defineComponent({
-  name: 'header',
+  name: 'header'
 })
+
+const nav = useNav()
+
+console.log(nav)
 </script>
 
 <style lang="scss">

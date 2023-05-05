@@ -1,5 +1,9 @@
 ---
-title: 'A Vue 3 UI Framework'
-lang: zh-CN
+title: A Vue 3 UI Framework
 page: true
+lang: zh-CN
 ---
+
+<ClientOnly>
+  <bl-homepage />
+</ClientOnly>

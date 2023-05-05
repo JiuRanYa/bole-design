@@ -9,7 +9,7 @@ interface InstallConfig {
 }
 
 export function buildInstall(components: any[] = [], LocalConfig?: LocalConfig) {
-  return function install(app: App, options: InstallConfig) {
+  return function install(app: App, options: InstallConfig = {}) {
     const { props = {}, prefix = '' } = options
 
     configProps(props, app)

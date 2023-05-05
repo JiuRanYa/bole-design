@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { nav } from './configs'
 
 // https://vitepress.dev/reference/site-config
 const config = defineConfig({
@@ -6,8 +7,8 @@ const config = defineConfig({
   lang: 'zh-CN',
   description: 'A VitePress Site',
   themeConfig: {
-    repo: '../../docs',
-  },
+    nav
+  }
 })
 
 export default config
