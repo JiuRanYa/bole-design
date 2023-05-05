@@ -1,10 +1,8 @@
 import { App, ComponentPropsOptions, unref } from 'vue'
-import { isObject, has, isFunction, isNull } from './utils'
+import { isObject, has, isFunction, isNull, warnWithPrefix } from './utils'
 import { computed, ComputedRef, inject, reactive, watch } from 'vue'
 
 import { booleanProps, EnsureValue, Expand, MaybeRef } from './types'
-
-import { warnWithPrefix } from './warn'
 
 const eventPropRE = /^on[A-Z]/
 const PROVIDED_PROPS = '__bl-provided-props'
@@ -104,11 +102,11 @@ export function useProps<T extends Record<string, any>>(
     } else {
       props[key] = computed(() => {
         if (isNull(sourceProps[key])) {
-          if (!isNull(commonProps.value[key])) {
-            return getValue(commonProps.value[key])
-          }
           if (!isNull(configProps.value[key])) {
             return getValue(configProps.value[key])
+          }
+          if (!isNull(commonProps.value[key])) {
+            return getValue(commonProps.value[key])
           }
 
           return getDefault()

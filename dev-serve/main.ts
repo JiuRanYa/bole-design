@@ -10,7 +10,8 @@ const app = Promise.all([import(`./router/port-${__PORT__}.ts`), import('./App.v
           default: {
             size: 'large'
           }
-        }
+        },
+        prefix: 'bl'
       })
       .use(router)
       .mount('#app')

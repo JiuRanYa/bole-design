@@ -8,8 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from '@bole-design/components'
-
 function handleClick() {
   alert('123')
 }

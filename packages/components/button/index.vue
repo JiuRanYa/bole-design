@@ -21,16 +21,15 @@ export default defineComponent({
       size: 'middle'
     })
 
-    const type = computed(() => props.type)
-    const size = computed(() => props.size)
+    console.log(props)
 
     const classNames = computed(() => {
       return {
         [ns.b()]: true,
         [ns.bs('vars')]: true,
         [ns.bm('inherit')]: props.inherit,
-        [ns.bm(type.value)]: type.value !== 'default',
-        [ns.bm(size.value)]: size.value !== 'middle',
+        [ns.bm(props.type)]: props.type !== 'default',
+        [ns.bm(props.size)]: props.size !== 'middle',
         [ns.bm('disabled')]: props.disable
       }
     })
