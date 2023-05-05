@@ -5,7 +5,7 @@ import { menuProps } from './props'
 export default defineComponent({
   name: 'Menu',
   props: menuProps,
-  setup: (_props) => {
+  setup: _props => {
     const props = useProps('menu', _props, {})
 
     console.log(_props)
@@ -15,5 +15,5 @@ export default defineComponent({
     return () => {
       return <div>menu</div>
     }
-  },
+  }
 })

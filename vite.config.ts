@@ -12,21 +12,21 @@ export default defineConfig(async () => {
     await glob('**/*.{js,ts,vue}', {
       cwd: pkgRoot,
       absolute: true,
-      onlyFiles: true,
+      onlyFiles: true
     })
   )
 
   return {
     plugins: [vue(), vueJsx()],
     resolve: {
-      alias: [{ find: /^@\//, replacement: resolve(__dirname) }],
+      alias: [{ find: /^@\//, replacement: resolve(__dirname) }]
     },
     build: {
       outDir: 'dist',
       sourcemap: true,
       lib: {
         entry: resolve(pkgRoot, 'bole-design'),
-        name: 'bole-design',
+        name: 'bole-design'
       },
       rollupOptions: {
         input,
@@ -37,7 +37,7 @@ export default defineConfig(async () => {
             preserveModulesRoot: resolve(pkgRoot, 'bole-design'),
             dir: resolve(blOutput, 'lib'),
             exports: 'named',
-            entryFileNames: '[name].cjs',
+            entryFileNames: '[name].cjs'
           },
           {
             format: 'es',
@@ -45,16 +45,16 @@ export default defineConfig(async () => {
             preserveModules: true,
             preserveModulesRoot: resolve(pkgRoot, 'bole-design'),
             dir: resolve(blOutput, 'es'),
-            entryFileNames: '[name].mjs',
-          },
+            entryFileNames: '[name].mjs'
+          }
         ],
         external: await generateExternal(),
-        treeshake: false,
+        treeshake: false
       },
       commonjsOptions: {
-        sourceMap: false,
+        sourceMap: false
       },
-      chunkSizeWarningLimit: 10000,
-    },
+      chunkSizeWarningLimit: 10000
+    }
   }
 })
