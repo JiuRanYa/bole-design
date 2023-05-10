@@ -3,8 +3,11 @@ import HomePage from './bl-container.vue'
 import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
+import { getProject } from '../../configs/project'
 
 const isSidebarOpen = false
+
+getProject()
 </script>
 
 <template>

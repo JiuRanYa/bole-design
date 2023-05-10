@@ -1,10 +1,10 @@
 <template>
   <Row class="bl-header">
     <Col :span="8">
-      <div class="bl-logo">
+      <a class="bl-logo" href="/">
         <img src="/bl-logo.png" />
-        <span class="bl-text"> Bole Design </span>
-      </div>
+        <span class="bl-text">{{ project }}</span>
+      </a>
     </Col>
     <Col :span="16">
       <div class="bl-nav">
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
+import { getProject } from '../../configs/project'
 import { useNav } from '../composables/index'
 
 defineComponent({
@@ -23,6 +24,7 @@ defineComponent({
 })
 
 const nav = useNav()
+const project = getProject()
 
 console.log(nav)
 </script>
@@ -48,6 +50,8 @@ console.log(nav)
     height: 55px;
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: black;
     img {
       width: 40px;
       height: 40px;

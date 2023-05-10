@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
+import { changeProject, getProject } from '../../configs/project'
 import Wave from './wave/wave.vue'
 
 defineComponent({
-  name: 'home-page',
+  name: 'home-page'
 })
+
+function handleStartClick() {
+  changeProject('Panda')
+}
 </script>
 
 <template>
@@ -20,7 +25,7 @@ defineComponent({
         支持，面向开发者的工具集
       </div>
       <div class="homepage-main-btn">
-        <Button type="primary" size="middle">开始使用</Button>
+        <Button type="primary" size="middle" @click="handleStartClick">开始使用</Button>
         <Button size="small">浏览组件</Button>
       </div>
       <div class="homepage-main-bg">
