@@ -8,22 +8,19 @@ import {
   logger,
   hooks as allHooks,
   components as allComponents,
-  toCapitalCase,
+  toCapitalCase
 } from './utils'
 
 const ignores: any[] = []
 const plugins: any[] = []
 
 async function main() {
-  const exportComponents = allComponents.filter((c) => !ignores.includes(c))
-  const components = exportComponents.filter((c) => !plugins.includes(c))
+  const exportComponents = allComponents.filter(c => !ignores.includes(c))
+  const components = exportComponents.filter(c => !plugins.includes(c))
 
   const index = `
     ${exportComponents
-      .map(
-        (component) =>
-          `import { ${toCapitalCase(component)} } from './${component}'`
-      )
+      .map(component => `import { ${toCapitalCase(component)} } from './${component}'`)
       .join('\n')}
 
     import { buildInstall } from './create'
@@ -34,15 +31,13 @@ async function main() {
 
     export const install = buildInstall(components)
 
-    ${allComponents
-      .map((component) => `export * from './${component}'`)
-      .join('\n')}
+    ${allComponents.map(component => `export * from './${component}'`).join('\n')}
   `
 
   const hooksIndex = `
-    ${allHooks.map((hook) => `import { ${hook} } from './${hook}'`).join('\n')}
+    ${allHooks.map(hook => `import { ${hook} } from './${hook}'`).join('\n')}
 
-    ${allHooks.map((hook) => `export * from './${hook}'`).join('\n')}
+    ${allHooks.map(hook => `export * from './${hook}'`).join('\n')}
   `
 
   const types = `
@@ -51,20 +46,14 @@ async function main() {
       export interface GlobalComponents {
         ${[...components]
           .map(
-            (name) =>
-              `${toCapitalCase(
-                name
-              )}: typeof import('bole-design')['${toCapitalCase(name)}']`
+            name => `${toCapitalCase(name)}: typeof import('bole-design')['${toCapitalCase(name)}']`
           )
           .join(',\n')}
       }
 
       interface ComponentCustomProperties {
         ${plugins
-          .map(
-            (name) =>
-              `$${name}: typeof import('bole-design')['${toCapitalCase(name)}']`
-          )
+          .map(name => `$${name}: typeof import('bole-design')['${toCapitalCase(name)}']`)
           .join(',\n')}
       }
     }
@@ -105,7 +94,7 @@ async function main() {
   // });
 }
 
-main().catch((error) => {
+main().catch(error => {
   logger.error(error)
   process.exit(1)
 })

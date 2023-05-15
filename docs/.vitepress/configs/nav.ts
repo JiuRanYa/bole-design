@@ -28,7 +28,7 @@ function getNav() {
   const dNav = [...navs[proj]]
 
   dNav.forEach(item => {
-    item.link = `/${proj}${item.link}`
+    item.link = `/projects/${proj}${item.link}`
   })
 
   return dNav

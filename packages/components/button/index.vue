@@ -21,8 +21,6 @@ export default defineComponent({
       size: 'middle'
     })
 
-    console.log(props)
-
     const classNames = computed(() => {
       return {
         [ns.b()]: true,

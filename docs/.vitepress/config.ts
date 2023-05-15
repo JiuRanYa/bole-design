@@ -8,8 +8,7 @@ const config = defineConfig({
   lang: 'zh-CN',
   description: 'A VitePress Site',
   themeConfig: {
-    nav,
-    project: project
+    nav
   }
 })
 
