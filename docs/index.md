@@ -4,6 +4,4 @@ page: true
 lang: zh-CN
 ---
 
-<ClientOnly>
-  <bl-homepage />
-</ClientOnly>
+<--placehold-->

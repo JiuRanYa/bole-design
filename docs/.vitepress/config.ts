@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitepress'
 import { nav } from './configs'
-import { project } from './configs/project'
 
 // https://vitepress.dev/reference/site-config
 const config = defineConfig({

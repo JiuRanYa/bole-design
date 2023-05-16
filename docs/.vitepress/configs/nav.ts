@@ -1,5 +1,4 @@
 import { computed } from 'vue'
-import { getProject } from './project'
 
 export const navs = {
   'bole-design': [
@@ -23,15 +22,6 @@ export const navs = {
     }
   ]
 }
-function getNav() {
-  const proj = getProject().value
-  const dNav = [...navs[proj]]
-
-  dNav.forEach(item => {
-    item.link = `/projects/${proj}${item.link}`
-  })
-
-  return dNav
-}
+function getNav() {}
 
 export const nav = getNav()

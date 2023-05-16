@@ -7,11 +7,7 @@ export type AlignType =
   | 'bottom'
   | 'stretch'
   | {
-      [key in 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl']:
-        | 'top'
-        | 'middle'
-        | 'bottom'
-        | 'stretch'
+      [key in 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl']: 'top' | 'middle' | 'bottom' | 'stretch'
     }
 
 export type JustifyType =
@@ -34,9 +30,9 @@ export type JustifyType =
 export const rowProps = buildProps({
   align: {
     default: 'top',
-    type: String as PropType<AlignType>,
+    type: String as PropType<AlignType>
   },
   justify: String as PropType<JustifyType>,
   gap: [Number, Array] as PropType<Number | Number[]>,
-  tag: String,
+  tag: String
 })

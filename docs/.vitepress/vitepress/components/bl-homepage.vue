@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import { changeProject, getProject } from '../../configs/project'
 import Wave from './wave/wave.vue'
 
 defineComponent({
   name: 'home-page'
 })
 
-function handleStartClick() {
-  changeProject('Panda')
-}
+function handleStartClick() {}
 </script>
 
 <template>

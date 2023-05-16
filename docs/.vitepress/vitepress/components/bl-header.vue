@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import { getProject } from '../../configs/project'
+import { useProject } from '../../configs/project'
 import { useData } from 'vitepress'
 import { useNav } from '../composables/index'
 
@@ -27,7 +27,7 @@ defineComponent({
 const { theme } = useData()
 
 const nav = theme.value.nav
-const project = getProject()
+const project = useProject()
 
 console.log(nav)
 </script>

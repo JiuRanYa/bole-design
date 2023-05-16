@@ -1,13 +1,22 @@
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 export const defaultProject = 'bole-design'
 
-export let project = ref(defaultProject)
+export const useProject = () => {
+  const route = useRoute()
 
-export const getProject = () => {
-  return project
-}
+  return computed(() => {
+    // the first part of the first slash
+    const path = route?.data?.relativePath
+    console.log(route)
+    let project: string
 
-export const changeProject = (proj: string) => {
-  project.value = proj
+    if (path?.includes('/')) {
+      project = path.split('/').shift()! || defaultProject
+    } else {
+      project = defaultProject
+    }
+    return project
+  })
 }

@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import Comp from 'unplugin-vue-components/vite'
 
 export default defineConfig(() => {
-  console.log(123)
   return {
     plugins: [
       Comp({
