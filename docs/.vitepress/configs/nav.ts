@@ -22,6 +22,7 @@ export const navs = {
     }
   ]
 }
-function getNav() {}
+function getNav() {
+}
 
 export const nav = getNav()
