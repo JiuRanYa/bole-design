@@ -1,5 +1,4 @@
 import { computed } from 'vue'
-import { useData } from 'vitepress'
 import { navs } from '../../configs/nav'
 import { useProject } from './project'
 

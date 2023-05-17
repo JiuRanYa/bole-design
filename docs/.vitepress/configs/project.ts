@@ -1,3 +1,5 @@
-import path from 'path'
+const defaultProject = 'bole-design'
 
-export function getProject() {}
+export function getProject() {
+  return defaultProject
+}

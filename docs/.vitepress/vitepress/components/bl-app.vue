@@ -3,17 +3,17 @@ import HomePage from './bl-container.vue'
 import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
-import { useSiderbar } from '../composables/siderbar'
+import { useSidebar } from '../composables/sidebar'
 
-const isSidebarOpen = false
+const { hasSidebar } = useSidebar()
 
-useSiderbar()
+console.log(hasSidebar)
 </script>
 
 <template>
   <div>
     <LayoutHeader />
-    <BLContent :is-sidebar-open="isSidebarOpen">
+    <BLContent :is-sidebar-open="hasSidebar">
       <template #content-top>
         <slot name="content-top" />
       </template>
