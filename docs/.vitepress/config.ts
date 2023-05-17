@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { nav } from './configs'
 import head from './configs/head'
-import siderbars from './configs/sidebar'
+import sidebars from './configs/sidebar'
 
 // https://vitepress.dev/reference/site-config
 const config = defineConfig({
@@ -11,7 +11,7 @@ const config = defineConfig({
   head,
   themeConfig: {
     nav,
-    siderbars
+    sidebars
   }
 })
 

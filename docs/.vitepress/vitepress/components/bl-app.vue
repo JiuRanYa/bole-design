@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HomePage from './bl-container.vue'
+import BlSidebar from './sidebar/sidebar.vue'
 import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
@@ -13,7 +14,8 @@ console.log(hasSidebar)
 <template>
   <div>
     <LayoutHeader />
-    <BLContent :is-sidebar-open="hasSidebar">
+    <BlSidebar :hasSidebar="hasSidebar" />
+    <BLContent :hasSidebar="hasSidebar">
       <template #content-top>
         <slot name="content-top" />
       </template>

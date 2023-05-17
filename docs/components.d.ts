@@ -19,6 +19,8 @@ declare module '@vue/runtime-core' {
     BlSiderbar: typeof import('./.vitepress/vitepress/components/bl-siderbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./.vitepress/vitepress/components/sidebar/sidebar.vue')['default']
+    SidebarLink: typeof import('./.vitepress/vitepress/components/sidebar/sidebar-link.vue')['default']
     Wave: typeof import('./.vitepress/vitepress/components/wave/wave.vue')['default']
   }
 }

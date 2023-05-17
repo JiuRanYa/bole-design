@@ -2,57 +2,48 @@ import { useData } from 'vitepress'
 import { useProject } from './project'
 import { computed } from 'vue'
 
-type SidebarItem = {
+export type SidebarItem = {
   text: string
   link: string
 }
 
-type SidebarConfig = SidebarItem[]
+export type SidebarConfig = SidebarItem[]
 
-type Sidebar =
-  | {
-      [key: string]: SidebarConfig
-    }
-  | false
-  | 'auto'
+export type Sidebar = {
+  [key: string]: SidebarConfig
+}
+export function ensureStartingSlash(path: string): string {
+  return /^\//.test(path) ? path : `/${path}`
+}
 
-function getSidebarConfig(sidebar: Sidebar) {
+function getSidebarConfig(sidebars: Sidebar, path: string) {
   const project = useProject()
 
-  const keys = Object.keys(sidebar)
+  const prefix = `/projects/${project.value}`
 
-  const result = JSON.parse(JSON.stringify(sidebar))
-
-  for (const key of keys) {
-    const items = sidebar[key]
-
-    items.forEach((item: any) => {
-      const children: SidebarItem[] = item.children
-      if (children.length) {
-        children.forEach(child => {
-          child.link = `/projects/${project}/${child.link}`
-        })
-      }
-    })
+  path = ensureStartingSlash(path)
+  for (const dir in sidebars) {
+    if (path.startsWith(`${prefix}/${dir}`)) {
+      return sidebars[dir]
+    }
   }
-
-  return result
+  return []
 }
 export function useSidebar() {
   const { site, page } = useData()
 
-  const sidebar = computed(() => {
-    if (page.value.frontmatter.hasSiderbar === false) return []
+  const sidebars = computed(() => {
+    if (page.value.frontmatter.hasSidebar === false) return []
 
-    const sidebars = getSidebarConfig(site.value.themeConfig.siderbars)
-
-    console.log(sidebars)
+    const sidebars = getSidebarConfig(site.value.themeConfig.sidebars, page.value.relativePath)
 
     return sidebars
   })
 
+  console.log(sidebars.value)
+
   return {
-    sidebar,
-    hasSidebar: computed(() => sidebar.value.length > 0)
+    sidebar: sidebars,
+    hasSidebar: computed(() => sidebars.value.length > 0)
   }
 }
