@@ -2,3 +2,4 @@ packages:
   - packages/*
   - docs
   - dev-serve
+  - internal

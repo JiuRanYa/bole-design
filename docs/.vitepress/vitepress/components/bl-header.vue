@@ -16,20 +16,15 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import { useProject } from '../../configs/project'
-import { useData } from 'vitepress'
+import { useProject } from '../composables/project'
 import { useNav } from '../composables/index'
 
 defineComponent({
   name: 'header'
 })
 
-const { theme } = useData()
-
-const nav = theme.value.nav
+const nav = useNav()
 const project = useProject()
-
-console.log(nav)
 </script>
 
 <style lang="scss">

@@ -1,17 +1,19 @@
-import { computed } from 'vue'
+function getProjectLink(pro: string, link: string) {
+  return `/projects/${pro}/${link}`
+}
 
-export const navs = {
+export const navs: Record<string, any> = {
   'bole-design': [
     {
-      link: '/guide/design',
+      link: getProjectLink('bole-design', '/guide/design'),
       text: '指南'
     },
     {
-      link: '/components',
+      link: getProjectLink('bole-design', '/guide/design'),
       text: '组件'
     }
   ],
-  Panda: [
+  panda: [
     {
       link: '/guide/design',
       text: '项目说明'
@@ -23,6 +25,12 @@ export const navs = {
   ]
 }
 function getNav() {
+  // const project = getProject()
+  //
+  // if (navs[project.value]) {
+  //   console.warn(`${project.value} nav config not exit, pls add config to nav.ts`)
+  // }
+  // return navs[project.value]
 }
 
 export const nav = getNav()

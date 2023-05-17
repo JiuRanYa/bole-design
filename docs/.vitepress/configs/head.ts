@@ -1,11 +1,10 @@
 import fs from 'fs'
-import path, { resolve } from 'path'
+import path from 'path'
 import type { HeadConfig } from 'vitepress'
-
-const blRoot = resolve(__dirname, '../../.vitepress')
+import { vpRoot } from '@bole-design/internal'
 
 const head: HeadConfig[] = [
-  ['script', {}, fs.readFileSync(path.resolve(blRoot, 'project.js'), 'utf-8')]
+  ['script', {}, fs.readFileSync(path.resolve(vpRoot, './project.js'), 'utf-8')]
 ]
 
 export default head
