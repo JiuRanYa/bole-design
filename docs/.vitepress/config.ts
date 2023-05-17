@@ -11,7 +11,8 @@ const config = defineConfig({
   head,
   themeConfig: {
     nav,
-    sidebars
+    sidebars,
+    docsDir: 'docs'
   }
 })
 
