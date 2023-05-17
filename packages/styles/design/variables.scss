@@ -16,20 +16,20 @@ $color-map: () !default;
 $color-map: map.deep-merge(
   (
     primary: (
-      base: #339af0,
+      base: #339af0
     ),
     info: (
-      base: #3bc9db,
+      base: #3bc9db
     ),
     success: (
-      base: #20c997,
+      base: #20c997
     ),
     warning: (
-      base: #fab005,
+      base: #fab005
     ),
     error: (
-      base: #f03e3e,
-    ),
+      base: #f03e3e
+    )
   ),
   $color-map
 );
@@ -52,8 +52,8 @@ $color-map: map.deep-merge(
               $mixed-color,
               map.get($color-map, $type, 'base'),
               math.percentage(math.div($i, 10))
-            ),
-        ),
+            )
+        )
       ),
       $color-map
     ) !global;
@@ -66,11 +66,8 @@ $color-map: map.deep-merge(
       (
         $type: (
           'opacity-#{$i}':
-            rgba(
-              map.get($color-map, $type, 'base'),
-              math.percentage(math.div(10 - $i, 10))
-            ),
-        ),
+            rgba(map.get($color-map, $type, 'base'), math.percentage(math.div(10 - $i, 10)))
+        )
       ),
       $color-map
     ) !global;
@@ -91,7 +88,7 @@ $border-color-map: map.merge(
     light-1: #dee2e6,
     light-2: #e9ecef,
     dark-1: #adb5bd,
-    dark-2: #868e96,
+    dark-2: #868e96
   ),
   $border-color-map
 );
@@ -103,8 +100,7 @@ $border-shape: get-css-var('border-width') get-css-var('border-style') !default;
 //transition-start
 $transition-duration: 250ms !default;
 $transition-timing: ease !default;
-$transition-base: get-css-var('transition-duration')
-  get-css-var('transition-timing') !default;
+$transition-base: get-css-var('transition-duration') get-css-var('transition-timing') !default;
 
 $transition-map: () !default;
 $transition-map: map.merge(
@@ -114,7 +110,7 @@ $transition-map: map.merge(
     border: border-color get-css-var('transition-base'),
     shadow: box-shadow get-css-var('transition-base'),
     opacity: opacity get-css-var('transition-base'),
-    transform: transform get-css-var('transition-base'),
+    transform: transform get-css-var('transition-base')
   ),
   $transition-map
 );
@@ -124,7 +120,7 @@ $radius-map: map.merge(
   (
     base: 4px,
     large: 6px,
-    small: 2px,
+    small: 2px
   ),
   $radius-map
 );
@@ -138,7 +134,7 @@ $fill-color-map: map.merge(
     hover: #e9ecef,
     humble: #f3f4f6,
     background: #f8f9fa,
-    reverse: #131719,
+    reverse: #131719
   ),
   $fill-color-map
 );
@@ -146,8 +142,14 @@ $fill-color-map: map.merge(
 $content-color-map: () !default;
 $content-color-map: map.merge(
   (
+    primary: #212529,
     base: #495057,
+    secondary: #868e96,
+    third: #a1adb1,
     disabled: #adb5bd,
+    placeholder: #ced4da,
+    humble: #dee2e6,
+    reverse: #fff
   ),
   $content-color-map
 );

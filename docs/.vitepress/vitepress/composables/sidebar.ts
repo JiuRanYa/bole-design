@@ -16,7 +16,7 @@ export function ensureStartingSlash(path: string): string {
   return /^\//.test(path) ? path : `/${path}`
 }
 
-function getSidebarConfig(sidebars: Sidebar, path: string) {
+function getSidebarConfig(sidebars: Sidebar, path: string): any {
   const project = useProject()
 
   const prefix = `/projects/${project.value}`
@@ -40,10 +40,8 @@ export function useSidebar() {
     return sidebars
   })
 
-  console.log(sidebars.value)
-
   return {
-    sidebar: sidebars,
+    sidebars,
     hasSidebar: computed(() => sidebars.value.length > 0)
   }
 }

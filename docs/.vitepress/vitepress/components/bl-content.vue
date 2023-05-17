@@ -11,3 +11,13 @@ const props = defineProps<{ hasSidebar: boolean }>()
     </BLDocContent>
   </main>
 </template>
+
+<style lang="scss">
+#page-content {
+  margin-top: var(--header-height);
+}
+.has-sidebar {
+  margin-left: 300px;
+  padding: 40px;
+}
+</style>

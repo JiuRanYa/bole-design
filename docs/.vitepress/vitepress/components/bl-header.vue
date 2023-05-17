@@ -65,7 +65,6 @@ const project = useProject()
     padding-right: 100px;
 
     a {
-      text-decoration: none;
       padding: 20px;
       color: var(--bl-content-color-base);
     }

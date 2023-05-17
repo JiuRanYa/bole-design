@@ -1,6 +1,28 @@
 import { SidebarItem } from '../vitepress/composables/sidebar'
 import { getProject } from './project'
 
+export const siderbarsConfig: SidebarsConfig = {
+  'bole-design': {
+    guide: [
+      {
+        text: '指南',
+        children: [
+          { text: '设计', link: '/guide/design' },
+          { text: '快速安装', link: '/guide/installation' },
+          { text: '全局配置', link: '/guide/global-config' }
+        ]
+      }
+    ],
+    components: [
+      {
+        text: '组件',
+        children: [{ text: '按钮', link: '/components/button' }]
+      }
+    ]
+  },
+  panda: {}
+}
+
 type SideConfigItem = {
   text: string
   children: ConfigItem[]
@@ -11,18 +33,6 @@ type ConfigItem = {
 }
 
 type SidebarsConfig = Record<string, Record<string, SideConfigItem[]>>
-
-export const siderbarsConfig: SidebarsConfig = {
-  'bole-design': {
-    guide: [
-      {
-        text: 'Guide',
-        children: [{ text: 'Design', link: '/guide' }]
-      }
-    ]
-  },
-  panda: {}
-}
 
 export const getSidebars = () => {
   const project = getProject()

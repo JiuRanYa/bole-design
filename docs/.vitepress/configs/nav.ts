@@ -9,7 +9,7 @@ export const navs: Record<string, any> = {
       text: '指南'
     },
     {
-      link: getProjectLink('bole-design', '/guide/design'),
+      link: getProjectLink('bole-design', '/components/button'),
       text: '组件'
     }
   ],

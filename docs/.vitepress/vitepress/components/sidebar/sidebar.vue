@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
+import SidebarLink from './sidebar-link.vue'
+import { useSidebar } from '../../composables/sidebar'
 
 defineComponent({
   name: 'bl-sidebar'
@@ -8,20 +10,41 @@ defineComponent({
 defineProps({
   hasSidebar: Boolean
 })
+
+const { sidebars } = useSidebar()
 </script>
 
 <template>
-  <div v-if="hasSidebar">
-    <aside>sidebar</aside>
+  <div v-if="hasSidebar" class="bl-sidebar">
+    <aside>
+      <div class="sidebar-groups">
+        <section v-for="(item, key) of sidebars" :key="key" class="sidebar-group">
+          <p class="sidebar-group__title">
+            {{ item.text }}
+          </p>
+          <SidebarLink v-for="(child, childKey) in item.children" :key="childKey" :item="child" />
+        </section>
+      </div>
+    </aside>
   </div>
 </template>
 
 <style lang="scss" scoped>
-aside {
-  width: 20vw;
-  height: 100vh;
-  background: red;
+.bl-sidebar {
+  width: 300px;
+  height: 100%;
+  border-right: var(--bl-border-light-2);
   position: fixed;
   left: 0;
+  top: var(--header-height);
+  padding: 48px 32px 96px;
+  box-sizing: border-box;
+  .sidebar-groups {
+    .sidebar-group {
+      &__title {
+        font-size: 22px;
+      }
+    }
+  }
 }
 </style>

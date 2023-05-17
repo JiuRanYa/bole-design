@@ -2,6 +2,20 @@ body {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--bl-content-color-base);
+}
+
+a {
+  text-decoration: inherit;
+  font-weight: 500;
+}
+
 #app {
   height: 100%;
 }
