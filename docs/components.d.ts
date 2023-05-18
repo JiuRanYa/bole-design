@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BlApp: typeof import('./.vitepress/vitepress/components/bl-app.vue')['default']
     BlContent: typeof import('./.vitepress/vitepress/components/bl-content.vue')['default']
+    BlDemo: typeof import('./.vitepress/vitepress/components/bl-demo.vue')['default']
     BlDocContent: typeof import('./.vitepress/vitepress/components/bl-doc-content.vue')['default']
     BlFooter: typeof import('./.vitepress/vitepress/components/bl-footer.vue')['default']
     BlHeader: typeof import('./.vitepress/vitepress/components/bl-header.vue')['default']

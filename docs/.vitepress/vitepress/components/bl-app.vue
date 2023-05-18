@@ -6,8 +6,6 @@ import BLContent from './bl-content.vue'
 import { useSidebar } from '../composables/sidebar'
 
 const { hasSidebar } = useSidebar()
-
-console.log(hasSidebar)
 </script>
 
 <template>
