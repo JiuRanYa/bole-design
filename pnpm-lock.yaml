@@ -95,11 +95,13 @@ importers:
       '@bole-design/internal': workspace:*
       '@bole-design/styles': workspace:*
       '@types/markdown-it': ^12.2.3
+      '@types/markdown-it-container': ^2.0.5
       chalk: ^5.2.0
       consola: ^3.1.0
       escape-html: ^1.0.3
       markdown-it: ^13.0.1
       markdown-it-container: ^3.0.0
+      prism-theme-vars: ^0.2.4
       prismjs: ^1.29.0
       sass: ^1.62.0
       tsup: ^6.7.0
@@ -109,6 +111,7 @@ importers:
     dependencies:
       markdown-it: 13.0.1
       markdown-it-container: 3.0.0
+      prism-theme-vars: 0.2.4
       sass: 1.62.0
       vitepress: 1.0.0-alpha.73_sass@1.62.0
       vue-router: 4.1.6
@@ -117,6 +120,7 @@ importers:
       '@bole-design/internal': link:../internal
       '@bole-design/styles': link:../packages/styles
       '@types/markdown-it': 12.2.3
+      '@types/markdown-it-container': 2.0.5
       chalk: 5.2.0
       consola: 3.1.0
       escape-html: 1.0.3
@@ -1128,6 +1132,12 @@ packages:
 
   /@types/linkify-it/3.0.2:
     resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==}
+    dev: true
+
+  /@types/markdown-it-container/2.0.5:
+    resolution: {integrity: sha512-8v5jIC5gcCUv+JcD0DExwNBkoKC0kLB4acensF0NoNlTIcXmQxF3RDjzAdIW82sXSoR+n772ePguxIWlq2ELvA==}
+    dependencies:
+      '@types/markdown-it': 12.2.3
     dev: true
 
   /@types/markdown-it/12.2.3:
@@ -4174,6 +4184,10 @@ packages:
     resolution: {integrity: sha512-66hKPCr+72mlfiSjlEB1+45IjXSqvVAIy6mocupoww4tBFE9R9IhwwUGoI4G++Tc9Aq+2rxOt0RFU6gPcrte0A==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /prism-theme-vars/0.2.4:
+    resolution: {integrity: sha512-B3Pht+GCT87sZph7hMRLlCQXzCM0awW7Rhk08RavpqRW4LEQOeqN0uMG4QCWkul2tr8PB61YAOJGUrEW+1uuJA==}
+    dev: false
 
   /prismjs/1.29.0:
     resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}

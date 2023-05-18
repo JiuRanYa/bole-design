@@ -10,7 +10,6 @@ export default {
     app.use(install)
 
     globals.forEach(([name, Comp]) => {
-      console.log(name, Comp)
       app.component(name, Comp)
     })
   }
