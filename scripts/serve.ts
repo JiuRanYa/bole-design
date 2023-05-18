@@ -28,16 +28,14 @@ async function main() {
 }
 
 async function serveComponent() {
-  const demosDir = resolve(rootDir, 'docs/demos')
-  const allComponents = readdirSync(demosDir).filter((f) =>
+  const demosDir = resolve(rootDir, 'docs/demos/bole-design')
+  const allComponents = readdirSync(demosDir).filter(f =>
     statSync(resolve(demosDir, f)).isDirectory()
   )
 
   const target = await selectComponent(allComponents)
 
-  const matchedLang = lang
-    ? langs.find((l) => l === lang || l.startsWith(lang)) || 'zh-CN'
-    : 'zh-CN'
+  const matchedLang = lang ? langs.find(l => l === lang || l.startsWith(lang)) || 'zh-CN' : 'zh-CN'
 
   const demos = queryDemoFile(target, matchedLang)
 
@@ -54,7 +52,7 @@ async function serveComponent() {
             return `{
               path: '${index ? `/${demo}` : '/'}',
               name: '${demo}',
-              component: () => import('../../docs/demos/${target}/${demo}/demo.${matchedLang}.vue')
+              component: () => import('../../docs/demos/bole-design/${target}/${demo}/demo.${matchedLang}.vue')
             }`
           })
           .join(',\n')},
@@ -83,8 +81,8 @@ async function serveComponent() {
       NODE_ENV: prodMode ? 'production' : 'development',
       TARGET: target,
       DEMOS: JSON.stringify(demos),
-      PORT: `${port}`,
-    },
+      PORT: `${port}`
+    }
   })
 }
 
@@ -94,10 +92,10 @@ async function selectComponent(allComponents: string[]) {
       type: 'select',
       name: 'component',
       message: 'Select a component:',
-      choices: allComponents.map((comp) => ({
+      choices: allComponents.map(comp => ({
         title: comp,
-        value: comp,
-      })),
+        value: comp
+      }))
     })
   ).component
 
@@ -105,16 +103,16 @@ async function selectComponent(allComponents: string[]) {
 }
 
 function queryDemoFile(component: string, lang: string) {
-  const compDir = resolve(rootDir, 'docs/demos', component)
+  const compDir = resolve(rootDir, 'docs/demos/bole-design', component)
 
   return readdirSync(compDir).filter(
-    (f) =>
+    f =>
       statSync(resolve(compDir, f)).isDirectory() &&
       existsSync(resolve(compDir, f, `demo.${lang}.vue`))
   )
 }
 
-main().catch((error) => {
+main().catch(error => {
   logger.error(error)
   process.exit(1)
 })
