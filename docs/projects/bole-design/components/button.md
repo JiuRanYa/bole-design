@@ -1,7 +1,7 @@
---
+---
 title: components
 lang: zh-CN
---
+---
 
 # Button
 
