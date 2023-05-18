@@ -49,7 +49,6 @@ const project = useProject()
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: black;
     img {
       width: 40px;
       height: 40px;

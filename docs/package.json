@@ -15,11 +15,11 @@
     "@bole-design/components": "workspace:*",
     "@bole-design/internal": "workspace:*",
     "@bole-design/styles": "workspace:*",
-    "unplugin-vue-components": "^0.24.1",
-    "vitepress": "1.0.0-alpha.73"
+    "unplugin-vue-components": "^0.24.1"
   },
   "dependencies": {
     "sass": "^1.62.0",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vitepress": "1.0.0-alpha.73"
   }
 }

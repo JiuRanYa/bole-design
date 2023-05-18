@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HomePage from './bl-container.vue'
 import BlSidebar from './sidebar/sidebar.vue'
 import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'

@@ -4,7 +4,11 @@ const props = defineProps<{ hasSidebar: boolean }>()
 </script>
 
 <template>
-  <main id="page-content" :class="{ 'page-content': true, 'has-sidebar': hasSidebar }">
+  <main
+    id="page-content"
+    :class="{ 'page-content': true, 'has-sidebar': hasSidebar }"
+    class="bl-doc"
+  >
     <BLDocContent>
       <template #content-top><slot name="content-top" /></template>
       <template #content-bottom><slot name="content-bottom" /></template>
