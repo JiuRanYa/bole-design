@@ -17,6 +17,7 @@
     "@bole-design/components": "workspace:*",
     "@bole-design/internal": "workspace:*",
     "@bole-design/styles": "workspace:*",
+    "@types/markdown-it": "^12.2.3",
     "chalk": "^5.2.0",
     "consola": "^3.1.0",
     "escape-html": "^1.0.3",

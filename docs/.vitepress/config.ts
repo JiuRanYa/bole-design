@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 import { nav } from './configs'
 import head from './configs/head'
 import sidebars from './configs/sidebar'
-import { mdPlugin } from './plugins/myMarkdown'
+import { markdownPlugin } from './configs/myMarkdown'
 
 // https://vitepress.dev/reference/site-config
 const config = defineConfig({
@@ -14,10 +14,10 @@ const config = defineConfig({
     nav,
     sidebars,
     docsDir: 'docs'
+  },
+  markdown: {
+    config: md => markdownPlugin(md)
   }
-  // markdown: {
-  //   config: md => mdPlugin(md)
-  // }
 })
 
 export default config
