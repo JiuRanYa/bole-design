@@ -33,26 +33,6 @@
       <div class="content">col-4</div>
     </Col>
   </Row>
-  <Row style="margin-top: 24px">
-    <Col :span="4">
-      <div class="content">col-4</div>
-    </Col>
-    <Col :span="4">
-      <div class="content">col-4</div>
-    </Col>
-    <Col :span="4">
-      <div class="content">col-4</div>
-    </Col>
-    <Col :span="4">
-      <div class="content">col-4</div>
-    </Col>
-    <Col :span="4">
-      <div class="content">col-4</div>
-    </Col>
-    <Col :span="4">
-      <div class="content">col-4</div>
-    </Col>
-  </Row>
 </template>
 
 <style scoped>

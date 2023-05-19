@@ -20,3 +20,12 @@ console.log(decoded.value)
     <div class="example-source language-vue" v-html="decoded" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.example-source-wrapper {
+  .example-source {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+</style>

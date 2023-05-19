@@ -42,7 +42,9 @@ const { sidebars } = useSidebar()
   .sidebar-groups {
     .sidebar-group {
       &__title {
-        font-size: 22px;
+        font-size: 1rem;
+        line-height: 24px;
+        font-weight: 700;
       }
     }
   }

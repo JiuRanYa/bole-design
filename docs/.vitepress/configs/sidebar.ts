@@ -16,8 +16,13 @@ export const siderbarsConfig: SidebarsConfig = {
     ],
     components: [
       {
-        text: '组件',
-        children: [{ text: '按钮', link: '/components/button' }]
+        text: '基础组件',
+        children: [{ text: 'Button按钮', link: '/components/button' }]
+      },
+
+      {
+        text: '布局组件',
+        children: [{ text: 'Row行', link: '/components/row' }]
       }
     ]
   },

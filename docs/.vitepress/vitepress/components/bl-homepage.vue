@@ -26,7 +26,7 @@ function handleStartClick() {}
         <Button size="small">浏览组件</Button>
       </div>
       <div class="homepage-main-bg">
-        <!-- <img src="/bl-bg.svg" /> -->
+        <img src="/bl-bg.svg" />
       </div>
     </div>
   </div>
@@ -34,7 +34,8 @@ function handleStartClick() {}
 
 <style lang="scss">
 .homepage {
-  padding-top: var(--header-height);
+  margin-top: var(--header-height);
+  height: calc(100vh - var(--header-height));
 
   &-en {
     margin: 0 4px;
@@ -73,8 +74,9 @@ function handleStartClick() {}
     &-bg {
       pointer-events: none;
       position: absolute;
+      bottom: 10vw;
       img {
-        width: 100%;
+        width: 100vw;
       }
     }
   }
