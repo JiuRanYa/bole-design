@@ -1,3 +1,3 @@
-import Tooltip from './index.vue'
+import Tooltip from './index.tsx'
 
 export { Tooltip }
