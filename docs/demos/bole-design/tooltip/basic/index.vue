@@ -1,0 +1,3 @@
+<template>
+  <Tooltip></Tooltip>
+</template>

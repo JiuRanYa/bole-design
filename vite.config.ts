@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'node:path'
 import glob from 'fast-glob'
-import { blOutput, excludeFiles, pkgRoot } from './common/path/index'
+import { blOutput, excludeFiles, pkgRoot } from '@bole-design/internal'
 import { generateExternal } from './scripts/utils'
 
 // https://vitejs.dev/config/

@@ -52,7 +52,7 @@ async function serveComponent() {
             return `{
               path: '${index ? `/${demo}` : '/'}',
               name: '${demo}',
-              component: () => import('../../docs/demos/bole-design/${target}/${demo}/demo.${matchedLang}.vue')
+              component: () => import('../../docs/demos/bole-design/${target}/${demo}/index.vue')
             }`
           })
           .join(',\n')},
@@ -106,9 +106,7 @@ function queryDemoFile(component: string, lang: string) {
   const compDir = resolve(rootDir, 'docs/demos/bole-design', component)
 
   return readdirSync(compDir).filter(
-    f =>
-      statSync(resolve(compDir, f)).isDirectory() &&
-      existsSync(resolve(compDir, f, `demo.${lang}.vue`))
+    f => statSync(resolve(compDir, f)).isDirectory() && existsSync(resolve(compDir, f, `index.vue`))
   )
 }
 

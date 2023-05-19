@@ -26,6 +26,7 @@
     "@bole-design/common": "workspace:*",
     "@bole-design/components": "workspace:*",
     "@bole-design/hooks": "workspace:*",
+    "@bole-design/internal": "workspace:*",
     "D": "^1.0.0",
     "vue": "^3.2.47"
   },

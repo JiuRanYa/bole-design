@@ -8,6 +8,7 @@ importers:
       '@bole-design/common': workspace:*
       '@bole-design/components': workspace:*
       '@bole-design/hooks': workspace:*
+      '@bole-design/internal': workspace:*
       '@rollup/plugin-commonjs': ^24.1.0
       '@types/eslint': ^8.37.0
       '@types/fs-extra': ^11.0.1
@@ -45,6 +46,7 @@ importers:
       '@bole-design/common': link:packages/common
       '@bole-design/components': link:packages/components
       '@bole-design/hooks': link:packages/hooks
+      '@bole-design/internal': link:internal
       D: 1.0.0
       vue: 3.2.47
     devDependencies:
