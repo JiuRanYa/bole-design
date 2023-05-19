@@ -42,12 +42,16 @@ export const markdownPlugin = (md: MarkdownIt) => {
 
         code = highlight(code)
 
+        console.log(localMd.render(encodeURIComponent(description)))
+
         return `<Demo 
 					:demos="demos"
-					desc="${localMd.render(encodeURIComponent(description))}"
+					desc="${encodeURIComponent(localMd.render(description))}"
 					path="${sourceFilePath}"
 					source="${encodeURIComponent(code)}"
-				/>`
+				>`
+      } else {
+        return '</Demo>'
       }
     }
   })

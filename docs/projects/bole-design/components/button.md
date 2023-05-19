@@ -11,9 +11,9 @@ lang: zh-CN
 const demos = import.meta.globEager('../../../demos/bole-design/button/*/*.vue')
 </script>
 
-## Basic usage
+## 基本用法
 
-:::demo Use `type`, `plain`, `round` and `circle` to define Button's style.
+:::demo 使用 `type` 定义组件样式
 
 button/basic
 

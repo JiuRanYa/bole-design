@@ -39,3 +39,39 @@ import { Button } from 'vexip-ui'
 ```ts
 import 'bole-design/css/index.css'
 ```
+
+# 自动引入
+
+出于 `vite` 生态的强大，您可以借助下面的`vite`插件来实现组件的自动引入
+
+```shell
+pnpm i -D unplugin-vue-components unplugin-auto-import @bole-design/plugins
+
+```
+
+然后配置你的`vite.config.ts`
+
+```ts
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import { BoleDesignResolver } from '@bole-design/plugins'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    Components({
+      resolvers: [
+        BoleDesignResolver()
+      ]
+    }),
+    AutoImport({
+      resolvers: [
+        BoleDesignResolver()
+      ]
+    })
+  ]
+})
+```

@@ -2,7 +2,7 @@
   <a
     :class="{
       link: true,
-      active: isActive(route.path, item.link)
+      active: isActive(route.path, props.item.link)
     }"
     :href="item.link"
     @click="$emit('close')"
@@ -19,7 +19,7 @@ import { isActive } from '../../utils/index'
 
 const route = useRoute()
 
-defineProps<{
+const props = defineProps<{
   item: Link
 }>()
 

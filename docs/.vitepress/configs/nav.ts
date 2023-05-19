@@ -1,5 +1,5 @@
 function getProjectLink(pro: string, link: string) {
-  return `/projects/${pro}/${link}`
+  return `/projects/${pro}${link}`
 }
 
 export const navs: Record<string, any> = {

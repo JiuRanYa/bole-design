@@ -24,6 +24,7 @@ function getSidebarConfig(sidebars: Sidebar, path: string): any {
   path = ensureStartingSlash(path)
   for (const dir in sidebars) {
     if (path.startsWith(`${prefix}/${dir}`)) {
+      console.log(sidebars[dir])
       return sidebars[dir]
     }
   }

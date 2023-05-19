@@ -11,13 +11,12 @@ h6 {
   color: var(--bl-content-color-base);
 }
 
+a {
+  text-decoration: inherit;
+  font-weight: 500;
+  color: var(--bl-content-color-base);
+}
 #app {
   height: 100%;
   color: var(--bl-content-color-base);
-
-  a {
-    text-decoration: inherit;
-    font-weight: 500;
-    color: var(--bl-content-color-base);
-  }
 }

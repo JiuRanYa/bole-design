@@ -8,7 +8,15 @@
     </Col>
     <Col :span="16">
       <div class="bl-nav">
-        <a v-for="item in nav" :href="item.link">{{ item.text }}</a>
+        <a
+          v-for="item in nav"
+          :href="item.link"
+          :class="{
+            link: true,
+            active: isActive(route.path, item.link)
+          }"
+          >{{ item.text }}</a
+        >
       </div>
     </Col>
   </Row>
@@ -18,13 +26,19 @@
 import { defineComponent } from 'vue'
 import { useProject } from '../composables/project'
 import { useNav } from '../composables/index'
+import { useRoute } from 'vitepress'
 
 defineComponent({
   name: 'header'
 })
 
+const route = useRoute()
 const nav = useNav()
 const project = useProject()
+
+function isActive(routePath: string, link: string) {
+  return routePath.includes(link)
+}
 </script>
 
 <style lang="scss">
@@ -37,7 +51,7 @@ const project = useProject()
     height: var(--header-height);
     background-color: var(--bg-color);
     border-bottom: var(--bl-border-light-2);
-    transition: var(--bl-transition-border), var(--bl-transition-transform);
+    transition: all var(--bl-transition-base);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -62,12 +76,16 @@ const project = useProject()
     align-items: center;
     justify-content: end;
     padding-right: 100px;
+    transition: var(--bl-transition-border), var(--bl-transition-transform);
 
-    a {
+    .link {
       padding: 20px;
       color: var(--bl-content-color-base);
+      &:hover {
+        color: var(--bl-color-primary-base);
+      }
     }
-    .router-link-active {
+    .active {
       border-bottom: var(--bl-border-shape) var(--bl-color-primary-base);
     }
   }

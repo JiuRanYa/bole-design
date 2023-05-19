@@ -29,7 +29,9 @@ const decodedDescription = computed(() => decodeURIComponent(props.desc!))
 <template>
   <p v-html="decodedDescription"></p>
 
-  <component v-if="targetDemo" :is="targetDemo"></component>
+  <div class="demo-container" style="">
+    <component v-if="targetDemo" :is="targetDemo"></component>
+  </div>
 
   <SourceCode :source="source" />
 </template>

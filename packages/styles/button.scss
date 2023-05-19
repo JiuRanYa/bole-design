@@ -9,7 +9,7 @@ $button-size-map: map.merge(
   (
     lg: 40px,
     md: 32px,
-    sm: 24px,
+    sm: 24px
   ),
   $button-size-map
 );
@@ -18,7 +18,7 @@ $button-padding-map: map.merge(
   (
     lg: 20px,
     md: 14px,
-    sm: 10px,
+    sm: 10px
   ),
   $button-padding-map
 );
@@ -36,6 +36,7 @@ $button: map.merge(
     v-padding: 0,
     h-padding: map.get($button-padding-map, 'md'),
     radius: get-css-var('radius-base'),
+    series-span: 12px
   ),
   $button
 );
@@ -62,9 +63,8 @@ $button: map.merge(
   border: get-css-var('border-shape') get-css-var('button-b-color');
   padding: get-css-var('button-v-padding') get-css-var('button-h-padding');
 
-  transition: get-css-var('transition-color'),
-    get-css-var('transition-background'), get-css-var('transition-border'),
-    get-css-var('transition-shadow');
+  transition: get-css-var('transition-color'), get-css-var('transition-background'),
+    get-css-var('transition-border'), get-css-var('transition-shadow');
 
   &:hover {
     color: get-css-var('button-color-hover');
@@ -86,11 +86,15 @@ $button: map.merge(
             color-focus: 'color-white',
             color-active: 'color-white',
             bg-color: 'color' $type 'base',
-            bg-color-hover: 'color' $type 'light-2',
+            bg-color-hover: 'color' $type 'light-2'
           )
         );
       }
     }
+  }
+
+  & + & {
+    margin-left: get-css-var('button-series-span');
   }
 
   &--small {
@@ -98,7 +102,7 @@ $button: map.merge(
       'button',
       (
         height: map.get($button-size-map, 'sm'),
-        h-padding: map.get($button-padding-map, 'sm'),
+        h-padding: map.get($button-padding-map, 'sm')
       )
     );
   }
@@ -108,7 +112,7 @@ $button: map.merge(
       'button',
       (
         height: map.get($button-size-map, 'lg'),
-        h-padding: map.get($button-padding-map, 'lg'),
+        h-padding: map.get($button-padding-map, 'lg')
       )
     );
   }
