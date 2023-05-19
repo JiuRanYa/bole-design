@@ -9,6 +9,7 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [
           { text: '设计', link: '/guide/design' },
           { text: '快速安装', link: '/guide/installation' },
+          { text: '快速上手', link: '/guide/quick-start' },
           { text: '全局配置', link: '/guide/global-config' }
         ]
       }

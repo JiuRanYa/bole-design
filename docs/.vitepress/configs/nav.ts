@@ -11,6 +11,10 @@ export const navs: Record<string, any> = {
     {
       link: getProjectLink('bole-design', '/components/button'),
       text: '组件'
+    },
+    {
+      link: getProjectLink('bole-design', '/hooks/guide'),
+      text: 'Hooks'
     }
   ],
   panda: [
