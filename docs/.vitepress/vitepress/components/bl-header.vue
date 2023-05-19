@@ -77,9 +77,12 @@ function isActive(routePath: string, link: string) {
     justify-content: end;
     padding-right: 100px;
     transition: var(--bl-transition-border), var(--bl-transition-transform);
+    font-size: 14px;
 
     .link {
-      padding: 20px;
+      padding: 0 16px;
+      height: 100%;
+      line-height: var(--header-height);
       color: var(--bl-content-color-base);
       &:hover {
         color: var(--bl-color-primary-base);

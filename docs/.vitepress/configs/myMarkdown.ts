@@ -42,8 +42,6 @@ export const markdownPlugin = (md: MarkdownIt) => {
 
         code = highlight(code)
 
-        console.log(localMd.render(encodeURIComponent(description)))
-
         return `<Demo 
 					:demos="demos"
 					desc="${encodeURIComponent(localMd.render(description))}"

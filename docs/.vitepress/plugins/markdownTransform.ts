@@ -10,7 +10,7 @@ export default function markdownTransform(): Plugin {
 
       const componentId = path.basename(id, '.id')
 
-      // console.log(code, id)
+      // TODO: add append
     }
   }
 }

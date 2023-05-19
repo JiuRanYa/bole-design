@@ -18,3 +18,11 @@ const demos = import.meta.globEager('../../../demos/bole-design/button/*/*.vue')
 button/basic
 
 :::
+
+## 禁用状态
+
+:::demo 使用 `disable` 设置组件的禁用状态
+
+button/disable
+
+:::
