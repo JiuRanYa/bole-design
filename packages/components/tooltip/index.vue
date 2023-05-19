@@ -1,11 +1,15 @@
 <template>
-  <div>tooltip</div>
+  <div>
+    <slot name="trigger" />
+  </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { defineComponent } from 'vue'
+import { toolTipProps } from './props'
 
-defineComponent({
-  name: 'Tooltip'
+export default defineComponent({
+  name: 'Tooltip',
+  props: toolTipProps
 })
 </script>
