@@ -22,12 +22,10 @@
     "build:style": "gulp --require sucrase/register/ts"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@bole-design/common": "workspace:*",
     "@bole-design/components": "workspace:*",
     "@bole-design/hooks": "workspace:*",
     "@bole-design/internal": "workspace:*",
-    "D": "^1.0.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {

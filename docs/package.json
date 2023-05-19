@@ -19,6 +19,7 @@
     "@bole-design/styles": "workspace:*",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-container": "^2.0.5",
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
     "shiki": "^0.14.2",
     "tsup": "^6.7.0",
     "unplugin-vue-components": "^0.24.1"

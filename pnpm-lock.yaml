@@ -4,7 +4,6 @@ importers:
 
   .:
     specifiers:
-      '-': ^0.0.1
       '@bole-design/common': workspace:*
       '@bole-design/components': workspace:*
       '@bole-design/hooks': workspace:*
@@ -22,7 +21,6 @@ importers:
       '@types/prompts': ^2.4.2
       '@vitejs/plugin-vue': ^4.1.0
       '@vitejs/plugin-vue-jsx': ^3.0.1
-      D: ^1.0.0
       eslint: ^8.38.0
       execa: ^7.0.0
       fast-glob: ^3.2.12
@@ -42,12 +40,10 @@ importers:
       vue: ^3.2.47
       vue-tsc: ^1.2.0
     dependencies:
-      '-': 0.0.1
       '@bole-design/common': link:packages/common
       '@bole-design/components': link:packages/components
       '@bole-design/hooks': link:packages/hooks
       '@bole-design/internal': link:internal
-      D: 1.0.0
       vue: 3.2.47
     devDependencies:
       '@rollup/plugin-commonjs': 24.1.0
@@ -98,6 +94,7 @@ importers:
       '@bole-design/styles': workspace:*
       '@types/markdown-it': ^12.2.3
       '@types/markdown-it-container': ^2.0.5
+      '@vitejs/plugin-vue-jsx': ^3.0.1
       markdown-it: ^13.0.1
       markdown-it-container: ^3.0.0
       sass: ^1.62.0
@@ -118,6 +115,7 @@ importers:
       '@bole-design/styles': link:../packages/styles
       '@types/markdown-it': 12.2.3
       '@types/markdown-it-container': 2.0.5
+      '@vitejs/plugin-vue-jsx': 3.0.1
       shiki: 0.14.2
       tsup: 6.7.0
       unplugin-vue-components: 0.24.1
@@ -150,10 +148,6 @@ importers:
     specifiers: {}
 
 packages:
-
-  /-/0.0.1:
-    resolution: {integrity: sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==}
-    dev: false
 
   /@algolia/autocomplete-core/1.7.4:
     resolution: {integrity: sha512-daoLpQ3ps/VTMRZDEBfU8ixXd+amZcNJ4QSP3IERGyzqnL5Ch8uSRFt/4G8pUvW9c3o6GA4vtVv4I4lmnkdXyg==}
@@ -1217,6 +1211,20 @@ packages:
     resolution: {integrity: sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==}
     dev: false
 
+  /@vitejs/plugin-vue-jsx/3.0.1:
+    resolution: {integrity: sha512-+Jb7ggL48FSPS1uhPnJbJwWa9Sr90vQ+d0InW+AhBM22n+cfuYqJZDckBc+W3QSHe1WDvewMZfa4wZOtk5pRgw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^4.0.0
+      vue: ^3.0.0
+    dependencies:
+      '@babel/core': 7.21.4
+      '@babel/plugin-transform-typescript': 7.21.3_@babel+core@7.21.4
+      '@vue/babel-plugin-jsx': 1.1.1_@babel+core@7.21.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@vitejs/plugin-vue-jsx/3.0.1_vite@4.2.2+vue@3.2.47:
     resolution: {integrity: sha512-+Jb7ggL48FSPS1uhPnJbJwWa9Sr90vQ+d0InW+AhBM22n+cfuYqJZDckBc+W3QSHe1WDvewMZfa4wZOtk5pRgw==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -1415,11 +1423,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: false
-
-  /D/1.0.0:
-    resolution: {integrity: sha512-nQvrCBu7K2pSSEtIM0EEF03FVjcczCXInMt3moLNFbjlWx6bZrX72uT6/1uAXDbnzGUAx9gTyDiQ+vrFi663oA==}
-    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
     dev: false
 
   /acorn-jsx/5.3.2_acorn@8.8.2:
