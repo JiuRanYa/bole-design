@@ -24,7 +24,7 @@ export const markdownPlugin = (md: MarkdownIt) => {
       const project = mdPath.split('projects')[1].split('/')[1]
 
       if (!project) {
-        throw new Error(`Mark sure to put your md in correct project path`)
+        throw new Error(`Mark sure to put your md in projects path`)
       }
 
       if (tokens[idx].nesting === 1) {
@@ -35,7 +35,7 @@ export const markdownPlugin = (md: MarkdownIt) => {
 
         if (sourceFileToken?.type === 'inline') {
           code = fs.readFileSync(
-            path.resolve(docRoot, `demos/${project}`, `${sourceFilePath}.vue`),
+            path.resolve(docRoot, `demos/${project}`, `${sourceFilePath}`, 'index.vue'),
             'utf-8'
           )
         }

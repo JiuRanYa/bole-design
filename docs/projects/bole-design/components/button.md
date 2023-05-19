@@ -5,7 +5,7 @@ lang: zh-CN
 
 # Button
 
-Commonly used button.
+一个基础的按钮组件
 
 <script setup>
 const demos = import.meta.globEager('../../../demos/bole-design/button/*/*.vue')
