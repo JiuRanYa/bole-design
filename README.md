@@ -43,6 +43,7 @@
 - [x] 为开发环境增加 dev-serve,自动读取 docs 中的中英文 demo 文件
 - [x] 支持全局引入时的 default 和不同组件的全局配置
 - [ ] 修改自动生成的 `Demo` 文件路径
+- [x] 为 md 添加插件，提供 container demo
 
 ## Scripts
 
