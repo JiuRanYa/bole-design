@@ -1,16 +1,16 @@
 <template>
-  <Portal>
+  <Portal :to="to">
     <slot></slot>
   </Portal>
 </template>
 
-<script setup>
+<script lang="ts">
 import { useProps } from '@bole-design/common'
 import { defineComponent } from 'vue'
 import { popoverProps } from './props'
 import { Portal } from '../portal'
 
-defineComponent({
+export default defineComponent({
   name: 'Popover',
   props: popoverProps,
   components: {
@@ -20,8 +20,6 @@ defineComponent({
     const props = useProps('popover', _props, {
       to: ''
     })
-
-    console.log(props.to)
 
     return {
       props

@@ -12,8 +12,8 @@ export const useProject = () => {
     paths.shift()
 
     if (path?.includes('/')) {
-      // the sec relativePath is project
-      project = (!paths.shift() || defaultProject) as string
+      const pro = paths.shift()
+      project = pro ?? defaultProject
     } else {
       project = defaultProject
     }

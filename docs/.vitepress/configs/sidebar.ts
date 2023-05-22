@@ -1,3 +1,4 @@
+import { useProject } from '../vitepress/composables/project'
 import { SidebarItem } from '../vitepress/composables/sidebar'
 import { getProject } from './project'
 
@@ -36,12 +37,7 @@ export const siderbarsConfig: SidebarsConfig = {
     guide: [
       {
         text: '指南',
-        children: [
-          { text: '设计', link: '/guide/design' },
-          { text: '快速安装', link: '/guide/installation' },
-          { text: '快速上手', link: '/guide/quick-start' },
-          { text: '全局配置', link: '/guide/global-config' }
-        ]
+        children: [{ text: '设计', link: '/guide/index' }]
       }
     ]
   }
@@ -59,6 +55,7 @@ type ConfigItem = {
 type SidebarsConfig = Record<string, Record<string, SideConfigItem[]>>
 
 export const getSidebars = () => {
+  // TODO: not use project, return all sidebars
   const project = getProject()
 
   const defaultSiderbars = siderbarsConfig[project]
@@ -78,6 +75,8 @@ export const getSidebars = () => {
       }
     })
   }
+
+  console.log('gashashas', sidebars)
 
   return sidebars
 }

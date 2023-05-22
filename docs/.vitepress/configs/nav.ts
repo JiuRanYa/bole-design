@@ -19,11 +19,11 @@ export const navs: Record<string, any> = {
   ],
   panda: [
     {
-      link: '/guide/design',
+      link: getProjectLink('panda', '/guide/index'),
       text: '项目说明'
     },
     {
-      link: '/components',
+      link: getProjectLink('panda', '/design/index'),
       text: '代码规范'
     }
   ]

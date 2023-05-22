@@ -12,7 +12,7 @@ const props = defineProps<{
   rawSource: string
   desc?: string
 }>()
-const showCode = ref(false)
+const showCode = ref(true)
 
 const targetDemo = computed(() => {
   const keys = Object.keys(props.demos)
@@ -74,6 +74,7 @@ function expandCode() {
       width: 18px;
       height: 18px;
       opacity: 0.3;
+      cursor: pointer;
     }
   }
 }
