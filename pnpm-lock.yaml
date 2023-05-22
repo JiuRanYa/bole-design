@@ -102,13 +102,11 @@ importers:
       tsup: ^6.7.0
       unplugin-vue-components: ^0.24.1
       vitepress: 1.0.0-alpha.73
-      vue-router: ^4.1.6
     dependencies:
       markdown-it: 13.0.1
       markdown-it-container: 3.0.0
       sass: 1.62.0
       vitepress: 1.0.0-alpha.73_sass@1.62.0
-      vue-router: 4.1.6
     devDependencies:
       '@bole-design/components': link:../packages/components
       '@bole-design/internal': link:../internal
