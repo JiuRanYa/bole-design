@@ -1,7 +1,8 @@
-import { buildProps, booleanStringProp } from '@bole-design/common'
+import { buildProps, booleanStringProp, Placement } from '@bole-design/common'
+import { PropType } from 'vue'
 
 export const toolTipProps = buildProps({
   content: String,
-  // popper包裹的元素类型, 为ture时默认为span
-  wrap: booleanStringProp
+  wrap: booleanStringProp,
+  placement: String as PropType<Placement>
 })

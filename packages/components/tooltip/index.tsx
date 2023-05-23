@@ -1,6 +1,6 @@
-import { Fragment, computed, defineComponent } from 'vue'
+import { Fragment, computed, defineComponent, ref, toRef } from 'vue'
 import { toolTipProps } from './props'
-import { useProps } from '@bole-design/common'
+import { placementWhiteList, useProps } from '@bole-design/common'
 import { useNamespace } from '@bole-design/hooks'
 import { Popover } from '@bole-design/components'
 import usePopper from '@bole-design/hooks/usePopper'
@@ -15,13 +15,27 @@ export default defineComponent({
     const ns = useNamespace('tooltip')
     const props = useProps('tooltip', _props, {
       content: '',
-      wrap: true
+      wrap: true,
+      placement: {
+        default: 'bottom-start',
+        validator: value => placementWhiteList.includes(value)
+      }
     })
-    const triggers = slots.trigger?.()
-    const triggerNode = triggers ? triggers[0] : null
+    console.log(props)
 
+    const triggers = slots.trigger?.()
+    const triggerVNode = triggers ? triggers[0] : null
+
+    const popperEl = ref<HTMLElement>()
+    const originTriggerEl = ref<HTMLElement>()
     const referenceEl = computed(() => {})
-    usePopper({})
+    const placement = toRef(props, 'placement')
+
+    usePopper({
+      referenceEl: originTriggerEl,
+      popperEl,
+      placement
+    })
 
     const classNames = computed(() => {
       return [ns.b()]
@@ -31,8 +45,14 @@ export default defineComponent({
       const CustomTag = props.wrap ? (props.wrap === true ? 'span' : (props.wrap as any)) : null
 
       return [
-        triggerNode && CustomTag ? <CustomTag>{triggers}</CustomTag> : triggers,
-        <Popover to="body">{slots.default?.()}</Popover>
+        triggerVNode && CustomTag ? (
+          <CustomTag ref={originTriggerEl}>{triggers}</CustomTag>
+        ) : (
+          triggers
+        ),
+        <Popover ref={popperEl} to="body">
+          {slots.default?.()}
+        </Popover>
       ]
     }
   }
