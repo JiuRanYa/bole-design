@@ -12,9 +12,7 @@ export function isActive(
     return false
   }
 
-  console.log(currentPath)
   currentPath = normalize(currentPath)
-  console.log(currentPath)
 
   if (asRegex) {
     return new RegExp(matchPath).test(currentPath)

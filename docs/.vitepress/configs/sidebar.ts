@@ -76,8 +76,6 @@ export const getSidebars = () => {
     })
   }
 
-  console.log('gashashas', sidebars)
-
   return sidebars
 }
 

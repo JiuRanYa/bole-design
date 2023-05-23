@@ -19,14 +19,11 @@ export function ensureStartingSlash(path: string): string {
 function getSidebarConfig(sidebars: Sidebar, path: string): any {
   const project = useProject()
 
-  console.log(project.value, sidebars)
-
   const prefix = `/projects/${project.value}`
 
   path = ensureStartingSlash(path)
   for (const dir in sidebars) {
     if (path.startsWith(`${prefix}/${dir}`)) {
-      console.log(12313, dir)
       return sidebars[dir]
     }
   }

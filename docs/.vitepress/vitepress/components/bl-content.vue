@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import BLDocContent from './bl-doc-content.vue'
-const props = defineProps<{ hasSidebar: boolean }>()
+
+defineProps<{ hasSidebar: boolean }>()
 </script>
 
 <template>

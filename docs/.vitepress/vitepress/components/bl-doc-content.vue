@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress'
 import BLTableContent from './doc-content/table-content.vue'
+import { nextTick, onMounted } from 'vue'
 
 const { page } = useData()
-console.log(page.value.headers)
+onMounted(() => {
+  nextTick(() => {
+    console.log(page.value)
+  })
+})
 </script>
 
 <template>

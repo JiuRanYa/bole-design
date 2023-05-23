@@ -9,7 +9,6 @@ const props = defineProps<{
   demos: object
   source: string
   path: string
-  rawSource: string
   desc?: string
 }>()
 const showCode = ref(true)
