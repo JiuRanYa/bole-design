@@ -1,6 +1,5 @@
-import { computed, provide, inject, unref } from 'vue'
+import { computed, unref } from 'vue'
 
-import type { App, ComputedRef } from 'vue'
 import type { MaybeRef } from './types'
 
 // export const PROVIDED_NAMESPACE = '__bl-provided-namespace'
@@ -41,10 +40,7 @@ export const globalNamespace = computed(() => 'bl')
  *
  * For css vars name, the namespace is fixed to 'bl'
  */
-export function useNamespace(
-  block: string,
-  namespace: MaybeRef<string> = globalNamespace
-) {
+export function useNamespace(block: string, namespace: MaybeRef<string> = globalNamespace) {
   /**
    * @returns `${namespace}-${block}`
    */
@@ -60,8 +56,7 @@ export function useNamespace(
   /**
    * @returns `${namespace}-${block}__${element}--${modifier}`
    */
-  const bem = (element: string, modifier: string | number) =>
-    `${b()}__${element}--${modifier}`
+  const bem = (element: string, modifier: string | number) => `${b()}__${element}--${modifier}`
   /**
    * @returns `${namespace}-${block}-${suffix}`
    */
@@ -77,11 +72,8 @@ export function useNamespace(
   /**
    * @returns a map that is transformed origin style map's key to cv(key)
    */
-  const cvm = (
-    map: Record<string, string>,
-    style: Record<string, string> = {}
-  ) => {
-    Object.keys(map).forEach((name) => {
+  const cvm = (map: Record<string, string>, style: Record<string, string> = {}) => {
+    Object.keys(map).forEach(name => {
       style[cv(name)] = map[name]
     })
 
@@ -111,7 +103,7 @@ export function useNamespace(
     cvm,
     gcv,
     nv,
-    gnv,
+    gnv
   }
 }
 

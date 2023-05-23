@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
     Sidebar: typeof import('./.vitepress/vitepress/components/sidebar/sidebar.vue')['default']
     SidebarLink: typeof import('./.vitepress/vitepress/components/sidebar/sidebar-link.vue')['default']
     SourceCode: typeof import('./.vitepress/vitepress/components/demo/source-code.vue')['default']
+    TableContent: typeof import('./.vitepress/vitepress/components/doc-content/table-content.vue')['default']
     Wave: typeof import('./.vitepress/vitepress/components/wave/wave.vue')['default']
   }
 }
