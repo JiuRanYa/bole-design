@@ -44,7 +44,6 @@ importers:
       '@bole-design/components': link:packages/components
       '@bole-design/hooks': link:packages/hooks
       '@bole-design/internal': link:internal
-      vue: 3.2.47
     devDependencies:
       '@rollup/plugin-commonjs': 24.1.0
       '@types/eslint': 8.37.0
@@ -75,6 +74,7 @@ importers:
       tsx: 3.12.6
       typescript: 4.9.5
       vite: 4.2.2_@types+node@18.15.12
+      vue: 3.2.47
       vue-tsc: 1.2.0_typescript@4.9.5
 
   dev-serve:
@@ -137,7 +137,10 @@ importers:
     specifiers: {}
 
   packages/hooks:
-    specifiers: {}
+    specifiers:
+      '@floating-ui/dom': ^1.2.8
+    dependencies:
+      '@floating-ui/dom': 1.2.8
 
   packages/styles:
     specifiers: {}
@@ -836,6 +839,16 @@ packages:
     resolution: {integrity: sha512-IoD2MfUnOV58ghIHCiil01PcohxjbYR/qCxsoC+xNgUwh1EY8jOOrYmu3d3a71+tJJ23uscEV4X2HJWMsPJu4g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@floating-ui/core/1.2.6:
+    resolution: {integrity: sha512-EvYTiXet5XqweYGClEmpu3BoxmsQ4hkj3QaYA6qEnigCWffTP3vNRwBReTdrwDwo7OoJ3wM8Uoe9Uk4n+d4hfg==}
+    dev: false
+
+  /@floating-ui/dom/1.2.8:
+    resolution: {integrity: sha512-XLwhYV90MxiHDq6S0rzFZj00fnDM+A1R9jhSioZoMsa7G0Q0i+Q4x40ajR8FHSdYDE1bgjG45mIWe6jtv9UPmg==}
+    dependencies:
+      '@floating-ui/core': 1.2.6
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}

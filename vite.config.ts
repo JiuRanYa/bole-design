@@ -9,7 +9,7 @@ import { generateExternal } from './scripts/utils'
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
   const input = excludeFiles(
-    await glob('**/*.{js,ts,vue}', {
+    await glob('**/*.{js,ts,vue,tsx}', {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true

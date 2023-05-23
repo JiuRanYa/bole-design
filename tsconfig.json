@@ -5,21 +5,20 @@
     "allowJs": false,
     "strict": true,
     "jsx": "preserve",
-    "outDir": "dist",
-    "baseUrl": ".",
-    "sourceMap": false,
+    "importHelpers": true,
     "moduleResolution": "node",
-    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "removeComments": false,
-    "rootDir": ".",
-    "paths": {
-      "@bole-design/*": ["packages/*"],
-      "@/common/*": ["./common/*"],
-      "bole-design": ["."]
-    }
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": false,
+    "baseUrl": ".",
+    "types": ["node", "vite/client"],
+    "paths": {},
+    "lib": ["esnext", "dom"]
   },
-  "include": ["packages", "dev-server", "index.ts", "types.d.ts", "dev-server"]
+  "include": ["packages", "dev-server", "docs", "index.ts", "full-lib.ts", "types.d.ts"],
+  "exclude": ["node_modules"]
 }
