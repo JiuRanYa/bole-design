@@ -1,7 +1,7 @@
 <template>
   <Row class="bl-header">
     <Col :span="8">
-      <a class="bl-logo" href="/">
+      <a class="bl-logo" href="/projects/bole-design/">
         <img src="/bl-logo.png" />
         <span class="bl-text">{{ project }}</span>
       </a>

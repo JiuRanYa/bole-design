@@ -57,6 +57,7 @@ function expandCode() {
 <style lang="scss" scoped>
 .demo-box {
   border: var(--bl-border-base);
+  border-radius: 4px;
   &-top {
     padding: 24px;
   }

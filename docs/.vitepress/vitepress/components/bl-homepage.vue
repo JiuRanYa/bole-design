@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import Wave from './wave/wave.vue'
 
 defineComponent({
   name: 'home-page'
