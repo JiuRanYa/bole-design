@@ -7,6 +7,7 @@ import usePopper from '@bole-design/hooks/usePopper'
 
 export default defineComponent({
   name: 'Tooltip',
+  inheritAttrs: false,
   props: toolTipProps,
   components: {
     Popper
@@ -20,7 +21,8 @@ export default defineComponent({
         default: 'bottom-start',
         validator: value => placementWhiteList.includes(value)
       },
-      transfer: false
+      transfer: false,
+      reverse: false
     })
     const triggers = slots.trigger?.()
     const triggerVNode = triggers ? triggers[0] : null
@@ -52,7 +54,17 @@ export default defineComponent({
         ) : (
           triggers
         ),
-        <Popper ref={popper} to="body">
+        <Popper
+          ref={popper}
+          class={{
+            [ns.be('popper')]: true,
+            [ns.bs('vars')]: true,
+            [ns.bem('popper', props.reverse ? 'dark' : 'light')]: true
+          }}
+          role={'tooltip'}
+          tabindex={-1}
+          to="body"
+        >
           {slots.default?.()}
         </Popper>
       ]

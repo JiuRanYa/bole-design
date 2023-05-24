@@ -1,6 +1,6 @@
 <template>
   <Portal :to="to">
-    <div :class="classNames" ref="wrapper">
+    <div ref="wrapper" v-bind="$attrs" :class="classNames">
       <slot></slot>
     </div>
   </Portal>
