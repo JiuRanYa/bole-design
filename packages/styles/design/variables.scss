@@ -153,4 +153,22 @@ $content-color-map: map.merge(
   ),
   $content-color-map
 );
-//transition-end
+
+$shadow-color-map: () !default;
+$shadow-color-map: map.merge(
+  (
+    base: #dee2e6,
+    light-1: #e9ecef,
+    light-2: #f1f3f5,
+    dark-1: #ced4da,
+    dark-2: #adb5bd
+  ),
+  $shadow-color-map
+);
+$shadow-x: 0 !default;
+$shadow-y: 0 !default;
+$shadow-blur: 6px !default;
+$shadow-shape: get-css-var('shadow-x') get-css-var('shadow-y') get-css-var('shadow-blur') !default;
+$shadow-base: get-css-var('shadow-shape') get-css-var('border-color-base') !default;
+$shadow-border: 0 0 0 1px !default;
+$shadow-focus: 0 0 2px 2px !default;

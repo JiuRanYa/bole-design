@@ -1,6 +1,7 @@
 import { computed, nextTick, onMounted, ref, Ref } from 'vue'
 import { autoUpdate, computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
+import { watch } from 'fs'
 
 interface UsePopperOptions {
   /*
@@ -49,6 +50,8 @@ export default function usePopper(options: UsePopperOptions) {
       top: `${y}px`,
       position: 'absolute'
     })
+
+    el.dataset.placement = placement.value
   }
 
   onMounted(() => {

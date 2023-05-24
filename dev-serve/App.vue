@@ -11,11 +11,9 @@
       </router-link>
     </div>
     <main class="dev-main">
-      <section class="dev-main-content">
-        <router-view v-slot="{ Component }">
-          <component :is="Component"></component>
-        </router-view>
-      </section>
+      <router-view v-slot="{ Component }">
+        <component :is="Component"></component>
+      </router-view>
     </main>
   </div>
 </template>
@@ -27,7 +25,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 defineComponent({
-  name: 'app',
+  name: 'app'
 })
 </script>
 

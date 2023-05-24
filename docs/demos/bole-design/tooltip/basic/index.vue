@@ -1,6 +1,8 @@
 <template>
   <Tooltip>
-    <template #trigger>触发Tooltip</template>
+    <template #trigger>
+      <Button> 触发Tooltip </Button>
+    </template>
     一些Tooltip内容
   </Tooltip>
 </template>

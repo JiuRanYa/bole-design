@@ -35,6 +35,24 @@
 
   @include define-preset-values('fill-color', $fill-color-map);
   @include define-preset-values('content-color', $content-color-map);
+
+  @include define-css-var('shadow-x', $shadow-x);
+  @include define-css-var('shadow-y', $shadow-y);
+  @include define-css-var('shadow-blur', $shadow-blur);
+  @include define-css-var('shadow-shape', $shadow-shape);
+  @include define-css-var('shadow-base', $shadow-base);
+
+  @include define-preset-values('shadow-color', $shadow-color-map);
+
+  @each $name in map.keys($shadow-color-map) {
+    @include define-css-var(
+      ('shadow', $name),
+      get-css-var('shadow-shape') get-css-var('shadow-color', $name)
+    );
+  }
+
+  @include define-css-var('shadow-border', $shadow-border);
+  @include define-css-var('shadow-focus', $shadow-focus);
 }
 
 body {

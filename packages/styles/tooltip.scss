@@ -1,0 +1,49 @@
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$tooltip: () !default;
+$tooltip: map.merge(
+  (
+    bg-color: get-css-var('bg-color-base'),
+    s-color: get-css-var('shadow-color-base'),
+    s-color-dark: get-css-var('bg-color-reverse'),
+    shadow: get-css-var('shadow-shape') get-css-var('tooltip-s-color'),
+    v-padding: 8px,
+    h-padding: 14px,
+    min-height: 30px,
+    min-width: 60px
+  ),
+  $tooltip
+);
+
+.#{$namespace}-tooltip {
+  &-vars {
+    @include define-preset-values('tooltip', $tooltip);
+  }
+
+  &__tip {
+    background-color: get-css-var('tooltip-bg-color');
+    box-shadow: get-css-var('tooltip-shadow');
+    padding: get-css-var('tooltip-v-padding') get-css-var('tooltip-h-padding');
+    position: relative;
+    min-width: get-css-var('tooltip-min-width');
+    min-height: get-css-var('tooltip-min-height');
+  }
+
+  &__popper {
+    &[data-placement^='top'] {
+      padding: 5px 0 10px;
+    }
+    &[data-placement^='bottom'] {
+      padding: 10px 0 5px;
+    }
+    &[data-placement^='left'] {
+      padding: 0 10px 0 5px;
+    }
+    &[data-placement^='right'] {
+      padding: 0 5px 0 10px;
+    }
+  }
+}
