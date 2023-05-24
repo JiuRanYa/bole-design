@@ -1,12 +1,12 @@
-import type { Ref } from 'vue'
-import { computePosition } from '@floating-ui/dom'
+import { computed, nextTick, onMounted, ref, Ref } from 'vue'
+import { autoUpdate, computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
 
 interface UsePopperOptions {
   /*
-   *	popper元素
+   *	弹出位置
    * */
-  placement?: Ref<Placement>
+  placement: Ref<Placement>
   /**
    * popper 元素需要迁移至的目标选择器，为 true 时会迁移至 body
    */
@@ -14,13 +14,44 @@ interface UsePopperOptions {
   /**
    * 参考元素，popper 元素的位置计算依据
    */
-  referenceEl: Ref<HTMLElement | VirtualElement | null | undefined>
+  referenceEl: Ref<Element | VirtualElement | null | undefined>
   /**
    * popper 元素
    */
-  popperEl?: Ref<HTMLElement | null | undefined>
+  popperEl: Ref<HTMLElement | null | undefined>
 }
 
-function usePopper(options: UsePopperOptions) {}
+export default function usePopper(options: UsePopperOptions) {
+  const { placement } = options
+  const referenceEl = options.referenceEl ?? ref(null)
+  const popperEl = options.popperEl ?? ref(null)
 
-export default usePopper
+  function createPopper() {
+    const refEl = referenceEl.value
+    const popEl = popperEl.value
+
+    if (!refEl || !popEl) return
+
+    autoUpdate(refEl, popEl, () => {
+      computePosition(refEl, popEl, {
+        placement: placement.value
+      }).then(({ x, y }) => {
+        assignStyle(popperEl.value, x, y)
+      })
+    })
+  }
+
+  function assignStyle(el: HTMLElement | null | undefined, x: number, y: number) {
+    if (!el) return
+
+    Object.assign(el.style, {
+      left: `${x}px`,
+      top: `${y}px`,
+      position: 'absolute'
+    })
+  }
+
+  onMounted(() => {
+    nextTick(createPopper)
+  })
+}

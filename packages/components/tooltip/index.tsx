@@ -2,14 +2,14 @@ import { Fragment, computed, defineComponent, ref, toRef } from 'vue'
 import { toolTipProps } from './props'
 import { placementWhiteList, useProps } from '@bole-design/common'
 import { useNamespace } from '@bole-design/hooks'
-import { Popover } from '@bole-design/components'
+import { Popper, PopperExposed } from '@bole-design/components'
 import usePopper from '@bole-design/hooks/usePopper'
 
 export default defineComponent({
   name: 'Tooltip',
   props: toolTipProps,
   components: {
-    Popover
+    Popper
   },
   setup: (_props, { slots }) => {
     const ns = useNamespace('tooltip')
@@ -19,18 +19,22 @@ export default defineComponent({
       placement: {
         default: 'bottom-start',
         validator: value => placementWhiteList.includes(value)
-      }
+      },
+      transfer: false
     })
     const triggers = slots.trigger?.()
     const triggerVNode = triggers ? triggers[0] : null
 
-    const popperEl = ref<HTMLElement>()
+    const popper = ref<PopperExposed>()
+    const popperEl = computed(() => popper.value?.wrapper)
+
     const originTriggerEl = ref<HTMLElement>()
-    const referenceEl = computed(() => {})
     const placement = toRef(props, 'placement')
+    const transfer = toRef(props, 'transfer')
 
     usePopper({
       referenceEl: originTriggerEl,
+      transfer,
       popperEl,
       placement
     })
@@ -48,9 +52,9 @@ export default defineComponent({
         ) : (
           triggers
         ),
-        <Popover ref={popperEl} to="body">
+        <Popper ref={popper} to="body">
           {slots.default?.()}
-        </Popover>
+        </Popper>
       ]
     }
   }

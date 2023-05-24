@@ -1,5 +1,5 @@
 <template>
-  <Tooltip :placement="'sadasd'">
+  <Tooltip>
     <template #trigger>触发Tooltip</template>
     一些Tooltip内容
   </Tooltip>

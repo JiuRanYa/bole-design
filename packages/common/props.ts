@@ -89,6 +89,8 @@ export function useProps<T extends Record<string, any>>(
       watch(
         () => sourceProps[key],
         value => {
+          if (isNull(value)) return
+
           const result = validator(value)
 
           if (result === false) {
