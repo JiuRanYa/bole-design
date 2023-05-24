@@ -31,6 +31,12 @@ export const siderbarsConfig: SidebarsConfig = {
           { text: 'Popover气泡', link: '/components/popover' }
         ]
       }
+    ],
+    hooks: [
+      {
+        text: 'Hooks',
+        children: [{ text: 'usePopper', link: '/hooks/usePopper' }]
+      }
     ]
   },
   panda: {

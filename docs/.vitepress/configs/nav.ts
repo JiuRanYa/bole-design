@@ -13,7 +13,7 @@ export const navs: Record<string, any> = {
       text: '组件'
     },
     {
-      link: getProjectLink('bole-design', '/hooks/guide'),
+      link: getProjectLink('bole-design', '/hooks/usePopper'),
       text: 'Hooks'
     }
   ],
