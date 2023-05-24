@@ -1,5 +1,6 @@
-import { buildProps } from '@bole-design/common'
+import { booleanProps, buildProps } from '@bole-design/common'
 
 export const popperProps = buildProps({
-  to: String
+  to: String,
+  visible: booleanProps
 })

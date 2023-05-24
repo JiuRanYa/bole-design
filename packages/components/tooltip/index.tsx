@@ -23,9 +23,11 @@ export default defineComponent({
         default: 'bottom',
         validator: value => placementWhiteList.includes(value)
       },
+      visible: false,
       transfer: false,
       reverse: false
     })
+    const visible = ref(props.visible)
     const triggers = slots.trigger?.()
     const triggerVNode = triggers ? triggers[0] : null
 
@@ -91,6 +93,7 @@ export default defineComponent({
             [ns.bs('vars')]: true,
             [ns.bem('popper', props.reverse ? 'dark' : 'light')]: true
           }}
+          visible={visible.value}
           role={'tooltip'}
           tabindex={-1}
           to=""

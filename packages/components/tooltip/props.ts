@@ -6,5 +6,6 @@ export const toolTipProps = buildProps({
   wrap: booleanStringProp,
   placement: String as PropType<Placement>,
   transfer: booleanProps,
-  reverse: booleanProps
+  reverse: booleanProps,
+  visible: booleanProps
 })

@@ -1,6 +1,6 @@
 <template>
   <Portal :to="to">
-    <div ref="wrapper" v-bind="$attrs" :class="classNames">
+    <div v-if="visible" ref="wrapper" v-bind="$attrs" :class="classNames">
       <slot></slot>
     </div>
   </Portal>
@@ -21,7 +21,8 @@ export default defineComponent({
   },
   setup(_props) {
     const props = useProps('popper', _props, {
-      to: ''
+      to: '',
+      visible: false
     })
     const wrapper = ref<HTMLElement>()
     const ns = useNamespace('popper')
