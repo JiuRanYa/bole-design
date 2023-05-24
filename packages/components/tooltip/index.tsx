@@ -21,8 +21,6 @@ export default defineComponent({
         validator: value => placementWhiteList.includes(value)
       }
     })
-    console.log(props)
-
     const triggers = slots.trigger?.()
     const triggerVNode = triggers ? triggers[0] : null
 

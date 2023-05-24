@@ -88,15 +88,30 @@ async function serveComponent() {
 
 async function selectComponent(allComponents: string[]) {
   const component = (
-    await prompts({
-      type: 'select',
-      name: 'component',
-      message: 'Select a component:',
-      choices: allComponents.map(comp => ({
-        title: comp,
-        value: comp
-      }))
-    })
+    await prompts(
+      {
+        type: 'autocomplete',
+        name: 'component',
+        message: 'Select a component:',
+        choices: allComponents.map(comp => ({
+          title: comp,
+          value: comp
+        })),
+        onState: function (this: any) {
+          this.fallback = { title: this.input, value: this.input }
+
+          if (this.suggestions.length === 0) {
+            this.value = this.fallback.value
+          }
+        }
+      },
+      {
+        onCancel: () => {
+          console.log('Canceled by user, exiting...')
+          process.exit(1)
+        }
+      }
+    )
   ).component
 
   return component

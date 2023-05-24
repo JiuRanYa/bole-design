@@ -85,19 +85,20 @@ export function useProps<T extends Record<string, any>>(
 
     const isFunc = isNull(propsOptions.isFunc) ? eventPropRE.test(String(key)) : propsOptions.isFunc
 
-    const execValidator = (value: T[keyof T]) => {
-      if (!validator) return
+    validator &&
+      watch(
+        () => sourceProps[key],
+        value => {
+          const result = validator(value)
 
-      const result = validator(value)
-
-      if (result === false) {
-        warnWithPrefix(name, `an invalid value is set to '${key as string}' prop`)
-      }
-    }
-
-    execValidator(sourceProps[key])
-
-    validator && watch(() => sourceProps[key], execValidator)
+          if (result === false) {
+            warnWithPrefix(name, `an invalid value is set to '${key as string}' prop`)
+          }
+        },
+        {
+          immediate: true
+        }
+      )
 
     if (props.static) {
       props[key] = computed(() => sourceProps[key] ?? getDefault())
