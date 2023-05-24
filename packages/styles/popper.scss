@@ -4,5 +4,6 @@
 @use './design' as *;
 
 .#{$namespace}-popper {
+  @include basis;
   display: flex;
 }

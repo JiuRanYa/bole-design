@@ -53,6 +53,8 @@
 
   @include define-css-var('shadow-border', $shadow-border);
   @include define-css-var('shadow-focus', $shadow-focus);
+
+  @include define-preset-values('font-size', $font-size-map);
 }
 
 body {

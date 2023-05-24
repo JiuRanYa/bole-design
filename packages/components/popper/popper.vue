@@ -26,7 +26,7 @@ export default defineComponent({
     const wrapper = ref<HTMLElement>()
     const ns = useNamespace('popper')
     const classNames = computed(() => {
-      return [ns.b()]
+      return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
     })
 
     return {

@@ -172,3 +172,13 @@ $shadow-shape: get-css-var('shadow-x') get-css-var('shadow-y') get-css-var('shad
 $shadow-base: get-css-var('shadow-shape') get-css-var('border-color-base') !default;
 $shadow-border: 0 0 0 1px !default;
 $shadow-focus: 0 0 2px 2px !default;
+
+$font-size-map: () !default;
+$font-size-map: map.merge(
+  (
+    base: 14px,
+    primary: 16px,
+    secondary: 12px
+  ),
+  $font-size-map
+);
