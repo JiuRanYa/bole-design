@@ -1,12 +1,18 @@
 <template>
   <Row class="bl-header">
-    <Col :span="8">
+    <Col :span="4">
       <a class="bl-logo" href="/projects/bole-design/">
         <img src="/bl-logo.png" />
         <span class="bl-text">Bole Design</span>
       </a>
     </Col>
-    <Col :span="16">
+    <Col :span="6">
+      <div class="bl-header-search">
+        <input placeholder="在Bole Design中搜索" />
+        <kbd>⌘ K</kbd>
+      </div>
+    </Col>
+    <Col :span="12">
       <div class="bl-nav">
         <a
           v-for="item in nav"
@@ -17,7 +23,7 @@
           }"
           >{{ item.text }}</a
         >
-        <span @click="switchTheme">switch-dark</span>
+        <span @click="switchTheme">切换主题</span>
       </div>
     </Col>
   </Row>
@@ -65,6 +71,33 @@ function switchTheme() {
     justify-content: space-between;
     align-items: center;
     //backdrop-filter: saturate(40%) blur(4px);
+    &-search {
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      padding-left: 30px;
+      border-left: var(--bl-border-light-2);
+      input {
+        border: none;
+        background-color: transparent;
+        font-size: 14px;
+        line-height: 1;
+        height: 30px;
+        display: inline-block;
+        outline: none;
+        &:focus {
+          border: none;
+        }
+      }
+      kbd {
+        font-size: 10px;
+        line-height: 1;
+        background-color: var(--bl-fill-color-background);
+        border: var(--bl-border-light-1);
+        border-radius: var(--bl-radius-base);
+        padding: 3px 5px 4px;
+      }
+    }
   }
 
   &-logo {
