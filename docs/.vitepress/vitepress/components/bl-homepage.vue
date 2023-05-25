@@ -54,7 +54,7 @@ function handleStartClick() {}
       margin: 1rem 0;
       font-size: 5rem;
       font-weight: 600;
-      background: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.5));
+      background: var(--text-linear-color);
       -webkit-text-fill-color: transparent;
       background-clip: text;
       -webkit-background-clip: text;
@@ -62,10 +62,6 @@ function handleStartClick() {}
     &-desc {
       font-size: 1.4rem;
       font-weight: 400;
-      background: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.6));
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      -webkit-background-clip: text;
     }
     &-btn {
       display: flex;
