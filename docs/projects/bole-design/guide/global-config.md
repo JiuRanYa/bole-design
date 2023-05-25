@@ -3,9 +3,9 @@ title: global-config
 lang: en-US
 ---
 
-# 全局配置
+## 全局配置
 
-## 默认属性
+### 默认属性
 
 `bole-design`提供了全局的配置功能，你可以在引入时配置不同组件的默认属性
 
@@ -36,11 +36,11 @@ createApp(App)
 
 ```
 
-## 命名空间
+### 命名空间
 
 `bole-design`可根据你的项目来自行修改前缀，包括`组件前缀`和`样式前缀`
 
-### 组件前缀
+#### 组件命名空间
 
 ```ts
 createApp(App).use(install, { prefix: 'PD' })
@@ -55,7 +55,7 @@ createApp(App).use(install, { prefix: 'PD' })
 </template>
 ```
 
-### 样式命名空间
+#### 样式命名空间
 
 'bole-design'的样式文件也可提供不同的命名空间，你可以在引入 sass 时这样配置
 

@@ -3,7 +3,7 @@ title: Installation
 lang: en-US
 ---
 
-# 安装
+## 安装
 
 推荐使用 pnpm 或 yarn 的方式进行安装：
 
@@ -20,7 +20,7 @@ $ yarn add bole-design
 $ pnpm install bole-design
 ```
 
-# 分包安装
+## 分包安装
 
 `bole-deign`基于`Monorepo`开发，所以你可以根据自己的需求安装不同的工具包，以下是使用`pnpm`下载的示例
 

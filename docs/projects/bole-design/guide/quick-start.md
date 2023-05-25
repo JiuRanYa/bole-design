@@ -3,7 +3,7 @@ title: quick-start
 lang: en-US
 ---
 
-# 直接引入
+## 直接引入
 
 你可以选择在 vue 根目录下直接引入
 
@@ -40,7 +40,7 @@ import { Button } from 'vexip-ui'
 import 'bole-design/css/index.css'
 ```
 
-# 自动引入
+## 自动引入
 
 出于 `vite` 生态的强大，您可以借助下面的`vite`插件来实现组件的自动引入
 
