@@ -22,18 +22,17 @@ function handleStartClick() {}
       </div>
       <div class="homepage-main-btn">
         <Button type="primary" size="middle" @click="handleStartClick">开始使用</Button>
-        <Button size="small">浏览组件</Button>
       </div>
-      <div class="homepage-main-bg">
-        <img src="/bl-bg.svg" />
-      </div>
+      <!-- <div class="homepage-main-bg"> -->
+      <!--   <img src="/bl-bg.svg" /> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .homepage {
-  margin-top: var(--header-height);
+  padding-top: var(--header-height);
   height: calc(100vh - var(--header-height));
 
   &-en {
@@ -53,20 +52,24 @@ function handleStartClick() {}
     }
     &-title {
       margin: 1rem 0;
-      font-size: 3rem;
+      font-size: 5rem;
       font-weight: 400;
     }
     &-desc {
       font-size: 1.4rem;
       font-weight: 300;
+      background: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.38));
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
     }
     &-btn {
       display: flex;
       margin-top: 50px;
       gap: 40px;
       .bl-button {
-        border-radius: 40px;
-        width: 220px;
+        border-radius: 2rem;
+        width: 160px;
         height: 50px;
       }
     }

@@ -4,8 +4,17 @@ import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
 import { useSidebar } from '../composables/sidebar'
+import { nextTick, onMounted } from 'vue'
 
 const { hasSidebar } = useSidebar()
+const isClient = typeof window !== 'undefined'
+const rootCls = isClient ? document.documentElement.classList : undefined
+
+onMounted(() => {
+  nextTick(() => {
+    rootCls.add('dark')
+  })
+})
 </script>
 
 <template>

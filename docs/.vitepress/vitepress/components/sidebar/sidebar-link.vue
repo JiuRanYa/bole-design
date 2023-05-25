@@ -45,12 +45,12 @@ defineComponent({
 }
 
 .link:hover .link-text {
-  color: var(--bl-color-primary-base);
+  color: var(--bl-color-primary-light-4);
   transition: color 0.25s;
 }
 
 .link.active {
-  background-color: var(--bl-color-primary-light-8);
+  background-color: var(--bl-color-primary-opacity-8);
   .link-text {
     font-weight: 600;
     transition: color 0.25s;
@@ -62,7 +62,7 @@ defineComponent({
   line-height: 20px;
   font-size: 13px;
   font-weight: 500;
-  color: #495057;
+  color: var(--bl-content-color-base);
   transition: color 0.5s;
 }
 </style>

@@ -19,7 +19,7 @@ defineProps<{ hasSidebar: boolean }>()
 
 <style lang="scss">
 #page-content {
-  margin-top: var(--header-height);
+  padding-top: var(--header-height);
 }
 .has-sidebar {
   margin-left: 300px;

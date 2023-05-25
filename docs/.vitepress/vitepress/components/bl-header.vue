@@ -17,6 +17,7 @@
           }"
           >{{ item.text }}</a
         >
+        <span @click="switchTheme">switch-dark</span>
       </div>
     </Col>
   </Row>
@@ -35,9 +36,18 @@ defineComponent({
 const route = useRoute()
 const nav = useNav()
 const project = useProject()
+const isClient = typeof window !== 'undefined'
+const rootCls = isClient ? document.documentElement.classList : undefined
 
 function isActive(routePath: string, link: string) {
   return routePath.includes(link)
+}
+function switchTheme() {
+  if (rootCls.contains('dark')) {
+    rootCls.remove('dark')
+  } else {
+    rootCls.add('dark')
+  }
 }
 </script>
 
@@ -49,12 +59,12 @@ function isActive(routePath: string, link: string) {
     z-index: 100;
     width: 100%;
     height: var(--header-height);
-    background-color: var(--bg-color);
+    background-color: transparent;
     border-bottom: var(--bl-border-light-2);
-    transition: all var(--bl-transition-base);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    backdrop-filter: saturate(40%) blur(8px);
   }
 
   &-logo {
@@ -76,7 +86,6 @@ function isActive(routePath: string, link: string) {
     align-items: center;
     justify-content: end;
     padding-right: 100px;
-    transition: var(--bl-transition-border), var(--bl-transition-transform);
     font-size: 14px;
 
     .link {
@@ -84,8 +93,11 @@ function isActive(routePath: string, link: string) {
       height: 100%;
       line-height: var(--header-height);
       color: var(--bl-content-color-base);
+      margin-right: 12px;
+      transition: var(--bl-transition-border);
+      border-bottom: var(--bl-border-shape) transparent;
       &:hover {
-        color: var(--bl-color-primary-base);
+        border-bottom: var(--bl-border-shape) var(--bl-color-primary-base);
       }
     }
     .active {

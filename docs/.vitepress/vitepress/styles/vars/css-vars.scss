@@ -1,4 +1,17 @@
-:root {
-  --header-height: 60px;
+html {
   --bg-color: #fff;
+  --body-bg-color: var(--bl-fill-color-background);
+  --ghost-bg-color: #234;
+  --ghost-padding: 10px;
+
+  &.dark {
+    --bg-color: #131719;
+    --body-bg-color: #1b1b1b;
+    --ghost-bg-color: transparent;
+    --ghost-padding: 0;
+  }
+}
+
+#app {
+  --header-height: 54px;
 }
