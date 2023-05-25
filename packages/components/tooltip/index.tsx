@@ -1,4 +1,14 @@
-import { Fragment, computed, defineComponent, mergeProps, ref, toRef, createTextVNode } from 'vue'
+import {
+  Fragment,
+  computed,
+  defineComponent,
+  mergeProps,
+  ref,
+  toRef,
+  createTextVNode,
+  onMounted,
+  nextTick
+} from 'vue'
 import { toolTipProps } from './props'
 import { placementWhiteList, useProps } from '@bole-design/common'
 import { useNamespace } from '@bole-design/hooks'
@@ -25,7 +35,7 @@ export default defineComponent({
       },
       visible: false,
       transfer: false,
-      reverse: false
+      reverse: true
     })
     const visible = ref(props.visible)
     const triggers = slots.trigger?.()
@@ -37,9 +47,15 @@ export default defineComponent({
     const originTriggerEl = ref<HTMLElement>()
     const placement = toRef(props, 'placement')
     const transfer = toRef(props, 'transfer')
+    const trigger = computed(() => {
+      return originTriggerEl.value
+    })
+    const referenceEl = computed(() => {
+      return originTriggerEl.value
+    })
 
     usePopper({
-      referenceEl: originTriggerEl,
+      referenceEl,
       transfer,
       popperEl,
       placement
@@ -51,12 +67,19 @@ export default defineComponent({
 
     function syncTriggerRef(el?: HTMLElement | null) {
       if (el) {
-        console.log(el, el.nextElementSibling)
         originTriggerEl.value = el.nextElementSibling as HTMLElement | undefined
       } else {
         originTriggerEl.value = undefined
       }
     }
+
+    onMounted(() => {
+      nextTick(() => {
+        trigger.value?.addEventListener('click', () => {
+          visible.value = !visible.value
+        })
+      })
+    })
 
     return () => {
       const CustomTag = props.wrap ? (props.wrap === true ? 'span' : (props.wrap as any)) : null

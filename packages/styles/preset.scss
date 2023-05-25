@@ -9,6 +9,7 @@
     @include define-type-color($type);
   }
 
+  @include define-preset-values('bg-color', $bg-color-map);
   @include define-preset-values('border-color', $border-color-map);
 
   @include define-css-var('color-white', $color-white);

@@ -11,6 +11,14 @@ $types: primary, info, success, warning, error;
 $color-black: #000 !default;
 $color-white: #fff !default;
 
+$bg-color-map: () !default;
+$bg-color-map: map.merge(
+  (
+    base: #fff,
+    reverse: #131719
+  ),
+  $bg-color-map
+);
 // colors-start
 $color-map: () !default;
 $color-map: map.deep-merge(

@@ -7,13 +7,17 @@ $tooltip: () !default;
 $tooltip: map.merge(
   (
     bg-color: get-css-var('bg-color-base'),
+    bg-color-dark: get-css-var('fill-color-reverse'),
     s-color: get-css-var('shadow-color-base'),
     s-color-dark: get-css-var('bg-color-reverse'),
     shadow: get-css-var('shadow-shape') get-css-var('tooltip-s-color'),
     v-padding: 8px,
     h-padding: 14px,
     min-height: 30px,
-    min-width: 60px
+    min-width: 60px,
+    content-color: get-css-var('content-color-base'),
+    content-color-dark: get-css-var('bg-color-base'),
+    radius: get-css-var('radius-base')
   ),
   $tooltip
 );
@@ -30,6 +34,7 @@ $tooltip: map.merge(
     position: relative;
     min-width: get-css-var('tooltip-min-width');
     min-height: get-css-var('tooltip-min-height');
+    border-radius: get-css-var('tooltip-radius');
   }
 
   &__popper {
@@ -46,4 +51,16 @@ $tooltip: map.merge(
       padding: 0 5px 0 10px;
     }
   }
+  @mixin theme($name, $content-color, $fill-color) {
+    &__popper--#{$name} &__tip {
+      color: $content-color;
+      background-color: $fill-color;
+    }
+  }
+
+  @include theme(
+    'dark',
+    get-css-var('tooltip-content-color-dark'),
+    get-css-var('tooltip-bg-color-dark')
+  );
 }

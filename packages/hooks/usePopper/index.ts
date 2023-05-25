@@ -1,4 +1,4 @@
-import { nextTick, onMounted, ref, Ref } from 'vue'
+import { watch, nextTick, onMounted, ref, Ref, WatchStopHandle } from 'vue'
 import { autoUpdate, computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
 
@@ -26,11 +26,23 @@ export default function usePopper(options: UsePopperOptions) {
   const referenceEl = options.referenceEl ?? ref(null)
   const popperEl = options.popperEl ?? ref(null)
 
+  console.log(popperEl.value)
+
+  let stopWatchPopper: WatchStopHandle | null = null
+
   function createPopper() {
     const refEl = referenceEl.value
     const popEl = popperEl.value
 
+    const cancelWatchReference = watch(referenceEl, createPopper)
+    const cancelWatchPopper = watch(popperEl, createPopper)
+
     if (!refEl || !popEl) return
+
+    stopWatchPopper = () => {
+      cancelWatchReference()
+      cancelWatchPopper()
+    }
 
     autoUpdate(refEl, popEl, () => {
       computePosition(refEl, popEl, {

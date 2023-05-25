@@ -20,12 +20,12 @@ export default defineComponent({
     Portal
   },
   setup(_props) {
+    const ns = useNamespace('popper')
     const props = useProps('popper', _props, {
       to: '',
       visible: false
     })
     const wrapper = ref<HTMLElement>()
-    const ns = useNamespace('popper')
     const classNames = computed(() => {
       return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
     })
