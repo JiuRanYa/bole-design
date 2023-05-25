@@ -64,7 +64,7 @@ function switchTheme() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    backdrop-filter: saturate(40%) blur(8px);
+    backdrop-filter: saturate(40%) blur(4px);
   }
 
   &-logo {
