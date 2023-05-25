@@ -1,7 +1,6 @@
-import { computed, nextTick, onMounted, ref, Ref } from 'vue'
+import { nextTick, onMounted, ref, Ref } from 'vue'
 import { autoUpdate, computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
-import { watch } from 'fs'
 
 interface UsePopperOptions {
   /*
