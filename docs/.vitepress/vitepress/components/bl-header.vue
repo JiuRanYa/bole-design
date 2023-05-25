@@ -3,7 +3,7 @@
     <Col :span="8">
       <a class="bl-logo" href="/projects/bole-design/">
         <img src="/bl-logo.png" />
-        <span class="bl-text">{{ project }}</span>
+        <span class="bl-text">Bole Design</span>
       </a>
     </Col>
     <Col :span="16">
@@ -64,7 +64,7 @@ function switchTheme() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    backdrop-filter: saturate(40%) blur(4px);
+    //backdrop-filter: saturate(40%) blur(4px);
   }
 
   &-logo {

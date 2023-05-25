@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vitepress'
 
-export const defaultProject = 'bole-design'
+export const defaultProject = 'Bole Design'
 
 export const useProject = () => {
   const route = useRoute()

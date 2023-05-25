@@ -53,12 +53,16 @@ function handleStartClick() {}
     &-title {
       margin: 1rem 0;
       font-size: 5rem;
-      font-weight: 400;
+      font-weight: 600;
+      background: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.5));
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
     }
     &-desc {
       font-size: 1.4rem;
-      font-weight: 300;
-      background: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.38));
+      font-weight: 400;
+      background: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.6));
       -webkit-text-fill-color: transparent;
       background-clip: text;
       -webkit-background-clip: text;
@@ -68,9 +72,9 @@ function handleStartClick() {}
       margin-top: 50px;
       gap: 40px;
       .bl-button {
-        border-radius: 2rem;
         width: 160px;
         height: 50px;
+        border-radius: 2rem;
       }
     }
     &-bg {
