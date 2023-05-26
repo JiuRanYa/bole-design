@@ -58,16 +58,6 @@ function switchTheme() {
 </script>
 
 <style lang="scss">
-.theme-switch {
-  border: 1px solid var(--bl-border-color-base);
-
-  html.dark & {
-    --bl-switch-bg-color: var(--bl-fill-color-background);
-    --bl-switch-bg-color-open: var(--bl-fill-color-background);
-    --bl-switch-signal-bg-color: #000;
-    --bl-switch-icon-color: var(--bl-content-color-secondary);
-  }
-}
 .bl {
   &-header {
     position: fixed;
@@ -129,6 +119,19 @@ function switchTheme() {
     justify-content: end;
     padding-right: 100px;
     font-size: 14px;
+
+    .theme-switch {
+      border: 1px solid var(--bl-border-color-base);
+      --bl-switch-bg-color: var(--bl-fill-color-background);
+      --bl-switch-bg-color-open: var(--bl-fill-color-background);
+
+      html.dark & {
+        --bl-switch-bg-color: var(--bl-fill-color-background);
+        --bl-switch-bg-color-open: var(--bl-fill-color-background);
+        --bl-switch-signal-bg-color: #000;
+        --bl-switch-icon-color: var(--bl-content-color-secondary);
+      }
+    }
 
     .link {
       padding: 0 16px;
