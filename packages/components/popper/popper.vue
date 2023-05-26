@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { popperProps } from './props'
 import { Portal } from '../portal'
 import { useNamespace } from '@bole-design/hooks'
@@ -30,11 +30,13 @@ export default defineComponent({
     const classNames = computed(() => {
       return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
     })
+    const to = computed(() => props.to)
 
     return {
       props,
       wrapper,
-      classNames
+      classNames,
+      to
     }
   }
 })

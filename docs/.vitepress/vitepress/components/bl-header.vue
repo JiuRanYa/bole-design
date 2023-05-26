@@ -70,7 +70,7 @@ function switchTheme() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    //backdrop-filter: saturate(40%) blur(4px);
+    backdrop-filter: blur(8px);
     &-search {
       display: flex;
       align-items: center;

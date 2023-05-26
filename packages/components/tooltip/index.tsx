@@ -132,6 +132,16 @@ export default defineComponent({
     useEventListener(popperEl, 'mouseenter', handleTriggerEnter)
     useEventListener(popperEl, 'mouseleave', handleTriggerLeave)
 
+    const transferTarget = computed(() => {
+      if (props.transfer === true) {
+        return 'body'
+      }
+      if (typeof props.transfer === 'string') {
+        return props.transfer
+      }
+      return ''
+    })
+
     return () => {
       const CustomTag = props.wrap ? (props.wrap === true ? 'span' : (props.wrap as any)) : null
 
@@ -167,7 +177,7 @@ export default defineComponent({
           visible={visible.value}
           role={'tooltip'}
           tabindex={-1}
-          to=""
+          to={transferTarget.value}
         >
           <div class={{ [ns.be('tip')]: true }}>{content}</div>
         </Popper>

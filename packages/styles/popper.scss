@@ -6,4 +6,6 @@
 .#{$namespace}-popper {
   @include basis;
   display: flex;
+
+  z-index: 100;
 }

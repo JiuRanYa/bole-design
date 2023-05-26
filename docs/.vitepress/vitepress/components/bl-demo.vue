@@ -41,12 +41,14 @@ function expandCode() {
     </div>
 
     <div class="demo-code-actions">
-      <img
-        alt="expand code"
-        src="https://gw.alipayobjects.com/zos/antfincdn/4zAaozCvUH/unexpand.svg"
-        class="code-expand-icon-show"
-        @click="expandCode"
-      />
+      <Tooltip content="查看源代码" reverse transfer trigger="click">
+        <img
+          alt="expand code"
+          src="https://gw.alipayobjects.com/zos/antfincdn/4zAaozCvUH/unexpand.svg"
+          class="code-expand-icon-show"
+          @click="expandCode"
+        />
+      </Tooltip>
     </div>
 
     <SourceCode :source="source" v-if="showCode" />
