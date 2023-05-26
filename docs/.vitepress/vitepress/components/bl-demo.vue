@@ -11,7 +11,7 @@ const props = defineProps<{
   path: string
   desc?: string
 }>()
-const showCode = ref(true)
+const showCode = ref(false)
 
 const targetDemo = computed(() => {
   const keys = Object.keys(props.demos)
@@ -41,10 +41,10 @@ function expandCode() {
     </div>
 
     <div class="demo-code-actions">
-      <Tooltip content="查看源代码" reverse transfer trigger="click">
+      <Tooltip content="查看源代码" :reverse="true" transfer>
         <img
           alt="expand code"
-          src="https://gw.alipayobjects.com/zos/antfincdn/4zAaozCvUH/unexpand.svg"
+          src="/svg/coding.svg"
           class="code-expand-icon-show"
           @click="expandCode"
         />
