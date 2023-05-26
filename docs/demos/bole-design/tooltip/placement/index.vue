@@ -6,7 +6,7 @@
     style="max-width: 500px; margin: 10px 0"
   >
     <template v-for="placement in meta.placements" :key="placement">
-      <Tooltip theme="dark" :placement="placement" trigger="click">
+      <Tooltip theme="dark" :placement="placement" trigger="hover">
         <template #content>
           {{ `The ${placement.split('-').join(' ')} text` }}
         </template>

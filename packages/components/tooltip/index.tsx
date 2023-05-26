@@ -43,10 +43,11 @@ export default defineComponent({
         default: 'hover',
         validator: value => triggerWhiteList.includes(value)
       },
-      disabled: false
+      disabled: false,
+      mouseEnterDelay: 100,
+      mouseLeaveDelay: 100
     })
 
-    const triggerDuration = 100
     const visible = ref(props.visible)
     const triggers = slots.default?.()
     const content = props.content ? <span>{props.content}</span> : slots.content?.()
@@ -96,27 +97,33 @@ export default defineComponent({
     function handleToggerClick() {
       if (props.disabled) return
 
-      visible.value = !visible.value
+      if (props.trigger === 'click') {
+        visible.value = !visible.value
+      }
     }
 
     function handleTriggerEnter() {
       if (props.disabled) return
 
-      clearTimeout(timer.hover)
+      if (props.trigger === 'hover') {
+        clearTimeout(timer.hover)
 
-      timer.hover = setTimeout(() => {
-        visible.value = true
-      }, triggerDuration)
+        timer.hover = setTimeout(() => {
+          visible.value = true
+        }, props.mouseEnterDelay)
+      }
     }
 
     function handleTriggerLeave() {
       if (props.disabled) return
 
-      clearTimeout(timer.hover)
+      if (props.trigger === 'hover') {
+        clearTimeout(timer.hover)
 
-      timer.hover = setTimeout(() => {
-        visible.value = false
-      }, triggerDuration)
+        timer.hover = setTimeout(() => {
+          visible.value = false
+        }, props.mouseLeaveDelay)
+      }
     }
 
     useEventListener(trigger, 'click', handleToggerClick)
