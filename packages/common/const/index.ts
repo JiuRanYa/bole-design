@@ -14,3 +14,5 @@ export const placementWhiteList = Object.freeze([
   'right-start',
   'right-end'
 ] as Placement[])
+
+export const triggerWhiteList = Object.freeze(['click', 'hover'])

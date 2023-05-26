@@ -11,10 +11,12 @@ import {
   watch
 } from 'vue'
 import { toolTipProps } from './props'
-import { placementWhiteList, useProps } from '@bole-design/common'
+import { placementWhiteList, triggerWhiteList, useProps } from '@bole-design/common'
 import { useNamespace } from '@bole-design/hooks'
 import { Popper, PopperExposed } from '@bole-design/components'
 import usePopper from '@bole-design/hooks/usePopper'
+import useEventListener from '@bole-design/hooks/useEventListener'
+import useSetTimeout from '@bole-design/hooks/useSetTimeout'
 
 const TEXT_VNODE = createTextVNode('').type
 
@@ -36,8 +38,15 @@ export default defineComponent({
       },
       visible: false,
       transfer: false,
-      reverse: false
+      reverse: false,
+      trigger: {
+        default: 'hover',
+        validator: value => triggerWhiteList.includes(value)
+      },
+      disabled: false
     })
+
+    const triggerDuration = 100
     const visible = ref(props.visible)
     const triggers = slots.default?.()
     const content = props.content ? <span>{props.content}</span> : slots.content?.()
@@ -74,6 +83,7 @@ export default defineComponent({
         originTriggerEl.value = undefined
       }
     }
+
     watch(
       () => props.visible,
       value => {
@@ -81,13 +91,39 @@ export default defineComponent({
       }
     )
 
-    onMounted(() => {
-      nextTick(() => {
-        trigger.value?.addEventListener('click', () => {
-          visible.value = !visible.value
-        })
-      })
-    })
+    const { timer } = useSetTimeout()
+
+    function handleToggerClick() {
+      if (props.disabled) return
+
+      visible.value = !visible.value
+    }
+
+    function handleTriggerEnter() {
+      if (props.disabled) return
+
+      clearTimeout(timer.hover)
+
+      timer.hover = setTimeout(() => {
+        visible.value = true
+      }, triggerDuration)
+    }
+
+    function handleTriggerLeave() {
+      if (props.disabled) return
+
+      clearTimeout(timer.hover)
+
+      timer.hover = setTimeout(() => {
+        visible.value = false
+      }, triggerDuration)
+    }
+
+    useEventListener(trigger, 'click', handleToggerClick)
+    useEventListener(trigger, 'mouseenter', handleTriggerEnter)
+    useEventListener(trigger, 'mouseleave', handleTriggerLeave)
+    useEventListener(popperEl, 'mouseenter', handleTriggerEnter)
+    useEventListener(popperEl, 'mouseleave', handleTriggerLeave)
 
     return () => {
       const CustomTag = props.wrap ? (props.wrap === true ? 'span' : (props.wrap as any)) : null

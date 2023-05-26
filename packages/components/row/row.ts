@@ -14,8 +14,8 @@ export default defineComponent({
         ns.b(),
         ns.bs('vars'),
         {
-          [ns.bm(props.justify)]: props.justify,
-        },
+          [ns.bm(props.justify)]: props.justify
+        }
       ]
     })
 
@@ -24,7 +24,7 @@ export default defineComponent({
 
       if (typeof props.gap === 'number') {
         return {
-          [ns.cv('h-gap')]: `${props.gap}px`,
+          [ns.cv('h-gap')]: `${props.gap}px`
         }
       }
 
@@ -33,7 +33,7 @@ export default defineComponent({
 
         return {
           [ns.cv('h-gap')]: `${horizontal}px`,
-          [ns.cv('v-gap')]: `${vertical}px`,
+          [ns.cv('v-gap')]: `${vertical}px`
         }
       }
 
@@ -43,7 +43,7 @@ export default defineComponent({
     provide(
       ROW_STATE,
       reactive({
-        gap: toRef(props, 'gap'),
+        gap: toRef(props, 'gap')
       })
     )
 
@@ -52,11 +52,11 @@ export default defineComponent({
         props.tag || 'div',
         {
           class: classNames.value,
-          style: styles.value,
+          style: styles.value
         },
         {
-          default: () => slots.default && slots.default(),
+          default: () => slots.default && slots.default()
         }
       )
-  },
+  }
 })

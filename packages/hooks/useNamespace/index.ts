@@ -1,6 +1,5 @@
+import { MaybeRef } from 'packages/common'
 import { computed, unref } from 'vue'
-
-import type { MaybeRef } from './types'
 
 // export const PROVIDED_NAMESPACE = '__bl-provided-namespace'
 export const globalNamespace = computed(() => 'bl')
