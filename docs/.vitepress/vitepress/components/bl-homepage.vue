@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { useRouter } from 'vitepress'
 import { defineComponent } from 'vue'
 
 defineComponent({
   name: 'home-page'
 })
+const router = useRouter()
 
-function handleStartClick() {}
+function handleStartClick() {
+  router.go(`/projects/bole-design/guide/design`)
+}
 </script>
 
 <template>

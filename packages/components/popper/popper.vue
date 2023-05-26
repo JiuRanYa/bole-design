@@ -16,6 +16,7 @@ import { useNamespace } from '@bole-design/hooks'
 export default defineComponent({
   name: 'Popper',
   props: popperProps,
+  inheritAttrs: false,
   components: {
     Portal
   },

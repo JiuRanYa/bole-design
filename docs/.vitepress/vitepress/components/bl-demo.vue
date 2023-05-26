@@ -33,7 +33,7 @@ function expandCode() {
 <template>
   <div class="demo-box">
     <div class="demo-box-top">
-      <p v-html="decodedDescription"></p>
+      <p v-if="decodedDescription" v-html="decodedDescription"></p>
 
       <div class="demo-container" style="">
         <component v-if="targetDemo" :is="targetDemo"></component>
@@ -57,6 +57,7 @@ function expandCode() {
 .demo-box {
   border: var(--bl-border-base);
   border-radius: 4px;
+  margin-top: 12px;
   &-top {
     padding: 24px;
   }

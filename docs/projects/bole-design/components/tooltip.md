@@ -3,7 +3,7 @@ title: tooltip
 lang: zh-CN
 ---
 
-# Tooltip
+## Tooltip
 
 <script setup>
 const demos = import.meta.globEager('../../../demos/bole-design/tooltip/*/*.vue')
@@ -11,9 +11,27 @@ const demos = import.meta.globEager('../../../demos/bole-design/tooltip/*/*.vue'
 
 用于需要在特定元素周围弹出一下拓展信息。
 
-:::demo 基础用法
+### 基础用法
+
+:::demo
 
 tooltip/basic
+
+:::
+
+### 显示位置
+
+:::demo 可以使用`placement`控制显示位置
+
+tooltip/placement
+
+:::
+
+### visible
+
+:::demo 通过`visible`控制 tooltip 的行为
+
+tooltip/visible
 
 :::
 

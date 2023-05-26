@@ -7,7 +7,8 @@ import {
   toRef,
   createTextVNode,
   onMounted,
-  nextTick
+  nextTick,
+  watch
 } from 'vue'
 import { toolTipProps } from './props'
 import { placementWhiteList, useProps } from '@bole-design/common'
@@ -35,10 +36,11 @@ export default defineComponent({
       },
       visible: false,
       transfer: false,
-      reverse: true
+      reverse: false
     })
     const visible = ref(props.visible)
-    const triggers = slots.trigger?.()
+    const triggers = slots.default?.()
+    const content = props.content ? <span>{props.content}</span> : slots.content?.()
     const triggerVNode = triggers ? triggers[0] : null
 
     const popper = ref<PopperExposed>()
@@ -62,7 +64,7 @@ export default defineComponent({
     })
 
     const classNames = computed(() => {
-      return [ns.b()]
+      return [ns.b(), ns.bs('vars'), props.inherit && ns.bm('inherit')]
     })
 
     function syncTriggerRef(el?: HTMLElement | null) {
@@ -72,6 +74,12 @@ export default defineComponent({
         originTriggerEl.value = undefined
       }
     }
+    watch(
+      () => props.visible,
+      value => {
+        visible.value = value
+      }
+    )
 
     onMounted(() => {
       nextTick(() => {
@@ -100,10 +108,7 @@ export default defineComponent({
 
       return [
         triggerVNode && CustomTag ? (
-          <CustomTag
-            class={[ns.b(), ns.bs('vars'), props.inherit && ns.bm('inherit')]}
-            ref={originTriggerEl}
-          >
+          <CustomTag class={classNames} ref={originTriggerEl}>
             {triggers}
           </CustomTag>
         ) : (
@@ -121,7 +126,7 @@ export default defineComponent({
           tabindex={-1}
           to=""
         >
-          <div class={{ [ns.be('tip')]: true }}>{slots.default?.()}</div>
+          <div class={{ [ns.be('tip')]: true }}>{content}</div>
         </Popper>
       ]
     }
