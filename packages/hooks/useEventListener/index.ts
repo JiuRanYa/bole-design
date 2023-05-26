@@ -1,12 +1,13 @@
 import { MaybeRef, noop } from '@bole-design/common'
 import { getCurrentScope, onScopeDispose, unref, watch } from 'vue'
 
-export default function useEventListener<E = Event>(
+export function useEventListener<E = Event>(
   target: MaybeRef<EventTarget | null | undefined>,
   event: string,
   listener: (event: E) => any,
   options?: AddEventListenerOptions | boolean
 ) {
+  console.log(target)
   if (!target) {
     return
   }

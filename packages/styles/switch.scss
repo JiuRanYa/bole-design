@@ -1,0 +1,64 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$switch: () !default;
+$switch: map.merge(
+  (
+    bg-color: get-css-var('fill-color-secondary'),
+    bg-color-open: get-css-var('color-primary-base'),
+    duration: 0.2s
+  ),
+  $switch
+);
+
+.#{$namespace}-switch {
+  @include basis;
+
+  &-vars {
+    @include define-preset-values('switch', $switch);
+  }
+
+  &--open {
+    background-color: get-css-var(switch-bg-color-open);
+  }
+
+  border: 0;
+  background: get-css-var(switch-bg-color);
+  box-sizing: border-box;
+  height: 22px;
+  min-width: 44px;
+  border-radius: 100px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+
+  &-signal {
+    position: absolute;
+    top: 2px;
+    inset-inline-start: 2px;
+    width: 18px;
+    height: 18px;
+    transition: all get-css-var(switch-duration) ease-in-out;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background-color: #fff;
+      border-radius: 9px;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
+    }
+  }
+  &--open &-signal {
+    inset-inline-start: calc(100% - 20px);
+  }
+}

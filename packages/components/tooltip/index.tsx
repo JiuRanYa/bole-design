@@ -6,16 +6,13 @@ import {
   ref,
   toRef,
   createTextVNode,
-  onMounted,
-  nextTick,
   watch
 } from 'vue'
 import { toolTipProps } from './props'
 import { placementWhiteList, triggerWhiteList, useProps } from '@bole-design/common'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace, useEventListener } from '@bole-design/hooks'
 import { Popper, PopperExposed } from '@bole-design/components'
 import usePopper from '@bole-design/hooks/usePopper'
-import useEventListener from '@bole-design/hooks/useEventListener'
 import useSetTimeout from '@bole-design/hooks/useSetTimeout'
 
 const TEXT_VNODE = createTextVNode('').type

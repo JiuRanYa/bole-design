@@ -1,0 +1,3 @@
+<template>
+  <Switch></Switch>
+</template>
