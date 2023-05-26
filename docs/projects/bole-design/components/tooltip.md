@@ -3,7 +3,7 @@ title: tooltip
 lang: zh-CN
 ---
 
-## Tooltip
+# Tooltip
 
 <script setup>
 const demos = import.meta.globEager('../../../demos/bole-design/tooltip/*/*.vue')
@@ -11,7 +11,7 @@ const demos = import.meta.globEager('../../../demos/bole-design/tooltip/*/*.vue'
 
 用于需要在特定元素周围弹出一下拓展信息。
 
-### 基础用法
+## 基础用法
 
 :::demo
 
@@ -19,7 +19,7 @@ tooltip/basic
 
 :::
 
-### 显示位置
+## 显示位置
 
 :::demo 可以使用`placement`控制显示位置，共有 12 种位置
 
@@ -27,7 +27,7 @@ tooltip/placement
 
 :::
 
-### 触发行为
+## 触发行为
 
 :::demo 可以通过`click`或`hover`触发
 
@@ -35,7 +35,7 @@ tooltip/trigger
 
 :::
 
-### 主题控制
+## 主题控制
 
 :::demo 默认为反转主题来增加提示性，你也可以通过`reverse`来控制是否反转
 
@@ -43,7 +43,7 @@ tooltip/reverse
 
 :::
 
-### 受控模式
+## 受控模式
 
 :::demo 通过`visible`控制 tooltip 的行为
 
@@ -67,7 +67,7 @@ tooltip/visible
 | mouseEnterDelay | `boolean`                                   | 设置鼠标移入出现 tooltip 的延迟，单位`ms`                                      | `100`      | -       |
 | mouseLeaveDelay | `boolean`                                   | 设置鼠标移出后 tooltip 消失 的延迟，单位`ms`                                   | `100`      | -       |
 
-### Tooltip 事件
+## Tooltip 事件
 
 | 名称      | 说明                                       | 参数                 | 始于 |
 | --------- | ------------------------------------------ | -------------------- | ---- |
@@ -75,7 +75,7 @@ tooltip/visible
 | tip-enter | 当鼠标移入提示时触发，无返回值             | -                    | -    |
 | tip-leave | 当鼠标移出提示时触发，无返回值             | -                    | -    |
 
-### Tooltip 插槽
+## Tooltip 插槽
 
 | 名称    | 说明               | 参数 | 始于 |
 | ------- | ------------------ | ---- | ---- |

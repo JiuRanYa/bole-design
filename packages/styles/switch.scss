@@ -7,7 +7,8 @@ $switch: map.merge(
   (
     bg-color: get-css-var('fill-color-secondary'),
     bg-color-open: get-css-var('color-primary-base'),
-    duration: 0.2s
+    duration: 0.2s,
+    signal-bg-color: #fff
   ),
   $switch
 );
@@ -41,7 +42,6 @@ $switch: map.merge(
 
   &-signal {
     position: absolute;
-    top: 2px;
     inset-inline-start: 2px;
     width: 18px;
     height: 18px;
@@ -51,7 +51,7 @@ $switch: map.merge(
       position: absolute;
       top: 0;
       bottom: 0;
-      background-color: #fff;
+      background-color: get-css-var(switch-signal-bg-color);
       border-radius: 9px;
       inset-inline-start: 0;
       inset-inline-end: 0;

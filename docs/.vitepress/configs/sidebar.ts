@@ -25,6 +25,10 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [{ text: 'Row行', link: '/components/row' }]
       },
       {
+        text: '数据录入',
+        children: [{ text: 'Switch开关', link: '/components/switch' }]
+      },
+      {
         text: '通知组件',
         children: [
           { text: 'Tooltip提示', link: '/components/tooltip' },

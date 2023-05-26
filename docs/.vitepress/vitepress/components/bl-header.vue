@@ -23,7 +23,7 @@
           }"
           >{{ item.text }}</a
         >
-        <span @click="switchTheme">切换主题</span>
+        <Switch class="theme-switch" @click="switchTheme"></Switch>
       </div>
     </Col>
   </Row>
@@ -58,6 +58,16 @@ function switchTheme() {
 </script>
 
 <style lang="scss">
+.theme-switch {
+  border: 1px solid var(--bl-border-color-base);
+
+  html.dark & {
+    --bl-switch-bg-color: var(--bl-fill-color-background);
+    --bl-switch-bg-color-open: var(--bl-fill-color-background);
+    --bl-switch-signal-bg-color: #000;
+    --bl-switch-icon-color: var(--bl-content-color-secondary);
+  }
+}
 .bl {
   &-header {
     position: fixed;
