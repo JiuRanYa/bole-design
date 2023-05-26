@@ -1,15 +1,11 @@
 html {
   --bg-color: #fff;
   --body-bg-color: var(--bl-fill-color-background);
-  --ghost-bg-color: #234;
-  --ghost-padding: 10px;
   --text-linear-color: linear-gradient(to bottom, #000000 40%, rgba(255, 255, 255, 0));
 
   &.dark {
     --bg-color: #131719;
     --body-bg-color: #1b1b1b;
-    --ghost-bg-color: transparent;
-    --ghost-padding: 0;
     --text-linear-color: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.5));
   }
 }

@@ -20,6 +20,10 @@
 }
 
 .bl-doc h2 {
+  &:first-child {
+    border-top: none;
+    margin: 24px 0 16px;
+  }
   margin: 48px 0 16px;
   border-top: 1px solid var(--bl-c-divider);
   padding-top: 24px;

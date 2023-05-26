@@ -76,7 +76,6 @@ function switchTheme() {
       align-items: center;
       line-height: 1;
       padding-left: 30px;
-      border-left: var(--bl-border-light-2);
       input {
         border: none;
         background-color: transparent;
