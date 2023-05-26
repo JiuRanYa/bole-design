@@ -21,13 +21,29 @@ tooltip/basic
 
 ### 显示位置
 
-:::demo 可以使用`placement`控制显示位置
+:::demo 可以使用`placement`控制显示位置，共有 12 种位置
 
 tooltip/placement
 
 :::
 
-### visible
+### 触发行为
+
+:::demo 可以通过`click`或`hover`触发
+
+tooltip/trigger
+
+:::
+
+### 主题控制
+
+:::demo 默认为反转主题来增加提示性，你也可以通过`reverse`来控制是否反转
+
+tooltip/reverse
+
+:::
+
+### 受控模式
 
 :::demo 通过`visible`控制 tooltip 的行为
 

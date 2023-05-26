@@ -11,6 +11,21 @@ export const router = createRouter({
       component: () => import('../../docs/demos/bole-design/tooltip/basic/index.vue')
     },
     {
+      path: '/placement',
+      name: 'placement',
+      component: () => import('../../docs/demos/bole-design/tooltip/placement/index.vue')
+    },
+    {
+      path: '/trigger',
+      name: 'trigger',
+      component: () => import('../../docs/demos/bole-design/tooltip/trigger/index.vue')
+    },
+    {
+      path: '/visible',
+      name: 'visible',
+      component: () => import('../../docs/demos/bole-design/tooltip/visible/index.vue')
+    },
+    {
       path: '/:catchAll(.*)',
       redirect: '/'
     }

@@ -37,15 +37,16 @@ export default defineComponent({
         validator: value => placementWhiteList.includes(value)
       },
       visible: false,
-      transfer: false,
-      reverse: false,
+      transfer: true,
+      reverse: true,
       trigger: {
         default: 'hover',
         validator: value => triggerWhiteList.includes(value)
       },
       disabled: false,
       mouseEnterDelay: 100,
-      mouseLeaveDelay: 100
+      mouseLeaveDelay: 100,
+      noArrow: false
     })
 
     const visible = ref(props.visible)
@@ -179,7 +180,10 @@ export default defineComponent({
           tabindex={-1}
           to={transferTarget.value}
         >
-          <div class={{ [ns.be('tip')]: true }}>{content}</div>
+          <div class={{ [ns.be('tip')]: true }}>
+            {!props.noArrow && <div class={ns.be('arrow')}></div>}
+            {content}
+          </div>
         </Popper>
       ]
     }

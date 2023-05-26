@@ -13,5 +13,6 @@ export const toolTipProps = buildProps({
   trigger: String as PropType<TriggerType>,
   disabled: booleanProps,
   mouseEnterDelay: Number,
-  mouseLeaveDelay: Number
+  mouseLeaveDelay: Number,
+  noArrow: booleanProps
 })

@@ -8,16 +8,20 @@ $tooltip: map.merge(
   (
     bg-color: get-css-var('bg-color-base'),
     bg-color-dark: get-css-var('fill-color-reverse'),
-    s-color: get-css-var('shadow-color-base'),
-    s-color-dark: get-css-var('bg-color-reverse'),
-    shadow: get-css-var('shadow-shape') get-css-var('tooltip-s-color'),
+    border-color: get-css-var('shadow-color-base'),
+    border-color-dark: get-css-var('bg-color-reverse'),
+    shadow: get-css-var('shadow-shape') get-css-var('tooltip-border-color'),
+    shadow-dark: get-css-var('tooltip-shadow'),
     v-padding: 8px,
     h-padding: 14px,
     min-height: 30px,
     min-width: 60px,
     content-color: get-css-var('content-color-base'),
     content-color-dark: get-css-var('bg-color-base'),
-    radius: get-css-var('radius-base')
+    radius: get-css-var('radius-base'),
+    arrow-size: 7px,
+    arrow-v-offset: 16px,
+    arrow-h-offset: 28px
   ),
   $tooltip
 );
@@ -26,6 +30,8 @@ $tooltip: map.merge(
   &-vars {
     @include define-preset-values('tooltip', $tooltip);
   }
+
+  $arrow: #{&}__arrow;
 
   &__tip {
     background-color: get-css-var('tooltip-bg-color');
@@ -37,30 +43,206 @@ $tooltip: map.merge(
     border-radius: get-css-var('tooltip-radius');
   }
 
+  &__arrow {
+    &,
+    &::after {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: {
+        width: 0;
+        color: transparent;
+        style: solid;
+      }
+    }
+
+    &::after {
+      content: '';
+    }
+  }
+
+  // arrow size
+  $size: get-css-var('tooltip-arrow-size');
+
   &__popper {
     &[data-placement^='top'] {
       padding: 5px 0 10px;
+
+      #{$arrow} {
+        bottom: 0;
+        border-width: $size $size 0;
+        transform: translate(-50%, 100%);
+
+        &::after {
+          bottom: 1px;
+          border-width: $size $size 0;
+          transform: translateX(-50%);
+        }
+      }
     }
     &[data-placement^='bottom'] {
       padding: 10px 0 5px;
+
+      #{$arrow} {
+        top: 0;
+        border-width: 0 $size $size;
+        transform: translate(-50%, -100%);
+
+        &::after {
+          top: 1px;
+          border-width: 0 $size $size;
+          transform: translateX(-50%);
+        }
+      }
     }
     &[data-placement^='left'] {
       padding: 0 10px 0 5px;
+
+      #{$arrow} {
+        right: 0;
+        border-width: $size 0 $size $size;
+        transform: translate(100%, -50%);
+
+        &::after {
+          right: 1px;
+          border-width: $size 0 $size $size;
+          transform: translateY(-50%);
+        }
+      }
     }
     &[data-placement^='right'] {
       padding: 0 5px 0 10px;
+
+      #{$arrow} {
+        left: 0;
+        border-width: $size $size $size 0;
+        transform: translate(-100%, -50%);
+
+        &::after {
+          left: 1px;
+          border-width: $size $size $size 0;
+          transform: translateY(-50%);
+        }
+      }
+    }
+
+    $v-offset: get-css-var('tooltip-arrow-v-offset');
+    $h-offset: get-css-var('tooltip-arrow-h-offset');
+
+    &[data-placement='top'] #{$arrow} {
+      left: 50%;
+    }
+
+    &[data-placement='top-start'] #{$arrow} {
+      left: $h-offset;
+    }
+
+    &[data-placement='top-end'] #{$arrow} {
+      left: calc(100% - #{$h-offset});
+    }
+
+    &[data-placement='bottom'] #{$arrow} {
+      left: 50%;
+    }
+
+    &[data-placement='bottom-start'] #{$arrow} {
+      left: $h-offset;
+    }
+
+    &[data-placement='bottom-end'] #{$arrow} {
+      left: calc(100% - #{$h-offset});
+    }
+
+    &[data-placement='left'] #{$arrow} {
+      top: 50%;
+    }
+
+    &[data-placement='left-start'] #{$arrow} {
+      top: $v-offset;
+    }
+
+    &[data-placement='left-end'] #{$arrow} {
+      top: calc(100% - #{$v-offset});
+    }
+
+    &[data-placement='right'] #{$arrow} {
+      top: 50%;
+    }
+
+    &[data-placement='right-start'] #{$arrow} {
+      top: $v-offset;
+    }
+
+    &[data-placement='right-end'] #{$arrow} {
+      top: calc(100% - #{$v-offset});
+    }
+
+    &--no-hover {
+      pointer-events: none;
     }
   }
-  @mixin theme($name, $content-color, $fill-color) {
+
+  @mixin theme($name, $content-color, $border-color, $fill-color) {
     &__popper--#{$name} &__tip {
       color: $content-color;
       background-color: $fill-color;
     }
+
+    &__popper--#{$name} {
+      &[data-placement^='top'] {
+        #{$arrow} {
+          border-top-color: $border-color;
+
+          &::after {
+            border-top-color: $fill-color;
+          }
+        }
+      }
+
+      &[data-placement^='bottom'] {
+        padding: 10px 0 5px;
+
+        #{$arrow} {
+          border-bottom-color: $border-color;
+
+          &::after {
+            border-bottom-color: $fill-color;
+          }
+        }
+      }
+
+      &[data-placement^='left'] {
+        #{$arrow} {
+          border-left-color: $border-color;
+
+          &::after {
+            border-left-color: $fill-color;
+          }
+        }
+      }
+
+      &[data-placement^='right'] {
+        #{$arrow} {
+          border-right-color: $border-color;
+
+          &::after {
+            border-right-color: $fill-color;
+          }
+        }
+      }
+    }
   }
 
   @include theme(
+    'light',
+    get-css-var('tooltip-content-color'),
+    get-css-var('tooltip-border-color'),
+    get-css-var('tooltip-bg-color')
+  );
+  @include theme(
     'dark',
     get-css-var('tooltip-content-color-dark'),
+    get-css-var('tooltip-border-color'),
     get-css-var('tooltip-bg-color-dark')
   );
 }
