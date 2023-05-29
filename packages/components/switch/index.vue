@@ -8,11 +8,20 @@
 <script lang="ts">
 import { useNamespace, useEventListener } from '@bole-design/hooks'
 import { computed, defineComponent, ref } from 'vue'
+import { useProps } from '@bole-design/common'
+import { switchProps } from './props'
 
 export default defineComponent({
   name: 'Switch',
+  props: switchProps,
   setup(_props) {
     const ns = useNamespace('switch')
+    const props = useProps('switch', _props, {
+      value: {
+        default: false
+      }
+    })
+
     const className = computed(() => {
       return [
         ns.b(),
@@ -22,7 +31,8 @@ export default defineComponent({
         }
       ]
     })
-    const open = ref(false)
+
+    const open = ref(props.value)
     const switchRef = ref()
 
     function toggleState() {
