@@ -1,4 +1,4 @@
-import { booleanProps, buildProps } from 'packages/common'
+import { booleanProps, buildProps } from '@bole-design/common'
 
 export const switchProps = buildProps({
   value: booleanProps

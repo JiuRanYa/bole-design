@@ -17,9 +17,12 @@ export default defineConfig(async () => {
   )
 
   return {
-    plugins: [vue(), vueJSX()],
+    publicDir: false,
     resolve: {
-      alias: [{ find: /^@\//, replacement: resolve(__dirname) }]
+      alias: [
+        { find: /^@\//, replacement: resolve(__dirname) },
+        { find: /^@\/common/, replacement: resolve(__dirname, './packages/common') }
+      ]
     },
     build: {
       outDir: 'dist',
@@ -55,6 +58,7 @@ export default defineConfig(async () => {
         sourceMap: false
       },
       chunkSizeWarningLimit: 10000
-    }
+    },
+    plugins: [vue(), vueJSX()]
   }
 })
