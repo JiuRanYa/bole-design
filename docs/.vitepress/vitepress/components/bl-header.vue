@@ -36,7 +36,6 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import { useProject } from '../composables/project'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
 import { Sun, Moon } from '@bole-design/icons'
@@ -47,9 +46,7 @@ defineComponent({
 
 const route = useRoute()
 const nav = useNav()
-const project = useProject()
-const isClient = typeof window !== 'undefined'
-const rootCls = isClient ? document.documentElement.classList : undefined
+const rootCls = document.documentElement.classList
 
 function isActive(routePath: string, link: string) {
   return routePath.includes(link)

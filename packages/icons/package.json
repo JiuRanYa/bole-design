@@ -2,7 +2,6 @@
   "name": "@bole-design/icons",
   "version": "1.2.0",
   "license": "MIT",
-  "anchor": "qmhc",
   "scripts": {
     "build": "tsx scripts/build.ts"
   },
@@ -35,12 +34,6 @@
     "types",
     "vue"
   ],
-  "homepage": "https://github.com/vexip-ui/vexip-ui/tree/main/common/icons#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vexip-ui/vexip-ui.git",
-    "directory": "common/icons"
-  },
   "devDependencies": {
     "@types/node": "^18.7.23",
     "@types/prettier": "^2.7.1",

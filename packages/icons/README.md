@@ -1,4 +1,4 @@
-# @vexip-ui/icons
+# @bole-design/icons
 
 This package provides svg icons witch vue component (`.vue`), its icons are base the free icons of `fontawesome@6`.
 
