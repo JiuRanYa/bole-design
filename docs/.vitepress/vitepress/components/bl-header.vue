@@ -26,7 +26,7 @@
         <Switch
           :open-icon="Sun"
           :close-icon="Moon"
-          class="theme-switch"
+          class="theme-switch switchAppearance"
           @click="switchTheme"
         ></Switch>
       </div>
@@ -54,16 +54,87 @@ const rootCls = isClient ? document.documentElement.classList : undefined
 function isActive(routePath: string, link: string) {
   return routePath.includes(link)
 }
-function switchTheme() {
-  if (rootCls.contains('dark')) {
-    rootCls.remove('dark')
-  } else {
-    rootCls.add('dark')
-  }
+function setClass(dark: boolean): void {
+  const css = document.createElement('style')
+  css.type = 'text/css'
+  css.appendChild(
+    document.createTextNode(
+      `:not(.switchAppearance):not(.switchAppearance *) {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}`
+    )
+  )
+  document.head.appendChild(css)
+  rootCls[dark ? 'add' : 'remove']('dark')
+  // @ts-expect-error keep unused declaration, used to force the browser to redraw
+  const _ = window.getComputedStyle(css).opacity
+  document.head.removeChild(css)
+}
+function switchTheme(event: MouseEvent) {
+  const x = event.clientX
+  const y = event.clientY
+  const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+  const isDark = rootCls.contains('dark')
+
+  // @ts-expect-error: Transition API
+  const transition = document.startViewTransition(() => {
+    if (rootCls.contains('dark')) {
+      setClass(false)
+    } else {
+      setClass(true)
+    }
+  })
+
+  transition.ready.then(() => {
+    const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
+    // const clipPath = [
+    //   'polygon(0% 0%, 20% 0%, 20% 100%, 20% 100%, 20% 0%, 40% 0%, 40% 100%, 40% 100%, 40% 0%, 60% 0%, 60% 100%, 60% 100%, 60% 0%, 80% 0%, 80% 100%, 80% 100%, 80% 0%, 100% 0%, 100% 100%, 0% 100%)',
+    //   'polygon(20% 0%, 20% 0%, 20% 100%, 40% 100%, 40% 0%, 40% 0%, 40% 100%, 60% 100%, 60% 0%, 60% 0%, 60% 100%, 80% 100%, 80% 0%, 80% 0%, 80% 100%, 100% 100%, 100% 0%, 100% 0%, 100% 100%, 20% 100%)'
+    // ]
+    // const clipPath = [`inset(5% 100% 5% -50%)`, 'inset(45% 0% 45% 50%)', 'inset(0)']
+    document.documentElement.animate(
+      {
+        clipPath: !isDark ? clipPath : [...clipPath].reverse()
+      },
+      {
+        duration: 500,
+        easing: 'ease-in',
+        pseudoElement: !isDark ? '::view-transition-new(root)' : '::view-transition-old(root)'
+      }
+    )
+  })
 }
 </script>
 
 <style lang="scss">
+.switchAppearance.switchAppearanceTransition {
+  width: 22px;
+}
+.dark .switchAppearance:not(.switchAppearanceTransition) :deep(.check) {
+  /*rtl:ignore*/
+  transform: translateX(18px);
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+::view-transition-old(root) {
+  z-index: 9999;
+}
+::view-transition-new(root),
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+.dark::view-transition-new(root) {
+  z-index: 9999;
+}
 .bl {
   &-header {
     position: fixed;
@@ -106,7 +177,7 @@ function switchTheme() {
   }
 
   &-logo {
-    margin-left: 100px;
+    margin-inline-start: 100px;
     height: 55px;
     display: flex;
     align-items: center;
@@ -114,7 +185,7 @@ function switchTheme() {
     img {
       width: 40px;
       height: 40px;
-      margin-right: 20px;
+      margin-inline-end: 20px;
     }
   }
 
@@ -144,15 +215,15 @@ function switchTheme() {
       height: 100%;
       line-height: var(--header-height);
       color: var(--bl-content-color-base);
-      margin-right: 12px;
+      margin-inline-end: 12px;
       transition: var(--bl-transition-border);
       border-bottom: var(--bl-border-shape) transparent;
       &:hover {
-        border-bottom: var(--bl-border-shape) var(--bl-color-primary-base);
+        border-bottom: 2px solid var(--bl-color-primary-base);
       }
     }
     .active {
-      border-bottom: var(--bl-border-shape) var(--bl-color-primary-base);
+      border-bottom: 2px solid var(--bl-color-primary-base);
     }
   }
 }
