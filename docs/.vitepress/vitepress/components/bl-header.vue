@@ -26,6 +26,7 @@
         <Switch
           :open-icon="Sun"
           :close-icon="Moon"
+          :value="checked"
           class="theme-switch switchAppearance"
           @click="switchTheme"
         ></Switch>
@@ -35,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
 import { Sun, Moon } from '@bole-design/icons'
@@ -47,6 +48,7 @@ defineComponent({
 const route = useRoute()
 const nav = useNav()
 const rootCls = document.documentElement.classList
+const checked = ref(false)
 
 function isActive(routePath: string, link: string) {
   return routePath.includes(link)
@@ -57,12 +59,12 @@ function setClass(dark: boolean): void {
   css.appendChild(
     document.createTextNode(
       `:not(.switchAppearance):not(.switchAppearance *) {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -o-transition: none !important;
-  -ms-transition: none !important;
-  transition: none !important;
-}`
+				-webkit-transition: none !important;
+				-moz-transition: none !important;
+				-o-transition: none !important;
+				-ms-transition: none !important;
+				transition: none !important;
+			}`
     )
   )
   document.head.appendChild(css)
@@ -70,6 +72,7 @@ function setClass(dark: boolean): void {
   // @ts-expect-error keep unused declaration, used to force the browser to redraw
   const _ = window.getComputedStyle(css).opacity
   document.head.removeChild(css)
+  checked.value = !dark
 }
 function switchTheme(event: MouseEvent) {
   const x = event.clientX

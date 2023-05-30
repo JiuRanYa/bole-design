@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { useNamespace, useEventListener } from '@bole-design/hooks'
-import { computed, defineComponent, ref, h } from 'vue'
+import { computed, defineComponent, ref, h, watch } from 'vue'
 import { useProps } from '@bole-design/common'
 import { Icon } from '@bole-design/components'
 import { switchProps } from './props'
@@ -43,6 +43,12 @@ export default defineComponent({
     const open = ref(props.value)
     const switchRef = ref()
 
+    watch(
+      () => props.value,
+      value => {
+        open.value = value
+      }
+    )
     function toggleState() {
       open.value = !open.value
     }
