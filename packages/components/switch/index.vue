@@ -1,14 +1,20 @@
 <template>
   <button ref="switchRef" :class="className" role="switch">
-    <div :class="[ns.bs('signal')]"></div>
+    <div :class="[ns.bs('signal')]">
+      <slot name="icon">
+        <Icon v-if="open && props.openIcon" :icon="props.openIcon"></Icon>
+        <Icon v-if="!open && props.closeIcon" :icon="props.closeIcon"></Icon>
+      </slot>
+    </div>
     <div :class="[ns.bs('inner')]"></div>
   </button>
 </template>
 
 <script lang="ts">
 import { useNamespace, useEventListener } from '@bole-design/hooks'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, h } from 'vue'
 import { useProps } from '@bole-design/common'
+import { Icon } from '@bole-design/components'
 import { switchProps } from './props'
 
 export default defineComponent({
@@ -19,7 +25,9 @@ export default defineComponent({
     const props = useProps('switch', _props, {
       value: {
         default: false
-      }
+      },
+      openIcon: null,
+      closeIcon: null
     })
 
     const className = computed(() => {
@@ -44,7 +52,10 @@ export default defineComponent({
     return {
       ns,
       className,
-      switchRef
+      h,
+      switchRef,
+      props,
+      open
     }
   }
 })

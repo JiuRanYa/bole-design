@@ -3,6 +3,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Button: typeof import('bole-design')['Button']
     Col: typeof import('bole-design')['Col']
+    Icon: typeof import('bole-design')['Icon']
     Menu: typeof import('bole-design')['Menu']
     Popper: typeof import('bole-design')['Popper']
     Portal: typeof import('bole-design')['Portal']

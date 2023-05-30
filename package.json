@@ -14,12 +14,13 @@
   ],
   "scripts": {
     "build": "tsx scripts/build.ts",
+    "build:style": "gulp --require sucrase/register/ts",
+    "build:icons": "pnpm -C packages/icons build && pnpm i",
     "build:internal": "pnpm -C internal build",
     "props": "tsx scripts/props.ts",
     "serve": "tsx scripts/serve.ts",
     "serve:docs": "pnpm -C docs serve",
-    "bootstrap": "tsx scripts/bootstrap.ts",
-    "build:style": "gulp --require sucrase/register/ts"
+    "bootstrap": "tsx scripts/bootstrap.ts"
   },
   "dependencies": {
     "@bole-design/common": "workspace:*",

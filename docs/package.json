@@ -17,6 +17,7 @@
     "@bole-design/components": "workspace:*",
     "@bole-design/internal": "workspace:*",
     "@bole-design/styles": "workspace:*",
+    "@bole-design/icons": "workspace:*",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-container": "^2.0.5",
     "@vitejs/plugin-vue-jsx": "^3.0.1",

@@ -1,0 +1,56 @@
+{
+  "name": "@bole-design/icons",
+  "version": "1.2.0",
+  "license": "MIT",
+  "anchor": "qmhc",
+  "scripts": {
+    "build": "tsx scripts/build.ts"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "types": "types/index.d.ts",
+  "sideEffects": [
+    "dist/*"
+  ],
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./es/index.mjs",
+      "types": "./types/index.d.ts"
+    },
+    "./es": "./es/index.mjs",
+    "./lib": "./lib/index.js",
+    "./es/*.mjs": "./es/*.mjs",
+    "./es/*": "./es/*.mjs",
+    "./lib/*.js": "./lib/*.js",
+    "./lib/*": "./lib/*.js",
+    "./package.json": "./package.json",
+    "./*": "./*"
+  },
+  "files": [
+    "dist",
+    "es",
+    "lib",
+    "types",
+    "vue"
+  ],
+  "homepage": "https://github.com/vexip-ui/vexip-ui/tree/main/common/icons#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vexip-ui/vexip-ui.git",
+    "directory": "common/icons"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.23",
+    "@types/prettier": "^2.7.1",
+    "execa": "^6.1.0",
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^10.1.0",
+    "kolorist": "^1.6.0",
+    "prettier": "^2.7.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.25"
+  }
+}

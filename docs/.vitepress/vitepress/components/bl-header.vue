@@ -23,7 +23,12 @@
           }"
           >{{ item.text }}</a
         >
-        <Switch class="theme-switch" @click="switchTheme"></Switch>
+        <Switch
+          :open-icon="Sun"
+          :close-icon="Moon"
+          class="theme-switch"
+          @click="switchTheme"
+        ></Switch>
       </div>
     </Col>
   </Row>
@@ -34,6 +39,7 @@ import { defineComponent } from 'vue'
 import { useProject } from '../composables/project'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
+import { Sun, Moon } from '@bole-design/icons'
 
 defineComponent({
   name: 'header'
@@ -123,7 +129,7 @@ function switchTheme() {
     .theme-switch {
       border: 1px solid var(--bl-border-color-base);
       --bl-switch-bg-color: var(--bl-fill-color-background);
-      --bl-switch-bg-color-open: var(--bl-fill-color-background);
+      --bl-switch-bg-color-open: var(--bl-fill-color-secondary);
 
       html.dark & {
         --bl-switch-bg-color: var(--bl-fill-color-background);
