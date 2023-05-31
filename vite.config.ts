@@ -9,7 +9,7 @@ import { generateExternal } from './scripts/utils'
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
   const input = excludeFiles(
-    await glob('**/*.{js,ts,vue,tsx}', {
+    await glob('bole-design/*.{js,ts,vue,tsx}', {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true
@@ -19,10 +19,7 @@ export default defineConfig(async () => {
   return {
     publicDir: false,
     resolve: {
-      alias: [
-        { find: /^@\//, replacement: resolve(__dirname) },
-        { find: /^@\/common/, replacement: resolve(__dirname, './packages/common') }
-      ]
+      alias: [{ find: /^@\//, replacement: resolve(__dirname) }]
     },
     build: {
       outDir: 'dist',

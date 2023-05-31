@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { RendererElement, computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import SourceCode from './demo/source-code.vue'
-import { Icon } from '@bole-design/components'
 import { Code } from '@bole-design/icons'
+import { CollapseTransition } from '@bole-design/components'
 
 defineComponent({
   name: 'bl-demo'
@@ -48,7 +48,9 @@ function expandCode() {
       </Tooltip>
     </div>
 
-    <SourceCode :source="source" v-if="showCode" />
+    <CollapseTransition>
+      <SourceCode :source="source" v-if="showCode" />
+    </CollapseTransition>
   </div>
 </template>
 

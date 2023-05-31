@@ -16,8 +16,8 @@ async function main() {
   await run('pnpm', ['bootstrap'])
   await run('vite', ['build', '--config', 'vite.config.ts'], {
     env: {
-      NODE_ENV: env,
-    },
+      NODE_ENV: env
+    }
   })
   await run('pnpm', ['props'])
   await run('pnpm', ['build:style'])
@@ -29,7 +29,7 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   logger.error(error)
   process.exit(1)
 })
