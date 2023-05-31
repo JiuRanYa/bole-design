@@ -1,6 +1,6 @@
 import { onBeforeUnmount } from 'vue'
 
-export default function useSetTimeout() {
+export function useSetTimeout() {
   const timer: Record<string, any> = {}
 
   onBeforeUnmount(() => {

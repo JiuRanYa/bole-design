@@ -1,0 +1,20 @@
+@use './shared' as *;
+@use './design' as *;
+
+$date-picker: () !default;
+$date-picker: map.merge(
+  (
+    panel-shadow: get-css-var('shadow-base')
+  ),
+  $date-picker
+);
+
+.#{$namespace}-date-picker {
+  &__popper {
+    padding: 8px 0;
+  }
+
+  &__panel {
+    box-shadow: var(--bl-date-picker-panel-shadow);
+  }
+}

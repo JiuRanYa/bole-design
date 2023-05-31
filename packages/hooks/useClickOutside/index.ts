@@ -9,9 +9,9 @@ type ClickoutSideOptions = {
   ignore?: (MaybeElementRef | string)[]
 }
 
-export function useClickoutSide(
-  handler: (event?: MouseEvent) => void,
+export function useClickOutside(
   target: Ref<HTMLElement | null | undefined> = ref(null),
+  handler: (event?: MouseEvent) => void,
   options: ClickoutSideOptions = {}
 ) {
   const { ignore = [] } = options

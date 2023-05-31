@@ -7,11 +7,13 @@ import { useNamespace } from './useNamespace'
 import { usePopper } from './usePopper'
 import { useSetTimeout } from './useSetTimeout'
 
-export * from './useArray'
-export * from './useAsync'
-export * from './useClickOutside'
-export * from './useEventListener'
-export * from './useLocalStorage'
-export * from './useNamespace'
-export * from './usePopper'
-export * from './useSetTimeout'
+export {
+  useArray,
+  useAsync,
+  useClickOutside,
+  useEventListener,
+  useLocalStorage,
+  useNamespace,
+  usePopper,
+  useSetTimeout
+}

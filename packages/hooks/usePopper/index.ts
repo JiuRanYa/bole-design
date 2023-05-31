@@ -21,7 +21,7 @@ interface UsePopperOptions {
   popperEl: Ref<HTMLElement | null | undefined>
 }
 
-export default function usePopper(options: UsePopperOptions) {
+export function usePopper(options: UsePopperOptions) {
   const { placement } = options
   const referenceEl = options.referenceEl ?? ref(null)
   const popperEl = options.popperEl ?? ref(null)
