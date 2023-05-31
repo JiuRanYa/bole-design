@@ -39,7 +39,10 @@ export const siderbarsConfig: SidebarsConfig = {
     hooks: [
       {
         text: 'Hooks',
-        children: [{ text: 'usePopper', link: '/hooks/usePopper' }]
+        children: [
+          { text: 'usePopper', link: '/hooks/usePopper' },
+          { text: 'useClickOutside', link: '/hooks/useClickOutside' }
+        ]
       }
     ]
   },
