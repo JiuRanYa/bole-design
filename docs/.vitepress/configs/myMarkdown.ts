@@ -5,7 +5,6 @@ import mdContainer from 'markdown-it-container'
 import type Token from 'markdown-it/lib/token'
 import { docRoot } from '@bole-design/internal'
 import { highlight } from '../utils/highlight'
-import { computed } from 'vue'
 
 const localMd = MarkdownIt()
 

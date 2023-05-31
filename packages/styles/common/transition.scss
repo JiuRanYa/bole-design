@@ -1,0 +1,14 @@
+@use '../shared' as *;
+@use '../design' as *;
+
+.collapse-transition {
+  transition: get-css-var(transition-duration) height ease-in-out, 20s padding-top ease-in-out,
+    20s padding-bottom ease-in-out;
+}
+
+.#{$namespace}-collapse-transition-leave-active,
+.#{$namespace}-collapse-transition-enter-active {
+  transition: get-css-var(transition-duration) max-height ease-in-out,
+    get-css-var(transition-duration) padding-top ease-in-out,
+    get-css-var(transition-duration) padding-bottom ease-in-out;
+}
