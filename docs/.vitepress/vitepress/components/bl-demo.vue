@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RendererElement, computed, defineComponent, ref } from 'vue'
 import SourceCode from './demo/source-code.vue'
+import { Icon } from '@bole-design/components'
+import { Code } from '@bole-design/icons'
 
 defineComponent({
   name: 'bl-demo'
@@ -41,13 +43,8 @@ function expandCode() {
     </div>
 
     <div class="demo-code-actions">
-      <Tooltip content="查看源代码" :reverse="true" transfer>
-        <img
-          alt="expand code"
-          src="/svg/coding.svg"
-          class="code-expand-icon-show"
-          @click="expandCode"
-        />
+      <Tooltip content="查看源代码" :reverse="true" transfer class="demo-code-action">
+        <Icon :icon="Code" @click="expandCode" />
       </Tooltip>
     </div>
 
@@ -78,6 +75,14 @@ function expandCode() {
       height: 18px;
       opacity: 0.3;
       cursor: pointer;
+    }
+    .demo-code-action {
+      cursor: pointer;
+      transition: var(--vxp-transition-color);
+      &:hover,
+      &:focus {
+        color: var(--bl-color-primary-opacity-2);
+      }
     }
   }
 }

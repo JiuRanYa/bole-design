@@ -26,8 +26,6 @@ export default function usePopper(options: UsePopperOptions) {
   const referenceEl = options.referenceEl ?? ref(null)
   const popperEl = options.popperEl ?? ref(null)
 
-  console.log(popperEl.value)
-
   let stopWatchPopper: WatchStopHandle | null = null
 
   function createPopper() {

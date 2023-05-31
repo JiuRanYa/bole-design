@@ -7,7 +7,6 @@ export function useEventListener<E = Event>(
   listener: (event: E) => any,
   options?: AddEventListenerOptions | boolean
 ) {
-  console.log(target)
   if (!target) {
     return
   }

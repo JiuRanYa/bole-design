@@ -10,7 +10,7 @@ import {
 } from 'vue'
 import { toolTipProps } from './props'
 import { placementWhiteList, triggerWhiteList, useProps } from '@bole-design/common'
-import { useNamespace, useEventListener } from '@bole-design/hooks'
+import { useNamespace, useEventListener, useClickoutSide } from '@bole-design/hooks'
 import { Popper, PopperExposed } from '@bole-design/components'
 import usePopper from '@bole-design/hooks/usePopper'
 import useSetTimeout from '@bole-design/hooks/useSetTimeout'
@@ -64,12 +64,18 @@ export default defineComponent({
       return originTriggerEl.value
     })
 
+    function handleClickOutside() {
+      visible.value = false
+    }
+
     usePopper({
       referenceEl,
       transfer,
       popperEl,
       placement
     })
+
+    useClickoutSide(handleClickOutside, originTriggerEl, { ignore: [popperEl] })
 
     const classNames = computed(() => {
       return [ns.b(), ns.bs('vars'), props.inherit && ns.bm('inherit')]

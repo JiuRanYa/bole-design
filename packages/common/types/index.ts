@@ -12,6 +12,8 @@ export const booleanStringProp = {
 export type EnsureValue<T> = Exclude<T, undefined | null>
 
 export type MaybeRef<T> = T | Ref<T>
+export type MaybeElement = HTMLElement | SVGElement | undefined | null
+export type MaybeElementRef<T extends MaybeElement = MaybeElement> = MaybeRef<T>
 
 export type Expand<T> = T extends unknown ? { [K in keyof T]: T[K] } : never
 
