@@ -51,7 +51,10 @@ const rootCls = document.documentElement.classList
 const checked = ref(false)
 
 function isActive(routePath: string, link: string) {
-  return routePath.includes(link)
+  const routeTop = routePath.split('/').slice(1, 4).pop()
+  const linkTop = link.split('/').slice(1, 4).pop()
+
+  return routeTop === linkTop
 }
 function setClass(dark: boolean): void {
   const css = document.createElement('style')
