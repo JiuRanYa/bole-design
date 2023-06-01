@@ -11,14 +11,16 @@ $month-grid: map.merge((), $month-grid);
     @include define-preset-values('date-picker', $month-grid);
   }
   width: 100%;
-  padding: 22px;
+  padding-inline: 22px;
+  padding-top: 12px;
 
   &__title {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     font-size: 18px;
+    font-weight: 500;
+    padding-left: calc(((100% / 7) - var(--bl-font-size-base)) / 2);
   }
 
   &__days--body {
@@ -31,6 +33,12 @@ $month-grid: map.merge((), $month-grid);
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 50%;
+
+        &[aria-label]:not([aria-label='']):hover {
+          cursor: pointer;
+          background-color: get-css-var('color-primary-base');
+        }
       }
     }
   }

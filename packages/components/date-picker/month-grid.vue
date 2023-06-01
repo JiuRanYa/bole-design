@@ -16,7 +16,7 @@ const ns = useNamespace('month-grid')
 const _props = defineProps(monthGridProps)
 
 const props = useProps('month-grid', _props, {
-  value: '2023-6-01'
+  value: '2023-6'
 })
 
 const monthTitle = computed(() => {
@@ -33,7 +33,13 @@ const className = computed(() => {
 })
 
 function getDayAriaLabel(row: number, cell: number) {
-  return (row - 1) * 7 + cell <= daysInMonth.value ? `${(row - 1) * 7 + cell}` : ''
+  const start = (row - 1) * 7
+  const offsetValue = start + cell - weekDay.value + 1
+
+  if (start === 0) {
+    return start + cell < weekDay.value ? '' : `${offsetValue}`
+  }
+  return offsetValue <= daysInMonth.value ? `${offsetValue}` : ''
 }
 
 function getWeekDayByDate(date: string) {

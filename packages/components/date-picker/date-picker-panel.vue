@@ -27,9 +27,7 @@ defineExpose({
         <div :class="ns.be('header')">
           <div v-for="i in weekDay" :class="ns.bem('header', 'day')">{{ i }}</div>
         </div>
-        <div :class="ns.be('calendar')">
-          <DatePickerCalendar />
-        </div>
+        <DatePickerCalendar />
       </div>
       <div :class="ns.be('action')"></div>
     </div>

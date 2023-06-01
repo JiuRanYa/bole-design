@@ -52,6 +52,9 @@ $date-picker: map.merge(
   }
 
   &__calendar {
-    height: 274px;
+    max-height: 474px;
+    overflow: auto;
+    -webkit-mask-image: linear-gradient(transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(transparent, #000 10%, #000 90%, transparent);
   }
 }

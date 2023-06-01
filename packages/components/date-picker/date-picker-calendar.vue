@@ -10,14 +10,15 @@ defineComponent({
 })
 const _props = defineProps(calendarProps)
 
-const ns = useNamespace('calendar')
+const ns = useNamespace('date-picker')
 const props = useProps('calendar', _props, {
   value: ''
 })
+const renderDate = ['2023-06', '2023-07', '2023-08']
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <MonthGrid />
+  <div :class="ns.be('calendar')">
+    <MonthGrid v-for="date in renderDate" :value="date" />
   </div>
 </template>
