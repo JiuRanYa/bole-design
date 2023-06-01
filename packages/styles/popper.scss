@@ -5,7 +5,7 @@
 
 .#{$namespace}-popper {
   @include basis;
-  display: flex;
 
+  display: flex;
   z-index: 100;
 }

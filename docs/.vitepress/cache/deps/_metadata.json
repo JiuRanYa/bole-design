@@ -1,19 +1,35 @@
 {
-  "hash": "7360f7bb",
-  "browserHash": "df4c111b",
+  "hash": "bbe96c29",
+  "browserHash": "70914b18",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.2.47/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "56e9c196",
+      "fileHash": "e44d690c",
       "needsInterop": false
     },
     "@floating-ui/dom": {
       "src": "../../../../node_modules/.pnpm/@floating-ui+dom@1.2.8/node_modules/@floating-ui/dom/dist/floating-ui.dom.browser.mjs",
       "file": "@floating-ui_dom.js",
-      "fileHash": "e1e565e0",
+      "fileHash": "5bff900b",
       "needsInterop": false
+    },
+    "dayjs": {
+      "src": "../../../../node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/dayjs.min.js",
+      "file": "dayjs.js",
+      "fileHash": "6bc2855f",
+      "needsInterop": true
+    },
+    "dayjs/plugin/dayOfYear": {
+      "src": "../../../../node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/plugin/dayOfYear.js",
+      "file": "dayjs_plugin_dayOfYear.js",
+      "fileHash": "70e4dff6",
+      "needsInterop": true
     }
   },
-  "chunks": {}
+  "chunks": {
+    "chunk-RSJERJUL": {
+      "file": "chunk-RSJERJUL.js"
+    }
+  }
 }

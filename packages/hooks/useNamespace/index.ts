@@ -4,36 +4,6 @@ import { computed, unref } from 'vue'
 // export const PROVIDED_NAMESPACE = '__bl-provided-namespace'
 export const globalNamespace = computed(() => 'bl')
 
-// export function configNamespace(sourceNamespace: MaybeRef<string>, app?: App) {
-//   if (app) {
-//     const namespace = computed(() => {
-//       const namespace = unref(sourceNamespace)
-//
-//       return namespace || globalNamespace.value
-//     })
-//
-//     app.provide(PROVIDED_NAMESPACE, namespace)
-//   } else {
-//     const upstreamNamespace = inject<ComputedRef<string> | null>(
-//       PROVIDED_NAMESPACE,
-//       null
-//     )
-//     const namespace = computed(() => {
-//       return (
-//         unref(sourceNamespace) ||
-//         upstreamNamespace?.value ||
-//         globalNamespace.value
-//       )
-//     })
-//
-//     provide(PROVIDED_NAMESPACE, namespace)
-//   }
-// }
-
-// export function useNamespace() {
-//   return inject(PROVIDED_NAMESPACE, globalNamespace)
-// }
-
 /**
  * Create a name helper for BEM.
  *

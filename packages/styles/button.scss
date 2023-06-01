@@ -42,6 +42,7 @@ $button: map.merge(
 );
 
 .#{$namespace}-button {
+  @include basis;
   &-vars {
     @include define-preset-values('button', $button);
   }

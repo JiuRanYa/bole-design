@@ -1,0 +1,37 @@
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$month-grid: () !default;
+$month-grid: map.merge((), $month-grid);
+
+.#{$namespace}-month-grid {
+  &-vars {
+    @include define-preset-values('date-picker', $month-grid);
+  }
+  width: 100%;
+  padding: 22px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+
+  &__days--body {
+    tr[role='row'] {
+      display: flex;
+
+      td {
+        width: calc(100% / 7);
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

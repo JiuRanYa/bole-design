@@ -6,8 +6,10 @@
 $date-picker: () !default;
 $date-picker: map.merge(
   (
-    panel-shadow: get-css-var('shadow-base'),
-    panel-width: 300px
+    header-font-size: 12px,
+    panel-width: 300px,
+    panel-border: get-css-var('border-base'),
+    panel-shadow: get-css-var('shadow-base')
   ),
   $date-picker
 );
@@ -20,11 +22,36 @@ $date-picker: map.merge(
     padding: 8px 0;
   }
 
-  &--panel {
-    box-shadow: var(--bl-date-picker-panel-shadow);
+  &__panel {
+    // box-shadow: var(--bl-date-picker-panel-shadow);
+    border: get-css-var(border-shape) get-css-var(border-color-light-2);
+    border-radius: 12px;
   }
 
   &--list {
     width: var(--bl-date-picker-panel-width);
+  }
+
+  &__panel--body {
+    position: relative;
+  }
+
+  &__header {
+    height: 30px;
+    display: grid;
+    grid-template-columns: repeat(7, calc((get-css-var('date-picker-panel-width') - 44px) / 7));
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    box-shadow: rgba(55, 56, 60, 0.12) 0px 1px 2px;
+    font-size: get-css-var(date-picker-header-font-size);
+    &--day {
+      text-align: center;
+    }
+  }
+
+  &__calendar {
+    height: 274px;
   }
 }

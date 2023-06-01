@@ -16,6 +16,7 @@ export function useClickOutside(
 ) {
   const { ignore = [] } = options
   let shouldListen = true
+	console.log(ignore)
 
   const listener = (event: PointerEvent) => {
     if (!target.value || target.value.contains(event.target as HTMLElement)) return

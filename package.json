@@ -26,7 +26,8 @@
     "@bole-design/common": "workspace:*",
     "@bole-design/components": "workspace:*",
     "@bole-design/hooks": "workspace:*",
-    "@bole-design/internal": "workspace:*"
+    "@bole-design/internal": "workspace:*",
+    "dayjs": "^1.11.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",
