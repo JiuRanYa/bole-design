@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, toRef } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
+import { useProps } from '@bole-design/common'
+import { datePickerProps } from './props'
 
 defineComponent({
-  name: 'time-picker'
+  name: 'date-picker'
+})
+
+const _props = defineProps(datePickerProps)
+const props = useProps('date-picker', _props, {
+  placement: 'bottom-start'
 })
 
 const ns = useNamespace('date-picker')
@@ -13,16 +20,25 @@ const ns = useNamespace('date-picker')
 const referenceEl = computed(() => {
   return originTrigger.value
 })
-const originTrigger = ref<HTMLElement>()
 const popper = ref<PopperExposed>()
+const originTrigger = ref<HTMLElement>()
 const popperEl = computed(() => popper.value?.wrapper)
+
 const visible = ref(false)
+const placement = toRef(props, 'placement')
 
 usePopper({
   referenceEl,
   popperEl,
-  placement: ref('bottom')
+  placement
 })
+
+useClickOutside(originTrigger, handleClickOutside)
+
+const popperClass = computed(() => {
+  return [ns.be('popper')]
+})
+
 function showDatePanel() {
   visible.value = !visible.value
 }
@@ -30,11 +46,6 @@ function showDatePanel() {
 function handleClickOutside() {
   visible.value = false
 }
-const popperClass = computed(() => {
-  return [ns.be('popper')]
-})
-
-useClickOutside(originTrigger, handleClickOutside)
 </script>
 
 <template>

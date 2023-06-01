@@ -6,17 +6,25 @@
 $date-picker: () !default;
 $date-picker: map.merge(
   (
-    panel-shadow: get-css-var('shadow-base')
+    panel-shadow: get-css-var('shadow-base'),
+    panel-width: 300px
   ),
   $date-picker
 );
 
 .#{$namespace}-date-picker {
+  &-vars {
+    @include define-preset-values('date-picker', $date-picker);
+  }
   &__popper {
     padding: 8px 0;
   }
 
-  &__panel {
+  &--panel {
     box-shadow: var(--bl-date-picker-panel-shadow);
+  }
+
+  &--list {
+    width: var(--bl-date-picker-panel-width);
   }
 }
