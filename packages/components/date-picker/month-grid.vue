@@ -31,6 +31,9 @@ const daysRowNum = computed(() => {
 const className = computed(() => {
   return [ns.b(), ns.bs('vars')]
 })
+const weekDay = computed(() => {
+  return getWeekDayByDate(props.value)
+})
 
 function getDayAriaLabel(row: number, cell: number) {
   const start = (row - 1) * 7
@@ -45,7 +48,7 @@ function getDayAriaLabel(row: number, cell: number) {
 function getWeekDayByDate(date: string) {
   const year = dayjs(date).year()
   const whitchDay = dayjs(date).dayOfYear()
-  let result =
+  const result =
     (year -
       1 +
       Math.floor((year - 1) / 4) -
@@ -56,9 +59,6 @@ function getWeekDayByDate(date: string) {
 
   return result
 }
-const weekDay = computed(() => {
-  return getWeekDayByDate(props.value)
-})
 </script>
 
 <template>
