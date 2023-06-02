@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import dayjs from 'dayjs'
@@ -59,10 +59,14 @@ function getWeekDayByDate(date: string) {
 
   return result
 }
+
+const tableRef = ref<HTMLElement>()
+
+defineExpose({ tableRef })
 </script>
 
 <template>
-  <table :class="className">
+  <table :class="className" tableRef :aria-label="value" ref="tableRef">
     <thead :class="ns.be('title')">
       {{
         monthTitle
