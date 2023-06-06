@@ -66,7 +66,7 @@ defineExpose({ tableRef })
 </script>
 
 <template>
-  <table :class="className" tableRef :aria-label="value" ref="tableRef">
+  <table :class="className" :aria-label="value" ref="tableRef">
     <thead :class="ns.be('title')">
       {{
         monthTitle
