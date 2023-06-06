@@ -45,16 +45,16 @@ defineComponent({
 }
 
 .link:hover .link-text {
-  color: var(--bl-color-primary-light-4);
+  color: var(--bl-color-primary-light-1);
   transition: color 0.25s;
 }
 
 .link.active {
-  background-color: var(--bl-color-primary-opacity-8);
+  background-color: var(--bl-color-primary-light-9);
   .link-text {
     font-weight: 600;
     transition: color 0.25s;
-    color: var(--bl-color-primary-base);
+    color: var(--bl-color-primary-light-1);
   }
 }
 

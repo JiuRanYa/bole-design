@@ -10,7 +10,8 @@ $date-picker: map.merge(
     panel-width: 300px,
     panel-border: get-css-var('border-base'),
     panel-shadow: get-css-var('shadow-base'),
-    panel-bg-color: get-css-var('bg-color-base')
+    panel-bg-color: get-css-var('bg-color-base'),
+    confirm-btn-hover-bg: #f4f4fd
   ),
   $date-picker
 );
@@ -36,6 +37,19 @@ $date-picker: map.merge(
 
   &__panel--body {
     position: relative;
+  }
+
+  &__action {
+    display: flex;
+    padding: 8px 24px;
+    justify-content: flex-end;
+    .#{$namespace}-button {
+      --#{$namespace}-button-b-color: none;
+      &:hover {
+        color: get-css-var('color-primary-base');
+        background: get-css-var('date-picker-confirm-btn-hover-bg');
+      }
+    }
   }
 
   &__header {

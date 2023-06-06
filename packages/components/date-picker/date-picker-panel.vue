@@ -29,7 +29,10 @@ defineExpose({
         </div>
         <DatePickerCalendar />
       </div>
-      <div :class="ns.be('action')"></div>
+      <div :class="ns.be('action')">
+        <Button>取消</Button>
+        <Button>确认</Button>
+      </div>
     </div>
   </div>
 </template>

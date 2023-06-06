@@ -24,7 +24,7 @@ $color-map: () !default;
 $color-map: map.deep-merge(
   (
     primary: (
-      base: #339af0
+      base: #4f44e0
     ),
     info: (
       base: #3bc9db
@@ -151,7 +151,7 @@ $content-color-map: () !default;
 $content-color-map: map.merge(
   (
     primary: #212529,
-    base: #495057,
+    base: #181c32,
     secondary: #868e96,
     third: #a1adb1,
     disabled: #adb5bd,
