@@ -3,7 +3,7 @@ import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { computed, ref, toRef } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
-import { useProps } from '@bole-design/common'
+import { placementWhiteList, useProps } from '@bole-design/common'
 import { datePickerProps } from './props'
 
 defineOptions({
@@ -12,9 +12,12 @@ defineOptions({
 
 const _props = defineProps(datePickerProps)
 const props = useProps('date-picker', _props, {
-  placement: 'bottom-start'
+  placement: {
+    default: 'bottom-start',
+    validator: value => placementWhiteList.includes(value)
+  },
+  transitionName: () => ns.ns('drop')
 })
-
 const ns = useNamespace('date-picker')
 
 const referenceEl = computed(() => {
@@ -53,7 +56,14 @@ function handleClickOutside() {
 
 <template>
   <span ref="originTriggerRef" @click="showDatePanel">Date picker trigger</span>
-  <Popper :class="popperClass" to="body" ref="popperRef" :visible="visible">
+  <Popper
+    :class="popperClass"
+    to="body"
+    ref="popperRef"
+    :visible="visible"
+    :transition="props.transitionName"
+    style="transform-origin: center top"
+  >
     <DatePickerPanel ref="panelRef"></DatePickerPanel>
   </Popper>
 </template>

@@ -1,8 +1,10 @@
 <template>
   <Portal :to="to">
-    <div v-if="visible" ref="wrapper" v-bind="$attrs" :class="classNames">
-      <slot></slot>
-    </div>
+    <transition :name="props.transition">
+      <div v-if="visible" ref="wrapper" v-bind="$attrs" :class="classNames">
+        <slot></slot>
+      </div>
+    </transition>
   </Portal>
 </template>
 
@@ -24,8 +26,10 @@ export default defineComponent({
     const ns = useNamespace('popper')
     const props = useProps('popper', _props, {
       to: '',
-      visible: false
+      visible: false,
+      transition: () => ns.ns('drop')
     })
+    console.log(props.transition)
     const wrapper = ref<HTMLElement>()
     const classNames = computed(() => {
       return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
