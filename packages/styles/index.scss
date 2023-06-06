@@ -1,5 +1,7 @@
 @forward './design/variables.scss';
 
+@use './common/transition.scss';
+
 @use './preset.scss';
 
 @use './button.scss';

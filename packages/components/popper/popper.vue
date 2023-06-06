@@ -27,9 +27,8 @@ export default defineComponent({
     const props = useProps('popper', _props, {
       to: '',
       visible: false,
-      transition: () => ns.ns('drop')
+      transition: ''
     })
-    console.log(props.transition)
     const wrapper = ref<HTMLElement>()
     const classNames = computed(() => {
       return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
