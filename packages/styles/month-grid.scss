@@ -2,6 +2,7 @@
 
 @use './shared' as *;
 @use './design' as *;
+@use './common/animation.scss' as *;
 
 $month-grid: () !default;
 $month-grid: map.merge((), $month-grid);
@@ -34,11 +35,15 @@ $month-grid: map.merge((), $month-grid);
         align-items: center;
         justify-content: center;
         border-radius: 50%;
+        transition: color 0.2s;
 
         &[aria-label]:not([aria-label='']):hover {
           cursor: pointer;
-          background-color: get-css-var('color-primary-base');
+          border: 2px solid get-css-var(color-primary-light-2);
         }
+      }
+      td + .current-date {
+        animation: border-flash 1.4s infinite;
       }
     }
   }

@@ -52,11 +52,17 @@ $date-picker: map.merge(
   }
 
   &__calendar {
-    overflow: auto;
-    -webkit-mask-image: linear-gradient(transparent, #000 10%, #000 90%, transparent);
-    mask-image: linear-gradient(transparent, #000 10%, #000 90%, transparent);
+    overflow-y: scroll;
+    -webkit-mask-image: linear-gradient(transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(transparent, #000 5%, #000 95%, transparent);
     height: 474px;
     position: relative;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 
     &--buffer {
       position: absolute;

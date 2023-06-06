@@ -16,8 +16,11 @@ const ns = useNamespace('month-grid')
 const _props = defineProps(monthGridProps)
 
 const props = useProps('month-grid', _props, {
-  value: '2023-6'
+  value: ''
 })
+
+const tableRef = ref<HTMLElement>()
+const now = dayjs().format('YYYY-MM-DD')
 
 const monthTitle = computed(() => {
   return dayjs(props.value).format('YYYY年MM月')
@@ -60,7 +63,10 @@ function getWeekDayByDate(date: string) {
   return result
 }
 
-const tableRef = ref<HTMLElement>()
+function calcDate(day: string) {
+  if (!props.value || !day) return ''
+  return dayjs(`${props.value}-${day}`).format('YYYY-MM-DD')
+}
 
 defineExpose({ tableRef })
 </script>
@@ -74,7 +80,12 @@ defineExpose({ tableRef })
     </thead>
     <tbody :class="ns.bem('days', 'body')">
       <tr role="row" v-for="i in daysRowNum" :key="i">
-        <td part="data" :aria-label="getDayAriaLabel(i, j)" v-for="j in 7">
+        <td
+          part="data"
+          :aria-label="getDayAriaLabel(i, j)"
+          v-for="j in 7"
+          :class="{ 'current-date': now === calcDate(getDayAriaLabel(i, j)) }"
+        >
           {{ getDayAriaLabel(i, j) }}
         </td>
       </tr>

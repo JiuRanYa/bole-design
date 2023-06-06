@@ -15,16 +15,24 @@ const ns = useNamespace('date-picker')
 const props = useProps('calendar', _props, {
   value: ''
 })
-const renderDate = ref(['2023-04', '2023-05', '2023-06', '2023-07', '2023-08', '2023-09'])
+const renderDate = ref(initRenderDate())
 
 const bufferRef = ref<HTMLDivElement>()
 const calendarRef = ref<HTMLDivElement>()
 const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 
-function calculateMonthFront(date: string) {
+function initRenderDate() {
+  const currentDate = props.value ? props.value : dayjs().format('YYYY-MM')
+
+  const front = calculateMonthFront(currentDate, 3)
+  const back = calculateMonthBack(currentDate, 2)
+
+  return [...front, currentDate, ...back]
+}
+function calculateMonthFront(date: string, len = renderDate.value.length / 2) {
   const res = []
 
-  for (let i = 0; i < renderDate.value.length / 2; i++) {
+  for (let i = 0; i < len; i++) {
     res.unshift(
       dayjs(date)
         .subtract(i + 1, 'month')
@@ -35,10 +43,10 @@ function calculateMonthFront(date: string) {
   return res
 }
 
-function calculateMonthBack(date: string) {
+function calculateMonthBack(date: string, len = renderDate.value.length / 2) {
   const res = []
 
-  for (let i = 0; i < renderDate.value.length / 2; i++) {
+  for (let i = 0; i < len; i++) {
     res.push(
       dayjs(date)
         .add(i + 1, 'month')
@@ -63,7 +71,7 @@ function patchBackDate(reserve: boolean) {
 }
 
 function patchFrontDate(reserve: boolean) {
-  const idx = reserve ? 0 : 3
+  const idx = reserve ? 3 : 0
   const currentDate = renderDate.value[idx]
 
   const appendDate = calculateMonthFront(currentDate)
@@ -71,9 +79,9 @@ function patchFrontDate(reserve: boolean) {
   const len = temp.length
 
   for (let i = 0; i < len / 2; i++) {
-    !reserve ? temp.shift() : temp.pop()
+    reserve ? temp.shift() : temp.pop()
   }
-  renderDate.value = !reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
+  renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
 }
 
 const topOffset = ref(0)
@@ -106,21 +114,21 @@ function scrollUpdate() {
   const calendarH = calendarRef.value ? calendarRef.value.offsetHeight : 0
   const botLimit = botTrans + (3 - calendarH / 231) * 231
   const topLimit = Math.min(topTranslate.value, botTranslate.value)
-  const shouldChangeTop = topTranslate.value < botTranslate.value ? true : false
-  const shouldDescTop = botTranslate.value < topTranslate.value ? true : false
+  const shouldIncreaseTop = topTranslate.value < botTranslate.value ? true : false
+  const shouldDecreaseTop = botTranslate.value < topTranslate.value ? true : false
 
   // 向下
   if (scrollTop > lastScrollTop) {
     if (scrollTop >= botLimit) {
-      shouldChangeTop ? (topOffset.value += 2) : (botOffset.value += 2)
-      patchBackDate(shouldChangeTop)
+      shouldIncreaseTop ? (topOffset.value += 2) : (botOffset.value += 2)
+      patchBackDate(shouldIncreaseTop)
     }
   }
   // 向上
   if (scrollTop < lastScrollTop) {
     if (scrollTop <= topLimit) {
-      shouldDescTop ? (topOffset.value -= 2) : (botOffset.value -= 2)
-      patchFrontDate(shouldChangeTop)
+      shouldDecreaseTop ? (topOffset.value -= 2) : (botOffset.value -= 2)
+      patchFrontDate(shouldDecreaseTop)
     }
   }
 
