@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import dayjs from 'dayjs'
@@ -30,7 +30,7 @@ const daysInMonth = computed(() => {
 })
 const daysRowNum = computed(() => {
   let res = Math.ceil(daysInMonth.value / 7)
-  if (weekDay.value !== 1 && daysInMonth.value % 7 === 0) res += 1
+  if (weekDay.value === 0 || daysInMonth.value % 7 === 0) res += 1
   return res
 })
 const className = computed(() => {

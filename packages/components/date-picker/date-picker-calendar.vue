@@ -112,7 +112,7 @@ function scrollUpdate() {
   const scrollTop = calendarRef.value?.scrollTop ?? 0
   const botTrans = Math.max(topTranslate.value, botTranslate.value)
   const calendarH = calendarRef.value ? calendarRef.value.offsetHeight : 0
-  const botLimit = botTrans + (3 - calendarH / 231) * 231
+  const botLimit = botTrans + bufferHeight.value - calendarH
   const topLimit = Math.min(topTranslate.value, botTranslate.value)
   const shouldIncreaseTop = topTranslate.value < botTranslate.value ? true : false
   const shouldDecreaseTop = botTranslate.value < topTranslate.value ? true : false
