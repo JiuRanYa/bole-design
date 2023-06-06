@@ -8,8 +8,8 @@ import dayOfYear from 'dayjs/plugin/dayOfYear'
 
 dayjs.extend(dayOfYear)
 
-defineComponent({
-  name: 'month-grid'
+defineOptions({
+  name: 'MonthGrid'
 })
 
 const ns = useNamespace('month-grid')
@@ -29,7 +29,9 @@ const daysInMonth = computed(() => {
   return dayjs(props.value).daysInMonth() ?? 0
 })
 const daysRowNum = computed(() => {
-  return Math.ceil(daysInMonth.value / 7)
+  let res = Math.ceil(daysInMonth.value / 7)
+  if (weekDay.value !== 1 && daysInMonth.value % 7 === 0) res += 1
+  return res
 })
 const className = computed(() => {
   return [ns.b(), ns.bs('vars')]
@@ -39,28 +41,23 @@ const weekDay = computed(() => {
 })
 
 function getDayAriaLabel(row: number, cell: number) {
-  const start = (row - 1) * 7
-  const offsetValue = start + cell - weekDay.value + 1
+  let start = (row - 1) * 7
+  let day = start + cell - weekDay.value + 1
 
-  if (start === 0) {
-    return start + cell < weekDay.value ? '' : `${offsetValue}`
+  // when weekDay equals to 0, it mains Sunday, offset add one
+  if (weekDay.value === 0) {
+    if (start === 0) {
+      return cell === 7 ? '1' : ''
+    }
+    start = (row - 2) * 7 + 1
+    day = start + cell
   }
-  return offsetValue <= daysInMonth.value ? `${offsetValue}` : ''
+
+  return day <= daysInMonth.value && day > 0 ? `${day}` : ''
 }
 
 function getWeekDayByDate(date: string) {
-  const year = dayjs(date).year()
-  const whitchDay = dayjs(date).dayOfYear()
-  const result =
-    (year -
-      1 +
-      Math.floor((year - 1) / 4) -
-      Math.floor((year - 1) / 100) +
-      Math.floor((year - 1) / 400) +
-      whitchDay) %
-    7
-
-  return result
+  return dayjs(date).day()
 }
 
 function calcDate(day: string) {
@@ -83,6 +80,7 @@ defineExpose({ tableRef })
         <td
           part="data"
           :aria-label="getDayAriaLabel(i, j)"
+          :role="`${i},${j}`"
           v-for="j in 7"
           :class="{ 'current-date': now === calcDate(getDayAriaLabel(i, j)) }"
         >

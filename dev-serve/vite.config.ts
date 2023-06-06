@@ -4,12 +4,13 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import Comp from 'unplugin-vue-components/vite'
 import { resolve } from 'node:path'
 import { readdirSync, statSync, existsSync } from 'node:fs'
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 const demos = process.env.DEMOS
 const port = parseInt(process.env.PORT || '') || 8008
 
 const componentsDir = resolve(__dirname, '../packages/components')
-const components = readdirSync(componentsDir).filter((f) => {
+const components = readdirSync(componentsDir).filter(f => {
   const path = resolve(componentsDir, f)
 
   if (!statSync(path).isDirectory()) {
@@ -24,32 +25,33 @@ export default defineConfig(() => {
     plugins: [
       vue(),
       vueJsx(),
+      DefineOptions(),
       Comp({
         dts: false,
         resolvers: [
           {
             type: 'component',
-            resolve: (name) => {
+            resolve: name => {
               const kebabName = toKebabCase(name)
 
               if (components.includes(kebabName)) {
                 return {
                   name,
-                  from: `@bole-design/components/${kebabName}/index.ts`,
+                  from: `@bole-design/components/${kebabName}/index.ts`
                 }
               }
-            },
-          },
-        ],
-      }),
+            }
+          }
+        ]
+      })
     ],
     define: {
       __DEMOS__: demos,
-      __PORT__: JSON.stringify(port),
+      __PORT__: JSON.stringify(port)
     },
     server: {
-      port,
-    },
+      port
+    }
   }
 })
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { weekDay } from './const'
 import { useNamespace } from '@bole-design/hooks'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import DatePickerCalendar from './date-picker-calendar.vue'
 
-defineComponent({
-  name: 'date-picker-panel'
+defineOptions({
+  name: 'DatePickerPanel'
 })
 
 const wrapper = ref()

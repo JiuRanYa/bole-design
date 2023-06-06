@@ -20,6 +20,7 @@ export function buildInstall(components: any[] = [], LocalConfig?: LocalConfig) 
       if (typeof component === 'function' || typeof component.install === 'function') {
         app.use(component)
       } else {
+        console.log(component)
         app.component(`${normallizedPrefix}${component.name}`, component)
       }
     })

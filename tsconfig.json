@@ -15,7 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": false,
     "baseUrl": ".",
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite/client", "unplugin-vue-define-options/macros-global"],
     "paths": {},
     "lib": ["esnext", "dom"]
   },

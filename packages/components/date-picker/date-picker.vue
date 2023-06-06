@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { computed, defineComponent, onMounted, ref, toRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
 import { useProps } from '@bole-design/common'
 import { datePickerProps } from './props'
 
-defineComponent({
-  name: 'date-picker'
+defineOptions({
+  name: 'DatePicker'
 })
 
 const _props = defineProps(datePickerProps)

@@ -38,7 +38,7 @@ $month-grid: map.merge((), $month-grid);
         transition: color 0.2s;
 
         &[aria-label]:not([aria-label='']):hover {
-          cursor: pointer;
+          cursor: default;
           border: 2px solid get-css-var(color-primary-light-2);
         }
       }

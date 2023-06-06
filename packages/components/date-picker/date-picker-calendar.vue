@@ -6,8 +6,8 @@ import { useProps } from '@bole-design/common'
 import MonthGrid from './month-grid.vue'
 import dayjs from 'dayjs'
 
-defineComponent({
-  name: 'date-picker-calendar'
+defineOptions({
+  name: 'DatePickerCalendar'
 })
 const _props = defineProps(calendarProps)
 
@@ -42,7 +42,6 @@ function calculateMonthFront(date: string, len = renderDate.value.length / 2) {
 
   return res
 }
-
 function calculateMonthBack(date: string, len = renderDate.value.length / 2) {
   const res = []
 
@@ -109,6 +108,7 @@ const bufferHeight = computed(() => {
 
 let lastScrollTop = 0
 function scrollUpdate() {
+  //TODO: need to change 231 to all table offsetHeight
   const scrollTop = calendarRef.value?.scrollTop ?? 0
   const botTrans = Math.max(topTranslate.value, botTranslate.value)
   const calendarH = calendarRef.value ? calendarRef.value.offsetHeight : 0

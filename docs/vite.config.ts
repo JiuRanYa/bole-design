@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import Comp from 'unplugin-vue-components/vite'
 import markdownTransform from './.vitepress/plugins/markdownTransform'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 export default defineConfig(() => {
   return {
@@ -21,6 +22,7 @@ export default defineConfig(() => {
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/]
       }),
       vueJsx(),
+      DefineOptions(),
       markdownTransform()
     ]
   }

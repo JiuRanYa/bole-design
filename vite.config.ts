@@ -5,6 +5,7 @@ import { resolve } from 'node:path'
 import glob from 'fast-glob'
 import { blOutput, excludeFiles, pkgRoot } from '@bole-design/internal'
 import { generateExternal } from './scripts/utils'
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
@@ -56,6 +57,6 @@ export default defineConfig(async () => {
       },
       chunkSizeWarningLimit: 10000
     },
-    plugins: [vue(), vueJSX()]
+    plugins: [vue(), vueJSX(), DefineOptions()]
   }
 })

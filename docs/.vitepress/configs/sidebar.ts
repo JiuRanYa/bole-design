@@ -19,23 +19,26 @@ export const siderbarsConfig: SidebarsConfig = {
       {
         text: '基础组件',
         children: [
-          { text: 'Button按钮', link: '/components/button' },
-          { text: 'Icon图标', link: '/components/icon' }
+          { text: '按钮 Button', link: '/components/button' },
+          { text: '图标 Icon', link: '/components/icon' }
         ]
       },
       {
         text: '布局组件',
-        children: [{ text: 'Row行', link: '/components/row' }]
+        children: [{ text: '行 Row', link: '/components/row' }]
       },
       {
         text: '数据录入',
-        children: [{ text: 'Switch开关', link: '/components/switch' }]
+        children: [
+          { text: '开关 Switch ', link: '/components/switch' },
+          { text: '日期选择器 DatePicker', link: '/components/date-picker' }
+        ]
       },
       {
         text: '通知组件',
         children: [
-          { text: 'Tooltip提示', link: '/components/tooltip' },
-          { text: 'Popover气泡', link: '/components/popover' }
+          { text: '提示 Tooltip', link: '/components/tooltip' },
+          { text: '气泡 Popover', link: '/components/popover' }
         ]
       }
     ],

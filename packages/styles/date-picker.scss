@@ -9,7 +9,8 @@ $date-picker: map.merge(
     header-font-size: 12px,
     panel-width: 300px,
     panel-border: get-css-var('border-base'),
-    panel-shadow: get-css-var('shadow-base')
+    panel-shadow: get-css-var('shadow-base'),
+    panel-bg-color: get-css-var('bg-color-base')
   ),
   $date-picker
 );
@@ -24,8 +25,9 @@ $date-picker: map.merge(
 
   &__panel {
     // box-shadow: var(--bl-date-picker-panel-shadow);
-    border: get-css-var(border-shape) get-css-var(border-color-light-2);
+    border: get-css-var(border-shape) get-css-var(border-color-light-1);
     border-radius: 12px;
+    background: var(--bl-date-picker-panel-bg-color);
   }
 
   &--list {
@@ -44,7 +46,7 @@ $date-picker: map.merge(
     justify-content: center;
     position: sticky;
     top: 0;
-    box-shadow: rgba(55, 56, 60, 0.12) 0px 1px 2px;
+    border-bottom: get-css-var('border-light-2');
     font-size: get-css-var(date-picker-header-font-size);
     &--day {
       text-align: center;
