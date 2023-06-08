@@ -19,7 +19,7 @@ const prodMode = args.prod
 
 let port = parseFloat(argPort) || 8008
 
-const devDir = resolve(rootDir, 'dev-serve')
+const devDir = resolve(rootDir, 'playground')
 
 async function main() {
   port = await queryIdlePort(port)
