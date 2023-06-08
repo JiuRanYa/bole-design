@@ -26,3 +26,10 @@ button/basic
 button/disable
 
 :::
+
+## Button 属性
+
+| 名称    | 类型                                                        | 说明         | 默认值    | 始于 |
+| ------- | ----------------------------------------------------------- | ------------ | --------- | ---- |
+| type    | `default \| primary \| warn \| success \| warning \| error` | 按钮的类型   | `default` | -    |
+| disable | `Boolean`                                                   | 是否禁用按钮 | `false`   | -    |

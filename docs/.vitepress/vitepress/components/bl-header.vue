@@ -1,6 +1,6 @@
 <template>
   <Row class="bl-header">
-    <Col :span="4">
+    <Col :span="6">
       <a class="bl-logo" href="/projects/bole-design/">
         <img src="/bl-logo.png" />
         <span class="bl-text">Bole Design</span>

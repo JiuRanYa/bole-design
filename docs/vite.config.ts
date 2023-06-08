@@ -24,6 +24,9 @@ export default defineConfig(() => {
       vueJsx(),
       DefineOptions(),
       markdownTransform()
-    ]
+    ],
+    server: {
+      host: true
+    }
   }
 })
