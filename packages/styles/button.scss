@@ -38,7 +38,8 @@ $button: map.merge(
     h-padding: map.get($button-padding-map, 'md'),
     radius: get-css-var('radius-base'),
     series-span: 12px,
-    d-color-typed: rgba($color-white, 50%)
+    d-color-typed: rgba($color-white, 50%),
+    icon-span: 6px
   ),
   $button
 );
@@ -136,6 +137,11 @@ $button: map.merge(
         h-padding: map.get($button-padding-map, 'lg')
       )
     );
+  }
+  &__icon {
+    display: flex;
+    align-items: center;
+    margin-right: var(--bl-button-icon-span);
   }
 
   $self: &;

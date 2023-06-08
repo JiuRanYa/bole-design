@@ -5,6 +5,7 @@ import { computed, ref, toRef } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
 import { placementWhiteList, useProps } from '@bole-design/common'
 import { datePickerProps } from './props'
+import { CalendarR } from '@bole-design/icons'
 
 defineOptions({
   name: 'DatePicker'
@@ -55,12 +56,15 @@ function handleClickOutside() {
 </script>
 
 <template>
-  <span>
+  <span ref="originTriggerRef" @click="showDatePanel">
     <ButtonGroup>
-      <span ref="originTriggerRef" @click="showDatePanel">
-        <Button>手动</Button>
-      </span>
-      <Button>预设</Button>
+      <Button>
+        <template #icon>
+          <Icon :icon="CalendarR" :scale="1.4"></Icon>
+        </template>
+        手动
+      </Button>
+      <Button @click.stop>预设</Button>
     </ButtonGroup>
   </span>
   <Popper

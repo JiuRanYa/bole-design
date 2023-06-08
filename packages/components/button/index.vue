@@ -1,5 +1,9 @@
 <template>
   <button type="button" :class="classNames">
+    <div v-if="icon || $slots.icon" :class="ns.be('icon')">
+      <Icon :icon="icon" v-if="icon" />
+      <slot v-else name="icon" />
+    </div>
     <slot />
   </button>
 </template>
@@ -18,7 +22,8 @@ export default defineComponent({
 
     const props = useProps('button', _props, {
       type: 'default',
-      size: 'middle'
+      size: 'middle',
+      icon: null
     })
 
     const classNames = computed(() => {
@@ -33,7 +38,9 @@ export default defineComponent({
     })
 
     return {
-      classNames
+      classNames,
+      ns,
+      props
     }
   }
 })

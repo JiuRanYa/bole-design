@@ -8,7 +8,8 @@ export type ButtonSize = 'large' | 'middle' | 'small'
 export const buttonProps = buildProps({
   disable: booleanProps,
   type: String as PropType<ButtonType>,
-  size: String as PropType<ButtonSize>
+  size: String as PropType<ButtonSize>,
+  icon: Object
 })
 
 export const buttonGroupProps = buildProps({
