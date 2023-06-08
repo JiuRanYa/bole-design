@@ -1,4 +1,5 @@
 import { Button } from './button'
+import { ButtonGroup } from './button-group'
 import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
@@ -14,6 +15,7 @@ import { buildInstall } from './create'
 
 const components = [
   Button,
+  ButtonGroup,
   Col,
   CollapseTransition,
   DatePicker,
@@ -29,6 +31,7 @@ const components = [
 export const install = buildInstall(components)
 
 export * from './button'
+export * from './button-group'
 export * from './col'
 export * from './collapse-transition'
 export * from './date-picker'

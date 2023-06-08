@@ -2,6 +2,7 @@
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Button: typeof import('bole-design')['Button']
+    ButtonGroup: typeof import('bole-design')['ButtonGroup']
     Col: typeof import('bole-design')['Col']
     CollapseTransition: typeof import('bole-design')['CollapseTransition']
     DatePicker: typeof import('bole-design')['DatePicker']

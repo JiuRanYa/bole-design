@@ -30,13 +30,15 @@ $button: map.merge(
     color-disabled: get-css-var('content-color-disabled'),
     b-color: get-css-var('border-color-base'),
     bg-color: get-css-var('fill-color-base'),
+    bg-color-hover: get-css-var('button-bg-color'),
     color-hover: get-css-var('color-primary-light-2'),
-    b-color-hover: get-css-var('border-color-light-2'),
+    b-color-hover: get-css-var('color-primary-light-2'),
     height: map.get($button-size-map, 'md'),
     v-padding: 0,
     h-padding: map.get($button-padding-map, 'md'),
     radius: get-css-var('radius-base'),
-    series-span: 12px
+    series-span: 12px,
+    d-color-typed: rgba($color-white, 50%)
   ),
   $button
 );
@@ -69,13 +71,16 @@ $button: map.merge(
 
   &:hover {
     color: get-css-var('button-color-hover');
-    border-color: get-css-var('button-b-color-hover');
     background-color: get-css-var('button-bg-color-hover');
+    border-color: get-css-var('button-b-color-hover');
+    outline: 0;
   }
 
   @mixin define-button-style($style-map) {
     @include define-preset-style('button', $style-map);
   }
+
+  $d-color: get-css-var('button-d-color-typed');
 
   @each $type in $types {
     @at-root {
@@ -90,6 +95,21 @@ $button: map.merge(
             bg-color-hover: 'color' $type 'light-2'
           )
         );
+      }
+
+      &-group &--#{$type} {
+        &:first-child {
+          border-right-color: $d-color;
+        }
+
+        &:last-child {
+          border-left-color: $d-color;
+        }
+
+        &:not(:first-child, :last-child) {
+          border-right-color: $d-color;
+          border-left-color: $d-color;
+        }
       }
     }
   }
@@ -137,5 +157,72 @@ $button: map.merge(
     cursor: not-allowed;
     background-color: get-css-var('button-bg-color-disabled');
     border-color: get-css-var('button-b-color-disabled');
+  }
+
+  @at-root {
+    &-group {
+      & > .#{$namespace}-button {
+        &:first-child {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        &:last-child {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+        &:not(:first-child):not(:last-child) {
+          border-radius: 0;
+        }
+        &:not(:last-child) {
+          margin-right: -1px;
+        }
+      }
+      @include basis;
+
+      display: inline-flex;
+      align-items: center;
+
+      #{$self} + #{$self} {
+        margin-left: 0;
+      }
+
+      #{$self} {
+        &:hover,
+        &:focus {
+          z-index: 1;
+        }
+
+        &:active,
+        &--active {
+          z-index: 2;
+        }
+
+        &--first {
+          margin-right: 0;
+          border-radius: get-css-var('button-radius') 0 0 get-css-var('button-radius');
+        }
+
+        &--last {
+          margin-right: 0;
+          border-radius: 0 get-css-var('button-radius') get-css-var('button-radius') 0;
+        }
+
+        &:not(#{$self}--last) {
+          margin-right: -1px;
+        }
+      }
+
+      &--circle {
+        #{$self} {
+          &--first {
+            border-radius: get-css-var('button-height') 0 0 get-css-var('button-height');
+          }
+
+          &--last {
+            border-radius: 0 get-css-var('button-height') get-css-var('button-height') 0;
+          }
+        }
+      }
+    }
   }
 }

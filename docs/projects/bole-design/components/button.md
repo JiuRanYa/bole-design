@@ -27,6 +27,14 @@ button/disable
 
 :::
 
+## 按钮组
+
+:::demo 通过`ButtonGroup`可以组合多个按钮
+
+button/group
+
+:::
+
 ## Button 属性
 
 | 名称    | 类型                                                        | 说明         | 默认值    | 始于 |
