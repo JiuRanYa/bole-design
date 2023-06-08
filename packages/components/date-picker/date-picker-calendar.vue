@@ -86,6 +86,7 @@ function patchFrontDate(reserve: boolean) {
 const topOffset = ref(0)
 const botOffset = ref(1)
 
+// TODO: need to add top offset value
 const topTranslate = computed(() => {
   return 0.5e6 + bufferHeight.value * topOffset.value
 })

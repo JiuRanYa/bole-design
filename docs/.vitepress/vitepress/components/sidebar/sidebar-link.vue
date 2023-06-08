@@ -50,11 +50,11 @@ defineComponent({
 }
 
 .link.active {
-  background-color: var(--bl-color-primary-light-9);
+  background-color: var(--bl-color-primary-opacity-8);
   .link-text {
     font-weight: 600;
     transition: color 0.25s;
-    color: var(--bl-color-primary-light-1);
+    color: var(--bl-color-primary-light-2);
   }
 }
 
