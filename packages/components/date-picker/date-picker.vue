@@ -55,7 +55,14 @@ function handleClickOutside() {
 </script>
 
 <template>
-  <span ref="originTriggerRef" @click="showDatePanel">Date picker trigger</span>
+  <span>
+    <ButtonGroup>
+      <span ref="originTriggerRef" @click="showDatePanel">
+        <Button>手动</Button>
+      </span>
+      <Button>预设</Button>
+    </ButtonGroup>
+  </span>
   <Popper
     :class="popperClass"
     to="body"

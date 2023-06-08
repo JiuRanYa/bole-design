@@ -177,6 +177,14 @@ $button: map.merge(
           margin-right: -1px;
         }
       }
+      &--circle > .#{$namespace}-button {
+        &:first-child {
+          border-radius: get-css-var('button-height') 0 0 get-css-var('button-height');
+        }
+        &:last-child {
+          border-radius: 0 get-css-var('button-height') get-css-var('button-height') 0;
+        }
+      }
       @include basis;
 
       display: inline-flex;

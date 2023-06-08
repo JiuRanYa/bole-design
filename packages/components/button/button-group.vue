@@ -17,11 +17,17 @@ defineOptions({
 const ns = useNamespace('button-group')
 
 const _props = defineProps(buttonGroupProps)
+
 const props = useProps('buttonGroup', _props, {
   circle: false
 })
 
 const classNames = computed(() => {
-  return [ns.b()]
+  return [
+    ns.b(),
+    {
+      [ns.bm('circle')]: props.circle
+    }
+  ]
 })
 </script>
