@@ -27,9 +27,23 @@ button/disable
 
 :::
 
+## 内嵌图标
+
+当需要在按钮内嵌入图标时，可以将图标组件直接传入 `icon` 属性。
+
+也可以直接在插槽内使用 `Icon` 组件。
+
+:::demo
+
+button/icon
+
+:::
+
 ## 按钮组
 
-:::demo 通过`ButtonGroup`可以组合多个按钮
+通过`ButtonGroup`组件可以组合多个按钮
+
+:::demo
 
 button/group
 
@@ -41,3 +55,9 @@ button/group
 | ------- | ----------------------------------------------------------- | ------------ | --------- | ---- |
 | type    | `default \| primary \| warn \| success \| warning \| error` | 按钮的类型   | `default` | -    |
 | disable | `Boolean`                                                   | 是否禁用按钮 | `false`   | -    |
+
+## ButtonGroup
+
+| 名称   | 类型      | 说明             | 默认值  | 始于 |
+| ------ | --------- | ---------------- | ------- | ---- |
+| circle | `Boolean` | 按钮组是否为圆角 | `false` | -    |
