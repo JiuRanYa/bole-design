@@ -17,7 +17,8 @@ const props = useProps('calendar', _props, {
 })
 const renderDate = ref(initRenderDate())
 
-const bufferRef = ref<HTMLDivElement>()
+const bufferRefTop = ref<HTMLElement>()
+const bufferRefBot = ref<HTMLElement>()
 const calendarRef = ref<HTMLDivElement>()
 const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 
@@ -83,16 +84,10 @@ function patchFrontDate(reserve: boolean) {
   renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
 }
 
-const topOffset = ref(0)
-const botOffset = ref(1)
+// TODO: need to add transfer offset value
+const topTranslate = ref(0.5e6)
+const botTranslate = ref(0.5e6)
 
-// TODO: need to add top offset value
-const topTranslate = computed(() => {
-  return 0.5e6 + bufferHeight.value * topOffset.value
-})
-const botTranslate = computed(() => {
-  return 0.5e6 + bufferHeight.value * botOffset.value
-})
 const topTranslateStyle = computed(() => {
   return {
     transform: `translate3D(0, ${topTranslate.value}px, 0)`
@@ -103,43 +98,65 @@ const bottomTranslateStyle = computed(() => {
     transform: `translate3D(0, ${botTranslate.value}px, 0)`
   }
 })
-const bufferHeight = computed(() => {
-  return bufferRef.value ? bufferRef.value.offsetHeight : 0
+const bufferHeightTop = computed(() => {
+  return bufferRefTop.value ? bufferRefTop.value.offsetHeight : 0
 })
 
 let lastScrollTop = 0
 function scrollUpdate() {
-  //TODO: need to change 231 to all table offsetHeight
   const scrollTop = calendarRef.value?.scrollTop ?? 0
   const botTrans = Math.max(topTranslate.value, botTranslate.value)
   const calendarH = calendarRef.value ? calendarRef.value.offsetHeight : 0
-  const botLimit = botTrans + bufferHeight.value - calendarH
+
+  const botLimit = botTrans + bufferHeightTop.value - calendarH
   const topLimit = Math.min(topTranslate.value, botTranslate.value)
+
   const shouldIncreaseTop = topTranslate.value < botTranslate.value ? true : false
   const shouldDecreaseTop = botTranslate.value < topTranslate.value ? true : false
 
-  // 向下
+  // 向下，向上时需要的偏移量是数据改变前的高度
   if (scrollTop > lastScrollTop) {
     if (scrollTop >= botLimit) {
-      shouldIncreaseTop ? (topOffset.value += 2) : (botOffset.value += 2)
       patchBackDate(shouldIncreaseTop)
+      increaseTrans(shouldIncreaseTop)
     }
   }
-  // 向上
+  // 向上，向上时需要的偏移量是数据改变后的高度
   if (scrollTop < lastScrollTop) {
     if (scrollTop <= topLimit) {
-      shouldDecreaseTop ? (topOffset.value -= 2) : (botOffset.value -= 2)
       patchFrontDate(shouldDecreaseTop)
+      nextTick(() => {
+        decreaseTrans(shouldDecreaseTop)
+      })
     }
   }
 
   lastScrollTop = scrollTop
 }
+
+function increaseTrans(isTop: boolean) {
+  const target = isTop ? topTranslate : botTranslate
+  const topBufferHeight = bufferRefTop.value?.offsetHeight ?? 0
+  const botBufferHeight = bufferRefBot.value?.offsetHeight ?? 0
+
+  target.value = target.value + topBufferHeight + botBufferHeight
+}
+function decreaseTrans(isTop: boolean) {
+  const target = isTop ? topTranslate : botTranslate
+  const topBufferHeight = bufferRefTop.value?.offsetHeight ?? 0
+  const botBufferHeight = bufferRefBot.value?.offsetHeight ?? 0
+
+  target.value = target.value - topBufferHeight - botBufferHeight
+}
+
+function scrollToView() {
+  calendarRef.value?.scrollTo(0, topTranslate.value + bufferHeightTop.value)
+  botTranslate.value = topTranslate.value + (bufferRefTop.value?.offsetHeight ?? 0)
+}
+
 onMounted(() => {
   nextTick(() => {
-    setTimeout(() => {
-      calendarRef.value?.scrollTo(0, topTranslate.value + bufferHeight.value)
-    }, 0)
+    scrollToView()
     useEventListener(calendarRef, 'scroll', () => window.requestAnimationFrame(scrollUpdate))
   })
 })
@@ -147,10 +164,10 @@ onMounted(() => {
 
 <template>
   <div :class="ns.be('calendar')" ref="calendarRef">
-    <div :class="ns.bem('calendar', 'buffer')" :style="topTranslateStyle">
+    <div :class="ns.bem('calendar', 'buffer')" :style="topTranslateStyle" ref="bufferRefTop">
       <MonthGrid v-for="date in renderDate.slice(0, 3)" :value="date" ref="monthRef" />
     </div>
-    <div :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle" ref="bufferRef">
+    <div :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle" ref="bufferRefBot">
       <MonthGrid v-for="date in renderDate.slice(3)" :value="date" ref="monthRef" />
     </div>
     <div class="full-height" style="height: 1e6px"></div>
