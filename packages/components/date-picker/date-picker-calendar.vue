@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useEventListener, useNamespace } from '@bole-design/hooks'
-import { computed, defineComponent, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import { calendarProps } from './props'
 import { useProps } from '@bole-design/common'
 import MonthGrid from './month-grid.vue'
@@ -68,6 +68,9 @@ function patchBackDate(reserve: boolean) {
     reserve ? temp.shift() : temp.pop()
   }
   renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
+
+  // 向上时需要的偏移量是数据改变前的高度,不需要等待渲染完毕
+  increaseTrans(reserve)
 }
 
 function patchFrontDate(reserve: boolean) {
@@ -82,9 +85,14 @@ function patchFrontDate(reserve: boolean) {
     reserve ? temp.shift() : temp.pop()
   }
   renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
+
+  //向上时需要的偏移量是数据改变后的高度
+  nextTick(() => {
+    decreaseTrans(reserve)
+  })
 }
 
-// TODO: need to add transfer offset value
+let lastScrollTop = 0
 const topTranslate = ref(0.5e6)
 const botTranslate = ref(0.5e6)
 
@@ -98,37 +106,26 @@ const bottomTranslateStyle = computed(() => {
     transform: `translate3D(0, ${botTranslate.value}px, 0)`
   }
 })
-const bufferHeightTop = computed(() => {
-  return bufferRefTop.value ? bufferRefTop.value.offsetHeight : 0
-})
 
-let lastScrollTop = 0
 function scrollUpdate() {
   const scrollTop = calendarRef.value?.scrollTop ?? 0
+  const calendarH = calendarRef.value?.offsetHeight ?? 0
+  const bufferTopH = bufferRefTop.value?.offsetHeight ?? 0
   const botTrans = Math.max(topTranslate.value, botTranslate.value)
-  const calendarH = calendarRef.value ? calendarRef.value.offsetHeight : 0
 
-  const botLimit = botTrans + bufferHeightTop.value - calendarH
   const topLimit = Math.min(topTranslate.value, botTranslate.value)
+  const botLimit = botTrans + bufferTopH - calendarH
 
   const shouldIncreaseTop = topTranslate.value < botTranslate.value ? true : false
   const shouldDecreaseTop = botTranslate.value < topTranslate.value ? true : false
 
-  // 向下，向上时需要的偏移量是数据改变前的高度
+  // 向下
   if (scrollTop > lastScrollTop) {
-    if (scrollTop >= botLimit) {
-      patchBackDate(shouldIncreaseTop)
-      increaseTrans(shouldIncreaseTop)
-    }
+    scrollTop >= botLimit ? patchBackDate(shouldIncreaseTop) : null
   }
-  // 向上，向上时需要的偏移量是数据改变后的高度
+  // 向上
   if (scrollTop < lastScrollTop) {
-    if (scrollTop <= topLimit) {
-      patchFrontDate(shouldDecreaseTop)
-      nextTick(() => {
-        decreaseTrans(shouldDecreaseTop)
-      })
-    }
+    scrollTop <= topLimit ? patchFrontDate(shouldDecreaseTop) : null
   }
 
   lastScrollTop = scrollTop
@@ -150,7 +147,9 @@ function decreaseTrans(isTop: boolean) {
 }
 
 function scrollToView() {
-  calendarRef.value?.scrollTo(0, topTranslate.value + bufferHeightTop.value)
+  const bufferHeightTop = bufferRefTop.value?.offsetHeight ?? 0
+
+  calendarRef.value?.scrollTo(0, topTranslate.value + bufferHeightTop)
   botTranslate.value = topTranslate.value + (bufferRefTop.value?.offsetHeight ?? 0)
 }
 
