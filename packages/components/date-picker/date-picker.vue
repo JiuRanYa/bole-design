@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { computed, ref, toRef } from 'vue'
+import { computed, reactive, ref, toRef } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
-import { placementWhiteList, useProps } from '@bole-design/common'
+import { placementWhiteList, useProps, doubleDigits } from '@bole-design/common'
 import { datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 
@@ -17,6 +17,7 @@ const props = useProps('date-picker', _props, {
     default: 'bottom-start',
     validator: value => placementWhiteList.includes(value)
   },
+  value: '',
   transitionName: () => ns.ns('drop'),
   presets: {},
   type: 'static'
@@ -34,20 +35,38 @@ const panelEle = computed(() => panelRef.value?.wrapper)
 const popperEl = computed(() => popperRef.value?.wrapper)
 
 const visible = ref(false)
-const currentValue = ref(props.type === 'range' ? [] : '')
+const startState = createDateState()
+const endState = createDateState()
+
+const currentValue = ref(() => {
+  const values = [startState, endState].map(state => {
+    const values = Object.values(state.dateValue).map(doubleDigits)
+
+    return `${values.slice(0, 3).join('-')} ${values.slice(3).join(':')}`
+  })
+
+  return isRange.value ? values : values[0]
+})
 const placement = toRef(props, 'placement')
 
-usePopper({
-  referenceEl,
-  popperEl,
-  placement
+const isRange = computed(() => {
+  return props.type === 'range'
 })
-
-useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
-
 const popperClass = computed(() => {
   return [ns.be('popper')]
 })
+
+function createDateState() {
+  const dateValue = reactive({
+    year: 1970,
+    month: 0,
+    day: 0
+  })
+
+  return {
+    dateValue
+  }
+}
 
 function showDatePanel() {
   visible.value = !visible.value
@@ -58,6 +77,13 @@ function handleClickOutside() {
 }
 
 function handlePresetClick(preset, value) {}
+
+usePopper({
+  referenceEl,
+  popperEl,
+  placement
+})
+useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>
 
 <template>
@@ -94,6 +120,6 @@ function handlePresetClick(preset, value) {}
     :transition="props.transitionName"
     style="transform-origin: center top"
   >
-    <DatePickerPanel ref="panelRef" v-model="currentValue"></DatePickerPanel>
+    <DatePickerPanel ref="panelRef"></DatePickerPanel>
   </Popper>
 </template>
