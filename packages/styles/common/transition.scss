@@ -13,6 +13,18 @@
     get-css-var(transition-duration) padding-bottom ease-in-out;
 }
 
+.fade-in-enter-active,
+.fade-in-leave-active {
+  transition: opacity 0.3s cubic-bezier(0.3, 1.3, 0.3, 1),
+    transform 0.3s cubic-bezier(0.3, 1.3, 0.3, 1);
+}
+
+.fade-in-enter-from,
+.fade-in-leave-to {
+  transform: scale(0.5, 0.5);
+  opacity: 0;
+}
+
 $-name: '#{$namespace}-drop';
 
 @mixin -start {

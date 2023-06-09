@@ -47,7 +47,8 @@ export default defineComponent({
       disabled: false,
       mouseEnterDelay: 100,
       mouseLeaveDelay: 100,
-      noArrow: false
+      noArrow: false,
+      transition: 'fade-in'
     })
 
     const visible = ref(props.visible)
@@ -186,6 +187,7 @@ export default defineComponent({
           role={'tooltip'}
           tabindex={-1}
           to={transferTarget.value}
+          transition={props.transition}
         >
           <div class={{ [ns.be('tip')]: true }}>
             {!props.noArrow && <div class={ns.be('arrow')}></div>}
