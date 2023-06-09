@@ -20,10 +20,11 @@ import { switchProps } from './props'
 export default defineComponent({
   name: 'Switch',
   props: switchProps,
-  setup(_props) {
+  emits: ['update:modelValue'],
+  setup(_props, { emit }) {
     const ns = useNamespace('switch')
     const props = useProps('switch', _props, {
-      value: {
+      modelValue: {
         default: false
       },
       openIcon: null,
@@ -40,15 +41,18 @@ export default defineComponent({
       ]
     })
 
-    const open = ref(props.value)
+    const open = ref(props.modelValue)
     const switchRef = ref()
 
     watch(
-      () => props.value,
+      () => props.modelValue,
       value => {
         open.value = value
       }
     )
+    watch(open, value => {
+      emit('update:modelValue', value)
+    })
     function toggleState() {
       open.value = !open.value
     }
