@@ -11,6 +11,11 @@ export const router = createRouter({
       component: () => import('../../docs/demos/bole-design/date-picker/basic/index.vue')
     },
     {
+      path: '/preset',
+      name: 'preset',
+      component: () => import('../../docs/demos/bole-design/date-picker/preset/index.vue')
+    },
+    {
       path: '/:catchAll(.*)',
       redirect: '/'
     }

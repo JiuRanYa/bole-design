@@ -3,9 +3,10 @@ import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { computed, reactive, ref, toRef } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
-import { placementWhiteList, useProps, doubleDigits } from '@bole-design/common'
-import { datePickerProps } from './props'
+import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-design/common'
+import { OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
+import dayjs from 'dayjs'
 
 defineOptions({
   name: 'DatePicker'
@@ -38,7 +39,7 @@ const visible = ref(false)
 const startState = createDateState()
 const endState = createDateState()
 
-const currentValue = ref(() => {
+const currentValue = computed(() => {
   const values = [startState, endState].map(state => {
     const values = Object.values(state.dateValue).map(doubleDigits)
 
@@ -63,9 +64,9 @@ function createDateState() {
     day: 0
   })
 
-  return {
+  return reactive({
     dateValue
-  }
+  })
 }
 
 function showDatePanel() {
@@ -76,8 +77,25 @@ function handleClickOutside() {
   visible.value = false
 }
 
-function handlePresetClick(preset, value) {}
+function patchDateValue(d: Dateable) {
+  const date = dayjs(d)
 
+  startState.dateValue = {
+    year: date.year(),
+    month: date.month() + 1,
+    day: date.date()
+  }
+}
+function handlePresetClick(value: Dateable) {
+  if (props.type === 'static') {
+    patchDateValue(value)
+  }
+}
+
+function handlePickDate(date: OriginDate) {
+  visible.value = false
+  startState.dateValue = date
+}
 usePopper({
   referenceEl,
   popperEl,
@@ -94,11 +112,11 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         <template #icon>
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
-        手动
+        {{ currentValue }}
       </Button>
       <Button
         v-for="preset in Object.keys(presets)"
-        @click.stop="handlePresetClick(preset, presets[preset])"
+        @click.stop="handlePresetClick(presets[preset])"
       >
         {{ preset }}
       </Button>
@@ -108,7 +126,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       <template #icon>
         <Icon :icon="CalendarR" :scale="1.4"></Icon>
       </template>
-      手动
+      {{ currentValue }}
     </Button>
   </span>
 
@@ -120,6 +138,6 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
     :transition="props.transitionName"
     style="transform-origin: center top"
   >
-    <DatePickerPanel ref="panelRef"></DatePickerPanel>
+    <DatePickerPanel ref="panelRef" @pick="handlePickDate" />
   </Popper>
 </template>

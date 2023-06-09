@@ -1,6 +1,11 @@
 import { PropType } from 'vue'
 import { buildProps, Dateable, Placement } from '@bole-design/common'
 
+export type OriginDate = {
+  year: number
+  month: number
+  day: number
+}
 export type DatePickerType = 'static' | 'range'
 
 export const datePickerProps = buildProps({
