@@ -1,6 +1,15 @@
 <template>
   <Row :gap="[0, 18]">
     <Col>
+      <ButtonGroup circle>
+        <Button :icon="SunR"></Button>
+        <Button :icon="MoonR"></Button>
+        <Button :icon="FaceGrinBeamR"></Button>
+        <Button :icon="FaceSurpriseR"></Button>
+      </ButtonGroup>
+    </Col>
+
+    <Col>
       <ButtonGroup>
         <Button>按钮1</Button>
         <Button>按钮2</Button>
@@ -17,3 +26,7 @@
     </Col>
   </Row>
 </template>
+
+<script setup lang="ts">
+import { FaceGrinBeamR, FaceSurpriseR, SunR, MoonR } from '@bole-design/icons'
+</script>
