@@ -14,5 +14,6 @@ export const toolTipProps = buildProps({
   disabled: booleanProps,
   mouseEnterDelay: Number,
   mouseLeaveDelay: Number,
-  noArrow: booleanProps
+  noArrow: booleanProps,
+	transition: String
 })

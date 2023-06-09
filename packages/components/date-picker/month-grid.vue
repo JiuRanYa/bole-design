@@ -12,9 +12,10 @@ defineOptions({
   name: 'MonthGrid'
 })
 
+const emit = defineEmits(['pick'])
 const ns = useNamespace('month-grid')
-const _props = defineProps(monthGridProps)
 
+const _props = defineProps(monthGridProps)
 const props = useProps('month-grid', _props, {
   value: ''
 })
@@ -64,25 +65,40 @@ function calcDate(day: string) {
   if (!props.value || !day) return ''
   return dayjs(`${props.value}-${day}`).format('YYYY-MM-DD')
 }
+function handlePickDate(e: Event) {
+  const target = (e.target as HTMLElement).closest('td')
+
+  if (!target || target.tagName !== 'TD' || !target.ariaLabel) return
+
+  const day = target.ariaLabel
+  const date = dayjs(`${props.value}-${day}`)
+
+  const emitValue = {
+    year: date.year(),
+    month: date.month() + 1,
+    day: date.date()
+  }
+  emit('pick', emitValue)
+}
 
 defineExpose({ tableRef })
 </script>
 
 <template>
-  <table :class="className" :aria-label="value" ref="tableRef">
+  <table :class="className" :aria-label="value" ref="tableRef" @click="handlePickDate">
     <thead :class="ns.be('title')">
       {{
         monthTitle
       }}
     </thead>
     <tbody :class="ns.bem('days', 'body')">
-      <tr role="row" v-for="i in daysRowNum" :key="i">
+      <tr role="row" v-for="i in daysRowNum" :key="i" :aria-rowindex="i">
         <td
           part="data"
           :aria-label="getDayAriaLabel(i, j)"
-          :role="`${i},${j}`"
           v-for="j in 7"
           :class="{ 'current-date': now === calcDate(getDayAriaLabel(i, j)) }"
+          :aria-colindex="j"
         >
           {{ getDayAriaLabel(i, j) }}
         </td>

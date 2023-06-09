@@ -81,6 +81,14 @@ $button: map.merge(
     @include define-preset-style('button', $style-map);
   }
 
+  &--icon-only {
+    width: get-css-var('button-height');
+    padding: 0;
+  }
+  &--icon-only > &__icon {
+    margin: 0;
+  }
+
   $d-color: get-css-var('button-d-color-typed');
 
   @each $type in $types {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useEventListener, useNamespace } from '@bole-design/hooks'
 import { computed, nextTick, onMounted, ref } from 'vue'
-import { calendarProps } from './props'
+import { OriginDate, calendarProps } from './props'
 import { useProps } from '@bole-design/common'
 import MonthGrid from './month-grid.vue'
 import dayjs from 'dayjs'
@@ -153,6 +153,12 @@ function scrollToView() {
   botTranslate.value = topTranslate.value + (bufferRefTop.value?.offsetHeight ?? 0)
 }
 
+const emit = defineEmits(['pick'])
+
+function handlePickDate(date: OriginDate) {
+  emit('pick', date)
+}
+
 onMounted(() => {
   nextTick(() => {
     scrollToView()
@@ -164,10 +170,20 @@ onMounted(() => {
 <template>
   <div :class="ns.be('calendar')" ref="calendarRef">
     <div :class="ns.bem('calendar', 'buffer')" :style="topTranslateStyle" ref="bufferRefTop">
-      <MonthGrid v-for="date in renderDate.slice(0, 3)" :value="date" ref="monthRef" />
+      <MonthGrid
+        v-for="date in renderDate.slice(0, 3)"
+        :value="date"
+        ref="monthRef"
+        @pick="handlePickDate"
+      />
     </div>
     <div :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle" ref="bufferRefBot">
-      <MonthGrid v-for="date in renderDate.slice(3)" :value="date" ref="monthRef" />
+      <MonthGrid
+        v-for="date in renderDate.slice(3)"
+        :value="date"
+        ref="monthRef"
+        @pick="handlePickDate"
+      />
     </div>
     <div class="full-height" style="height: 1e6px"></div>
   </div>

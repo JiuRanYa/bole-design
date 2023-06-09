@@ -24,3 +24,5 @@ export type Alignment = 'start' | 'end'
 export type AlignedPlacement = `${Side}-${Alignment}`
 
 export type Placement = Side | AlignedPlacement
+
+export type Dateable = number | string | Date

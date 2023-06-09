@@ -107,12 +107,12 @@ async function generateVueIcons(dir: string, out: string, suffix: string) {
       name += suffix
 
       const vue = `
-      <template>${svg}</template>
-      <script lang="ts">
-        import { defineComponent, markRaw } from 'vue'
-        export default defineComponent(markRaw({ name: '${name}' }))
-      </script>
-    `
+				<template>${svg}</template>
+				<script lang="ts">
+					import { defineComponent, markRaw } from 'vue'
+					export default defineComponent(markRaw({ name: '${name}' }))
+				</script>
+			`
 
       await writeFile(
         resolve(outDir, `${fileName}.vue`),

@@ -17,7 +17,7 @@ import { useProps } from '@bole-design/common'
 export default defineComponent({
   name: 'Button',
   props: buttonProps,
-  setup(_props) {
+  setup(_props, { slots }) {
     const ns = useNamespace('button')
 
     const props = useProps('button', _props, {
@@ -33,7 +33,8 @@ export default defineComponent({
         [ns.bm('inherit')]: props.inherit,
         [ns.bm(props.type)]: props.type !== 'default',
         [ns.bm(props.size)]: props.size !== 'middle',
-        [ns.bm('disabled')]: props.disable
+        [ns.bm('disabled')]: props.disable,
+        [ns.bm('icon-only')]: props.icon && !slots.default
       }
     })
 

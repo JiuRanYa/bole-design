@@ -5,9 +5,7 @@ import { nextTick, onMounted } from 'vue'
 
 const { page } = useData()
 onMounted(() => {
-  nextTick(() => {
-    console.log(page.value)
-  })
+  nextTick(() => {})
 })
 </script>
 
