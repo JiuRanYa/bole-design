@@ -53,19 +53,19 @@ tooltip/visible
 
 ## Tooltip 属性
 
-| 名称            | 类型                                        | 说明                                                                           | 默认值     | 始于    |
-| --------------- | ------------------------------------------- | ------------------------------------------------------------------------------ | ---------- | ------- |
-| visible         | `boolean`                                   | 提示的显示状态，可以使用 `v-model` 双向绑定                                    | `false`    | -       |
-| trigger         | `'hover' \| 'click' \| 'focus' \| 'custom'` | 下拉菜单的触发方式，当为 `custom` 时，所有情景都需要手动控制 `visible`         | `'hover'`  | -       |
-| placement       | `Placement`                                 | 提示出现的位置，可选值同 Popper.js                                             | `'bottom'` | -       |
-| content         | `string`                                    | tooltip 显示的文字内容，可被 content 插槽覆盖                                  | `'bottom'` | -       |
-| reverse         | `boolean`                                   | 设置气泡是否为反色主题                                                         | `false`    | `2.0.0` |
-| disabled        | `boolean`                                   | 设置是否禁用 tooltip                                                           | `false`    | `2.0.0` |
-| transfer        | `boolean \| string`                         | 设置气泡的渲染位置，设置为 `true` 时默认渲染至 `<body>`，也可传入选择器 `#app` | `false`    | -       |
-| wrap            | `boolean \| string`                         | 设置是否渲染包围元素                                                           | `false`    | `2.0.0` |
-| noArrow         | `boolean`                                   | 设置是否显示箭头                                                               | `false`    | -       |
-| mouseEnterDelay | `boolean`                                   | 设置鼠标移入出现 tooltip 的延迟，单位`ms`                                      | `100`      | -       |
-| mouseLeaveDelay | `boolean`                                   | 设置鼠标移出后 tooltip 消失 的延迟，单位`ms`                                   | `100`      | -       |
+| 名称            | 类型                                                                           | 说明                                        | 默认值     | 始于    |
+| --------------- | ------------------------------------------------------------------------------ | ------------------------------------------- | ---------- | ------- |
+| visible         | 提示的显示状态，可以使用 `v-model` 双向绑定                                    | `boolean`                                   | `false`    | -       |
+| trigger         | 下拉菜单的触发方式，当为 `custom` 时，所有情景都需要手动控制 `visible`         | `'hover' \| 'click' \| 'focus' \| 'custom'` | `'hover'`  | -       |
+| placement       | 提示出现的位置，可选值同 Popper.js                                             | `Placement`                                 | `'bottom'` | -       |
+| content         | tooltip 显示的文字内容，可被 content 插槽覆盖                                  | `string`                                    | `'bottom'` | -       |
+| reverse         | 设置气泡是否为反色主题                                                         | `boolean`                                   | `false`    | `2.0.0` |
+| disabled        | 设置是否禁用 tooltip                                                           | `boolean`                                   | `false`    | `2.0.0` |
+| transfer        | 设置气泡的渲染位置，设置为 `true` 时默认渲染至 `<body>`，也可传入选择器 `#app` | `boolean \| string`                         | `false`    | -       |
+| wrap            | 设置是否渲染包围元素                                                           | `boolean \| string`                         | `false`    | `2.0.0` |
+| noArrow         | 设置是否显示箭头                                                               | `boolean`                                   | `false`    | -       |
+| mouseEnterDelay | 设置鼠标移入出现 tooltip 的延迟，单位`ms`                                      | `boolean`                                   | `100`      | -       |
+| mouseLeaveDelay | 设置鼠标移出后 tooltip 消失 的延迟，单位`ms`                                   | `boolean`                                   | `100`      | -       |
 
 ## Tooltip 事件
 

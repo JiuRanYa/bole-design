@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { computed, reactive, ref, toRef } from 'vue'
+import { computed, reactive, ref, toRef, watch } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
 import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-design/common'
 import { OriginDate, datePickerProps } from './props'
@@ -63,9 +63,19 @@ function createDateState() {
     month: 0,
     day: 0
   })
+  if (props.value) {
+  }
 
   return reactive({
-    dateValue
+    dateValue,
+    setDate: (date: Dateable) => {
+      dateValue.year = dayjs(date).year()
+      dateValue.month = dayjs(date).month() + 1
+      dateValue.day = dayjs(date).date()
+    },
+    getDate: () => {
+      return new Date(dateValue.year, dateValue.month)
+    }
   })
 }
 
@@ -85,6 +95,7 @@ function patchDateValue(d: Dateable) {
     month: date.month() + 1,
     day: date.date()
   }
+  emit('update:value', currentValue.value)
 }
 function handlePresetClick(value: Dateable) {
   if (props.type === 'static') {
@@ -92,10 +103,22 @@ function handlePresetClick(value: Dateable) {
   }
 }
 
+const emit = defineEmits(['update:value'])
 function handlePickDate(date: OriginDate) {
   visible.value = false
   startState.dateValue = date
+  emit('update:value', currentValue.value)
 }
+watch(
+  () => props.value,
+  value => {
+    if (!value) return
+
+    const startValue = Array.isArray(value) ? value[0] : value
+    startState.setDate(startValue)
+  },
+  { immediate: true }
+)
 usePopper({
   referenceEl,
   popperEl,

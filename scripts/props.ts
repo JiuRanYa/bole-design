@@ -1,5 +1,3 @@
-async function main() {
-  console.log(123)
-}
+async function main() {}
 
 main()
