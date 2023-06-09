@@ -17,7 +17,9 @@ const props = useProps('date-picker', _props, {
     default: 'bottom-start',
     validator: value => placementWhiteList.includes(value)
   },
-  transitionName: () => ns.ns('drop')
+  transitionName: () => ns.ns('drop'),
+  presets: {},
+  type: 'static'
 })
 const ns = useNamespace('date-picker')
 
@@ -32,6 +34,7 @@ const panelEle = computed(() => panelRef.value?.wrapper)
 const popperEl = computed(() => popperRef.value?.wrapper)
 
 const visible = ref(false)
+const currentValue = ref(props.type === 'range' ? [] : '')
 const placement = toRef(props, 'placement')
 
 usePopper({
@@ -53,20 +56,36 @@ function showDatePanel() {
 function handleClickOutside() {
   visible.value = false
 }
+
+function handlePresetClick(preset, value) {}
 </script>
 
 <template>
   <span ref="originTriggerRef" @click="showDatePanel">
-    <ButtonGroup>
+    <slot v-if="$slots.trigger" name="trigger" />
+    <ButtonGroup v-else-if="presets">
       <Button>
         <template #icon>
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
         手动
       </Button>
-      <Button @click.stop>预设</Button>
+      <Button
+        v-for="preset in Object.keys(presets)"
+        @click.stop="handlePresetClick(preset, presets[preset])"
+      >
+        {{ preset }}
+      </Button>
     </ButtonGroup>
+
+    <Button v-else>
+      <template #icon>
+        <Icon :icon="CalendarR" :scale="1.4"></Icon>
+      </template>
+      手动
+    </Button>
   </span>
+
   <Popper
     :class="popperClass"
     to="body"
@@ -75,6 +94,6 @@ function handleClickOutside() {
     :transition="props.transitionName"
     style="transform-origin: center top"
   >
-    <DatePickerPanel ref="panelRef"></DatePickerPanel>
+    <DatePickerPanel ref="panelRef" v-model="currentValue"></DatePickerPanel>
   </Popper>
 </template>

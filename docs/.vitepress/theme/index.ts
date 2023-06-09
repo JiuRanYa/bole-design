@@ -7,7 +7,9 @@ export default {
   Layout,
   enhanceApp({ app }) {
     // ...
-    app.use(install)
+    app.use(install, {
+      default: { transfer: '#transfer-place' }
+    })
 
     globals.forEach(([name, Comp]) => {
       app.component(name, Comp)
