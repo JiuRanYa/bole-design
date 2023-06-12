@@ -16,7 +16,7 @@ export const markdownPlugin = (md: MarkdownIt) => {
       return !!params.trim().match(demoRex)
     },
 
-    render(tokens: Token, idx: number, t: any, env: any) {
+    render(tokens: Token[], idx: number, t: any, env: any) {
       const m = tokens[idx].info.trim().match(demoRex)
       const sourceFileToken = tokens[idx + 2]
       const mdPath = env.path
