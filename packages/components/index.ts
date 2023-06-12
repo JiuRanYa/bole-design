@@ -4,6 +4,7 @@ import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
 import { Icon } from './icon'
+import { Input } from './input'
 import { Menu } from './menu'
 import { Popper } from './popper'
 import { Portal } from './portal'
@@ -20,6 +21,7 @@ const components = [
   CollapseTransition,
   DatePicker,
   Icon,
+  Input,
   Menu,
   Popper,
   Portal,
@@ -36,6 +38,7 @@ export * from './col'
 export * from './collapse-transition'
 export * from './date-picker'
 export * from './icon'
+export * from './input'
 export * from './menu'
 export * from './popper'
 export * from './portal'

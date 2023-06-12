@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
     CollapseTransition: typeof import('bole-design')['CollapseTransition']
     DatePicker: typeof import('bole-design')['DatePicker']
     Icon: typeof import('bole-design')['Icon']
+    Input: typeof import('bole-design')['Input']
     Menu: typeof import('bole-design')['Menu']
     Popper: typeof import('bole-design')['Popper']
     Portal: typeof import('bole-design')['Portal']
