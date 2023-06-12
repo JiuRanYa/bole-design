@@ -1,25 +1,8 @@
 import { resolve } from 'node:path'
-import {
-  readdirSync,
-  statSync,
-  existsSync,
-  lstatSync,
-  rmdirSync,
-  unlinkSync,
-} from 'node:fs'
+import { readdirSync, statSync, existsSync, lstatSync, rmdirSync, unlinkSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { execa } from 'execa'
-import {
-  bgYellow,
-  bgCyan,
-  bgGreen,
-  bgRed,
-  yellow,
-  cyan,
-  green,
-  red,
-  lightBlue,
-} from 'kolorist'
+import { bgYellow, bgCyan, bgGreen, bgRed, yellow, cyan, green, red, lightBlue } from 'kolorist'
 import prompts from 'prompts'
 
 import type { Options } from 'execa'
@@ -46,10 +29,10 @@ export const prettierConfig: Config = {
     {
       files: '*.md',
       options: {
-        embeddedLanguageFormatting: 'off',
-      },
-    },
-  ],
+        embeddedLanguageFormatting: 'off'
+      }
+    }
+  ]
 }
 
 type LogFn = () => void
@@ -92,7 +75,7 @@ export const logger = {
   },
   errorText: (msg: string) => {
     console.error(`${red(msg)}`)
-  },
+  }
 }
 
 export function bin(name: string) {
@@ -132,9 +115,7 @@ export function toKebabCase(value: string) {
 export function toCapitalCase(value: string) {
   return (
     value.charAt(0).toUpperCase() +
-    value
-      .slice(1)
-      .replace(/-([a-z])/g, (_, char) => (char ? char.toUpperCase() : ''))
+    value.slice(1).replace(/-([a-z])/g, (_, char) => (char ? char.toUpperCase() : ''))
   )
 }
 
@@ -152,7 +133,7 @@ export function toCamelCase(value: string) {
 export const hooksDir = resolve(rootDir, 'packages/hooks')
 export const componentsDir = resolve(rootDir, 'packages/components')
 
-export const components = readdirSync(componentsDir).filter((f) => {
+export const components = readdirSync(componentsDir).filter(f => {
   const path = resolve(componentsDir, f)
 
   if (!statSync(path).isDirectory()) {
@@ -161,7 +142,7 @@ export const components = readdirSync(componentsDir).filter((f) => {
 
   return existsSync(`${path}/index.ts`)
 })
-export const hooks = readdirSync(hooksDir).filter((f) => {
+export const hooks = readdirSync(hooksDir).filter(f => {
   const path = resolve(hooksDir, f)
 
   if (!statSync(path).isDirectory()) {
@@ -171,14 +152,10 @@ export const hooks = readdirSync(hooksDir).filter((f) => {
   return existsSync(`${path}/index.ts`)
 })
 
-export function fuzzyMatch(
-  partials: string[],
-  total: string[],
-  includeAll = false
-) {
+export function fuzzyMatch(partials: string[], total: string[], includeAll = false) {
   const matched: string[] = []
 
-  partials.forEach((partial) => {
+  partials.forEach(partial => {
     for (const target of total) {
       if (target.match(partial)) {
         matched.push(target)
@@ -201,9 +178,7 @@ export function fuzzyMatchComponent(
   if (matched.length) {
     return matched
   } else {
-    logger.withBothLn(() =>
-      logger.error(`Any component matches '${partialComponents}'!`)
-    )
+    logger.withBothLn(() => logger.error(`Any component matches '${partialComponents}'!`))
     process.exit(1)
   }
 }
@@ -213,9 +188,7 @@ export async function specifyComponent(
   allComponents = components,
   required = true
 ) {
-  const matchedComponents = args._.length
-    ? fuzzyMatchComponent(args._, true, allComponents)
-    : ['']
+  const matchedComponents = args._.length ? fuzzyMatchComponent(args._, true, allComponents) : ['']
 
   let component: string
 
@@ -225,13 +198,10 @@ export async function specifyComponent(
         type: 'select',
         name: 'component',
         message: 'Select a component:',
-        choices: (matchedComponents.length > 1
-          ? matchedComponents
-          : allComponents
-        ).map((name) => ({
+        choices: (matchedComponents.length > 1 ? matchedComponents : allComponents).map(name => ({
           title: name,
-          value: name,
-        })),
+          value: name
+        }))
       })
     ).component
   } else {
@@ -260,9 +230,7 @@ export async function runParallel<T>(
     ret.push(p)
 
     if (maxConcurrency <= source.length) {
-      const e: Promise<any> = p.then(() =>
-        executing.splice(executing.indexOf(e), 1)
-      )
+      const e: Promise<any> = p.then(() => executing.splice(executing.indexOf(e), 1))
 
       executing.push(e)
 
@@ -299,17 +267,11 @@ export const generateExternal = async () => {
   return (source: string) => {
     const packages: string[] = peerDependencies
 
-    return [...new Set(packages)].some(
-      (pkg) => source === pkg || source.startsWith(`${pkg}/`)
-    )
+    return [...new Set(packages)].some(pkg => source === pkg || source.startsWith(`${pkg}/`))
   }
 }
 
-export const queryIdlePort = (
-  startPort: number,
-  host = 'localhost',
-  maxTry = 20
-) => {
+export const queryIdlePort = (startPort: number, host = 'localhost', maxTry = 20) => {
   const server = createServer()
 
   return new Promise<number>((resolve, reject) => {
@@ -337,4 +299,16 @@ export const queryIdlePort = (
       resolve(startPort)
     })
   })
+}
+
+export function mkDirAndFile(path: string) {
+  const compose = path.split('/')
+
+  console.log(path)
+  compose.reduce((cur, path) => {
+    console.log(cur)
+    // if (statSync(cur)) {
+    //   console.log(statSync(cur))
+    // }
+  }, compose[1])
 }
