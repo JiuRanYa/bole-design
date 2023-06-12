@@ -126,9 +126,9 @@ $transition-map: map.merge(
 $radius-map: () !default;
 $radius-map: map.merge(
   (
-    base: 4px,
-    large: 6px,
-    small: 2px
+    base: 6px,
+    large: 8px,
+    small: 4px
   ),
   $radius-map
 );
