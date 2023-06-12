@@ -1,5 +1,3 @@
-import { useProject } from '../vitepress/composables/project'
-import { SidebarItem } from '../vitepress/composables/sidebar'
 import { getProject } from './project'
 
 export const siderbarsConfig: SidebarsConfig = {
@@ -49,6 +47,15 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [
           { text: 'usePopper', link: '/hooks/usePopper' },
           { text: 'useClickOutside', link: '/hooks/useClickOutside' }
+        ]
+      }
+    ],
+    contribute: [
+      {
+        text: '开发',
+        children: [
+          { text: '启动项目', link: '/contribute/start' },
+          { text: '开发命令', link: '/contribute/server' }
         ]
       }
     ]
