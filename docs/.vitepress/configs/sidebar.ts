@@ -1,5 +1,3 @@
-import { useProject } from '../vitepress/composables/project'
-import { SidebarItem } from '../vitepress/composables/sidebar'
 import { getProject } from './project'
 
 export const siderbarsConfig: SidebarsConfig = {
@@ -19,26 +17,27 @@ export const siderbarsConfig: SidebarsConfig = {
       {
         text: '基础组件',
         children: [
-          { text: '按钮 Button', link: '/components/button' },
-          { text: '图标 Icon', link: '/components/icon' }
+          { text: 'Button 按钮', link: '/components/button' },
+          { text: 'Icon 图标', link: '/components/icon' }
         ]
       },
       {
         text: '布局组件',
-        children: [{ text: '行 Row', link: '/components/row' }]
+        children: [{ text: 'Row 行', link: '/components/row' }]
       },
       {
         text: '数据录入',
         children: [
-          { text: '开关 Switch ', link: '/components/switch' },
-          { text: '日期选择器 DatePicker', link: '/components/date-picker' }
+          { text: 'Input 输入框', link: '/components/input' },
+          { text: 'Switch 开关', link: '/components/switch' },
+          { text: 'DatePicker 日期选择器', link: '/components/date-picker' }
         ]
       },
       {
         text: '通知组件',
         children: [
-          { text: '提示 Tooltip', link: '/components/tooltip' },
-          { text: '气泡 Popover', link: '/components/popover' }
+          { text: 'Tooltip 提示', link: '/components/tooltip' },
+          { text: 'Popover 气泡', link: '/components/popover' }
         ]
       }
     ],
@@ -48,6 +47,15 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [
           { text: 'usePopper', link: '/hooks/usePopper' },
           { text: 'useClickOutside', link: '/hooks/useClickOutside' }
+        ]
+      }
+    ],
+    contribute: [
+      {
+        text: '开发',
+        children: [
+          { text: '启动项目', link: '/contribute/start' },
+          { text: '开发命令', link: '/contribute/server' }
         ]
       }
     ]
