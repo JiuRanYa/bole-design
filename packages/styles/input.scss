@@ -1,0 +1,6 @@
+@use './shared' as *;
+@use './design' as *;
+
+.#{$namespace}-input {
+  display: inline-flex;
+}

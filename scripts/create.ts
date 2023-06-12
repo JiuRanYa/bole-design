@@ -41,6 +41,14 @@ lang: zh-CN
 <script setup>
 const demos = import.meta.globEager('../../../demos/bole-design/${comp.name}/*/*.vue')
 </script>
+
+## 基础用法
+
+:::demo
+
+${comp.name}/basic
+
+:::demo
   	`
   const markdownPath = resolve('docs/projects/bole-design/components')
 
