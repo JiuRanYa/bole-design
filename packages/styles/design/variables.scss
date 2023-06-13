@@ -166,7 +166,7 @@ $shadow-color-map: () !default;
 $shadow-color-map: map.merge(
   (
     base: #dee2e6,
-    light-1: #e9ecef,
+    light-1: rgba(79, 68, 224, 0.1),
     light-2: #f1f3f5,
     dark-1: #ced4da,
     dark-2: #adb5bd
@@ -189,6 +189,15 @@ $font-size-map: map.merge(
     secondary: 12px
   ),
   $font-size-map
+);
+
+$line-height-map: () !default;
+$line-height-map: map.merge(
+  (
+    base: 1.2,
+    secondary: 1
+  ),
+  $line-height-map
 );
 
 $font-family-map: () !default;

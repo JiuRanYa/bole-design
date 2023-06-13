@@ -9,6 +9,7 @@ importers:
       '@bole-design/hooks': workspace:*
       '@bole-design/icons': workspace:*
       '@bole-design/internal': workspace:*
+      '@bole-design/utils': workspace:*
       '@rollup/plugin-commonjs': ^24.1.0
       '@types/eslint': ^8.37.0
       '@types/fs-extra': ^11.0.1
@@ -48,6 +49,7 @@ importers:
       '@bole-design/hooks': link:packages/hooks
       '@bole-design/icons': link:packages/icons
       '@bole-design/internal': link:internal
+      '@bole-design/utils': link:packages/utils
       dayjs: 1.11.7
     devDependencies:
       '@rollup/plugin-commonjs': 24.1.0

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@bole-design/common": "workspace:*",
+    "@bole-design/utils": "workspace:*",
     "@bole-design/components": "workspace:*",
     "@bole-design/hooks": "workspace:*",
     "@bole-design/internal": "workspace:*",

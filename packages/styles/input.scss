@@ -1,6 +1,51 @@
+@use 'sass:map';
+
 @use './shared' as *;
 @use './design' as *;
 
+$input: () !default;
+$input: map.merge(
+  (
+    b-color: transparent,
+    b-color-hover: get-css-var(color-primary-light-2),
+    bg-color: get-css-var(fill-color-humble),
+    radius: get-css-var(radius-base),
+    line-height: get-css-var(line-height-base),
+    shadow: 0 0 0 4px get-css-var(shadow-color-light-1)
+  ),
+  $input
+);
 .#{$namespace}-input {
+  &-vars {
+    @include define-preset-values('input', $input);
+  }
   display: inline-flex;
+  border: get-css-var(border-shape) get-css-var(input-b-color);
+  margin: 0;
+  padding: 0;
+  font-size: get-css-var(font-size-base);
+  background-color: get-css-var(input-bg-color);
+  border-radius: get-css-var(input-radius);
+  transition: get-css-var(transition-color);
+  padding: 8px 12px;
+
+  &:hover {
+    border: get-css-var(border-shape) get-css-var(input-b-color-hover);
+  }
+
+  &:focus-within {
+    background-color: get-css-var(fill-color-base);
+    box-shadow: get-css-var(input-shadow);
+    border: get-css-var(border-shape) get-css-var(input-b-color-hover);
+  }
+
+  &--control {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    height: 100%;
+    min-width: 0;
+    font-size: inherit;
+    line-height: get-css-var(input-line-height);
+  }
 }
