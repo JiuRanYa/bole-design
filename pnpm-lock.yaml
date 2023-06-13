@@ -10,6 +10,7 @@ importers:
       '@bole-design/icons': workspace:*
       '@bole-design/internal': workspace:*
       '@bole-design/utils': workspace:*
+      '@floating-ui/dom': ^1.2.8
       '@rollup/plugin-commonjs': ^24.1.0
       '@types/eslint': ^8.37.0
       '@types/fs-extra': ^11.0.1
@@ -23,6 +24,7 @@ importers:
       '@types/prompts': ^2.4.2
       '@vitejs/plugin-vue': ^4.1.0
       '@vitejs/plugin-vue-jsx': ^3.0.1
+      dayjs: ^1.11.3
       eslint: ^8.38.0
       execa: ^7.0.0
       fast-glob: ^3.2.12
@@ -49,6 +51,8 @@ importers:
       '@bole-design/icons': link:packages/icons
       '@bole-design/internal': link:internal
       '@bole-design/utils': link:packages/utils
+      '@floating-ui/dom': 1.2.8
+      dayjs: 1.11.7
     devDependencies:
       '@rollup/plugin-commonjs': 24.1.0
       '@types/eslint': 8.37.0
