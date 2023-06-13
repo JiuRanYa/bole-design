@@ -15,6 +15,7 @@ $month-grid: map.merge((), $month-grid);
   width: 100%;
   padding-inline: 22px;
   padding-top: 12px;
+  border-collapse: separate;
 
   &__title {
     display: flex;
