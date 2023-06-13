@@ -12,6 +12,10 @@
   "peerDependencies": {
     "vue": "^3.2.0"
   },
+  "dependencies": {
+    "@floating-ui/dom": "^1.2.8",
+    "dayjs": "^1.11.3"
+  },
   "devDependencies": {
     "vue": "^3.2.37"
   }
