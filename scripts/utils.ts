@@ -259,18 +259,6 @@ export function emptyDir(dir: string) {
     }
   }
 }
-
-export const generateExternal = async () => {
-  // TODO: need to read package.json file
-  const peerDependencies = ['vue']
-
-  return (source: string) => {
-    const packages: string[] = peerDependencies
-
-    return [...new Set(packages)].some(pkg => source === pkg || source.startsWith(`${pkg}/`))
-  }
-}
-
 export const queryIdlePort = (startPort: number, host = 'localhost', maxTry = 20) => {
   const server = createServer()
 
