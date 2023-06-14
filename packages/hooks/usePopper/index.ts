@@ -1,14 +1,5 @@
-import {
-  watch,
-  nextTick,
-  onMounted,
-  ref,
-  Ref,
-  WatchStopHandle,
-  onBeforeUnmount,
-  watchEffect
-} from 'vue'
-import { autoUpdate, computePosition } from '@floating-ui/dom'
+import { watch, onMounted, ref, Ref, WatchStopHandle, watchEffect } from 'vue'
+import { computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
 
 interface UsePopperOptions {
@@ -34,13 +25,19 @@ export function usePopper(options: UsePopperOptions) {
   const { placement } = options
   const referenceEl = options.referenceEl ?? ref(null)
   const popperEl = options.popperEl ?? ref(null)
+  const x = ref<number>()
+  const y = ref<number>()
 
   let stopWatchPopper: WatchStopHandle | null = null
 
-  function createPopper() {
-    const cancelWatchReference = watch(referenceEl, createPopperInstance, { immediate: true })
+  const state = {
+    x,
+    y
   }
-  async function createPopperInstance() {
+  function createPopper() {
+    const cancelWatchReference = watch(referenceEl, update, { immediate: true })
+  }
+  async function update() {
     const refEl = referenceEl.value
     const popEl = popperEl.value
     const middleware = ref({})
@@ -52,19 +49,9 @@ export function usePopper(options: UsePopperOptions) {
       placement: placement.value,
       middleware: []
     })
-    assignStyle(popperEl.value, data.x, data.y)
-  }
 
-  function assignStyle(el: HTMLElement | null | undefined, x: number, y: number) {
-    if (!el) return
-
-    Object.assign(el.style, {
-      left: `${x}px`,
-      top: `${y}px`,
-      position: 'absolute'
-    })
-
-    el.dataset.placement = placement.value
+    state.x.value = data.x
+    state.y.value = data.y
   }
 
   onMounted(() => {
@@ -72,4 +59,9 @@ export function usePopper(options: UsePopperOptions) {
       createPopper()
     })
   })
+
+  return {
+    ...state,
+    update
+  }
 }
