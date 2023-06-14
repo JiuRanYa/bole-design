@@ -196,6 +196,7 @@ export default defineComponent({
           tabindex={-1}
           to={transferTarget.value}
           transition={props.transition}
+          data-placement={placement.value}
           style={popperStyle.value}
         >
           <div class={{ [ns.be('tip')]: true }}>
