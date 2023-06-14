@@ -1,4 +1,13 @@
-import { watch, nextTick, onMounted, ref, Ref, WatchStopHandle, onBeforeUnmount } from 'vue'
+import {
+  watch,
+  nextTick,
+  onMounted,
+  ref,
+  Ref,
+  WatchStopHandle,
+  onBeforeUnmount,
+  watchEffect
+} from 'vue'
 import { autoUpdate, computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
 
@@ -29,36 +38,21 @@ export function usePopper(options: UsePopperOptions) {
   let stopWatchPopper: WatchStopHandle | null = null
 
   function createPopper() {
-    destroyPopper()
-    createPopperInstance()
-
-    const cancelWatchReference = watch(referenceEl, createPopperInstance)
-    const cancelWatchPopper = watch(popperEl, createPopperInstance)
-
-    stopWatchPopper = () => {
-      cancelWatchReference()
-      cancelWatchPopper()
-    }
+    const cancelWatchReference = watch(referenceEl, createPopperInstance, { immediate: true })
   }
-  function createPopperInstance() {
+  async function createPopperInstance() {
     const refEl = referenceEl.value
     const popEl = popperEl.value
+    const middleware = ref({})
 
     if (!refEl || !popEl) return
 
-    autoUpdate(refEl, popEl, () => {
-      computePosition(refEl, popEl, {
-        placement: placement.value
-      }).then(({ x, y }) => {
-        assignStyle(popperEl.value, x, y)
-      })
+    const data = await computePosition(refEl, popEl, {
+      strategy: 'absolute',
+      placement: placement.value,
+      middleware: []
     })
-  }
-  function destroyPopper() {
-    if (typeof stopWatchPopper === 'function') {
-      stopWatchPopper()
-      stopWatchPopper = null
-    }
+    assignStyle(popperEl.value, data.x, data.y)
   }
 
   function assignStyle(el: HTMLElement | null | undefined, x: number, y: number) {
@@ -74,8 +68,8 @@ export function usePopper(options: UsePopperOptions) {
   }
 
   onMounted(() => {
-    nextTick(createPopper)
+    watchEffect(() => {
+      createPopper()
+    })
   })
-
-  onBeforeUnmount(destroyPopper)
 }
