@@ -15,4 +15,12 @@ const demos = import.meta.globEager('../../../demos/bole-design/input/*/*.vue')
 
 input/basic
 
+:::
+
+## 内置图标
+
 :::demo
+
+input/suffix
+
+:::

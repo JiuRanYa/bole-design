@@ -1,5 +1,5 @@
-import { watch, nextTick, onMounted, ref, Ref, WatchStopHandle, onBeforeUnmount } from 'vue'
-import { autoUpdate, computePosition } from '@floating-ui/dom'
+import { watch, onMounted, ref, Ref, WatchStopHandle, watchEffect } from 'vue'
+import { computePosition } from '@floating-ui/dom'
 import type { Placement, VirtualElement } from '@floating-ui/dom'
 
 interface UsePopperOptions {
@@ -25,57 +25,43 @@ export function usePopper(options: UsePopperOptions) {
   const { placement } = options
   const referenceEl = options.referenceEl ?? ref(null)
   const popperEl = options.popperEl ?? ref(null)
+  const x = ref<number>()
+  const y = ref<number>()
 
   let stopWatchPopper: WatchStopHandle | null = null
 
-  function createPopper() {
-    destroyPopper()
-    createPopperInstance()
-
-    const cancelWatchReference = watch(referenceEl, createPopperInstance)
-    const cancelWatchPopper = watch(popperEl, createPopperInstance)
-
-    stopWatchPopper = () => {
-      cancelWatchReference()
-      cancelWatchPopper()
-    }
+  const state = {
+    x,
+    y
   }
-  function createPopperInstance() {
+  function createPopper() {
+    const cancelWatchReference = watch(referenceEl, update, { immediate: true })
+  }
+  async function update() {
     const refEl = referenceEl.value
     const popEl = popperEl.value
+    const middleware = ref({})
 
     if (!refEl || !popEl) return
 
-    autoUpdate(refEl, popEl, () => {
-      computePosition(refEl, popEl, {
-        placement: placement.value
-      }).then(({ x, y }) => {
-        assignStyle(popperEl.value, x, y)
-      })
-    })
-  }
-  function destroyPopper() {
-    if (typeof stopWatchPopper === 'function') {
-      stopWatchPopper()
-      stopWatchPopper = null
-    }
-  }
-
-  function assignStyle(el: HTMLElement | null | undefined, x: number, y: number) {
-    if (!el) return
-
-    Object.assign(el.style, {
-      left: `${x}px`,
-      top: `${y}px`,
-      position: 'absolute'
+    const data = await computePosition(refEl, popEl, {
+      strategy: 'absolute',
+      placement: placement.value,
+      middleware: []
     })
 
-    el.dataset.placement = placement.value
+    state.x.value = data.x
+    state.y.value = data.y
   }
 
   onMounted(() => {
-    nextTick(createPopper)
+    watchEffect(() => {
+      createPopper()
+    })
   })
 
-  onBeforeUnmount(destroyPopper)
+  return {
+    ...state,
+    update
+  }
 }

@@ -11,9 +11,11 @@ $month-grid: map.merge((), $month-grid);
   &-vars {
     @include define-preset-values('date-picker', $month-grid);
   }
+  display: table;
   width: 100%;
   padding-inline: 22px;
   padding-top: 12px;
+  border-collapse: separate;
 
   &__title {
     display: flex;

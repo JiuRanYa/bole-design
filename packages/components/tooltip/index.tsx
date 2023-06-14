@@ -73,11 +73,19 @@ export default defineComponent({
       visible.value = false
     }
 
-    usePopper({
+    const { x, y } = usePopper({
       referenceEl,
       transfer,
       popperEl,
       placement
+    })
+
+    const popperStyle = computed(() => {
+      return {
+        position: 'absolute',
+        left: `${x.value || 0}px`,
+        top: `${y.value || 0}px`
+      }
     })
 
     useClickOutside(originTriggerEl, handleClickOutside, { ignore: [popperEl] })
@@ -188,6 +196,8 @@ export default defineComponent({
           tabindex={-1}
           to={transferTarget.value}
           transition={props.transition}
+          data-placement={placement.value}
+          style={popperStyle.value}
         >
           <div class={{ [ns.be('tip')]: true }}>
             {!props.noArrow && <div class={ns.be('arrow')}></div>}

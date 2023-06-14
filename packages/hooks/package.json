@@ -10,7 +10,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@floating-ui/dom": "^1.2.8"
-  }
+  "dependencies": {}
 }

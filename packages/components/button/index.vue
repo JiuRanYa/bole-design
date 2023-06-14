@@ -13,6 +13,7 @@ import { buttonProps } from './props'
 import { defineComponent, computed } from 'vue'
 import { useNamespace } from '@bole-design/hooks'
 import { useProps } from '@bole-design/common'
+import { Icon } from '@bole-design/components'
 
 export default defineComponent({
   name: 'Button',

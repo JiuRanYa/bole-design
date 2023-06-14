@@ -7,6 +7,7 @@ import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-desi
 import { OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 import dayjs from 'dayjs'
+import { Button, ButtonGroup, Icon } from '@bole-design/components'
 
 defineOptions({
   name: 'DatePicker'
@@ -119,10 +120,18 @@ watch(
   },
   { immediate: true }
 )
-usePopper({
+const { x, y } = usePopper({
   referenceEl,
   popperEl,
   placement
+})
+const popperStyle = computed(() => {
+  return {
+    'transform-origin': 'center top',
+    position: 'absolute',
+    left: `${x.value || 0}px`,
+    top: `${y.value || 0}px`
+  }
 })
 useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>
@@ -159,7 +168,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
     ref="popperRef"
     :visible="visible"
     :transition="props.transitionName"
-    style="transform-origin: center top"
+    :style="popperStyle"
   >
     <DatePickerPanel ref="panelRef" @pick="handlePickDate" />
   </Popper>

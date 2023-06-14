@@ -11,7 +11,7 @@ export type DatePickerType = 'static' | 'range'
 export const datePickerProps = buildProps({
   placement: String as PropType<Placement>,
   transitionName: String || Function,
-  presets: Object as PropType<Record<string, Dateable[]>>,
+  presets: Object as PropType<Record<string, Dateable>>,
   type: String as PropType<DatePickerType>,
   value: [Number, String, Date, Array] as PropType<Dateable | Dateable[]>
 })
