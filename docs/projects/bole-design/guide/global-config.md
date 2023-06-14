@@ -60,7 +60,7 @@ createApp(App).use(install, { prefix: 'PD' })
 'bole-design'的样式文件也可提供不同的命名空间，你可以在引入 sass 时这样配置
 
 ```sass
-@use 'vexip-ui/style' with (
+@use 'bole-design/style' with (
   $namespace: 'pd'
 );
 

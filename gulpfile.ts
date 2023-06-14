@@ -1,4 +1,5 @@
 import fs from 'fs-extra'
+import path from 'path'
 import dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import { resolve } from 'node:path'
@@ -9,6 +10,7 @@ import { series, parallel, src, dest } from 'gulp'
 const { existsSync, mkdirSync, emptyDir } = fs
 
 const buildOutput = resolve(__dirname, 'dist')
+const distCssBundle = path.resolve(buildOutput, 'bole-design/css')
 const cssDir = resolve(buildOutput, 'bole-design/css')
 
 function buildStyle() {
@@ -27,4 +29,10 @@ function ensureEmptyDir(dir: string) {
   existsSync(dir) ? emptyDir(dir) : mkdirSync(dir)
 }
 
-export default parallel(series(buildStyle))
+function copyThemeChalkSource() {
+  return src(path.resolve(__dirname, 'packages/styles/**')).pipe(
+    dest(path.resolve(distCssBundle, 'src'))
+  )
+}
+
+export default parallel(copyThemeChalkSource, series(buildStyle))
