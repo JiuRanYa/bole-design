@@ -9,7 +9,8 @@ export default defineComponent({
   setup(_props, { slots }) {
     const props = useProps('icon', _props, {
       title: '',
-      scale: 1
+      scale: 1,
+      size: null
     })
     const ns = useNamespace('icon')
     const className = computed(() => {
