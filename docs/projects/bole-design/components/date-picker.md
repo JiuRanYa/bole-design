@@ -11,12 +11,6 @@ const demos = import.meta.globEager('../../../demos/bole-design/date-picker/*/*.
 
 多功能日期选择器
 
-:::demo
-
-date-picker/test
-
-:::
-
 ## 基础用法
 
 通过`v-model:value`可进行双向绑定

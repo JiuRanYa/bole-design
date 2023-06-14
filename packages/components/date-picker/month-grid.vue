@@ -20,6 +20,7 @@ const props = useProps('month-grid', _props, {
   value: ''
 })
 
+const selectedDate = ref()
 const tableRef = ref<HTMLElement>()
 const now = dayjs().format('YYYY-MM-DD')
 
@@ -72,6 +73,7 @@ function handlePickDate(e: Event) {
 
   const day = target.ariaLabel
   const date = dayjs(`${props.value}-${day}`)
+  selectedDate.value = calcDate(day)
 
   const emitValue = {
     year: date.year(),
@@ -97,7 +99,10 @@ defineExpose({ tableRef })
           part="data"
           :aria-label="getDayAriaLabel(i, j)"
           v-for="j in 7"
-          :class="{ 'current-date': now === calcDate(getDayAriaLabel(i, j)) }"
+          :class="{
+            today: now === calcDate(getDayAriaLabel(i, j)),
+            'selected-date': selectedDate === calcDate(getDayAriaLabel(i, j))
+          }"
           :aria-colindex="j"
         >
           {{ getDayAriaLabel(i, j) }}
