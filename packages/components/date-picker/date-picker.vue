@@ -120,16 +120,18 @@ watch(
   },
   { immediate: true }
 )
-const popperStyle = computed(() => {
-  return {
-    'transform-origin': 'center top',
-    position: 'absolute'
-  }
-})
-usePopper({
+const { x, y } = usePopper({
   referenceEl,
   popperEl,
   placement
+})
+const popperStyle = computed(() => {
+  return {
+    'transform-origin': 'center top',
+    position: 'absolute',
+    left: `${x.value || 0}px`,
+    top: `${y.value || 0}px`
+  }
 })
 useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>
