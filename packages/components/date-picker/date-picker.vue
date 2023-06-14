@@ -120,6 +120,12 @@ watch(
   },
   { immediate: true }
 )
+const popperStyle = computed(() => {
+  return {
+    'transform-origin': 'center top',
+    position: 'absolute'
+  }
+})
 usePopper({
   referenceEl,
   popperEl,
@@ -160,7 +166,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
     ref="popperRef"
     :visible="visible"
     :transition="props.transitionName"
-    style="transform-origin: center top"
+    :style="popperStyle"
   >
     <DatePickerPanel ref="panelRef" @pick="handlePickDate" />
   </Popper>
