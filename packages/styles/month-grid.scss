@@ -44,7 +44,7 @@ $month-grid: map.merge((), $month-grid);
           border: 2px solid get-css-var(color-primary-light-2);
         }
       }
-      td + .current-date {
+      td + .today {
         animation: border-flash 1.4s infinite;
       }
     }

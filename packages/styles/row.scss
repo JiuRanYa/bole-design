@@ -4,14 +4,12 @@
 .#{$namespace}-row {
   @include basis;
 
+  position: relative;
   display: flex;
-  width: 100%;
   flex-flow: row wrap;
-
-  margin-inline-end: calc(-0.5 * get-css-var('row-h-gap'));
-  margin-inline-start: calc(-0.5 * get-css-var('row-h-gap'));
-
   row-gap: get-css-var('row-v-gap');
+  margin-right: calc(-0.5 * get-css-var('row-h-gap'));
+  margin-left: calc(-0.5 * get-css-var('row-h-gap'));
 
   &--start {
     justify-content: flex-start;
