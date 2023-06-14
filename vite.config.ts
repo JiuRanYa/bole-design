@@ -10,12 +10,13 @@ import DefineOptions from 'unplugin-vue-define-options/vite'
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
   const input = excludeFiles(
-    await glob('components/*.{js,ts,vue,tsx}', {
+    await glob('bole-design/*.{js,ts,vue,tsx}', {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true
     })
   )
+  console.log(input)
 
   return {
     publicDir: false,
