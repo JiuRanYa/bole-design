@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useEventListener, useNamespace } from '@bole-design/hooks'
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, inject, nextTick, onMounted, ref } from 'vue'
 import { OriginDate, calendarProps } from './props'
 import { useProps } from '@bole-design/common'
 import MonthGrid from './month-grid.vue'
 import dayjs from 'dayjs'
+import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 defineOptions({
   name: 'DatePickerCalendar'
@@ -15,15 +16,17 @@ const ns = useNamespace('date-picker')
 const props = useProps('calendar', _props, {
   value: ''
 })
-const renderDate = ref(initRenderDate())
+const renderDate = ref()
 
+const rootValue = inject(DATE_PICKER_INJECTION_KEY)
 const bufferRefTop = ref<HTMLElement>()
 const bufferRefBot = ref<HTMLElement>()
 const calendarRef = ref<HTMLDivElement>()
 const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 
 function initRenderDate() {
-  const currentDate = props.value ? props.value : dayjs().format('YYYY-MM')
+  const dateStr = rootValue?.currentValue.value ?? ''
+  const currentDate = dayjs(dateStr).format('YYYY-MM')
 
   const front = calculateMonthFront(currentDate, 3)
   const back = calculateMonthBack(currentDate, 2)
@@ -160,6 +163,7 @@ function handlePickDate(date: OriginDate) {
 }
 
 onMounted(() => {
+  renderDate.value = initRenderDate()
   nextTick(() => {
     scrollToView()
     useEventListener(calendarRef, 'scroll', () => window.requestAnimationFrame(scrollUpdate))
@@ -171,7 +175,7 @@ onMounted(() => {
   <div :class="ns.be('calendar')" ref="calendarRef">
     <div :class="ns.bem('calendar', 'buffer')" :style="topTranslateStyle" ref="bufferRefTop">
       <MonthGrid
-        v-for="date in renderDate.slice(0, 3)"
+        v-for="date in renderDate?.slice(0, 3)"
         :value="date"
         ref="monthRef"
         @pick="handlePickDate"
@@ -179,7 +183,7 @@ onMounted(() => {
     </div>
     <div :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle" ref="bufferRefBot">
       <MonthGrid
-        v-for="date in renderDate.slice(3)"
+        v-for="date in renderDate?.slice(3)"
         :value="date"
         ref="monthRef"
         @pick="handlePickDate"

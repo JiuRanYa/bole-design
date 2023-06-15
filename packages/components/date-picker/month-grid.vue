@@ -98,6 +98,7 @@ function handlePickDate(e: Event) {
 
   const day = target.ariaLabel
   const date = dayjs(`${props.value}-${day}`)
+  console.log(props.value, day)
 
   const emitValue = {
     year: date.year(),
@@ -109,6 +110,8 @@ function handlePickDate(e: Event) {
 }
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
+
+  console.log(cell)
 
   return {
     today: now === dateStr,

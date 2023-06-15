@@ -11,7 +11,7 @@ $content-color-map: map.merge(
     disabled: rgba(#fff, 0.4),
     placeholder: rgba(#fff, 0.3),
     humble: rgba(#fff, 0.5),
-    reverse: rgba(#fff, 0.1)
+    reverse: #fff
   ),
   $content-color-map
 );
