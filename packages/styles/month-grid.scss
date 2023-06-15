@@ -38,6 +38,7 @@ $month-grid: map.merge((), $month-grid);
         justify-content: center;
         border-radius: 50%;
         transition: color 0.2s;
+        position: relative;
 
         &[aria-label]:not([aria-label='']):hover {
           cursor: default;
@@ -51,6 +52,41 @@ $month-grid: map.merge((), $month-grid);
         color: get-css-var(content-color-reverse);
         border: 2px solid get-css-var(color-primary-light-2);
         background-color: get-css-var(color-primary-light-2);
+      }
+      td.start {
+        @extend .selected;
+      }
+      td.start + .in-range {
+        &::before {
+          content: '';
+          position: absolute;
+          width: 36px;
+          height: 36px;
+          background-color: get-css-var(color-primary-light-9);
+          z-index: -1;
+          left: -50%;
+        }
+      }
+      td.in-range + .end {
+        &::before {
+          content: '';
+          position: absolute;
+          width: 36px;
+          height: 36px;
+          background-color: get-css-var(color-primary-light-9);
+          z-index: -1;
+          left: -50%;
+        }
+      }
+      td.end {
+        @extend .selected;
+      }
+      td.in-range {
+        border-radius: 0;
+        background-color: get-css-var(color-primary-light-9);
+        &:hover {
+          border-radius: 50%;
+        }
       }
     }
   }

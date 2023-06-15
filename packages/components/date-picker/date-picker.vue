@@ -42,6 +42,9 @@ const visible = ref(false)
 const startState = createDateState()
 const endState = createDateState()
 
+const isRange = computed(() => {
+  return props.type === 'range'
+})
 const currentValue = computed(() => {
   const values = [startState, endState].map(state => {
     const values = Object.values(state.dateValue).map(doubleDigits)
@@ -53,9 +56,6 @@ const currentValue = computed(() => {
 })
 const placement = toRef(props, 'placement')
 
-const isRange = computed(() => {
-  return props.type === 'range'
-})
 const popperClass = computed(() => {
   return [ns.be('popper')]
 })
@@ -135,7 +135,8 @@ const popperStyle = computed(() => {
   }
 })
 provide(DATE_PICKER_INJECTION_KEY, {
-  currentValue
+  currentValue,
+  isRange
 })
 useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>
@@ -148,7 +149,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         <template #icon>
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
-        {{ currentValue }}
+        {{ isRange ? `${currentValue[0]} - ${currentValue[1]}` : currentValue }}
       </Button>
       <Button
         v-for="preset in Object.keys(presets)"
@@ -162,7 +163,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       <template #icon>
         <Icon :icon="CalendarR" :scale="1.4"></Icon>
       </template>
-      {{ currentValue }}
+      {{ isRange ? `${currentValue[0]} - ${currentValue[1]}` : currentValue }}
     </Button>
   </span>
 
