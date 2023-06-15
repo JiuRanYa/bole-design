@@ -9,6 +9,7 @@ importers:
       '@bole-design/hooks': workspace:*
       '@bole-design/icons': workspace:*
       '@bole-design/internal': workspace:*
+      '@bole-design/tokens': workspace:*
       '@bole-design/utils': workspace:*
       '@floating-ui/dom': ^1.2.8
       '@rollup/plugin-commonjs': ^24.1.0
@@ -50,6 +51,7 @@ importers:
       '@bole-design/hooks': link:packages/hooks
       '@bole-design/icons': link:packages/icons
       '@bole-design/internal': link:internal
+      '@bole-design/tokens': link:packages/tokens
       '@bole-design/utils': link:packages/utils
       '@floating-ui/dom': 1.2.8
       dayjs: 1.11.7
@@ -165,6 +167,9 @@ importers:
       prettier: 2.8.7
 
   packages/styles:
+    specifiers: {}
+
+  packages/tokens:
     specifiers: {}
 
   packages/utils:

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, ref } from 'vue'
-import { monthGridProps } from './props'
+import { computed, inject, ref } from 'vue'
+import { DateCell, monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import dayjs from 'dayjs'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
+import { config } from './const'
+import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 dayjs.extend(dayOfYear)
 
@@ -12,6 +14,7 @@ defineOptions({
   name: 'MonthGrid'
 })
 
+const rootValue = inject(DATE_PICKER_INJECTION_KEY)
 const emit = defineEmits(['pick'])
 const ns = useNamespace('month-grid')
 
@@ -21,24 +24,51 @@ const props = useProps('month-grid', _props, {
 })
 
 const tableRef = ref<HTMLElement>()
-const now = dayjs().format('YYYY-MM-DD')
+const now = dayjs().format(config.defaultFormat)
 
+const className = computed(() => {
+  return [ns.b(), ns.bs('vars')]
+})
 const monthTitle = computed(() => {
   return dayjs(props.value).format('YYYY年MM月')
 })
+// 该月有多少天
 const daysInMonth = computed(() => {
   return dayjs(props.value).daysInMonth() ?? 0
 })
+// 该月第一天是星期几, 0为周日
+const weekDay = computed(() => {
+  return getWeekDayByDate(props.value)
+})
+// 该月需要渲染多少行
 const daysRowNum = computed(() => {
   let res = Math.ceil(daysInMonth.value / 7)
   if (weekDay.value === 0 || daysInMonth.value % 7 === 0) res += 1
   return res
 })
-const className = computed(() => {
-  return [ns.b(), ns.bs('vars')]
-})
-const weekDay = computed(() => {
-  return getWeekDayByDate(props.value)
+const rows = computed(() => {
+  const rowsNum = daysRowNum.value ?? 0
+  const rows_: DateCell[][] = Array.from({ length: daysRowNum.value }, () => [])
+
+  for (let i = 0; i < rowsNum; i++) {
+    for (let j = 0; j < 7; j++) {
+      const day = getDayAriaLabel(i + 1, j + 1)
+      const dayjs_ = dayjs(`${props.value}-${day}`)
+      const dateStr = day ? dayjs_.format(config.defaultFormat) : ''
+
+      rows_[i].push({
+        rowIndex: i,
+        cellIndex: j,
+        text: day,
+        isCurrent: rootValue?.currentValue.value === dateStr,
+        date: dayjs_!.toDate(),
+        dayjs: dayjs_,
+        dateStr
+      })
+    }
+  }
+
+  return rows_
 })
 
 function getDayAriaLabel(row: number, cell: number) {
@@ -61,10 +91,6 @@ function getWeekDayByDate(date: string) {
   return dayjs(date).day()
 }
 
-function calcDate(day: string) {
-  if (!props.value || !day) return ''
-  return dayjs(`${props.value}-${day}`).format('YYYY-MM-DD')
-}
 function handlePickDate(e: Event) {
   const target = (e.target as HTMLElement).closest('td')
 
@@ -80,7 +106,14 @@ function handlePickDate(e: Event) {
   }
   emit('pick', emitValue)
 }
+function getCellClass(cell: DateCell) {
+  const dateStr = cell.dateStr
 
+  return {
+    today: now === dateStr,
+    selected: cell.dateStr === rootValue?.currentValue.value
+  }
+}
 defineExpose({ tableRef })
 </script>
 
@@ -92,15 +125,9 @@ defineExpose({ tableRef })
       }}
     </thead>
     <tbody :class="ns.bem('days', 'body')">
-      <tr role="row" v-for="i in daysRowNum" :key="i" :aria-rowindex="i">
-        <td
-          part="data"
-          :aria-label="getDayAriaLabel(i, j)"
-          v-for="j in 7"
-          :class="{ 'current-date': now === calcDate(getDayAriaLabel(i, j)) }"
-          :aria-colindex="j"
-        >
-          {{ getDayAriaLabel(i, j) }}
+      <tr role="row" v-for="(row, idx) in rows" :key="idx">
+        <td part="data" v-for="cell in row" :class="getCellClass(cell)" :aria-label="cell.text">
+          {{ cell.text }}
         </td>
       </tr>
     </tbody>

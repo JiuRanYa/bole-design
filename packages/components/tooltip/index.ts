@@ -1,3 +1,3 @@
-import Tooltip from './index.tsx'
+import Tooltip from './tooltip.tsx'
 
 export { Tooltip }
