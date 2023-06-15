@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import { DateCell, monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import dayjs from 'dayjs'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
 import { config } from './const'
+import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 dayjs.extend(dayOfYear)
 
@@ -13,6 +14,7 @@ defineOptions({
   name: 'MonthGrid'
 })
 
+const rootValue = inject(DATE_PICKER_INJECTION_KEY)
 const emit = defineEmits(['pick'])
 const ns = useNamespace('month-grid')
 
@@ -52,15 +54,16 @@ const rows = computed(() => {
     for (let j = 0; j < 7; j++) {
       const day = getDayAriaLabel(i + 1, j + 1)
       const dayjs_ = dayjs(`${props.value}-${day}`)
+      const dateStr = day ? dayjs_.format(config.defaultFormat) : ''
 
       rows_[i].push({
         rowIndex: i,
         cellIndex: j,
         text: day,
-        isCurrent: false,
+        isCurrent: rootValue?.currentValue.value === dateStr,
         date: dayjs_!.toDate(),
         dayjs: dayjs_,
-        dateStr: dayjs_.format(config.defaultFormat)
+        dateStr
       })
     }
   }
@@ -105,17 +108,16 @@ function handlePickDate(e: Event) {
     month: date.month() + 1,
     day: date.date()
   }
+  console.log(emitValue)
   emit('pick', emitValue)
 }
 function getCellClass(cell: DateCell) {
-  const res = []
   const dateStr = cell.dateStr
 
-  if (now === dateStr) {
-    res.push('today')
+  return {
+    today: now === dateStr,
+    selected: cell.dateStr === rootValue?.currentValue.value
   }
-
-  return res
 }
 defineExpose({ tableRef })
 </script>
@@ -129,7 +131,7 @@ defineExpose({ tableRef })
     </thead>
     <tbody :class="ns.bem('days', 'body')">
       <tr role="row" v-for="(row, idx) in rows" :key="idx">
-        <td part="data" v-for="cell in row" :class="getCellClass(cell)">
+        <td part="data" v-for="cell in row" :class="getCellClass(cell)" :aria-label="cell.text">
           {{ cell.text }}
         </td>
       </tr>

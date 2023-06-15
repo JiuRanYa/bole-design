@@ -44,8 +44,13 @@ $month-grid: map.merge((), $month-grid);
           border: 2px solid get-css-var(color-primary-light-2);
         }
       }
-      td + .today {
+      td + .today:not(.selected) {
         animation: border-flash 1.4s infinite;
+      }
+      td + .selected {
+        color: get-css-var(fill-color-base);
+        border: 2px solid get-css-var(color-primary-light-2);
+        background-color: get-css-var(color-primary-light-2);
       }
     }
   }

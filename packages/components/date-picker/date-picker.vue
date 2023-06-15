@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { computed, reactive, ref, toRef, watch } from 'vue'
+import { computed, provide, reactive, ref, toRef, watch } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
 import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-design/common'
 import { OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 import dayjs from 'dayjs'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'
+import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 defineOptions({
   name: 'DatePicker'
 })
 
+const emit = defineEmits(['update:value'])
 const _props = defineProps(datePickerProps)
 const props = useProps('date-picker', _props, {
   placement: {
@@ -44,7 +46,7 @@ const currentValue = computed(() => {
   const values = [startState, endState].map(state => {
     const values = Object.values(state.dateValue).map(doubleDigits)
 
-    return `${values.slice(0, 3).join('-')} ${values.slice(3).join(':')}`
+    return `${values.slice(0, 3).join('-')}`
   })
 
   return isRange.value ? values : values[0]
@@ -104,7 +106,6 @@ function handlePresetClick(value: Dateable) {
   }
 }
 
-const emit = defineEmits(['update:value'])
 function handlePickDate(date: OriginDate) {
   visible.value = false
   startState.dateValue = date
@@ -132,6 +133,9 @@ const popperStyle = computed(() => {
     left: `${x.value || 0}px`,
     top: `${y.value || 0}px`
   }
+})
+provide(DATE_PICKER_INJECTION_KEY, {
+  currentValue
 })
 useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>

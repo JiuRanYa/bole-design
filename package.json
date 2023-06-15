@@ -30,6 +30,7 @@
     "@bole-design/hooks": "workspace:*",
     "@bole-design/internal": "workspace:*",
     "@bole-design/icons": "workspace:*",
+    "@bole-design/tokens": "workspace:*",
     "@floating-ui/dom": "^1.2.8",
     "dayjs": "^1.11.3"
   },
