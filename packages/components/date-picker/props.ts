@@ -1,5 +1,6 @@
 import { PropType } from 'vue'
 import { buildProps, Dateable, Placement } from '@bole-design/common'
+import type { Dayjs } from 'dayjs'
 
 export type OriginDate = {
   year: number
@@ -23,3 +24,13 @@ export const calendarProps = buildProps({
 export const monthGridProps = buildProps({
   value: String
 })
+
+export interface DateCell {
+  rowIndex?: number
+  cellIndex?: number
+  isCurrent?: boolean
+  text?: string
+  dayjs: Dayjs
+  date: Date
+  dateStr: string
+}
