@@ -29,10 +29,13 @@ function ensureEmptyDir(dir: string) {
   existsSync(dir) ? emptyDir(dir) : mkdirSync(dir)
 }
 
-function copyThemeChalkSource() {
+// TODO: fix not empty
+function copySassSource() {
+  ensureEmptyDir(resolve(cssDir, 'src'))
+
   return src(path.resolve(__dirname, 'packages/styles/**')).pipe(
     dest(path.resolve(distCssBundle, 'src'))
   )
 }
 
-export default parallel(copyThemeChalkSource, series(buildStyle))
+export default parallel(series(buildStyle), series(copySassSource))
