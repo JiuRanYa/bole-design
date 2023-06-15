@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, inject, ref } from 'vue'
+import { computed, inject, reactive, ref } from 'vue'
 import { DateCell, monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { config } from './const'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 dayjs.extend(dayOfYear)
+dayjs.extend(isBetween)
+dayjs.extend(isSameOrBefore)
 
 defineOptions({
   name: 'MonthGrid'
@@ -91,6 +95,25 @@ function getWeekDayByDate(date: string) {
   return dayjs(date).day()
 }
 
+const startState = ref()
+const endState = ref()
+const startFormatDate = computed(() => {
+  return dayjs(
+    `${startState.value?.year}-${startState.value?.month}-${startState.value?.day}`
+  ).format(config.defaultFormat)
+})
+const endFormatDate = computed(() => {
+  return dayjs(`${endState.value?.year}-${endState.value?.month}-${endState.value?.day}`).format(
+    config.defaultFormat
+  )
+})
+function calcEmitValue(date: Dayjs) {
+  return {
+    year: date.year(),
+    month: date.month() + 1,
+    day: date.date()
+  }
+}
 function handlePickDate(e: Event) {
   const target = (e.target as HTMLElement).closest('td')
 
@@ -98,20 +121,41 @@ function handlePickDate(e: Event) {
 
   const day = target.ariaLabel
   const date = dayjs(`${props.value}-${day}`)
+  const emitValue = calcEmitValue(date)
+  const isRange = rootValue?.isRange.value
 
-  const emitValue = {
-    year: date.year(),
-    month: date.month() + 1,
-    day: date.date()
+  if (!isRange) {
+    emit('pick', emitValue)
   }
-  emit('pick', emitValue)
+
+  if (isRange) {
+    if (!startState.value || (startState.value && endState.value)) {
+      startState.value = emitValue
+      endState.value = null
+      return
+    }
+    if (!endState.value) {
+      endState.value = emitValue
+      if (dayjs(endFormatDate.value).isSameOrBefore(startFormatDate.value)) {
+        ;[startState.value, endState.value] = [endState.value, startState.value]
+      }
+      return
+    }
+  }
 }
+function isInRange(date: DateCell['dateStr']) {
+  return dayjs(date).isBetween(startFormatDate.value, endFormatDate.value)
+}
+
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
 
   return {
     today: now === dateStr,
-    selected: cell.dateStr === rootValue?.currentValue.value
+    selected: cell.dateStr === rootValue?.currentValue.value,
+    start: cell.dateStr === startFormatDate.value,
+    end: cell.dateStr === endFormatDate.value,
+    'in-range': isInRange(cell.dateStr)
   }
 }
 defineExpose({ tableRef })

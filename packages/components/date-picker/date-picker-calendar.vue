@@ -25,8 +25,9 @@ const calendarRef = ref<HTMLDivElement>()
 const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 
 function initRenderDate() {
-  const dateStr = rootValue?.currentValue.value ?? ''
-  const currentDate = dayjs(dateStr).format('YYYY-MM')
+  const isRange = rootValue?.isRange.value
+  const startDate = isRange ? rootValue?.currentValue.value[0] : rootValue?.currentValue.value
+  const currentDate = dayjs(startDate).format('YYYY-MM')
 
   const front = calculateMonthFront(currentDate, 3)
   const back = calculateMonthBack(currentDate, 2)
