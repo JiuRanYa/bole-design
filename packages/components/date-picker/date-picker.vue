@@ -60,10 +60,25 @@ const popperClass = computed(() => {
   return [ns.be('popper')]
 })
 
+const { x, y } = usePopper({
+  referenceEl,
+  popperEl,
+  placement
+})
+
+const popperStyle = computed(() => {
+  return {
+    'transform-origin': 'center top',
+    position: 'absolute',
+    left: `${x.value || 0}px`,
+    top: `${y.value || 0}px`
+  }
+})
+
 function createDateState() {
   const dateValue = reactive({
-    year: 1970,
-    month: 0,
+    year: dayjs().year(),
+    month: dayjs().month() + 2,
     day: 0
   })
   if (props.value) {
@@ -111,6 +126,7 @@ function handlePickDate(date: OriginDate) {
   startState.dateValue = date
   emit('update:value', currentValue.value)
 }
+
 watch(
   () => props.value,
   value => {
@@ -121,19 +137,6 @@ watch(
   },
   { immediate: true }
 )
-const { x, y } = usePopper({
-  referenceEl,
-  popperEl,
-  placement
-})
-const popperStyle = computed(() => {
-  return {
-    'transform-origin': 'center top',
-    position: 'absolute',
-    left: `${x.value || 0}px`,
-    top: `${y.value || 0}px`
-  }
-})
 provide(DATE_PICKER_INJECTION_KEY, {
   currentValue,
   isRange
@@ -149,7 +152,9 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         <template #icon>
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
-        {{ isRange ? `${currentValue[0]} - ${currentValue[1]}` : currentValue }}
+        {{
+          isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
+        }}
       </Button>
       <Button
         v-for="preset in Object.keys(presets)"
@@ -163,7 +168,9 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       <template #icon>
         <Icon :icon="CalendarR" :scale="1.4"></Icon>
       </template>
-      {{ isRange ? `${currentValue[0]} - ${currentValue[1]}` : currentValue }}
+      {{
+        isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
+      }}
     </Button>
   </span>
 

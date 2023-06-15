@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useProps } from '@bole-design/common'
-import { computed, inject, reactive, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import { DateCell, monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import dayjs, { Dayjs } from 'dayjs'
@@ -149,6 +149,8 @@ function isInRange(date: DateCell['dateStr']) {
 
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
+
+  console.log(rootValue?.currentValue.value)
 
   return {
     today: now === dateStr,

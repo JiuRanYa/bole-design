@@ -18,6 +18,7 @@ const props = useProps('calendar', _props, {
 })
 const renderDate = ref()
 
+const emit = defineEmits(['pick'])
 const rootValue = inject(DATE_PICKER_INJECTION_KEY)
 const bufferRefTop = ref<HTMLElement>()
 const bufferRefBot = ref<HTMLElement>()
@@ -156,8 +157,6 @@ function scrollToView() {
   calendarRef.value?.scrollTo(0, topTranslate.value + bufferHeightTop)
   botTranslate.value = topTranslate.value + (bufferRefTop.value?.offsetHeight ?? 0)
 }
-
-const emit = defineEmits(['pick'])
 
 function handlePickDate(date: OriginDate) {
   emit('pick', date)

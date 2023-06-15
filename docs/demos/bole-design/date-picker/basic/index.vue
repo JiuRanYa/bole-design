@@ -8,8 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import dayjs from 'dayjs'
 import { ref } from 'vue'
 
-const currentDate = ref(dayjs().format('YYYY-MM-DD'))
+const currentDate = ref()
 </script>
