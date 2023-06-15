@@ -48,7 +48,7 @@ const daysRowNum = computed(() => {
 })
 const rows = computed(() => {
   const rowsNum = daysRowNum.value ?? 0
-  const rows_: DateCell[][] = Array.from({ length: 5 }, () => [])
+  const rows_: DateCell[][] = Array.from({ length: daysRowNum.value }, () => [])
 
   for (let i = 0; i < rowsNum; i++) {
     for (let j = 0; j < 7; j++) {
@@ -91,10 +91,6 @@ function getWeekDayByDate(date: string) {
   return dayjs(date).day()
 }
 
-function calcDateByDay(day: string) {
-  if (!props.value || !day) return ''
-  return dayjs(`${props.value}-${day}`).format('YYYY-MM-DD')
-}
 function handlePickDate(e: Event) {
   const target = (e.target as HTMLElement).closest('td')
 

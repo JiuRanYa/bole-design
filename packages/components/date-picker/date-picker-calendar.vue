@@ -175,7 +175,6 @@ onMounted(() => {
         :value="date"
         ref="monthRef"
         @pick="handlePickDate"
-        :key="date"
       />
     </div>
     <div :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle" ref="bufferRefBot">
@@ -184,7 +183,6 @@ onMounted(() => {
         :value="date"
         ref="monthRef"
         @pick="handlePickDate"
-        :key="date"
       />
     </div>
     <div class="full-height" style="height: 1e6px"></div>
