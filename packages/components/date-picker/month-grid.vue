@@ -95,18 +95,6 @@ function getWeekDayByDate(date: string) {
   return dayjs(date).day()
 }
 
-const startState = ref()
-const endState = ref()
-const startFormatDate = computed(() => {
-  return dayjs(
-    `${startState.value?.year}-${startState.value?.month}-${startState.value?.day}`
-  ).format(config.defaultFormat)
-})
-const endFormatDate = computed(() => {
-  return dayjs(`${endState.value?.year}-${endState.value?.month}-${endState.value?.day}`).format(
-    config.defaultFormat
-  )
-})
 function calcEmitValue(date: Dayjs) {
   return {
     year: date.year(),
@@ -120,8 +108,9 @@ function handlePickDate(e: Event) {
   if (!target || target.tagName !== 'TD' || !target.ariaLabel) return
 
   const day = target.ariaLabel
-  const date = dayjs(`${props.value}-${day}`)
-  const emitValue = calcEmitValue(date)
+  const dayjs_ = dayjs(`${props.value}-${day}`)
+  const date = dayjs(`${props.value}-${day}`).format(config.defaultFormat)
+  const emitValue = calcEmitValue(dayjs_)
   const isRange = rootValue?.isRange.value
 
   if (!isRange) {
@@ -129,23 +118,50 @@ function handlePickDate(e: Event) {
   }
 
   if (isRange) {
-    if (!startState.value || (startState.value && endState.value)) {
-      startState.value = emitValue
-      endState.value = null
+    if (!startHasChanged.value || (startHasChanged.value && endHasChanged.value)) {
+      rootValue.startMeta.setDate(date)
+      rootValue.startMeta.extraMeta.allocated = true
+
+      let shouldPatchEnd = startHasChanged.value && endHasChanged.value
+      shouldPatchEnd ? (rootValue.endMeta.extraMeta.allocated = false) : null
+
       return
     }
-    if (!endState.value) {
-      endState.value = emitValue
-      if (dayjs(endFormatDate.value).isSameOrBefore(startFormatDate.value)) {
-        ;[startState.value, endState.value] = [endState.value, startState.value]
-      }
-      return
+
+    if (!endHasChanged.value) {
+      const startDate = rootValue.startMeta.getDate()
+      const endDate = date
+
+      const needChange = dayjs(endDate).isSameOrBefore(startDate)
+      const emitStart = needChange ? endDate : startDate
+      const emitEnd = needChange ? startDate : endDate
+
+      rootValue.startMeta.setDate(emitStart)
+      rootValue.endMeta.setDate(emitEnd)
+
+      rootValue.endMeta.extraMeta.allocated = true
     }
   }
 }
 function isInRange(date: DateCell['dateStr']) {
-  return dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)')
+  return (
+    dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)') &&
+    startHasChanged.value &&
+    endHasChanged.value
+  )
 }
+const startFormatDate = computed(() => {
+  return rootValue?.startMeta.getDate()
+})
+const endFormatDate = computed(() => {
+  return rootValue?.endMeta.getDate()
+})
+const startHasChanged = computed(() => {
+  return rootValue?.startMeta.extraMeta.allocated
+})
+const endHasChanged = computed(() => {
+  return rootValue?.endMeta.extraMeta.allocated
+})
 
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
@@ -153,8 +169,8 @@ function getCellClass(cell: DateCell) {
   return {
     today: now === dateStr,
     selected: cell.dateStr === rootValue?.currentValue.value,
-    start: cell.dateStr === startFormatDate.value,
-    end: cell.dateStr === endFormatDate.value,
+    start: cell.dateStr === startFormatDate.value && startHasChanged.value,
+    end: cell.dateStr === endFormatDate.value && endHasChanged.value,
     'in-range': isInRange(cell.dateStr)
   }
 }

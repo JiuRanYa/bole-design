@@ -4,11 +4,12 @@ import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { computed, provide, reactive, ref, toRef, watch } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
 import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-design/common'
-import { OriginDate, datePickerProps } from './props'
+import { DateMeta, OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 import dayjs from 'dayjs'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import { config } from './const'
 
 defineOptions({
   name: 'DatePicker'
@@ -39,15 +40,15 @@ const panelEle = computed(() => panelRef.value?.wrapper)
 const popperEl = computed(() => popperRef.value?.wrapper)
 
 const visible = ref(false)
-const startState = createDateState()
-const endState = createDateState()
+const startMeta = createDateMeta()
+const endMeta = createDateMeta()
 
 const isRange = computed(() => {
   return props.type === 'range'
 })
 const currentValue = computed(() => {
-  const values = [startState, endState].map(state => {
-    const values = Object.values(state.dateValue).map(doubleDigits)
+  const values = [startMeta, endMeta].map(state => {
+    const values = Object.values(state.dateMeta).map(doubleDigits)
 
     return `${values.slice(0, 3).join('-')}`
   })
@@ -75,24 +76,28 @@ const popperStyle = computed(() => {
   }
 })
 
-function createDateState() {
-  const dateValue = reactive({
+function createDateMeta() {
+  const dateMeta = reactive<DateMeta>({
     year: dayjs().year(),
     month: dayjs().month() + 2,
     day: 0
   })
-  if (props.value) {
-  }
+  const extraMeta = reactive({
+    allocated: false
+  })
 
   return reactive({
-    dateValue,
+    dateMeta,
+    extraMeta,
     setDate: (date: Dateable) => {
-      dateValue.year = dayjs(date).year()
-      dateValue.month = dayjs(date).month() + 1
-      dateValue.day = dayjs(date).date()
+      dateMeta.year = dayjs(date).year()
+      dateMeta.month = dayjs(date).month() + 1
+      dateMeta.day = dayjs(date).date()
     },
     getDate: () => {
-      return new Date(dateValue.year, dateValue.month)
+      return dayjs(new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day)).format(
+        config.defaultFormat
+      )
     }
   })
 }
@@ -105,10 +110,10 @@ function handleClickOutside() {
   visible.value = false
 }
 
-function patchDateValue(d: Dateable) {
+function PatchDateMeta(d: Dateable) {
   const date = dayjs(d)
 
-  startState.dateValue = {
+  startMeta.dateMeta = {
     year: date.year(),
     month: date.month() + 1,
     day: date.date()
@@ -117,13 +122,13 @@ function patchDateValue(d: Dateable) {
 }
 function handlePresetClick(value: Dateable) {
   if (props.type === 'static') {
-    patchDateValue(value)
+    PatchDateMeta(value)
   }
 }
 
 function handlePickDate(date: OriginDate) {
   visible.value = false
-  startState.dateValue = date
+  startMeta.dateMeta = date
   emit('update:value', currentValue.value)
 }
 
@@ -133,13 +138,15 @@ watch(
     if (!value) return
 
     const startValue = Array.isArray(value) ? value[0] : value
-    startState.setDate(startValue)
+    startMeta.setDate(startValue)
   },
   { immediate: true }
 )
 provide(DATE_PICKER_INJECTION_KEY, {
   currentValue,
-  isRange
+  isRange,
+  startMeta,
+  endMeta
 })
 useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>

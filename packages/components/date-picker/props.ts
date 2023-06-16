@@ -34,3 +34,19 @@ export interface DateCell {
   date: Date
   dateStr: string
 }
+
+export interface Meta {
+  dateMeta: DateMeta
+  extraMeta: ExtraMeta
+  setDate: (date: Dateable) => void
+  getDate: () => string
+}
+export interface DateMeta {
+  year: number
+  month: number
+  day: number
+}
+
+export interface ExtraMeta {
+  allocated: boolean
+}
