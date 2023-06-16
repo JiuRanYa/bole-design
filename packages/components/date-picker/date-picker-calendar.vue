@@ -13,7 +13,7 @@ defineOptions({
 const _props = defineProps(calendarProps)
 
 // requestAnimationFrame frame task has down
-let done = false
+let ticking = false
 const ns = useNamespace('date-picker')
 const props = useProps('calendar', _props, {
   value: ''
@@ -115,10 +115,10 @@ const bottomTranslateStyle = computed(() => {
 })
 
 function scrollStep() {
-  if (!done) {
+  if (!ticking) {
     window.requestAnimationFrame(scrollUpdate)
   }
-  done = true
+  ticking = true
 }
 
 function scrollUpdate() {
@@ -142,7 +142,7 @@ function scrollUpdate() {
     scrollTop <= topLimit ? patchFrontDate(shouldDecreaseTop) : null
   }
 
-  done = false
+  ticking = false
   lastScrollTop = scrollTop
 }
 
