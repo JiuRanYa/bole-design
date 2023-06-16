@@ -3,7 +3,7 @@ import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { computed, provide, reactive, ref, toRef, watch } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
-import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-design/common'
+import { placementWhiteList, useProps, doubleDigits, Dateable, is } from '@bole-design/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 import dayjs from 'dayjs'
@@ -114,18 +114,22 @@ function handleClickOutside() {
   visible.value = false
 }
 
-function PatchDateMeta(d: Dateable) {
-  const date = dayjs(d)
-
-  startMeta.dateMeta = {
-    year: date.year(),
-    month: date.month() + 1,
-    day: date.date()
+function PatchDateMeta(d: Dateable | Dateable[]) {
+  if (!Array.isArray(d)) {
+    startMeta.setDate(d)
+    emit('update:value', currentValue.value)
+    return
   }
+
+  startMeta.setDate(d[0])
+  endMeta.setDate(d[1])
   emit('update:value', currentValue.value)
 }
-function handlePresetClick(value: Dateable) {
+function handlePresetClick(value: Dateable | Dateable[]) {
   if (props.type === 'static') {
+    PatchDateMeta(value)
+  }
+  if (isRange.value) {
     PatchDateMeta(value)
   }
 }
