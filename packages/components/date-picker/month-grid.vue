@@ -50,6 +50,18 @@ const daysRowNum = computed(() => {
   if (weekDay.value === 0 || daysInMonth.value % 7 === 0) res += 1
   return res
 })
+const startFormatDate = computed(() => {
+  return rootValue?.startMeta.getDate()
+})
+const endFormatDate = computed(() => {
+  return rootValue?.endMeta.getDate()
+})
+const startHasChanged = computed(() => {
+  return rootValue?.startMeta.extraMeta.allocated
+})
+const endHasChanged = computed(() => {
+  return rootValue?.endMeta.extraMeta.allocated
+})
 const rows = computed(() => {
   const rowsNum = daysRowNum.value ?? 0
   const rows_: DateCell[][] = Array.from({ length: daysRowNum.value }, () => [])
@@ -150,18 +162,6 @@ function isInRange(date: DateCell['dateStr']) {
     endHasChanged.value
   )
 }
-const startFormatDate = computed(() => {
-  return rootValue?.startMeta.getDate()
-})
-const endFormatDate = computed(() => {
-  return rootValue?.endMeta.getDate()
-})
-const startHasChanged = computed(() => {
-  return rootValue?.startMeta.extraMeta.allocated
-})
-const endHasChanged = computed(() => {
-  return rootValue?.endMeta.extraMeta.allocated
-})
 
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
