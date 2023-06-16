@@ -31,6 +31,24 @@ date-picker/preset
 
 :::
 
+## 范围选择器
+
+通过设置`type`属性为`range`可以支持范围选择
+
+:::demo
+
+date-picker/range
+
+:::
+
+同时范围选择器也可以搭配`presets`属性使用，但主要要传入的数组变为俩个值
+
+:::demo
+
+date-picker/rangePresets
+
+:::
+
 ## 自定义 Trigger
 
 默认显示形式为`Button group`，你也可以通过`trigger`插槽来自定义触发形式

@@ -3,12 +3,16 @@ import { useProps } from '@bole-design/common'
 import { computed, inject, ref } from 'vue'
 import { DateCell, monthGridProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { config } from './const'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 dayjs.extend(dayOfYear)
+dayjs.extend(isBetween)
+dayjs.extend(isSameOrBefore)
 
 defineOptions({
   name: 'MonthGrid'
@@ -45,6 +49,18 @@ const daysRowNum = computed(() => {
   let res = Math.ceil(daysInMonth.value / 7)
   if (weekDay.value === 0 || daysInMonth.value % 7 === 0) res += 1
   return res
+})
+const startFormatDate = computed(() => {
+  return rootValue?.startMeta.getDate()
+})
+const endFormatDate = computed(() => {
+  return rootValue?.endMeta.getDate()
+})
+const startHasChanged = computed(() => {
+  return rootValue?.startMeta.extraMeta.allocated
+})
+const endHasChanged = computed(() => {
+  return rootValue?.endMeta.extraMeta.allocated
 })
 const rows = computed(() => {
   const rowsNum = daysRowNum.value ?? 0
@@ -91,27 +107,71 @@ function getWeekDayByDate(date: string) {
   return dayjs(date).day()
 }
 
+function calcEmitValue(date: Dayjs) {
+  return {
+    year: date.year(),
+    month: date.month() + 1,
+    day: date.date()
+  }
+}
 function handlePickDate(e: Event) {
   const target = (e.target as HTMLElement).closest('td')
 
   if (!target || target.tagName !== 'TD' || !target.ariaLabel) return
 
   const day = target.ariaLabel
-  const date = dayjs(`${props.value}-${day}`)
+  const dayjs_ = dayjs(`${props.value}-${day}`)
+  const date = dayjs(`${props.value}-${day}`).format(config.defaultFormat)
+  const emitValue = calcEmitValue(dayjs_)
+  const isRange = rootValue?.isRange.value
 
-  const emitValue = {
-    year: date.year(),
-    month: date.month() + 1,
-    day: date.date()
+  if (!isRange) {
+    emit('pick', emitValue)
   }
-  emit('pick', emitValue)
+
+  if (isRange) {
+    if (!startHasChanged.value || (startHasChanged.value && endHasChanged.value)) {
+      rootValue.startMeta.setDate(date)
+      rootValue.startMeta.extraMeta.allocated = true
+
+      let shouldPatchEnd = startHasChanged.value && endHasChanged.value
+      shouldPatchEnd ? (rootValue.endMeta.extraMeta.allocated = false) : null
+
+      return
+    }
+
+    if (!endHasChanged.value) {
+      const startDate = rootValue.startMeta.getDate()
+      const endDate = date
+
+      const needChange = dayjs(endDate).isSameOrBefore(startDate)
+      const emitStart = needChange ? endDate : startDate
+      const emitEnd = needChange ? startDate : endDate
+
+      rootValue.startMeta.setDate(emitStart)
+      rootValue.endMeta.setDate(emitEnd)
+
+      rootValue.endMeta.extraMeta.allocated = true
+    }
+  }
 }
+function isInRange(date: DateCell['dateStr']) {
+  return (
+    dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)') &&
+    startHasChanged.value &&
+    endHasChanged.value
+  )
+}
+
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
 
   return {
     today: now === dateStr,
-    selected: cell.dateStr === rootValue?.currentValue.value
+    selected: cell.dateStr === rootValue?.currentValue.value,
+    start: cell.dateStr === startFormatDate.value && startHasChanged.value,
+    end: cell.dateStr === endFormatDate.value && endHasChanged.value,
+    'in-range': isInRange(cell.dateStr)
   }
 }
 defineExpose({ tableRef })

@@ -3,12 +3,13 @@ import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { computed, provide, reactive, ref, toRef, watch } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
-import { placementWhiteList, useProps, doubleDigits, Dateable } from '@bole-design/common'
-import { OriginDate, datePickerProps } from './props'
+import { placementWhiteList, useProps, doubleDigits, Dateable, is } from '@bole-design/common'
+import { DateMeta, OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 import dayjs from 'dayjs'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import { config } from './const'
 
 defineOptions({
   name: 'DatePicker'
@@ -31,6 +32,10 @@ const ns = useNamespace('date-picker')
 const referenceEl = computed(() => {
   return originTriggerRef.value
 })
+const isRange = computed(() => {
+  return props.type === 'range'
+})
+
 const panelRef = ref()
 const popperRef = ref<PopperExposed>()
 const originTriggerRef = ref<HTMLElement>()
@@ -39,12 +44,12 @@ const panelEle = computed(() => panelRef.value?.wrapper)
 const popperEl = computed(() => popperRef.value?.wrapper)
 
 const visible = ref(false)
-const startState = createDateState()
-const endState = createDateState()
+const startMeta = createDateMeta()
+const endMeta = createDateMeta()
 
 const currentValue = computed(() => {
-  const values = [startState, endState].map(state => {
-    const values = Object.values(state.dateValue).map(doubleDigits)
+  const values = [startMeta, endMeta].map(state => {
+    const values = Object.values(state.dateMeta).map(doubleDigits)
 
     return `${values.slice(0, 3).join('-')}`
   })
@@ -53,31 +58,50 @@ const currentValue = computed(() => {
 })
 const placement = toRef(props, 'placement')
 
-const isRange = computed(() => {
-  return props.type === 'range'
-})
 const popperClass = computed(() => {
   return [ns.be('popper')]
 })
 
-function createDateState() {
-  const dateValue = reactive({
-    year: 1970,
-    month: 0,
+const { x, y } = usePopper({
+  referenceEl,
+  popperEl,
+  placement
+})
+
+const popperStyle = computed(() => {
+  return {
+    'transform-origin': 'center top',
+    position: 'absolute',
+    left: `${x.value || 0}px`,
+    top: `${y.value || 0}px`
+  }
+})
+
+function createDateMeta() {
+  const dateMeta = reactive<DateMeta>({
+    year: dayjs().year(),
+    month: dayjs().month() + 2,
     day: 0
   })
-  if (props.value) {
+  const extraMeta = reactive({
+    allocated: false
+  })
+  if (props.value && isRange.value) {
+    extraMeta.allocated = true
   }
 
   return reactive({
-    dateValue,
+    dateMeta,
+    extraMeta,
     setDate: (date: Dateable) => {
-      dateValue.year = dayjs(date).year()
-      dateValue.month = dayjs(date).month() + 1
-      dateValue.day = dayjs(date).date()
+      dateMeta.year = dayjs(date).year()
+      dateMeta.month = dayjs(date).month() + 1
+      dateMeta.day = dayjs(date).date()
     },
     getDate: () => {
-      return new Date(dateValue.year, dateValue.month)
+      return dayjs(new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day)).format(
+        config.defaultFormat
+      )
     }
   })
 }
@@ -90,52 +114,49 @@ function handleClickOutside() {
   visible.value = false
 }
 
-function patchDateValue(d: Dateable) {
-  const date = dayjs(d)
-
-  startState.dateValue = {
-    year: date.year(),
-    month: date.month() + 1,
-    day: date.date()
+function PatchDateMeta(d: Dateable | Dateable[]) {
+  if (!Array.isArray(d)) {
+    startMeta.setDate(d)
+    emit('update:value', currentValue.value)
+    return
   }
+
+  startMeta.setDate(d[0])
+  endMeta.setDate(d[1])
   emit('update:value', currentValue.value)
 }
-function handlePresetClick(value: Dateable) {
+function handlePresetClick(value: Dateable | Dateable[]) {
   if (props.type === 'static') {
-    patchDateValue(value)
+    PatchDateMeta(value)
+  }
+  if (isRange.value) {
+    PatchDateMeta(value)
   }
 }
 
 function handlePickDate(date: OriginDate) {
   visible.value = false
-  startState.dateValue = date
+  startMeta.dateMeta = date
   emit('update:value', currentValue.value)
 }
+
 watch(
   () => props.value,
   value => {
     if (!value) return
 
     const startValue = Array.isArray(value) ? value[0] : value
-    startState.setDate(startValue)
+    const endValue = Array.isArray(value) ? value[1] : value
+    startMeta.setDate(startValue)
+    endMeta.setDate(endValue)
   },
   { immediate: true }
 )
-const { x, y } = usePopper({
-  referenceEl,
-  popperEl,
-  placement
-})
-const popperStyle = computed(() => {
-  return {
-    'transform-origin': 'center top',
-    position: 'absolute',
-    left: `${x.value || 0}px`,
-    top: `${y.value || 0}px`
-  }
-})
 provide(DATE_PICKER_INJECTION_KEY, {
-  currentValue
+  currentValue,
+  isRange,
+  startMeta,
+  endMeta
 })
 useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
 </script>
@@ -148,7 +169,9 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         <template #icon>
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
-        {{ currentValue }}
+        {{
+          isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
+        }}
       </Button>
       <Button
         v-for="preset in Object.keys(presets)"
@@ -162,7 +185,9 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       <template #icon>
         <Icon :icon="CalendarR" :scale="1.4"></Icon>
       </template>
-      {{ currentValue }}
+      {{
+        isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
+      }}
     </Button>
   </span>
 

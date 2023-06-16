@@ -12,12 +12,15 @@ defineOptions({
 })
 const _props = defineProps(calendarProps)
 
+// requestAnimationFrame frame task has down
+let done = false
 const ns = useNamespace('date-picker')
 const props = useProps('calendar', _props, {
   value: ''
 })
 const renderDate = ref()
 
+const emit = defineEmits(['pick'])
 const rootValue = inject(DATE_PICKER_INJECTION_KEY)
 const bufferRefTop = ref<HTMLElement>()
 const bufferRefBot = ref<HTMLElement>()
@@ -25,8 +28,9 @@ const calendarRef = ref<HTMLDivElement>()
 const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 
 function initRenderDate() {
-  const dateStr = rootValue?.currentValue.value ?? ''
-  const currentDate = dayjs(dateStr).format('YYYY-MM')
+  const isRange = rootValue?.isRange.value
+  const startDate = isRange ? rootValue?.currentValue.value[0] : rootValue?.currentValue.value
+  const currentDate = dayjs(startDate as string).format('YYYY-MM')
 
   const front = calculateMonthFront(currentDate, 3)
   const back = calculateMonthBack(currentDate, 2)
@@ -110,6 +114,13 @@ const bottomTranslateStyle = computed(() => {
   }
 })
 
+function scrollStep() {
+  if (!done) {
+    window.requestAnimationFrame(scrollUpdate)
+  }
+  done = true
+}
+
 function scrollUpdate() {
   const scrollTop = calendarRef.value?.scrollTop ?? 0
   const calendarH = calendarRef.value?.offsetHeight ?? 0
@@ -131,6 +142,7 @@ function scrollUpdate() {
     scrollTop <= topLimit ? patchFrontDate(shouldDecreaseTop) : null
   }
 
+  done = false
   lastScrollTop = scrollTop
 }
 
@@ -156,8 +168,6 @@ function scrollToView() {
   botTranslate.value = topTranslate.value + (bufferRefTop.value?.offsetHeight ?? 0)
 }
 
-const emit = defineEmits(['pick'])
-
 function handlePickDate(date: OriginDate) {
   emit('pick', date)
 }
@@ -166,7 +176,7 @@ onMounted(() => {
   renderDate.value = initRenderDate()
   nextTick(() => {
     scrollToView()
-    useEventListener(calendarRef, 'scroll', () => window.requestAnimationFrame(scrollUpdate))
+    useEventListener(calendarRef, 'scroll', scrollStep)
   })
 })
 </script>
