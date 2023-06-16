@@ -32,6 +32,10 @@ const ns = useNamespace('date-picker')
 const referenceEl = computed(() => {
   return originTriggerRef.value
 })
+const isRange = computed(() => {
+  return props.type === 'range'
+})
+
 const panelRef = ref()
 const popperRef = ref<PopperExposed>()
 const originTriggerRef = ref<HTMLElement>()
@@ -43,9 +47,6 @@ const visible = ref(false)
 const startMeta = createDateMeta()
 const endMeta = createDateMeta()
 
-const isRange = computed(() => {
-  return props.type === 'range'
-})
 const currentValue = computed(() => {
   const values = [startMeta, endMeta].map(state => {
     const values = Object.values(state.dateMeta).map(doubleDigits)
@@ -85,6 +86,9 @@ function createDateMeta() {
   const extraMeta = reactive({
     allocated: false
   })
+  if (props.value && isRange.value) {
+    extraMeta.allocated = true
+  }
 
   return reactive({
     dateMeta,
@@ -138,7 +142,9 @@ watch(
     if (!value) return
 
     const startValue = Array.isArray(value) ? value[0] : value
+    const endValue = Array.isArray(value) ? value[1] : value
     startMeta.setDate(startValue)
+    endMeta.setDate(endValue)
   },
   { immediate: true }
 )

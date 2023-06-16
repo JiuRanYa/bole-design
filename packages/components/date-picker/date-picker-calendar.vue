@@ -29,7 +29,7 @@ const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 function initRenderDate() {
   const isRange = rootValue?.isRange.value
   const startDate = isRange ? rootValue?.currentValue.value[0] : rootValue?.currentValue.value
-  const currentDate = dayjs(startDate).format('YYYY-MM')
+  const currentDate = dayjs(startDate as string).format('YYYY-MM')
 
   const front = calculateMonthFront(currentDate, 3)
   const back = calculateMonthBack(currentDate, 2)
