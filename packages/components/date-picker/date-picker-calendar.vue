@@ -6,13 +6,14 @@ import { useProps } from '@bole-design/common'
 import MonthGrid from './month-grid.vue'
 import dayjs from 'dayjs'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
-import { throttle } from '@bole-design/utils'
 
 defineOptions({
   name: 'DatePickerCalendar'
 })
 const _props = defineProps(calendarProps)
 
+// requestAnimationFrame frame task has down
+let done = false
 const ns = useNamespace('date-picker')
 const props = useProps('calendar', _props, {
   value: ''
@@ -113,7 +114,13 @@ const bottomTranslateStyle = computed(() => {
   }
 })
 
-// Refactor: using Intersection observer
+function scrollStep() {
+  if (!done) {
+    window.requestAnimationFrame(scrollUpdate)
+  }
+  done = true
+}
+
 function scrollUpdate() {
   const scrollTop = calendarRef.value?.scrollTop ?? 0
   const calendarH = calendarRef.value?.offsetHeight ?? 0
@@ -135,6 +142,7 @@ function scrollUpdate() {
     scrollTop <= topLimit ? patchFrontDate(shouldDecreaseTop) : null
   }
 
+  done = false
   lastScrollTop = scrollTop
 }
 
@@ -164,12 +172,11 @@ function handlePickDate(date: OriginDate) {
   emit('pick', date)
 }
 
-const throttleUpdate = throttle(scrollUpdate, 10)
 onMounted(() => {
   renderDate.value = initRenderDate()
   nextTick(() => {
     scrollToView()
-    useEventListener(calendarRef, 'scroll', throttleUpdate)
+    useEventListener(calendarRef, 'scroll', scrollStep)
   })
 })
 </script>
