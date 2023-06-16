@@ -41,6 +41,16 @@ date-picker/trigger
 
 :::
 
+## 范围选择器
+
+通过设置`type`属性为`range`可以支持范围选择
+
+:::demo
+
+date-picker/range
+
+:::
+
 ## DatePicker 参数
 
 | 名称           | 说明                         | 类型                       | 默认值   | 始于 |
