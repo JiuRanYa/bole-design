@@ -144,13 +144,11 @@ function handlePickDate(e: Event) {
   }
 }
 function isInRange(date: DateCell['dateStr']) {
-  return dayjs(date).isBetween(startFormatDate.value, endFormatDate.value)
+  return dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)')
 }
 
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
-
-  console.log(rootValue?.currentValue.value)
 
   return {
     today: now === dateStr,
