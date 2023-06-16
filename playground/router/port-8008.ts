@@ -21,6 +21,11 @@ export const router = createRouter({
       component: () => import('../../docs/demos/bole-design/date-picker/range/index.vue')
     },
     {
+      path: '/range-presets',
+      name: 'range-presets',
+      component: () => import('../../docs/demos/bole-design/date-picker/range-presets/index.vue')
+    },
+    {
       path: '/trigger',
       name: 'trigger',
       component: () => import('../../docs/demos/bole-design/date-picker/trigger/index.vue')
