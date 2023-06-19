@@ -56,10 +56,10 @@ const startFormatDate = computed(() => {
 const endFormatDate = computed(() => {
   return rootValue?.endMeta.getDate()
 })
-const startHasChanged = computed(() => {
+const startAllocated = computed(() => {
   return rootValue?.startMeta.extraMeta.allocated
 })
-const endHasChanged = computed(() => {
+const endAllocated = computed(() => {
   return rootValue?.endMeta.extraMeta.allocated
 })
 const rows = computed(() => {
@@ -130,17 +130,17 @@ function handlePickDate(e: Event) {
   }
 
   if (isRange) {
-    if (!startHasChanged.value || (startHasChanged.value && endHasChanged.value)) {
+    if (!startAllocated.value || (startAllocated.value && endAllocated.value)) {
       rootValue.startMeta.setDate(date)
       rootValue.startMeta.extraMeta.allocated = true
 
-      let shouldPatchEnd = startHasChanged.value && endHasChanged.value
+      let shouldPatchEnd = startAllocated.value && endAllocated.value
       shouldPatchEnd ? (rootValue.endMeta.extraMeta.allocated = false) : null
 
       return
     }
 
-    if (!endHasChanged.value) {
+    if (!endAllocated.value) {
       const startDate = rootValue.startMeta.getDate()
       const endDate = date
 
@@ -157,9 +157,9 @@ function handlePickDate(e: Event) {
 }
 function isInRange(date: DateCell['dateStr']) {
   return (
-    dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)') &&
-    startHasChanged.value &&
-    endHasChanged.value
+    startAllocated.value &&
+    endAllocated.value &&
+    dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)')
   )
 }
 
@@ -169,8 +169,8 @@ function getCellClass(cell: DateCell) {
   return {
     today: now === dateStr,
     selected: cell.dateStr === rootValue?.currentValue.value,
-    start: cell.dateStr === startFormatDate.value && startHasChanged.value,
-    end: cell.dateStr === endFormatDate.value && endHasChanged.value,
+    start: cell.dateStr === startFormatDate.value && startAllocated.value,
+    end: cell.dateStr === endFormatDate.value && endAllocated.value,
     'in-range': isInRange(cell.dateStr)
   }
 }
