@@ -9,6 +9,7 @@ import { Menu } from './menu'
 import { Popper } from './popper'
 import { Portal } from './portal'
 import { Row } from './row'
+import { Select } from './select'
 import { Switch } from './switch'
 import { Tooltip } from './tooltip'
 
@@ -26,6 +27,7 @@ const components = [
   Popper,
   Portal,
   Row,
+  Select,
   Switch,
   Tooltip
 ]
@@ -43,5 +45,6 @@ export * from './menu'
 export * from './popper'
 export * from './portal'
 export * from './row'
+export * from './select'
 export * from './switch'
 export * from './tooltip'

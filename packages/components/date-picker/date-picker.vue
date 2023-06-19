@@ -59,7 +59,13 @@ const currentValue = computed(() => {
 const placement = toRef(props, 'placement')
 
 const popperClass = computed(() => {
-  return [ns.be('popper')]
+  return [
+    ns.be('popper'),
+    'asdasd',
+    {
+      [ns.bm('inherit')]: true
+    }
+  ]
 })
 
 const { x, y } = usePopper({
@@ -174,8 +180,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         }}
       </Button>
       <Button
-        v-for="preset in Object.keys(presets)"
-        @click.stop="handlePresetClick(presets[preset])"
+        v-for="preset in Object.keys(presets)" @click.stop="handlePresetClick(presets[preset])"
       >
         {{ preset }}
       </Button>
