@@ -38,7 +38,7 @@ defineExpose({
       </div>
       <div :class="ns.be('action')">
         <Button>取消</Button>
-        <Button>确认</Button>
+        <Button style="--bl-button-color: var(--bl-color-primary-text)"> 确认 </Button>
       </div>
     </div>
   </div>

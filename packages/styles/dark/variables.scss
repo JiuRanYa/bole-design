@@ -31,8 +31,8 @@ $content-color-map: () !default;
 $content-color-map: map.merge(
   (
     primary: rgba(#fff, 0.94),
-    base: rgba(#fff, 0.88),
-    secondary: rgba(#fff, 0.7),
+    base: rgba(235, 244, 255, 0.9),
+    secondary: rgba(217, 232, 252, 0.69),
     disabled: rgba(#fff, 0.4),
     placeholder: rgba(#fff, 0.3),
     humble: rgba(#fff, 0.5),
