@@ -89,6 +89,9 @@ function fitPopperWidth() {
   })
 }
 function initValueAndLabel(value) {}
+function isSelected(value: string | number) {
+  return false
+}
 onMounted(() => {
   if (props.visible) {
     fitPopperWidth()
