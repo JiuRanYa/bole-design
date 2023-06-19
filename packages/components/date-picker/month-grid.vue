@@ -166,6 +166,7 @@ function isInRange(date: DateCell['dateStr']) {
 function getCellClass(cell: DateCell) {
   const dateStr = cell.dateStr
 
+  console.log(rows.value)
   return {
     today: now === dateStr,
     selected: cell.dateStr === rootValue?.currentValue.value,

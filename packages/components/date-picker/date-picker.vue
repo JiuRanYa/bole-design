@@ -61,7 +61,6 @@ const placement = toRef(props, 'placement')
 const popperClass = computed(() => {
   return [
     ns.be('popper'),
-    'asdasd',
     {
       [ns.bm('inherit')]: true
     }
@@ -76,10 +75,10 @@ const { x, y } = usePopper({
 
 const popperStyle = computed(() => {
   return {
-    'transform-origin': 'center top',
     position: 'absolute',
     left: `${x.value || 0}px`,
-    top: `${y.value || 0}px`
+    top: `${y.value || 0}px`,
+    'transform-origin': 'center top'
   }
 })
 
@@ -180,7 +179,8 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         }}
       </Button>
       <Button
-        v-for="preset in Object.keys(presets)" @click.stop="handlePresetClick(presets[preset])"
+        v-for="preset in Object.keys(presets)"
+        @click.stop="handlePresetClick(presets[preset])"
       >
         {{ preset }}
       </Button>
