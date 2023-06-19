@@ -27,15 +27,15 @@ $button: () !default;
 $button: map.merge(
   (
     color: get-css-var('content-color-base'),
+    color-hover: get-css-var('color-primary-light-2'),
     color-disabled: get-css-var('content-color-disabled'),
     b-color: get-css-var('border-color-base'),
+    b-color-hover: get-css-var('color-primary-light-2'),
     bg-color: get-css-var('fill-color-base'),
     bg-color-hover: get-css-var('button-bg-color'),
-    color-hover: get-css-var('color-primary-light-2'),
-    b-color-hover: get-css-var('color-primary-light-2'),
-    height: map.get($button-size-map, 'md'),
     v-padding: 0,
     h-padding: map.get($button-padding-map, 'md'),
+    height: map.get($button-size-map, 'md'),
     radius: get-css-var('radius-base'),
     series-span: 12px,
     d-color-typed: rgba($color-white, 50%),
@@ -73,7 +73,7 @@ $button: map.merge(
   &:hover {
     color: get-css-var('button-color-hover');
     background-color: get-css-var('button-bg-color-hover');
-    border-color: get-css-var('button-b-color-hover');
+    // border-color: get-css-var('button-b-color-hover');
     outline: 0;
   }
 
