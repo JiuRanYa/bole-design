@@ -59,7 +59,13 @@ const currentValue = computed(() => {
 const placement = toRef(props, 'placement')
 
 const popperClass = computed(() => {
-  return [ns.be('popper')]
+  return [
+    ns.be('popper'),
+    'asdasd',
+    {
+      [ns.bm('inherit')]: true
+    }
+  ]
 })
 
 const { x, y } = usePopper({

@@ -45,6 +45,8 @@ $date-picker: map.merge(
     justify-content: flex-end;
     .#{$namespace}-button {
       --#{$namespace}-button-b-color: none;
+      font-weight: 500;
+      margin-left: 0;
       &:hover {
         color: get-css-var('color-primary-base');
         background: get-css-var('date-picker-confirm-btn-hover-bg');

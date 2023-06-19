@@ -152,8 +152,8 @@ $content-color-map: () !default;
 $content-color-map: map.merge(
   (
     primary: #212529,
-    base: #192434,
-    secondary: #868e96,
+    base: rgba(25, 39, 57, 0.94),
+    secondary: rgba(27, 43, 65, 0.69),
     third: #a1adb1,
     disabled: #adb5bd,
     placeholder: #ced4da,
