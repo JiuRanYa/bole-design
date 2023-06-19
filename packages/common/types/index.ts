@@ -4,6 +4,10 @@ export const booleanProps = {
   type: Boolean,
   default: null
 }
+export const booleanNumberProp = {
+  type: [Boolean, Number],
+  default: null
+}
 export const booleanStringProp = {
   type: [Boolean, String],
   default: null
