@@ -31,6 +31,7 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [
           { text: 'Input 输入框', link: '/components/input' },
           { text: 'Switch 开关', link: '/components/switch' },
+          { text: 'Select 选择器', link: '/components/select' },
           { text: 'DatePicker 日期选择器', link: '/components/date-picker' }
         ]
       },

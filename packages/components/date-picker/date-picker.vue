@@ -180,8 +180,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
         }}
       </Button>
       <Button
-        v-for="preset in Object.keys(presets)"
-        @click.stop="handlePresetClick(presets[preset])"
+        v-for="preset in Object.keys(presets)" @click.stop="handlePresetClick(presets[preset])"
       >
         {{ preset }}
       </Button>

@@ -25,7 +25,8 @@ $color-map: map.deep-merge(
   (
     primary: (
       base: #006af5,
-      text: #005fdb
+      text: #005fdb,
+      bg: rgba(79, 68, 224, 0.06)
     ),
     info: (
       base: #3bc9db
@@ -43,57 +44,11 @@ $color-map: map.deep-merge(
   $color-map
 );
 // colors-end
-
-@mixin define-type-color($type) {
-  $colors: map.get($color-map, $type);
-
-  @each $name in map.keys($colors) {
-    @include define-css-var(('color', $type, $name), map.get($colors, $name));
-  }
-}
-@mixin define-level-colors($type, $max-level, $mode, $mixed-color) {
-  @for $i from 1 through $max-level {
-    $color-map: map.deep-merge(
-      (
-        $type: (
-          '#{$mode}-#{$i}':
-            color.mix(
-              $mixed-color,
-              map.get($color-map, $type, 'base'),
-              math.percentage(math.div($i, 10))
-            )
-        )
-      ),
-      $color-map
-    ) !global;
-  }
-}
-
-@mixin define-opacity-colors($type, $max-level) {
-  @for $i from 1 through $max-level {
-    $color-map: map.deep-merge(
-      (
-        $type: (
-          'opacity-#{$i}':
-            rgba(map.get($color-map, $type, 'base'), math.percentage(math.div(10 - $i, 10)))
-        )
-      ),
-      $color-map
-    ) !global;
-  }
-}
-
-@each $type in $types {
-  @include define-level-colors($type, 9, 'light', $color-white);
-  @include define-level-colors($type, 9, 'dark', $color-black);
-  @include define-opacity-colors($type, 9);
-}
-
 // border-end
 $border-color-map: () !default;
 $border-color-map: map.merge(
   (
-    base: #ced4da,
+    base: #cbd5e1,
     light-1: #dee2e6,
     light-2: #e9ecef,
     dark-1: #adb5bd,
@@ -226,3 +181,48 @@ $font-family-map: map.merge(
   ),
   $font-family-map
 );
+
+@mixin define-type-color($type) {
+  $colors: map.get($color-map, $type);
+
+  @each $name in map.keys($colors) {
+    @include define-css-var(('color', $type, $name), map.get($colors, $name));
+  }
+}
+@mixin define-level-colors($type, $max-level, $mode, $mixed-color) {
+  @for $i from 1 through $max-level {
+    $color-map: map.deep-merge(
+      (
+        $type: (
+          '#{$mode}-#{$i}':
+            color.mix(
+              $mixed-color,
+              map.get($color-map, $type, 'base'),
+              math.percentage(math.div($i, 10))
+            )
+        )
+      ),
+      $color-map
+    ) !global;
+  }
+}
+
+@mixin define-opacity-colors($type, $max-level) {
+  @for $i from 1 through $max-level {
+    $color-map: map.deep-merge(
+      (
+        $type: (
+          'opacity-#{$i}':
+            rgba(map.get($color-map, $type, 'base'), math.percentage(math.div(10 - $i, 10)))
+        )
+      ),
+      $color-map
+    ) !global;
+  }
+}
+
+@each $type in $types {
+  @include define-level-colors($type, 9, 'light', $color-white);
+  @include define-level-colors($type, 9, 'dark', $color-black);
+  @include define-opacity-colors($type, 9);
+}

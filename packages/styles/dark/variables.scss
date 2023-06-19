@@ -10,7 +10,8 @@ $color-map: map.deep-merge(
   (
     primary: (
       base: #0c6ce9,
-      text: #005fdb
+      text: #7b80ff,
+      bg: rgba(123, 128, 255, 0.12)
     ),
     info: (
       base: #3bc9db
@@ -44,7 +45,7 @@ $content-color-map: map.merge(
 $bg-color-map: () !default;
 $bg-color-map: map.merge(
   (
-    base: #181a1b,
+    base: #1f2023,
     reverse: #fff
   ),
   $bg-color-map
