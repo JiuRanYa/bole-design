@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { watch, computed, onMounted, ref } from 'vue'
 import { selectProps } from './props'
-import { useProps } from '@bole-design/common'
+import { isNull, useProps } from '@bole-design/common'
 import type { Placement } from '@floating-ui/dom'
 import { Popper, PopperExposed } from '../popper'
 import { Option } from '../option'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
+import { ChevronDown } from '@bole-design/icons'
+import { Icon } from '../icon'
+import { SelectValue } from './.symbol'
 
 defineOptions({
   name: 'Select'
@@ -14,7 +17,7 @@ defineOptions({
 const emit = defineEmits(['update:value'])
 const _props = defineProps(selectProps)
 const props = useProps('select', _props, {
-  value: '',
+  value: 1,
   visible: false,
   transitionName: () => ns.ns('drop'),
   listClass: [],
@@ -43,7 +46,9 @@ const { x, y } = usePopper({
   popperEl,
   placement
 })
+
 const ns = useNamespace('select')
+let emittedValue: typeof props.value | null = props.value
 
 const className = computed(() => {
   return {
@@ -54,7 +59,12 @@ const className = computed(() => {
   }
 })
 const selectorClass = computed(() => {
-  return [ns.be('selector')]
+  return [
+    ns.be('selector'),
+    {
+      [ns.bem('selector', 'focused')]: currentVisible.value
+    }
+  ]
 })
 const popperStyle = computed(() => {
   return {
@@ -64,7 +74,7 @@ const popperStyle = computed(() => {
     top: `${y.value || 0}px`
   }
 })
-function showOptionsPanel() {
+function showListPanel() {
   setVisible(!currentVisible.value)
 }
 function setVisible(visible: boolean) {
@@ -88,19 +98,47 @@ function fitPopperWidth() {
     }
   })
 }
-function initValueAndLabel(value) {}
+function initValueAndLabel(value) {
+  if (isNull(value)) {
+    currentValues.value = []
+  }
+  currentValues.value[0] = value
+}
 function isSelected(value: string | number) {
-  return false
+  return currentValues.value[0] === value || true
+}
+function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
+  const isNewArray = Array.isArray(newValue)
+  const isOldArray = Array.isArray(oldValue)
+
+  if (isNewArray !== isOldArray) return false
+
+  if (isNewArray && isOldArray) {
+    if (newValue.length !== oldValue.length) return false
+
+    for (let i = 0, len = newValue.length; i < len; ++i) {
+      if (newValue[i] !== oldValue[i]) return false
+    }
+
+    return true
+  }
+
+  if (isNull(newValue)) return isNull(oldValue)
+
+  return newValue === oldValue
 }
 onMounted(() => {
   if (props.visible) {
+    console.log(props.value)
     fitPopperWidth()
   }
 })
 watch(
   () => props.value,
   value => {
-    initValueAndLabel(value)
+    if (!emittedValue || !isSameValue(value, emittedValue)) {
+      initValueAndLabel(value)
+    }
   }
 )
 watch(
@@ -115,9 +153,12 @@ useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
 </script>
 
 <template>
-  <div :class="className" ref="wrapper" @click="showOptionsPanel">
+  <div :class="className" ref="wrapper" @click="showListPanel">
     <div ref="reference" :class="selectorClass" tabindex="0">
       <div :class="ns.be('control')">请选择</div>
+      <div :class="[ns.be('icon'), ns.be('suffix')]">
+        <Icon :icon="ChevronDown" :class="ns.be('arrow')"></Icon>
+      </div>
     </div>
     <Popper
       ref="popper"
