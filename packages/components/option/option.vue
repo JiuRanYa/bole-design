@@ -7,7 +7,7 @@
     :aria-selected="selected"
   >
     <slot>
-      <Icon :icon="Check" :class="ns.be('icon')" />
+      <Icon v-if="selected" :icon="Check" :class="ns.be('icon')" />
       <span :class="ns.be('label')">
         {{ label || value }}
       </span>
