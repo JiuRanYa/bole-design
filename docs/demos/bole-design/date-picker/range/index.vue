@@ -7,5 +7,5 @@
 import dayjs from 'dayjs'
 import { ref } from 'vue'
 
-const value = ref([dayjs().subtract(1, 'day'), '2023年12月23日'])
+const value = ref([dayjs().subtract(1, 'day'), dayjs()])
 </script>
