@@ -16,8 +16,6 @@ defineOptions({
   name: 'DatePicker'
 })
 
-console.log(dayjs('2023年06月08日', 'YYYY年MM月DD日'))
-
 const emit = defineEmits(['update:value'])
 const _props = defineProps(datePickerProps)
 const props = useProps('date-picker', _props, {
