@@ -6,6 +6,7 @@ import { DatePicker } from './date-picker'
 import { Icon } from './icon'
 import { Input } from './input'
 import { Menu } from './menu'
+import { Option } from './option'
 import { Popper } from './popper'
 import { Portal } from './portal'
 import { Row } from './row'
@@ -24,6 +25,7 @@ const components = [
   Icon,
   Input,
   Menu,
+  Option,
   Popper,
   Portal,
   Row,
@@ -42,6 +44,7 @@ export * from './date-picker'
 export * from './icon'
 export * from './input'
 export * from './menu'
+export * from './option'
 export * from './popper'
 export * from './portal'
 export * from './row'
