@@ -1,6 +1,5 @@
 <template>
-  {{ value }}
-  <DatePicker type="range" v-model:value="value" value-format="YYYY年MM月DD日" />
+  <DatePicker type="range" v-model:value="value" />
 </template>
 
 <script setup lang="ts">
