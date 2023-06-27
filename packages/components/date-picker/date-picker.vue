@@ -6,7 +6,7 @@ import { Popper, PopperExposed } from '@bole-design/components'
 import { placementWhiteList, useProps, doubleDigits, Dateable, is } from '@bole-design/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
@@ -102,7 +102,8 @@ function createDateMeta() {
   return reactive({
     dateMeta,
     extraMeta,
-    setDate: (date: Dateable) => {
+    setDate: (date: Dateable | Dayjs) => {
+      if (!date) return
       dateMeta.year = dayjs(date).year()
       dateMeta.month = dayjs(date).month() + 1
       dateMeta.day = dayjs(date).date()
@@ -169,8 +170,7 @@ const parseDate = function (
   format: string | undefined,
   lang: string
 ) {
-  const day =
-    !format || format === 'x' ? dayjs(date).locale(lang) : dayjs(date, format).locale(lang)
+  const day = dayjs(date, format).locale(lang)
   return day.isValid() ? day : undefined
 }
 watch(
@@ -180,9 +180,11 @@ watch(
 
     const startValue = Array.isArray(value) ? value[0] : value
     const endValue = Array.isArray(value) ? value[1] : value
-    console.log(parseDate(startValue, props.valueFormat, 'zh-cn'), startValue)
-    startMeta.setDate(startValue)
-    endMeta.setDate(endValue)
+    const parsedStartDate = parseDate(startValue, props.valueFormat, 'zh-cn')
+    const parsedEndDate = parseDate(endValue, props.valueFormat, 'zh-cn')
+
+    parsedStartDate && startMeta.setDate(parsedStartDate)
+    parsedEndDate && endMeta.setDate(parsedEndDate)
   },
   { immediate: true }
 )
