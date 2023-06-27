@@ -49,6 +49,16 @@ date-picker/rangePresets
 
 :::
 
+## 格式化
+
+可以使用`valueFormat`属性对绑定的值进行格式化
+
+:::demo
+
+date-picker/format
+
+:::
+
 ## 自定义 Trigger
 
 默认显示形式为`Button group`，你也可以通过`trigger`插槽来自定义触发形式
