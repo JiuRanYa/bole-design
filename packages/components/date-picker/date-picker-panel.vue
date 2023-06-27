@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { weekDay } from './const'
 import { useNamespace } from '@bole-design/hooks'
-import { computed, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import DatePickerCalendar from './date-picker-calendar.vue'
 import { OriginDate } from './props'
 import { Button } from '@bole-design/components'
+import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 defineOptions({
   name: 'DatePickerPanel'
@@ -17,9 +18,21 @@ const className = computed(() => {
   return [ns.be('panel'), ns.bs('vars')]
 })
 
-const emit = defineEmits(['pick'])
+const emit = defineEmits(['pick', 'confirm', 'cancel'])
+const root = inject(DATE_PICKER_INJECTION_KEY)
 function handlePickValue(date: OriginDate) {
   emit('pick', date)
+}
+
+function confirmValue() {
+  if (root?.currentValue.value.length && root.isRange) {
+    const value = [...root.currentValue.value]
+    root?.updateModelValue(value)
+  }
+  emit('confirm')
+}
+function handleCancel() {
+  emit('cancel')
 }
 
 defineExpose({
@@ -37,8 +50,10 @@ defineExpose({
         <DatePickerCalendar @pick="handlePickValue" />
       </div>
       <div :class="ns.be('action')">
-        <Button>取消</Button>
-        <Button style="--bl-button-color: var(--bl-color-primary-text)"> 确认 </Button>
+        <Button @click="handleCancel">取消</Button>
+        <Button style="--bl-button-color: var(--bl-color-primary-text)" @click="confirmValue">
+          确认
+        </Button>
       </div>
     </div>
   </div>

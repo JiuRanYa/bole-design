@@ -1,10 +1,11 @@
 <template>
-  <DatePicker type="range" v-model:value="date" />
+  {{ value }}
+  <DatePicker type="range" v-model:value="value" value-format="YYYY年MM月DD日" />
 </template>
 
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { ref } from 'vue'
 
-const date = ref([dayjs().subtract(1, 'day'), dayjs()])
+const value = ref([dayjs().subtract(1, 'day'), dayjs()])
 </script>
