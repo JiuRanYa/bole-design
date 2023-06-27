@@ -16,7 +16,6 @@ export default defineConfig(async () => {
       onlyFiles: true
     })
   )
-  console.log(input)
 
   return {
     publicDir: false,

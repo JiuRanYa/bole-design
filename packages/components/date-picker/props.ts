@@ -14,7 +14,8 @@ export const datePickerProps = buildProps({
   transitionName: String || Function,
   presets: Object as PropType<Record<string, Dateable>>,
   type: String as PropType<DatePickerType>,
-  value: [Number, String, Date, Array] as PropType<Dateable | Dateable[]>
+  value: [Number, String, Date, Array] as PropType<Dateable | Dateable[]>,
+	valueFormat: String
 })
 
 export const calendarProps = buildProps({

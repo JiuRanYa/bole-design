@@ -6,6 +6,7 @@ export type DatePickerContext = {
   isRange: ComputedRef<boolean>
   startMeta: Meta
   endMeta: Meta
+  updateModelValue: (...args: any[]) => void
 }
 
 export const DATE_PICKER_INJECTION_KEY: InjectionKey<DatePickerContext> = Symbol()
