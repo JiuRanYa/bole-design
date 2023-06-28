@@ -59,11 +59,11 @@ date-picker/format
 
 :::
 
-## 事件
+## 内置事件
 
-DatePicker 提供了内置的事件，具体可查看事件列表(todo)
+DatePicker 提供了内置的事件，具体可查看下方事件
 
-:::demo
+:::demo onChange 会在更新 modelValue 时触发:
 
 date-picker/event
 
@@ -88,3 +88,9 @@ date-picker/trigger
 | type           | 日期选择的类型，单选或者范围 | `static \| range`          | `static` | -    |
 | transitionName | 弹出面板的动画效果           | `string`                   | `drop`   | -    |
 | valueFormat    | 更新绑定值的格式             | `string`                   | `null`   | -    |
+
+## 事件
+
+| 名称     | 说明                  | 类型                       | 默认值 | 始于 |
+| -------- | --------------------- | -------------------------- | ------ | ---- |
+| onChange | modelValue 更新时触发 | `(Date \| Date[]) => void` | `null` | -    |
