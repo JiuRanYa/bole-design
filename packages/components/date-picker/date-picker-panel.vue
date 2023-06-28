@@ -26,7 +26,7 @@ function handlePickValue(date: OriginDate) {
 
 function confirmValue() {
   if (root?.currentValue.value.length && root.isRange) {
-    const value = [...root.currentValue.value]
+    const value = [root.startMeta.getDate(), root.endMeta.getDate()]
     root?.updateModelValue(value)
   }
   emit('confirm')

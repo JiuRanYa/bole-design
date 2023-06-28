@@ -51,10 +51,10 @@ const daysRowNum = computed(() => {
   return res
 })
 const startFormatDate = computed(() => {
-  return rootValue?.startMeta.getDate()
+  return rootValue?.startMeta.getDayjs().format(config.defaultFormat)
 })
 const endFormatDate = computed(() => {
-  return rootValue?.endMeta.getDate()
+  return rootValue?.endMeta.getDayjs().format(config.defaultFormat)
 })
 const startAllocated = computed(() => {
   return rootValue?.startMeta.extraMeta.allocated

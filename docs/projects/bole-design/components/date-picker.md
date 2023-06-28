@@ -59,6 +59,16 @@ date-picker/format
 
 :::
 
+## 事件
+
+DatePicker 提供了内置的事件，具体可查看事件列表(todo)
+
+:::demo
+
+date-picker/event
+
+:::
+
 ## 自定义 Trigger
 
 默认显示形式为`Button group`，你也可以通过`trigger`插槽来自定义触发形式
