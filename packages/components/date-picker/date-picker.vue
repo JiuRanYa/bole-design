@@ -133,19 +133,20 @@ function handleClickOutside() {
 function patchDateMeta(d: Dateable | Dateable[]) {
   if (!Array.isArray(d)) {
     startMeta.setDate(d)
-    emit('update:value', currentValue.value)
+    updateModelValue(startMeta.getDate())
     return
   }
 
   startMeta.setDate(d[0])
   endMeta.setDate(d[1])
-  emit('update:value', currentValue.value)
+  updateModelValue([startMeta.getDate(), endMeta.getDate()])
 }
 function handlePresetClick(value: Dateable | Dateable[]) {
   if (props.type === 'static') {
     patchDateMeta(value)
   }
   if (isRange.value) {
+    console.log(value)
     patchDateMeta(value)
   }
 }
