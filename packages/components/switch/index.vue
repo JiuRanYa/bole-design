@@ -41,8 +41,12 @@ export default defineComponent({
       ]
     })
 
-    const open = ref(props.modelValue)
     const switchRef = ref()
+    const open = ref(props.modelValue)
+
+    function toggleState() {
+      open.value = !open.value
+    }
 
     watch(
       () => props.modelValue,
@@ -53,9 +57,6 @@ export default defineComponent({
     watch(open, value => {
       emit('update:modelValue', value)
     })
-    function toggleState() {
-      open.value = !open.value
-    }
 
     useEventListener(switchRef, 'click', toggleState)
 
