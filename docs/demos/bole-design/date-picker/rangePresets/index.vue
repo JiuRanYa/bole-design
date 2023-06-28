@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 import quarterOfYear from 'dayjs/plugin/quarterOfYear'
 
 dayjs.extend(quarterOfYear)
+
 import { ref } from 'vue'
 
 const date = ref([dayjs().subtract(1, 'day'), dayjs()])
