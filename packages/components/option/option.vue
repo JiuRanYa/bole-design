@@ -20,7 +20,7 @@ import { computed } from 'vue'
 import { optionProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import { Icon } from '@bole-design/components'
-import { Check } from '@bole-design/icons'
+// import { Check } from '@bole-design/icons'
 
 defineProps(optionProps)
 

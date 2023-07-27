@@ -12,7 +12,7 @@ import {
   emitEvent
 } from '@bole-design/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
-import { CalendarR } from '@bole-design/icons'
+// import { CalendarR } from '@bole-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'

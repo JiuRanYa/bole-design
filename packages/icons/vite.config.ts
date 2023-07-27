@@ -23,7 +23,7 @@ export default defineConfig(async () => {
       sourcemap: false,
       lib: {
         entry: resolve(__dirname, 'vue/index.ts'),
-        name: 'VexipUIIcon'
+        name: 'BoleDesignUIIcon'
       },
       rollupOptions: {
         input: [resolve(__dirname, 'vue/index.ts')],

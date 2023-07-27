@@ -6,7 +6,7 @@ import type { Placement } from '@floating-ui/dom'
 import { Popper, PopperExposed } from '../popper'
 import { Option } from '../option'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { ChevronDown } from '@bole-design/icons'
+// import { ChevronDown } from '@bole-design/icons'
 import { Icon } from '../icon'
 import { SelectValue } from './.symbol'
 
