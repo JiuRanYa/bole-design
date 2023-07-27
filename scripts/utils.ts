@@ -132,6 +132,7 @@ export function toCamelCase(value: string) {
 
 export const hooksDir = resolve(rootDir, 'packages/hooks')
 export const componentsDir = resolve(rootDir, 'packages/components')
+export const iconDir = resolve(rootDir, 'docs/public/icon') 
 
 export const components = readdirSync(componentsDir).filter(f => {
   const path = resolve(componentsDir, f)

@@ -54,8 +54,11 @@ export const siderbarsConfig: SidebarsConfig = {
     ],
     cdn: [
       {
-        text: 'CDN资源',
-        children: [{ text: '图标库', link: '/cdn/icon' }]
+        text: '图标库',
+        children: [
+          { text: '指南', link: '/cdn/icon' },
+          { text: 'Brands', link: '/cdn/brands' }
+        ]
       }
     ],
     contribute: [

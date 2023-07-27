@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
     "allowJs": false,
@@ -17,11 +18,11 @@
     "baseUrl": ".",
     "types": ["vite/client"],
     "paths": {
-      "@/*": ["../*"],
+      "@/*": ["./*"],
       "@docs/*": ["./*"],
       "bole-design": ["../packages"]
     },
     "lib": ["esnext", "dom"]
   },
-  "include": ["**/*", ".vitepress/**/*", "../types.d.ts"]
+  "include": ["**/*", "demos/**/*", ".vitepress/**/*", "../types.d.ts"]
 }
