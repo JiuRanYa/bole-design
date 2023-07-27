@@ -3,6 +3,7 @@ import Comp from 'unplugin-vue-components/vite'
 import markdownTransform from './.vitepress/plugins/markdownTransform'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import DefineOptions from 'unplugin-vue-define-options/vite'
+import path from 'node:path'
 
 export default defineConfig(() => {
   return {
@@ -25,6 +26,11 @@ export default defineConfig(() => {
       DefineOptions(),
       markdownTransform()
     ],
+    resolve: {
+      alias: {
+        '@/': `${path.resolve(__dirname, '')}/`
+      }
+    },
     server: {
       host: true
     }
