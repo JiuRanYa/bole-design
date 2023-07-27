@@ -1,7 +1,8 @@
 <template>
+  <Icon v-bind="icons.loading"></Icon>
   <div class="icon-demo-container">
     <div class="icon-demo" v-for="icon in iconMap['brands']">
-      <img :src="`/icon/${type}/${icon}`" loading="lazy" decoding="async" />
+      <!-- <img :src="`/icon/${type}/${icon}`" loading="lazy" decoding="async" /> -->
     </div>
   </div>
 </template>
@@ -10,12 +11,16 @@
 import { defineComponent } from 'vue'
 import { useRoute } from 'vitepress'
 import iconMap from '@/iconMap'
+import { useIcons } from '@bole-design/common/config/icons'
+
+const icons = useIcons()
 
 defineComponent({
   name: 'cdn-icon'
 })
 
 const { data } = useRoute()
+console.log(icons)
 const type = data.frontmatter.title
 </script>
 
@@ -24,7 +29,7 @@ const type = data.frontmatter.title
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-start;
+  justify-content: space-;
   gap: 20px;
   .icon-demo {
     img {
