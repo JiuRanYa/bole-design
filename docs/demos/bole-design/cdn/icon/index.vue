@@ -1,32 +1,35 @@
 <template>
-  <div class="icon-demo-container" v-for="sourceType in Object.keys(iconPath)">
-    <h1>{{ sourceType }}</h1>
-    <!-- <div class="icon-demo" v-for="icon in iconMap[sourceType]"> -->
-    <!-- <img :src="`/icon/${sourceType}/${icon}`" /> -->
-    <!-- </div> -->
+  <div class="icon-demo-container">
+    <div class="icon-demo" v-for="icon in iconMap['brands']">
+      <img :src="`/icon/${type}/${icon}`" loading="lazy" decoding="async" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
+import { useRoute } from 'vitepress'
+import iconMap from '@/iconMap'
 
 defineComponent({
   name: 'cdn-icon'
 })
 
-const iconPath = {
-  brands: [{ name: 'apple.svg' }]
-}
+const { data } = useRoute()
+const type = data.frontmatter.title
 </script>
 
 <style lang="scss" scoped>
 .icon-demo-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-start;
   gap: 20px;
   .icon-demo {
     img {
       width: 30px;
+      height: 30px;
     }
   }
 }
