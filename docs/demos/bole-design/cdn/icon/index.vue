@@ -1,9 +1,9 @@
 <template>
   <!-- <Icon v-bind="icons.loading"></Icon> -->
   <div class="icon-demo-container">
-    <Tooltip :content="icon" trigger="hover" v-for="icon in iconCategory[type]">
+    <Tooltip :content="icon.name" trigger="hover" v-for="icon in iconCategory[type]">
       <div class="icon-demo">
-        <img :src="`/icon/${type}/${icon}`" loading="lazy" decoding="async" />
+        <div v-html="icon.show_svg" class="svg-wrapper"></div>
       </div>
     </Tooltip>
   </div>
@@ -24,7 +24,7 @@ const { data } = useRoute()
 const type = data.frontmatter.title
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .icon-demo-container {
   display: flex;
   flex-direction: row;
@@ -36,9 +36,11 @@ const type = data.frontmatter.title
     justify-content: center;
     border-radius: 12px;
     cursor: pointer;
-    img {
-      width: 30px;
-      height: 30px;
+    .svg-wrapper {
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
     }
 
     &:hover {
