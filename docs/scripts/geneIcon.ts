@@ -8,15 +8,14 @@ import { iconDir, logger, prettierConfig } from '../../scripts/utils'
 async function main() {
   const iconMap = geneIconMap()
   const iconTemp = `
-		const iconMap = ${JSON.stringify(iconMap)}
-		export default iconMap
+		${JSON.stringify(iconMap)}
 	`
   const eslint = new ESLint({ fix: true })
-  const iconPath = 'docs/iconMap.ts'
+  const iconPath = 'docs/iconCategory.json'
 
   await writeFile(
     iconPath,
-    prettier.format(iconTemp, { ...prettierConfig, parser: 'typescript' }),
+    prettier.format(iconTemp, { ...prettierConfig, parser: 'json' }),
     'utf-8'
   )
 

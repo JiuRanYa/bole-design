@@ -57,7 +57,8 @@ export const siderbarsConfig: SidebarsConfig = {
         text: '图标库',
         children: [
           { text: '指南', link: '/cdn/icon' },
-          { text: 'Brands', link: '/cdn/brands' }
+          { text: 'Brands', link: '/cdn/brands' },
+          { text: 'regular', link: '/cdn/regular' }
         ]
       }
     ],

@@ -1,5 +1,5 @@
 ---
-title: brands
+title: regular
 page: true
 ---
 
@@ -7,9 +7,9 @@ page: true
 const demos = import.meta.globEager('../../../demos/bole-design/cdn/*/*.vue')
 </script>
 
-# Brands
+# Regular
 
-`brands` 类型图标
+`regular` 类型图标
 
 :::demo
 
