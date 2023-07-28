@@ -2,11 +2,11 @@ import path from 'node:path'
 import prettier from 'prettier'
 import { ESLint } from 'eslint'
 import { readdirSync, statSync } from 'node:fs'
-import { writeFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import { iconDir, logger, prettierConfig } from '../../scripts/utils'
 
 async function main() {
-  const iconMap = geneIconMap()
+  const iconMap = await geneIconMap()
   const iconTemp = `
 		${JSON.stringify(iconMap)}
 	`
@@ -22,10 +22,14 @@ async function main() {
   await ESLint.outputFixes(await eslint.lintFiles(iconPath))
 }
 
-function geneIconMap() {
+async function readFileAsync(filePath: string) {
+  const data = await readFile(filePath, 'utf8')
+  return data
+}
+async function geneIconMap() {
   const result: any = {}
 
-  const traverseFileTree = (directory: string, parentDir = '') => {
+  const traverseFileTree = async (directory: string, parentDir = '') => {
     const files = readdirSync(directory)
 
     for (const file of files) {
@@ -34,17 +38,21 @@ function geneIconMap() {
 
       if (!fileStats.isDirectory()) {
         if (Array.isArray(result[parentDir])) {
-          result[parentDir].push(file)
+          const svgFile = await readFileAsync(filePath)
+          result[parentDir].push({
+            name: file,
+            show_svg: svgFile
+          })
         } else {
           result[parentDir] = []
         }
       } else {
-        traverseFileTree(filePath, path.join(parentDir, file))
+        await traverseFileTree(filePath, path.join(parentDir, file))
       }
     }
   }
 
-  traverseFileTree(iconDir)
+  await traverseFileTree(iconDir)
 
   return result
 }
