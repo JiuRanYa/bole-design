@@ -1,7 +1,7 @@
 <template>
   <!-- <Icon v-bind="icons.loading"></Icon> -->
   <div class="icon-demo-container">
-    <Tooltip :content="icon" trigger="hover" v-for="icon in iconMap['brands']">
+    <Tooltip :content="icon" trigger="hover" v-for="icon in iconCategory[type]">
       <div class="icon-demo">
         <img :src="`/icon/${type}/${icon}`" loading="lazy" decoding="async" />
       </div>
@@ -10,12 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, shallowRef } from 'vue'
 import { useRoute } from 'vitepress'
-import iconMap from '@/iconMap'
-// import { useIcons } from '@bole-design/common/config/icons'
+import iconMap from '@/iconCategory.json'
 
-// const icons = useIcons()
+const iconCategory = shallowRef<any>(iconMap)
 
 defineComponent({
   name: 'cdn-icon'
