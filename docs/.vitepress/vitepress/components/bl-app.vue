@@ -12,7 +12,7 @@ const rootCls = isClient ? document.documentElement.classList : undefined
 
 onMounted(() => {
   nextTick(() => {
-    rootCls.add('dark')
+    rootCls?.add('dark')
   })
 })
 </script>

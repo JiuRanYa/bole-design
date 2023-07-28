@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { FaceGrinBeamR, FaceSurpriseR } from '@bole-design/icons'
+// import { FaceGrinBeamR, FaceSurpriseR } from '@bole-design/icons'
 </script>
