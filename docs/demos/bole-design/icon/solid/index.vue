@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-// import { Sun, SunR, Flag, FlagR, Moon, MoonR } from '@bole-design/icons'
+import { Sun, SunR, Flag, FlagR, Moon, MoonR } from '@bole-design/icons'
 </script>
 
 <style scoped>

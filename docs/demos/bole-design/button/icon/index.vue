@@ -10,5 +10,5 @@
 </template>
 
 <script setup lang="ts">
-// import { Moon, Sun } from '@bole-design/icons'
+import { Moon, Sun } from '@bole-design/icons'
 </script>

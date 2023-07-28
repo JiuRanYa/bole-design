@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-// import { Sun, Moon, Flag, Cat } from '@bole-design/icons'
+import { Sun, Moon, Flag, Cat } from '@bole-design/icons'
 </script>
 
 <style scoped>
