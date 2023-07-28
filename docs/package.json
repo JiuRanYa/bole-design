@@ -3,7 +3,6 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "main.ts",
   "scripts": {
     "serve": "vitepress dev .",
     "plugin:dev": "pnpm run plugin:build --watch .vitepress/plugins",
@@ -14,10 +13,6 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
-    "@bole-design/components": "workspace:*",
-    "@bole-design/internal": "workspace:*",
-    "@bole-design/styles": "workspace:*",
-    "@bole-design/icons": "workspace:*",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-container": "^2.0.5",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
@@ -26,6 +21,9 @@
     "unplugin-vue-components": "^0.24.1"
   },
   "dependencies": {
+    "@bole-design/components": "workspace:*",
+    "@bole-design/internal": "workspace:*",
+    "@bole-design/styles": "workspace:*",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
     "sass": "^1.62.0",

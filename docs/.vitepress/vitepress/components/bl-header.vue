@@ -39,7 +39,7 @@
 import { defineComponent, ref } from 'vue'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
-import { Sun, Moon } from '@bole-design/icons'
+// import { Sun, Moon } from '@bole-design/icons'
 
 defineComponent({
   name: 'header'

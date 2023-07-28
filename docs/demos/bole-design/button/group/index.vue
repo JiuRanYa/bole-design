@@ -28,5 +28,5 @@
 </template>
 
 <script setup lang="ts">
-import { FaceGrinBeamR, FaceSurpriseR, SunR, MoonR } from '@bole-design/icons'
+// import { FaceGrinBeamR, FaceSurpriseR, SunR, MoonR } from '@bole-design/icons'
 </script>
