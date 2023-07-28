@@ -68,7 +68,8 @@ export const siderbarsConfig: SidebarsConfig = {
         text: '开发',
         children: [
           { text: '启动项目', link: '/contribute/start' },
-          { text: '开发命令', link: '/contribute/server' }
+          { text: '开发命令', link: '/contribute/server' },
+          { text: '新增图片', link: '/contribute/icon' }
         ]
       }
     ]

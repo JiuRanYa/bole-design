@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import SourceCode from './demo/source-code.vue'
-// import { Code } from '@bole-design/icons'
+import { Code } from '@bole-design/icons'
 import { CollapseTransition } from '@bole-design/components'
 
 defineComponent({

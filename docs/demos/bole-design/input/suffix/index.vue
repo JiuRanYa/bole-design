@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-// import { Moon } from '@bole-design/icons'
+import { Moon } from '@bole-design/icons'
 </script>
