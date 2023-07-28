@@ -1,5 +1,5 @@
 import { PropType } from 'vue'
-import { buildProps, Dateable, Placement } from '@bole-design/common'
+import { buildProps, Dateable, eventProp, Placement } from '@bole-design/common'
 import type { Dayjs } from 'dayjs'
 
 export type OriginDate = {
@@ -15,7 +15,8 @@ export const datePickerProps = buildProps({
   presets: Object as PropType<Record<string, Dateable>>,
   type: String as PropType<DatePickerType>,
   value: [Number, String, Date, Array] as PropType<Dateable | Dateable[]>,
-	valueFormat: String
+  valueFormat: String,
+  onChange: eventProp<(value: string | number | string[] | number[] | null) => void>()
 })
 
 export const calendarProps = buildProps({
@@ -41,6 +42,7 @@ export interface Meta {
   extraMeta: ExtraMeta
   setDate: (date: Dateable) => void
   getDate: () => string
+  getDayjs: () => Dayjs
 }
 export interface DateMeta {
   year: number

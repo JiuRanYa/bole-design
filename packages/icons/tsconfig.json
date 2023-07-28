@@ -14,10 +14,7 @@
     "outDir": "dist",
     "declaration": true,
     "types": ["vite/client"],
-    "baseUrl": ".",
-    "paths": {
-      "@vexip-ui/*": ["../common/*/src"]
-    }
+    "baseUrl": "."
   },
   "include": ["vue"],
   "exclude": ["node_modules"]

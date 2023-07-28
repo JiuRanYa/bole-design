@@ -8,6 +8,10 @@ export default defineComponent({
   props: iconProps,
   setup(_props, { slots }) {
     const props = useProps('icon', _props, {
+      icon: {
+        default: null,
+        static: true
+      },
       title: '',
       scale: 1,
       size: null

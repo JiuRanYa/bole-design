@@ -92,7 +92,6 @@ importers:
   docs:
     specifiers:
       '@bole-design/components': workspace:*
-      '@bole-design/icons': workspace:*
       '@bole-design/internal': workspace:*
       '@bole-design/styles': workspace:*
       '@types/markdown-it': ^12.2.3
@@ -106,15 +105,14 @@ importers:
       unplugin-vue-components: ^0.24.1
       vitepress: 1.0.0-alpha.73
     dependencies:
+      '@bole-design/components': link:../packages/components
+      '@bole-design/internal': link:../internal
+      '@bole-design/styles': link:../packages/styles
       markdown-it: 13.0.1
       markdown-it-container: 3.0.0
       sass: 1.62.0
       vitepress: 1.0.0-alpha.73_sass@1.62.0
     devDependencies:
-      '@bole-design/components': link:../packages/components
-      '@bole-design/icons': link:../packages/icons
-      '@bole-design/internal': link:../internal
-      '@bole-design/styles': link:../packages/styles
       '@types/markdown-it': 12.2.3
       '@types/markdown-it-container': 2.0.5
       '@vitejs/plugin-vue-jsx': 3.0.1

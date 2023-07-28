@@ -11,6 +11,16 @@ export const router = createRouter({
       component: () => import('../../docs/demos/bole-design/date-picker/basic/index.vue')
     },
     {
+      path: '/event',
+      name: 'event',
+      component: () => import('../../docs/demos/bole-design/date-picker/event/index.vue')
+    },
+    {
+      path: '/format',
+      name: 'format',
+      component: () => import('../../docs/demos/bole-design/date-picker/format/index.vue')
+    },
+    {
       path: '/preset',
       name: 'preset',
       component: () => import('../../docs/demos/bole-design/date-picker/preset/index.vue')

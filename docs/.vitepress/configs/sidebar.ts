@@ -52,12 +52,24 @@ export const siderbarsConfig: SidebarsConfig = {
         ]
       }
     ],
+    cdn: [
+      {
+        text: '图标库',
+        children: [
+          { text: '指南', link: '/cdn/icon' },
+          { text: 'Solid', link: '/cdn/solid' },
+          { text: 'Brands', link: '/cdn/brands' },
+          { text: 'Regular', link: '/cdn/regular' }
+        ]
+      }
+    ],
     contribute: [
       {
         text: '开发',
         children: [
           { text: '启动项目', link: '/contribute/start' },
-          { text: '开发命令', link: '/contribute/server' }
+          { text: '开发命令', link: '/contribute/server' },
+          { text: '新增图片', link: '/contribute/icon' }
         ]
       }
     ]

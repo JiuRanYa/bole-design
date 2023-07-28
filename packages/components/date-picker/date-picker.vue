@@ -3,7 +3,14 @@ import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { computed, provide, reactive, ref, toRef, watch } from 'vue'
 import { Popper, PopperExposed } from '@bole-design/components'
-import { placementWhiteList, useProps, doubleDigits, Dateable, is } from '@bole-design/common'
+import {
+  placementWhiteList,
+  useProps,
+  doubleDigits,
+  Dateable,
+  is,
+  emitEvent
+} from '@bole-design/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
 import { CalendarR } from '@bole-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
@@ -107,9 +114,10 @@ function createDateMeta() {
       dateMeta.day = dayjs(date).date()
     },
     getDate: () => {
-      return dayjs(new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day)).format(
-        config.defaultFormat
-      )
+      return new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day)
+    },
+    getDayjs: () => {
+      return dayjs(new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day))
     }
   })
 }
@@ -125,19 +133,20 @@ function handleClickOutside() {
 function patchDateMeta(d: Dateable | Dateable[]) {
   if (!Array.isArray(d)) {
     startMeta.setDate(d)
-    emit('update:value', currentValue.value)
+    updateModelValue(startMeta.getDate())
     return
   }
 
   startMeta.setDate(d[0])
   endMeta.setDate(d[1])
-  emit('update:value', currentValue.value)
+  updateModelValue([startMeta.getDate(), endMeta.getDate()])
 }
 function handlePresetClick(value: Dateable | Dateable[]) {
   if (props.type === 'static') {
     patchDateMeta(value)
   }
   if (isRange.value) {
+    console.log(value)
     patchDateMeta(value)
   }
 }
@@ -145,23 +154,21 @@ function handlePresetClick(value: Dateable | Dateable[]) {
 function handlePickDate(date: OriginDate) {
   visible.value = false
   startMeta.dateMeta = date
-  emit('update:value', currentValue.value)
+  updateModelValue(new Date(date.year, date.month - 1, date.day))
 }
 
-const updateModelValue = (val: any) => {
+const updateModelValue = (val: Dateable | Dateable[]) => {
+  let emitValue = val
   if (props.valueFormat) {
-    if (isRange) {
-      emit(
-        'update:value',
-        val.map((d: any) => dayjs(d).format(props.valueFormat))
-      )
-      return
+    if (isRange && Array.isArray(val)) {
+      emitValue = val.map(d => dayjs(d).format(props.valueFormat))
+    } else {
+      emitValue = dayjs(val as any).format(props.valueFormat)
     }
-
-    emit('update:value', dayjs(val).format(props.valueFormat))
-    return
   }
-  emit('update:value', val)
+
+  emit('update:value', emitValue)
+  emitEvent(props.onChange, emitValue)
 }
 const parseDate = function (
   date: string | number | Date,
