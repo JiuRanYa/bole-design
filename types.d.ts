@@ -1,6 +1,7 @@
 // GlobalComponents for Volar
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Message: typeof import('bole-design')['Message']
     Button: typeof import('bole-design')['Button']
     ButtonGroup: typeof import('bole-design')['ButtonGroup']
     Col: typeof import('bole-design')['Col']
