@@ -25,7 +25,7 @@ export default defineComponent({
   setup(_props) {
     const ns = useNamespace('popper')
     const props = useProps('popper', _props, {
-      to: '',
+      to: 'body',
       visible: false,
       transition: ''
     })

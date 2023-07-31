@@ -1,3 +1,4 @@
+import { Message } from './message'
 import { Button } from './button'
 import { ButtonGroup } from './button-group'
 import { Col } from './col'
@@ -17,6 +18,7 @@ import { Tooltip } from './tooltip'
 import { buildInstall } from './create'
 
 const components = [
+  Message,
   Button,
   ButtonGroup,
   Col,
@@ -36,6 +38,7 @@ const components = [
 
 export const install = buildInstall(components)
 
+export * from './message'
 export * from './button'
 export * from './button-group'
 export * from './col'
