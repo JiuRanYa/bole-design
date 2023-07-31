@@ -2,7 +2,7 @@
   <!-- <Icon v-bind="icons.loading"></Icon> -->
   <div class="icon-demo-container">
     <Tooltip :content="icon.name" trigger="hover" v-for="icon in iconCategory[type]">
-      <div class="icon-demo">
+      <div class="icon-demo" @click="copyCode(icon)">
         <div v-html="icon.show_svg" class="svg-wrapper"></div>
       </div>
     </Tooltip>
@@ -22,6 +22,11 @@ defineComponent({
 
 const { data } = useRoute()
 const type = data.frontmatter.title
+async function copyCode(icon: any) {
+  const code = `${type}/${icon.name}`
+  console.log(code)
+  await navigator.clipboard.writeText(code)
+}
 </script>
 
 <style lang="scss">

@@ -18,7 +18,7 @@ export const navs: Record<string, any> = {
     },
     {
       link: getProjectLink('bole-design', '/cdn/icon'),
-      text: 'CDN图标库'
+      text: '图标'
     },
     {
       link: getProjectLink('bole-design', '/contribute/start'),
