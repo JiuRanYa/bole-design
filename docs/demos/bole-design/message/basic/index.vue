@@ -3,5 +3,11 @@
 </template>
 
 <script setup lang="ts">
-function openMessage() {}
+import { Message } from '@bole-design/components'
+
+function openMessage() {
+  Message({
+    message: '123'
+  })
+}
 </script>

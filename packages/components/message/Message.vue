@@ -1,5 +1,5 @@
 <template>
-  <div>123</div>
+  <div>12312312312312312312312312</div>
 </template>
 
 <script setup lang="ts">
