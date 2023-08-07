@@ -18,11 +18,12 @@ export type MessageContext = {
 
 let seed = 1
 
-function createMessage() {
+function createMessage({ appendTo }, appContext?: AppContext | null) {
   const id = `bl-message-${seed++}`
   const props = {}
 
   const vnode = createVNode(MessageComp, props)
+  console.log(vnode)
   const vm = vnode.component!
 
   const container = document.createElement('div')
@@ -34,6 +35,7 @@ function createMessage() {
   }
 
   render(vnode, container)
+  appendTo.appendChild(container.firstElementChild!)
 
   const instance: MessageContext = {
     id,
@@ -58,10 +60,15 @@ export type MessageTypedFn = (
   appContext?: null | AppContext
 ) => MessageHandler
 
-const message: MessageFn = () => {
-  const instance = createMessage()
+const message: MessageFn & { _context: AppContext | null } = (options, context) => {
+  const instance = createMessage(
+    {
+      appendTo: document.body
+    },
+    context
+  )
 
-  return instance
+  return instance.handler
 }
 
 export default message
