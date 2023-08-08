@@ -84,6 +84,7 @@ function normalizeOptioons(options: FuzzyOptions) {
 }
 
 const message: MessageFn = (options = {}, context) => {
+  console.log('exec')
   if (!isClient) return { close: () => undefined }
 
   const normalizedOptions = normalizeOptioons(options)

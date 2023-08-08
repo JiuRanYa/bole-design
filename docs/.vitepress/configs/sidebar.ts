@@ -39,7 +39,8 @@ export const siderbarsConfig: SidebarsConfig = {
         text: '通知组件',
         children: [
           { text: 'Tooltip 提示', link: '/components/tooltip' },
-          { text: 'Popover 气泡', link: '/components/popover' }
+          { text: 'Popover 气泡', link: '/components/popover' },
+          { text: 'Message 消息', link: '/components/message' }
         ]
       }
     ],
