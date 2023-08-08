@@ -30,7 +30,6 @@ export function usePopper(options: UsePopperOptions) {
 
   let stopWatchPopper: WatchStopHandle | null = null
 
-  console.log(referenceEl, popperEl)
   const state = {
     x,
     y

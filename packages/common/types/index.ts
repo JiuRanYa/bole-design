@@ -38,3 +38,5 @@ export type AlignedPlacement = `${Side}-${Alignment}`
 export type Placement = Side | AlignedPlacement
 
 export type Dateable = number | string | Date
+
+export type Mutable<T> = { -readonly [P in keyof T]: T[P] }
