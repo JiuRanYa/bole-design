@@ -18,7 +18,7 @@ export function buildInstall(components: any[] = [], LocalConfig?: LocalConfig) 
 
     components.forEach(component => {
       if (typeof component === 'function' || typeof component.install === 'function') {
-        // app.use(component)
+        app.use(component)
         // console.log(component)
       } else {
         app.component(`${normallizedPrefix}${component.name}`, component)
