@@ -1,0 +1,33 @@
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$message: () !default;
+$message: map.merge((), $message);
+
+.#{$namespace}-message {
+  &-vars {
+    @include define-preset-values('message', $message);
+  }
+
+  position: fixed;
+  padding: 8px 10px;
+  left: 50%;
+  top: 40px;
+  transform: translateX(-50%);
+  transition: opacity get-css-var('transition-duration') ease-in-out, transform 0.4s ease-in-out,
+    top 0.4s ease-in-out;
+  border-radius: get-css-var('radius-base');
+  background: red;
+
+  p {
+    margin: 0;
+  }
+}
+
+.#{$namespace}-message--fade-enter-from,
+.#{$namespace}-message--fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}

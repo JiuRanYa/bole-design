@@ -1,3 +1,6 @@
-import Message from './method'
+import { withInstallFunction } from '@bole-design/common/utils/vue/install'
 
-export { Message }
+import MessageCom from './method'
+
+// export function as install func will exec at the first time
+export const Message = withInstallFunction(MessageCom, '$message')

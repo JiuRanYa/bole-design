@@ -1,4 +1,3 @@
-import { Message } from './message'
 import { Button } from './button'
 import { ButtonGroup } from './button-group'
 import { Col } from './col'
@@ -7,6 +6,7 @@ import { DatePicker } from './date-picker'
 import { Icon } from './icon'
 import { Input } from './input'
 import { Menu } from './menu'
+import { Message } from './message'
 import { Option } from './option'
 import { Popper } from './popper'
 import { Portal } from './portal'
@@ -18,7 +18,6 @@ import { Tooltip } from './tooltip'
 import { buildInstall } from './create'
 
 const components = [
-  Message,
   Button,
   ButtonGroup,
   Col,
@@ -27,6 +26,7 @@ const components = [
   Icon,
   Input,
   Menu,
+  Message,
   Option,
   Popper,
   Portal,
@@ -38,7 +38,6 @@ const components = [
 
 export const install = buildInstall(components)
 
-export * from './message'
 export * from './button'
 export * from './button-group'
 export * from './col'
@@ -47,6 +46,7 @@ export * from './date-picker'
 export * from './icon'
 export * from './input'
 export * from './menu'
+export * from './message'
 export * from './option'
 export * from './popper'
 export * from './portal'
