@@ -1,8 +1,8 @@
 import { FuzzyOptions, MessageFn, MessageProps } from './symbol'
-import { MessagePlacement } from './props'
-import { Mutable } from '@bole-design/common'
+import { defaultProps, MessagePlacement } from './props'
+import { isClient, isString, Mutable } from '@bole-design/common'
 import { AppContext, ComponentInternalInstance, VNode, createVNode, render } from 'vue'
-import MessageComp from './Message.vue'
+import MessageComp from './message.vue'
 
 export type ManagerOptions = { duration?: number; placement?: MessagePlacement } & Record<
   string,
@@ -18,12 +18,14 @@ export type MessageContext = {
 
 let seed = 1
 
-function createMessage({ appendTo }, appContext?: AppContext | null) {
+function createMessage({ appendTo, ...options }, appContext?: AppContext | null) {
   const id = `bl-message-${seed++}`
-  const props = {}
+  const props = {
+    ...options
+  }
+  console.log(props)
 
   const vnode = createVNode(MessageComp, props)
-  console.log(vnode)
   const vm = vnode.component!
 
   const container = document.createElement('div')
@@ -59,11 +61,36 @@ export type MessageTypedFn = (
   options?: FuzzyOptions,
   appContext?: null | AppContext
 ) => MessageHandler
+export type MessageParamsNormalized = Omit<MessageProps, 'id'> & {
+  /**
+   * @description set the root element for the message, default to `document.body`
+   */
+  appendTo: HTMLElement
+}
 
-const message: MessageFn & { _context: AppContext | null } = (options, context) => {
+function normalizeOptioons(options: FuzzyOptions) {
+  const userOptions: FuzzyOptions = isString(options) ? { message: options } : options
+
+  const normalized = {
+    ...defaultProps,
+    ...userOptions
+  }
+
+  if (!normalized.appendTo) {
+    normalized.appendTo = document.body
+  }
+
+  return normalized
+}
+
+const message: MessageFn = (options = {}, context) => {
+  if (!isClient) return { close: () => undefined }
+
+  const normalizedOptions = normalizeOptioons(options)
+
   const instance = createMessage(
     {
-      appendTo: document.body
+      ...normalizedOptions
     },
     context
   )

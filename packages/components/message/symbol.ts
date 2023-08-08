@@ -7,7 +7,8 @@ export interface MessageFn {
 }
 
 export interface MessageOptions extends Record<string, any> {
-  message?: string
+  message?: string,
+	appendTo?: HTMLElement
 }
 
 export type FuzzyOptions = string | MessageOptions

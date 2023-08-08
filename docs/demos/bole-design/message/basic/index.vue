@@ -7,7 +7,7 @@ import { Message } from '@bole-design/components'
 
 function openMessage() {
   Message({
-    message: '123'
+    message: '这是一条提示信息'
   })
 }
 </script>

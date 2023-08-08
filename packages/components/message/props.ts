@@ -1,7 +1,9 @@
 import { buildProps } from '@bole-design/common'
 import { PropType } from 'vue'
+import { MessageProps } from './symbol'
 
-export const messageTypes = ['success', 'error', 'warning', 'message'] as const
+export type MessagePlacement = 'top' | 'bottom'
+export const messageTypes = ['success', 'error', 'warning', 'info'] as const
 export const messageProps = buildProps({
   message: String,
   type: {
@@ -13,4 +15,9 @@ export const messageProps = buildProps({
   }
 })
 
-export type MessagePlacement = 'top' | 'bottom'
+export const defaultProps: MessageProps = Object.freeze({
+  inherit: false,
+  message: '',
+  type: 'info',
+  placement: 'top'
+})
