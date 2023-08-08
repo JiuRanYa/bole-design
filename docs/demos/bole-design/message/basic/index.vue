@@ -1,5 +1,5 @@
 <template>
-  <Button type="primary" @click="openMessage">Open</Button>
+  <Button type="primary" @click="openMessage">Show message</Button>
 </template>
 
 <script setup lang="ts">
