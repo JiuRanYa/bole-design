@@ -16,9 +16,25 @@ export type MessageContext = {
   props: Mutable<MessageProps>
 }
 
+export interface MessageHandler {
+  close: () => void
+}
+
+export type MessageTypedFn = (
+  options?: FuzzyOptions,
+  appContext?: null | AppContext
+) => MessageHandler
+
+export type MessageParamsNormalized = Omit<MessageProps, 'id'> & {
+  appendTo: HTMLElement
+}
+
 let seed = 1
 
-function createMessage({ appendTo, ...options }, appContext?: AppContext | null) {
+function createMessage(
+  { appendTo, ...options }: MessageParamsNormalized,
+  appContext?: AppContext | null
+) {
   const id = `bl-message-${seed++}`
   const container = document.createElement('div')
 
@@ -53,24 +69,6 @@ function createMessage({ appendTo, ...options }, appContext?: AppContext | null)
   console.log(instance)
 
   return instance
-}
-
-export interface MessageHandler {
-  /**
-   * @description close the Message
-   */
-  close: () => void
-}
-
-export type MessageTypedFn = (
-  options?: FuzzyOptions,
-  appContext?: null | AppContext
-) => MessageHandler
-export type MessageParamsNormalized = Omit<MessageProps, 'id'> & {
-  /**
-   * @description set the root element for the message, default to `document.body`
-   */
-  appendTo: HTMLElement
 }
 
 function normalizeOptioons(options: FuzzyOptions) {
