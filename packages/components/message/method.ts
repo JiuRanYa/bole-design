@@ -20,19 +20,23 @@ let seed = 1
 
 function createMessage({ appendTo, ...options }, appContext?: AppContext | null) {
   const id = `bl-message-${seed++}`
+  const container = document.createElement('div')
+
   const props = {
-    ...options
+    ...options,
+    onDestroy: () => {
+      // clear the vnode
+      render(null, container)
+    }
   }
-  console.log(props)
 
   const vnode = createVNode(MessageComp, props)
   const vm = vnode.component!
-
-  const container = document.createElement('div')
+  vnode.appContext = appContext || message._context
 
   const handler: MessageHandler = {
     close: () => {
-      // vm.exposed!.visible.value = false
+      vm.exposed!.visible.value = false
     }
   }
 
@@ -46,6 +50,7 @@ function createMessage({ appendTo, ...options }, appContext?: AppContext | null)
     handler,
     props: (vnode.component as any).props
   }
+  console.log(instance)
 
   return instance
 }
@@ -83,7 +88,7 @@ function normalizeOptioons(options: FuzzyOptions) {
   return normalized
 }
 
-const message: MessageFn = (options = {}, context) => {
+const message: MessageFn & { _context: AppContext | null } = (options = {}, context) => {
   console.log('exec')
   if (!isClient) return { close: () => undefined }
 

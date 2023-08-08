@@ -11,12 +11,23 @@ $message: map.merge((), $message);
     @include define-preset-values('message', $message);
   }
 
-  display: inline-flex;
+  position: fixed;
   padding: 8px 10px;
+  left: 50%;
+  top: 40px;
+  transform: translateX(-50%);
+  transition: opacity get-css-var('transition-duration') ease-in-out, transform 0.4s ease-in-out,
+    top 0.4s ease-in-out;
 
   p {
     margin: 0;
   }
 
   background: red;
+}
+
+.#{$namespace}-message--fade-enter-from,
+.#{$namespace}-message--fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -100%);
 }
