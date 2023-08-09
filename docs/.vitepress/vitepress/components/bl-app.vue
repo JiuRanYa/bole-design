@@ -20,7 +20,7 @@ onMounted(() => {
 <template>
   <div>
     <LayoutHeader />
-    <div class="homepage-body">
+    <div class="homepage-body" :class="{ 'no-sider': !hasSidebar }">
       <BlSidebar :hasSidebar="hasSidebar" />
       <BLContent :hasSidebar="hasSidebar">
         <template #content-top>
@@ -46,15 +46,20 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .homepage-body {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 240px minmax(0, 1fr);
+  align-items: flex-start;
+}
+.no-sider {
   display: flex;
 }
 @media (min-width: 1400px) {
   .homepage-body {
     max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: center;
   }
 }
 </style>
