@@ -33,10 +33,6 @@ const { sidebars } = useSidebar()
 .bl-sidebar {
   width: 300px;
   height: 100%;
-  border-right: var(--bl-border-light-2);
-  position: fixed;
-  left: 0;
-  top: var(--header-height);
   padding: 48px 32px 96px;
   box-sizing: border-box;
   .sidebar-groups {

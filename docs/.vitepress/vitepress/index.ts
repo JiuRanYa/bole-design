@@ -1,5 +1,6 @@
 import './styles/vars/css-vars.scss'
 import './styles/app.scss'
+import './assets/font/index.css'
 import type { Component } from 'vue'
 
 import BLDemo from './components/bl-demo.vue'
