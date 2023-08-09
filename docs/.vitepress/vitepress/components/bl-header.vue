@@ -1,18 +1,9 @@
 <template>
-  <Row class="bl-header">
-    <Col :span="6">
+  <div class="bl-header">
+    <div class="bl-header-left">
       <a class="bl-logo" href="/projects/bole-design/">
-        <img src="/bl-logo.png" />
-        <span class="bl-text">Bole Design</span>
+        <span class="bl-title">Bole Design</span>
       </a>
-    </Col>
-    <Col :span="6">
-      <div class="bl-header-search">
-        <input placeholder="在Bole Design中搜索" />
-        <kbd>⌘ K</kbd>
-      </div>
-    </Col>
-    <Col :span="12">
       <div class="bl-nav">
         <a
           v-for="item in nav"
@@ -21,18 +12,25 @@
             link: true,
             active: isActive(route.path, item.link)
           }"
-          >{{ item.text }}</a
         >
-        <Switch
-          :open-icon="Sun"
-          :close-icon="Moon"
-          :value="checked"
-          class="theme-switch switchAppearance"
-          @click="switchTheme"
-        ></Switch>
+          {{ item.text }}
+        </a>
       </div>
-    </Col>
-  </Row>
+    </div>
+    <div class="bl-header-right">
+      <div class="bl-header-search">
+        <input placeholder="在Bole Design中搜索" />
+        <kbd>⌘ K</kbd>
+      </div>
+      <Switch
+        :open-icon="Sun"
+        :close-icon="Moon"
+        :value="checked"
+        class="theme-switch switchAppearance"
+        @click="switchTheme"
+      ></Switch>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -140,22 +138,34 @@ function switchTheme(event: MouseEvent) {
 }
 .bl {
   &-header {
-    position: fixed;
+    position: sticky;
     top: 0;
     z-index: 100;
+    padding: 0 2rem;
     width: 100%;
     height: var(--header-height);
     background-color: transparent;
     border-bottom: var(--bl-border-light-2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     backdrop-filter: blur(8px);
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    &-left {
+      display: flex;
+      align-items: center;
+    }
+    &-right {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      flex: 1 1 0%;
+    }
     &-search {
       display: flex;
       align-items: center;
       line-height: 1;
       padding-left: 30px;
+      margin-right: 60px;
       input {
         border: none;
         background-color: transparent;
@@ -179,17 +189,9 @@ function switchTheme(event: MouseEvent) {
     }
   }
 
-  &-logo {
-    margin-inline-start: 100px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    img {
-      width: 40px;
-      height: 40px;
-      margin-inline-end: 20px;
-    }
+  &-title {
+    font-family: 'CarterOne Regular';
+    margin-right: 24px;
   }
 
   &-nav {
@@ -197,7 +199,7 @@ function switchTheme(event: MouseEvent) {
     display: flex;
     align-items: center;
     justify-content: end;
-    padding-right: 100px;
+    flex: 1 1 0%;
     font-size: 14px;
 
     .theme-switch {
@@ -228,6 +230,12 @@ function switchTheme(event: MouseEvent) {
     .active {
       border-bottom: 2px solid var(--bl-color-primary-base);
     }
+  }
+}
+
+@media (min-width: 1400px) {
+  .bl-header {
+    max-width: 1400px;
   }
 }
 </style>

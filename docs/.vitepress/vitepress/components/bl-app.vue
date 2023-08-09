@@ -20,24 +20,41 @@ onMounted(() => {
 <template>
   <div>
     <LayoutHeader />
-    <BlSidebar :hasSidebar="hasSidebar" />
-    <BLContent :hasSidebar="hasSidebar">
-      <template #content-top>
-        <slot name="content-top" />
-      </template>
-      <template #content-bottom>
-        <slot name="content-bottom" />
-      </template>
-      <template #aside-top>
-        <slot name="aside-top" />
-      </template>
-      <template #aside-mid>
-        <slot name="aside-mid" />
-      </template>
-      <template #aside-bottom>
-        <slot name="aside-bottom" />
-      </template>
-    </BLContent>
+    <div class="homepage-body">
+      <BlSidebar :hasSidebar="hasSidebar" />
+      <BLContent :hasSidebar="hasSidebar">
+        <template #content-top>
+          <slot name="content-top" />
+        </template>
+        <template #content-bottom>
+          <slot name="content-bottom" />
+        </template>
+        <template #aside-top>
+          <slot name="aside-top" />
+        </template>
+        <template #aside-mid>
+          <slot name="aside-mid" />
+        </template>
+        <template #aside-bottom>
+          <slot name="aside-bottom" />
+        </template>
+      </BLContent>
+    </div>
     <LayoutFooter />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.homepage-body {
+  display: flex;
+}
+@media (min-width: 1400px) {
+  .homepage-body {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+  }
+}
+</style>
