@@ -1,34 +1,36 @@
 <template>
-  <div class="bl-header">
-    <div class="bl-header-left">
-      <a class="bl-logo" href="/projects/bole-design/">
-        <span class="bl-title">Bole Design</span>
-      </a>
-      <div class="bl-nav">
-        <a
-          v-for="item in nav"
-          :href="item.link"
-          :class="{
-            link: true,
-            active: isActive(route.path, item.link)
-          }"
-        >
-          {{ item.text }}
+  <div class="bl-header-container">
+    <div class="bl-header">
+      <div class="bl-header-left">
+        <a class="bl-logo" href="/projects/bole-design/">
+          <span class="bl-title">Bole Design</span>
         </a>
+        <div class="bl-nav">
+          <a
+            v-for="item in nav"
+            :href="item.link"
+            :class="{
+              link: true,
+              active: isActive(route.path, item.link)
+            }"
+          >
+            {{ item.text }}
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="bl-header-right">
-      <div class="bl-header-search">
-        <input placeholder="在Bole Design中搜索" />
-        <kbd>⌘ K</kbd>
+      <div class="bl-header-right">
+        <div class="bl-header-search">
+          <input placeholder="在Bole Design中搜索" />
+          <kbd>⌘ K</kbd>
+        </div>
+        <Switch
+          :open-icon="Sun"
+          :close-icon="Moon"
+          :value="checked"
+          class="theme-switch switchAppearance"
+          @click="switchTheme"
+        ></Switch>
       </div>
-      <Switch
-        :open-icon="Sun"
-        :close-icon="Moon"
-        :value="checked"
-        class="theme-switch switchAppearance"
-        @click="switchTheme"
-      ></Switch>
     </div>
   </div>
 </template>
@@ -137,6 +139,9 @@ function switchTheme(event: MouseEvent) {
   z-index: 9999;
 }
 .bl {
+  &-header-container {
+    border-bottom: var(--bl-border-light-2);
+  }
   &-header {
     position: sticky;
     top: 0;
@@ -145,7 +150,6 @@ function switchTheme(event: MouseEvent) {
     width: 100%;
     height: var(--header-height);
     background-color: transparent;
-    border-bottom: var(--bl-border-light-2);
     backdrop-filter: blur(8px);
     display: flex;
     margin-left: auto;
@@ -190,6 +194,7 @@ function switchTheme(event: MouseEvent) {
   }
 
   &-title {
+    color: var(--text-active);
     font-family: 'CarterOne Regular';
     margin-right: 24px;
   }
@@ -219,16 +224,15 @@ function switchTheme(event: MouseEvent) {
       padding: 0 16px;
       height: 100%;
       line-height: var(--header-height);
-      color: var(--bl-content-color-base);
+      color: var(--text-base);
       margin-inline-end: 12px;
       transition: var(--bl-transition-border);
-      border-bottom: var(--bl-border-shape) transparent;
       &:hover {
-        border-bottom: 2px solid var(--bl-color-primary-base);
+        color: var(--text-active);
       }
     }
     .active {
-      border-bottom: 2px solid var(--bl-color-primary-base);
+      color: var(--text-active);
     }
   }
 }

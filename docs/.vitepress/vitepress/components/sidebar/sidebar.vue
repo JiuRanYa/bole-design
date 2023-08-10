@@ -31,14 +31,20 @@ const { sidebars } = useSidebar()
 .bl-sidebar {
   width: 240px;
   height: 100%;
-  padding: 48px 32px 96px;
+  padding: 2rem;
+  padding-left: 40px;
   box-sizing: border-box;
   .sidebar-groups {
     .sidebar-group {
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
       &__title {
-        font-size: 1rem;
+        color: var(--text-active);
+        font-size: 14px;
         line-height: 24px;
         font-weight: 700;
+        margin: 12px 0;
       }
     }
   }

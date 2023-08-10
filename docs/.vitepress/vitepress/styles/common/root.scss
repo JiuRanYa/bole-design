@@ -12,11 +12,6 @@ body,
 
 :root {
   #app {
-    background: radial-gradient(
-      ellipse 80% 50% at 50% -20%,
-      rgba(120, 119, 198, 0.25),
-      rgba(255, 255, 255, 0)
-    );
   }
   .dark {
     #app {
@@ -30,13 +25,14 @@ body,
 }
 
 a {
+  color: #71717a;
   text-decoration: none;
   background-color: transparent;
 }
 body {
   margin: 0;
   font-family: var(--bl-font-family-base);
-  color: var(--bl-content-color-base);
+  color: #71717a;
   background-color: var(--bg-color);
   transition: var(--bl-transition-background);
 }

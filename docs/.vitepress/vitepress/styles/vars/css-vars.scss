@@ -1,6 +1,9 @@
 html {
   --bg-color: #fff;
   --body-bg-color: var(--bl-fill-color-background);
+  --text-base: #71717a;
+  --text-active: #09090b;
+  --text-hover: #09090b;
   --text-linear-color: linear-gradient(to bottom, #000000 40%, rgba(255, 255, 255, 0));
 
   &.dark {
