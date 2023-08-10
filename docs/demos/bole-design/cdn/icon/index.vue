@@ -13,6 +13,7 @@
 import { defineComponent, shallowRef } from 'vue'
 import { useRoute } from 'vitepress'
 import iconMap from '@/iconCategory.json'
+import { Message } from '@bole-design/components'
 
 const iconCategory = shallowRef<any>(iconMap)
 
@@ -24,7 +25,10 @@ const { data } = useRoute()
 const type = data.frontmatter.title
 async function copyCode(icon: any) {
   const code = `${type}/${icon.name}`
-  console.log(code)
+  Message({
+    message: '复制成功',
+    type: 'success'
+  })
   await navigator.clipboard.writeText(code)
 }
 </script>
