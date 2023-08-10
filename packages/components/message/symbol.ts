@@ -15,6 +15,7 @@ export interface MessageOptions extends Record<string, any> {
 export type FuzzyOptions = string | MessageOptions
 
 export type MessageType = 'info' | 'success' | 'warning' | 'error'
+export const messageTypes = ['success', 'info', 'warning', 'error'] as const
 
 export interface MessageInstance extends ComponentPublicInstance {
   placement: MessagePlacement
@@ -27,4 +28,16 @@ export const TypeComponentsMap = {
   info: CircleInfo,
   error: CircleXmark,
   warning: CircleExclamation
+}
+
+export type MessageTypedFn = (
+  options?: FuzzyOptions,
+  appContext?: null | AppContext
+) => MessageHandler
+
+export interface Message extends MessageFn {
+  success: MessageTypedFn
+  warning: MessageTypedFn
+  info: MessageTypedFn
+  error: MessageTypedFn
 }
