@@ -56,16 +56,15 @@ function expandCode() {
 
 <style lang="scss" scoped>
 .demo-box {
-  border: var(--bl-border-base);
-  border-radius: 4px;
+  border: 1px solid var(--bl-c-divider);
+  border-radius: 6px;
   margin-top: 12px;
   &-top {
     padding: 24px;
   }
   .demo-code-actions {
-    border-top: var(--bl-border-base);
     width: 100%;
-    height: 40px;
+    height: 28px;
     display: flex;
     padding: 0 20px;
     box-sizing: border-box;
