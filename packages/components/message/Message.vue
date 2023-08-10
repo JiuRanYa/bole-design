@@ -1,6 +1,9 @@
 <template>
   <Transition :name="ns.bm('fade')" @before-leave="onClose" @after-leave="$emit('destroy')">
-    <div v-show="visible" :class="classList" :style="style">
+    <div v-show="visible" :class="classList" :style="messageStyle">
+      <Icon :style="[{ color: props.iconColor }, props.iconStyle]" :class="iconClass">
+        <component :is="iconComponent" />
+      </Icon>
       <slot>
         <p>
           {{ props.message }}
@@ -15,6 +18,7 @@ import { useNamespace, useSetTimeout } from '@bole-design/hooks'
 import { computed, onMounted, ref } from 'vue'
 import { defaultProps, messageProps } from './props'
 import { useProps } from '@bole-design/common'
+import { TypeComponentsMap } from './symbol'
 
 defineOptions({
   name: 'Message'
@@ -28,11 +32,18 @@ const ns = useNamespace('message')
 const zIndex = ref(2000)
 const visible = ref(false)
 
+const iconComponent = computed(() => props.icon || TypeComponentsMap[props.type] || '')
+
+const iconClass = computed(() => {
+  return {
+    [ns.be('icon')]: true
+  }
+})
 const classList = computed(() => {
-  return [ns.b()]
+  return [ns.b(), ns.bs('vars'), ns.bm(props.type)]
 })
 
-const style = computed(() => {
+const messageStyle = computed(() => {
   return {
     zIndex: zIndex.value
   }

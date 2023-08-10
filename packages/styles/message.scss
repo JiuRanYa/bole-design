@@ -4,30 +4,66 @@
 @use './design' as *;
 
 $message: () !default;
-$message: map.merge((), $message);
+$message: map.merge(
+  (
+    bg-color: get-css-var('fill-color-base'),
+    icon-color: red
+  ),
+  $message
+);
 
 .#{$namespace}-message {
   &-vars {
     @include define-preset-values('message', $message);
   }
 
+  @mixin define-message-style($style-map) {
+    @include define-preset-style('message', $style-map);
+  }
+
   position: fixed;
-  padding: 8px 10px;
-  left: 50%;
-  top: 40px;
+  padding: 12px 24px;
+  right: 0;
+  bottom: 60px;
   transform: translateX(-50%);
   transition: opacity get-css-var('transition-duration') ease-in-out, transform 0.4s ease-in-out,
     top 0.4s ease-in-out;
   border-radius: get-css-var('radius-base');
-  background: red;
+  box-shadow: get-css-var(shadow-base);
+  background: get-css-var(message-bg-color);
+  display: flex;
 
   p {
     margin: 0;
   }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    color: get-css-var('message-icon-color');
+  }
+
+  $types: info success warning error;
+
+  @each $type in $types {
+    $color: if($type == 'info', 'primary', $type);
+
+    &--#{$type} {
+      @include define-message-style(
+        (
+          icon-color: 'color' $color 'base'
+        )
+      );
+    }
+  }
 }
 
-.#{$namespace}-message--fade-enter-from,
+.#{$namespace}-message--fade-enter-from {
+  opacity: 0;
+  transform: translate(-50%, 150%);
+}
 .#{$namespace}-message--fade-leave-to {
   opacity: 0;
-  transform: translate(-50%, -100%);
+  transform: translate(100%, 0%);
 }
