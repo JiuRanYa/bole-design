@@ -39,7 +39,7 @@
 import { defineComponent, ref } from 'vue'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
-import { Sun, Moon } from '@bole-design/icons'
+import { Sun, Moon, Bolt } from '@bole-design/icons'
 
 defineComponent({
   name: 'header'
@@ -193,9 +193,13 @@ function switchTheme(event: MouseEvent) {
     }
   }
 
+  &-logo {
+    display: flex;
+    align-items: center;
+  }
   &-title {
     color: var(--text-active);
-    font-family: 'CarterOne Regular';
+    font-family: 'Caprasimo Regular';
     margin-right: 24px;
   }
 
@@ -226,7 +230,7 @@ function switchTheme(event: MouseEvent) {
       line-height: var(--header-height);
       color: var(--text-base);
       margin-inline-end: 12px;
-      transition: var(--bl-transition-border);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
       &:hover {
         color: var(--text-active);
       }

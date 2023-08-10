@@ -51,7 +51,7 @@ function handleStartClick() {
     &-title {
       margin: 1rem 0;
       font-size: 5rem;
-      font-weight: 600;
+      font-weight: 800;
       background: var(--text-linear-color);
       -webkit-text-fill-color: transparent;
       background-clip: text;
