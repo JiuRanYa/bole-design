@@ -4,12 +4,14 @@ html {
   --text-base: #71717a;
   --text-active: #09090b;
   --text-hover: #09090b;
+  --text-link-base: #71717a;
   --text-linear-color: linear-gradient(to bottom, #000000 40%, rgba(255, 255, 255, 0));
 
   &.dark {
     --text-base: #fafafa99;
     --text-active: #fafafa;
     --text-hover: #fafafa;
+    --text-link-base: #a1a1a1;
     --bg-color: #131719;
     --body-bg-color: #1b1b1b;
     --text-linear-color: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.5));

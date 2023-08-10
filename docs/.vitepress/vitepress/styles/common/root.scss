@@ -10,29 +10,6 @@ body,
   height: 100%;
 }
 
-#app {
-  margin-left: calc(100vw - 100%);
-}
-
-:root {
-  #app {
-  }
-  .dark {
-    #app {
-      background: radial-gradient(
-        ellipse 80% 50% at 50% -20%,
-        rgba(120, 119, 198, 0.3),
-        rgba(255, 255, 255, 0)
-      );
-    }
-  }
-}
-
-a {
-  color: #71717a;
-  text-decoration: none;
-  background-color: transparent;
-}
 body {
   margin: 0;
   font-family: var(--bl-font-family-base);
@@ -48,4 +25,14 @@ ul {
 code {
   font-family: var(--bl-font-family-mono);
   line-height: 2;
+}
+
+#app {
+  margin-left: calc(100vw - 100%);
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-link-base);
+  background-color: transparent;
 }
