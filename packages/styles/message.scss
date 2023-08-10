@@ -25,7 +25,7 @@ $message: map.merge(
   padding: 12px 24px;
   right: 0;
   bottom: 60px;
-  transform: translateX(-50%);
+  transform: translateX(-60px);
   transition: opacity get-css-var('transition-duration') ease-in-out, transform 0.4s ease-in-out,
     top 0.4s ease-in-out;
   border-radius: get-css-var('radius-base');
@@ -61,7 +61,7 @@ $message: map.merge(
 
 .#{$namespace}-message--fade-enter-from {
   opacity: 0;
-  transform: translate(-50%, 150%);
+  transform: translate(-60px, 150%);
 }
 .#{$namespace}-message--fade-leave-to {
   opacity: 0;

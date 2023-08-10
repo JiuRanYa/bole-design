@@ -1,4 +1,4 @@
-import { FuzzyOptions, MessageFn, MessageProps } from './symbol'
+import { FuzzyOptions, Message, MessageFn, MessageProps, messageTypes } from './symbol'
 import { defaultProps, MessagePlacement } from './props'
 import { isClient, isString, Mutable } from '@bole-design/common'
 import { AppContext, ComponentInternalInstance, VNode, createVNode, render } from 'vue'
@@ -19,11 +19,6 @@ export type MessageContext = {
 export interface MessageHandler {
   close: () => void
 }
-
-export type MessageTypedFn = (
-  options?: FuzzyOptions,
-  appContext?: null | AppContext
-) => MessageHandler
 
 export type MessageParamsNormalized = Omit<MessageProps, 'id'> & {
   appendTo: HTMLElement
@@ -66,12 +61,11 @@ function createMessage(
     handler,
     props: (vnode.component as any).props
   }
-  console.log(instance)
 
   return instance
 }
 
-function normalizeOptioons(options: FuzzyOptions) {
+function normalizeOptions(options: FuzzyOptions) {
   const userOptions: FuzzyOptions = isString(options) ? { message: options } : options
 
   const normalized = {
@@ -86,11 +80,13 @@ function normalizeOptioons(options: FuzzyOptions) {
   return normalized
 }
 
-const message: MessageFn & { _context: AppContext | null } = (options = {}, context) => {
-  console.log('exec')
+const message: MessageFn & Partial<Message> & { _context: AppContext | null } = (
+  options = {},
+  context
+) => {
   if (!isClient) return { close: () => undefined }
 
-  const normalizedOptions = normalizeOptioons(options)
+  const normalizedOptions = normalizeOptions(options)
 
   const instance = createMessage(
     {
@@ -101,5 +97,12 @@ const message: MessageFn & { _context: AppContext | null } = (options = {}, cont
 
   return instance.handler
 }
+
+messageTypes.forEach(type => {
+  message[type] = (options = {}, appContext) => {
+    const normalized = normalizeOptions(options)
+    return message({ ...normalized, type }, appContext)
+  }
+})
 
 export default message
