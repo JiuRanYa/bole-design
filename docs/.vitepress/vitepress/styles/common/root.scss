@@ -36,7 +36,7 @@ a {
 body {
   margin: 0;
   font-family: var(--bl-font-family-base);
-  color: #71717a;
+  color: var(--text-base);
   background-color: var(--bg-color);
   transition: var(--bl-transition-background);
 }

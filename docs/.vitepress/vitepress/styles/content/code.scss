@@ -18,6 +18,11 @@
   line-height: 40px;
   font-size: 28px;
 }
+.bl-doc h1,
+h2,
+h3 {
+  color: var(--text-active);
+}
 
 .bl-doc h2 {
   &:first-child {
