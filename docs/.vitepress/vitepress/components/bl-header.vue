@@ -227,6 +227,7 @@ function switchTheme(event: MouseEvent) {
     .link {
       padding: 0 16px;
       height: 100%;
+      font-weight: 500;
       line-height: var(--header-height);
       color: var(--text-base);
       margin-inline-end: 12px;
