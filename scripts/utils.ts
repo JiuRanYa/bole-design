@@ -132,7 +132,7 @@ export function toCamelCase(value: string) {
 
 export const hooksDir = resolve(rootDir, 'packages/hooks')
 export const componentsDir = resolve(rootDir, 'packages/components')
-export const iconDir = resolve(rootDir, 'docs/public/icon') 
+export const iconDir = resolve(rootDir, 'docs/public/icon')
 
 export const components = readdirSync(componentsDir).filter(f => {
   const path = resolve(componentsDir, f)
@@ -293,11 +293,7 @@ export const queryIdlePort = (startPort: number, host = 'localhost', maxTry = 20
 export function mkDirAndFile(path: string) {
   const compose = path.split('/')
 
-  console.log(path)
   compose.reduce((cur, path) => {
     console.log(cur)
-    // if (statSync(cur)) {
-    //   console.log(statSync(cur))
-    // }
   }, compose[1])
 }

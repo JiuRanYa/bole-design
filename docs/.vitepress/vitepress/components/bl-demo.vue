@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { PropType, computed, defineComponent, ref } from 'vue'
 import SourceCode from './demo/source-code.vue'
 import { Code } from '@bole-design/icons'
 import { CollapseTransition } from '@bole-design/components'
@@ -8,7 +8,9 @@ defineComponent({
   name: 'bl-demo'
 })
 const props = defineProps<{
-  demos: object
+  demos: {
+    type: object
+  }
   source: string
   path: string
   desc?: string
