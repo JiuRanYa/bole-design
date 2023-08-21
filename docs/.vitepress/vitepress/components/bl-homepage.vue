@@ -15,9 +15,6 @@ function handleStartClick() {
 <template>
   <div class="homepage">
     <div class="homepage-main">
-      <!-- <div class="homepage-main-logo"> -->
-      <!--   <img src="/bl-logo.png" /> -->
-      <!-- </div> -->
       <div class="homepage-main-title">Bole Design</div>
       <div class="homepage-main-desc">
         高度可定制化，全量
@@ -27,9 +24,6 @@ function handleStartClick() {
       <div class="homepage-main-btn">
         <Button type="primary" size="middle" @click="handleStartClick">开始使用</Button>
       </div>
-      <!-- <div class="homepage-main-bg"> -->
-      <!--   <img src="/bl-bg.svg" /> -->
-      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -57,7 +51,7 @@ function handleStartClick() {
     &-title {
       margin: 1rem 0;
       font-size: 5rem;
-      font-weight: 600;
+      font-weight: 800;
       background: var(--text-linear-color);
       -webkit-text-fill-color: transparent;
       background-clip: text;

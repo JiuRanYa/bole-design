@@ -1,13 +1,13 @@
 import { buildProps } from '@bole-design/common'
 import { PropType } from 'vue'
-import { MessageProps } from './symbol'
+import { MessageProps, MessageType } from './symbol'
 
 export type MessagePlacement = 'top' | 'bottom'
 export const messageTypes = ['success', 'error', 'warning', 'info'] as const
 export const messageProps = buildProps({
   message: String,
   type: {
-    type: String,
+    type: String as PropType<MessageType>,
     values: messageTypes
   },
   placement: {
@@ -18,6 +18,13 @@ export const messageProps = buildProps({
   },
   duration: {
     type: Number
+  },
+  icon: {
+    type: Object as PropType<Record<string, any> | (() => any)>
+  },
+  iconColor: String,
+  iconStyle: {
+    type: String as PropType<Record<string, any>>
   }
 })
 

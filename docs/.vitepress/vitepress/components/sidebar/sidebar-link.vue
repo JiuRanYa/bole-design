@@ -34,7 +34,7 @@ defineComponent({
 }
 
 .link {
-  padding: 10px 16px;
+  padding: 8px 0px;
   line-height: 1.5;
   font-size: 0.9rem;
   border-radius: 8px;
@@ -45,24 +45,12 @@ defineComponent({
 }
 
 .link:hover .link-text {
-  color: var(--bl-color-primary-light-1);
+  text-decoration: underline;
   transition: color 0.25s;
-}
-
-.link.active {
-  background-color: var(--bl-color-primary-opacity-8);
-  .link-text {
-    font-weight: 600;
-    transition: color 0.25s;
-    color: var(--bl-color-primary-light-2);
-  }
 }
 
 .link-text {
   line-height: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--bl-content-color-base);
-  transition: color 0.5s;
+  font-size: 14px;
 }
 </style>

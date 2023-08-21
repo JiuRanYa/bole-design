@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { PropType, computed, defineComponent, ref } from 'vue'
 import SourceCode from './demo/source-code.vue'
 import { Code } from '@bole-design/icons'
 import { CollapseTransition } from '@bole-design/components'
@@ -8,7 +8,9 @@ defineComponent({
   name: 'bl-demo'
 })
 const props = defineProps<{
-  demos: object
+  demos: {
+    type: object
+  }
   source: string
   path: string
   desc?: string
@@ -56,16 +58,15 @@ function expandCode() {
 
 <style lang="scss" scoped>
 .demo-box {
-  border: var(--bl-border-base);
-  border-radius: 4px;
+  border: 1px solid var(--bl-c-divider);
+  border-radius: 6px;
   margin-top: 12px;
   &-top {
     padding: 24px;
   }
   .demo-code-actions {
-    border-top: var(--bl-border-base);
     width: 100%;
-    height: 40px;
+    height: 28px;
     display: flex;
     padding: 0 20px;
     box-sizing: border-box;
