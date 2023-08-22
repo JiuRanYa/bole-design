@@ -73,6 +73,7 @@ function expandCode() {
     justify-content: end;
     align-items: center;
     border-radius: 1px;
+    border-top: 1px dotted var(--bl-c-divider);
     .code-expand-icon-show {
       width: 18px;
       height: 18px;
