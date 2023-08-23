@@ -8,7 +8,6 @@ import {
   useProps,
   doubleDigits,
   Dateable,
-  is,
   emitEvent
 } from '@bole-design/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
@@ -17,7 +16,6 @@ import dayjs, { Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
-import { config } from './const'
 
 defineOptions({
   name: 'DatePicker'
@@ -34,7 +32,8 @@ const props = useProps('date-picker', _props, {
   transitionName: () => ns.ns('drop'),
   presets: {},
   type: 'static',
-  valueFormat: ''
+  valueFormat: '',
+  typing: null
 })
 const ns = useNamespace('date-picker')
 
@@ -243,6 +242,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
   >
     <DatePickerPanel
       ref="panelRef"
+      :typing="props.typing"
       @pick="handlePickDate"
       @confirm="togglePanel"
       @cancel="togglePanel"

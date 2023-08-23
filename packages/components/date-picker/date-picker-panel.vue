@@ -3,13 +3,14 @@ import { weekDay } from './const'
 import { useNamespace } from '@bole-design/hooks'
 import { computed, inject, ref } from 'vue'
 import DatePickerCalendar from './date-picker-calendar.vue'
-import { OriginDate } from './props'
+import { OriginDate, datePickerPanelProps } from './props'
 import { Button } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
 
 defineOptions({
   name: 'DatePickerPanel'
 })
+defineProps(datePickerPanelProps)
 
 const wrapper = ref()
 const ns = useNamespace('date-picker')
@@ -20,6 +21,7 @@ const className = computed(() => {
 
 const emit = defineEmits(['pick', 'confirm', 'cancel'])
 const root = inject(DATE_PICKER_INJECTION_KEY)
+
 function handlePickValue(date: OriginDate) {
   emit('pick', date)
 }
@@ -42,6 +44,8 @@ defineExpose({
 
 <template>
   <div :class="className" ref="wrapper">
+    <div v-if="typing" :class="ns.bm('typing')">123</div>
+
     <div :class="ns.bm('list')">
       <div :class="ns.bem('panel', 'body')">
         <div :class="ns.be('header')">

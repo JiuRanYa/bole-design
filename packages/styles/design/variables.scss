@@ -51,6 +51,7 @@ $border-color-map: map.merge(
     base: #cbd5e1,
     light-1: #dee2e6,
     light-2: #e9ecef,
+    light-3: #f5f8fa,
     dark-1: #adb5bd,
     dark-2: #868e96
   ),
@@ -124,6 +125,7 @@ $shadow-color-map: map.merge(
     base: #dee2e6,
     light-1: rgba(79, 68, 224, 0.1),
     light-2: #f1f3f5,
+    light-3: rgba(82, 63, 105, 0.15),
     dark-1: #ced4da,
     dark-2: #adb5bd
   ),
