@@ -1,5 +1,6 @@
 import { PropType } from 'vue'
 import { buildProps, Dateable, eventProp, Placement } from '@bole-design/common'
+import { datePickerSharedProps } from './shared'
 import type { Dayjs } from 'dayjs'
 
 export type OriginDate = {
@@ -8,8 +9,14 @@ export type OriginDate = {
   day: number
 }
 export type DatePickerType = 'static' | 'range'
+export type DatePickerTyping = 'fixed' | 'since' | 'last'
+
+export const datePickerPanelProps = buildProps({
+  ...datePickerSharedProps
+})
 
 export const datePickerProps = buildProps({
+  ...datePickerSharedProps,
   placement: String as PropType<Placement>,
   transitionName: String || Function,
   presets: Object as PropType<Record<string, Dateable>>,
