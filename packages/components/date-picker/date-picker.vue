@@ -145,7 +145,6 @@ function handlePresetClick(value: Dateable | Dateable[]) {
     patchDateMeta(value)
   }
   if (isRange.value) {
-    console.log(value)
     patchDateMeta(value)
   }
 }

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { weekDay } from './const'
+import { config, weekDay } from './const'
 import { useNamespace } from '@bole-design/hooks'
-import { computed, inject, ref } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import DatePickerCalendar from './date-picker-calendar.vue'
 import { OriginDate, datePickerPanelProps } from './props'
 import { Button } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import input from '../input/input'
+import dayjs from 'dayjs'
 
 defineOptions({
   name: 'DatePickerPanel'
@@ -40,13 +42,56 @@ function handleCancel() {
 defineExpose({
   wrapper
 })
+
+const startDate = ref(root?.startMeta.getDayjs().format(config.defaultFormat))
+const endDate = ref(root?.endMeta.getDayjs().format(config.defaultFormat))
+const rootStartDate = computed(() => root?.startMeta.getDayjs().format(config.defaultFormat))
+const rootEndDate = computed(() => root?.endMeta.getDayjs().format(config.defaultFormat))
+
+function validateDate(date: string) {
+  return dayjs(date).isValid()
+}
+
+function setValidStartDate(date: string, isStart: boolean = true) {
+  if (validateDate(date)) {
+    console.log('123')
+    const parsedDate = dayjs(date).format(config.defaultFormat)
+    const method = isStart ? root?.startMeta : root?.endMeta
+
+    method?.setDate(parsedDate)
+  }
+}
+// watch(
+//   () => startDate.value,
+//   () => {
+//     startDate.value && setValidStartDate(startDate.value)
+//   }
+// )
+// watch(
+//   () => endDate.value,
+//   () => {
+//     endDate.value && setValidStartDate(endDate.value, false)
+//   }
+// )
+watch(
+  () => rootStartDate.value,
+  () => {
+    startDate.value = rootStartDate.value
+  }
+)
+watch(
+  () => rootEndDate.value,
+  () => {
+    endDate.value = rootEndDate.value
+  }
+)
 </script>
 
 <template>
   <div :class="className" ref="wrapper">
     <div v-if="typing" :class="ns.be('typing')">
-      <Input placeholder="Start Date" />
-      <Input placeholder="End Date" />
+      <Input placeholder="Start Date" v-model:value="startDate" />
+      <Input placeholder="End Date" v-model:value="endDate" />
     </div>
 
     <div :class="ns.bm('list')">
