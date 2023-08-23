@@ -16,6 +16,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { Button, ButtonGroup, Icon } from '@bole-design/components'
 import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import { config } from './const'
 
 defineOptions({
   name: 'DatePicker'
@@ -176,6 +177,19 @@ const parseDate = function (
   const day = dayjs(date, format).locale(lang)
   return day.isValid() ? day : undefined
 }
+const startModelValue = computed(() => {
+  if (!Array.isArray(props.value)) return ''
+
+  const startProps = props.value[0]
+  return dayjs(startProps).format(config.defaultFormat)
+})
+const endModelValue = computed(() => {
+  if (!Array.isArray(props.value)) return ''
+
+  const endProps = props.value[1]
+  return dayjs(endProps).format(config.defaultFormat)
+})
+
 watch(
   () => props.value,
   value => {
@@ -210,7 +224,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
         {{
-          isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
+          isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动'
         }}
       </Button>
       <Button
@@ -225,9 +239,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       <template #icon>
         <Icon :icon="CalendarR" :scale="1.4"></Icon>
       </template>
-      {{
-        isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
-      }}
+      {{ isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动' }}
     </Button>
   </span>
 
