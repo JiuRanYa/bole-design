@@ -25,14 +25,11 @@ $date-picker: map.merge(
   }
 
   &__panel {
+    width: var(--bl-date-picker-panel-width);
     box-shadow: var(--bl-date-picker-panel-shadow);
     // border: get-css-var(border-shape) get-css-var(border-color-light-1);
     border-radius: 12px;
     background: var(--bl-date-picker-panel-bg-color);
-  }
-
-  &--list {
-    width: var(--bl-date-picker-panel-width);
   }
 
   &__panel--body {
@@ -66,6 +63,16 @@ $date-picker: map.merge(
     font-size: get-css-var(date-picker-header-font-size);
     &--day {
       text-align: center;
+    }
+  }
+
+  &__typing {
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    .bl-input {
+      max-width: calc(46%);
+      flex: 1;
     }
   }
 

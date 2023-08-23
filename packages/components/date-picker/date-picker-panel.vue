@@ -44,7 +44,10 @@ defineExpose({
 
 <template>
   <div :class="className" ref="wrapper">
-    <div v-if="typing" :class="ns.bm('typing')">123</div>
+    <div v-if="typing" :class="ns.be('typing')">
+      <Input placeholder="Start Date" />
+      <Input placeholder="End Date" />
+    </div>
 
     <div :class="ns.bm('list')">
       <div :class="ns.bem('panel', 'body')">
