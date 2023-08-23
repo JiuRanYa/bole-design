@@ -1,6 +1,6 @@
 import { useNamespace } from '@bole-design/hooks'
 import { isNull, useProps } from '@bole-design/common'
-import { computed, defineComponent, ref, toRef } from 'vue'
+import { computed, defineComponent, ref, toRef, watch } from 'vue'
 import { inputProps } from './props'
 import { debounce, throttle } from '@bole-design/utils'
 
@@ -69,6 +69,13 @@ export default defineComponent({
     function renderSuffix() {
       return slots.suffix && slots.suffix()
     }
+
+    watch(
+      () => props.value,
+      () => {
+        currentValue.value = String(props.value)
+      }
+    )
 
     return () => {
       if (hasPrefix.value) {

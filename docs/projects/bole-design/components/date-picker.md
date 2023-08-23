@@ -88,6 +88,7 @@ date-picker/trigger
 | type           | 日期选择的类型，单选或者范围 | `static \| range`          | `static` | -    |
 | transitionName | 弹出面板的动画效果           | `string`                   | `drop`   | -    |
 | valueFormat    | 更新绑定值的格式             | `string`                   | `null`   | -    |
+| typing         | 是否可以输入                 | `string`                   | `null`   | -    |
 
 ## 事件
 

@@ -8,7 +8,6 @@ import {
   useProps,
   doubleDigits,
   Dateable,
-  is,
   emitEvent
 } from '@bole-design/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
@@ -34,7 +33,8 @@ const props = useProps('date-picker', _props, {
   transitionName: () => ns.ns('drop'),
   presets: {},
   type: 'static',
-  valueFormat: ''
+  valueFormat: '',
+  typing: null
 })
 const ns = useNamespace('date-picker')
 
@@ -146,7 +146,6 @@ function handlePresetClick(value: Dateable | Dateable[]) {
     patchDateMeta(value)
   }
   if (isRange.value) {
-    console.log(value)
     patchDateMeta(value)
   }
 }
@@ -178,6 +177,19 @@ const parseDate = function (
   const day = dayjs(date, format).locale(lang)
   return day.isValid() ? day : undefined
 }
+const startModelValue = computed(() => {
+  if (!Array.isArray(props.value)) return ''
+
+  const startProps = props.value[0]
+  return dayjs(startProps).format(config.defaultFormat)
+})
+const endModelValue = computed(() => {
+  if (!Array.isArray(props.value)) return ''
+
+  const endProps = props.value[1]
+  return dayjs(endProps).format(config.defaultFormat)
+})
+
 watch(
   () => props.value,
   value => {
@@ -212,7 +224,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
           <Icon :icon="CalendarR" :scale="1.4"></Icon>
         </template>
         {{
-          isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
+          isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动'
         }}
       </Button>
       <Button
@@ -227,9 +239,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       <template #icon>
         <Icon :icon="CalendarR" :scale="1.4"></Icon>
       </template>
-      {{
-        isRange ? `${currentValue[0]} - ${currentValue[1]}` : props.value ? currentValue : '手动'
-      }}
+      {{ isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动' }}
     </Button>
   </span>
 
@@ -243,6 +253,7 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
   >
     <DatePickerPanel
       ref="panelRef"
+      :typing="props.typing"
       @pick="handlePickDate"
       @confirm="togglePanel"
       @cancel="togglePanel"

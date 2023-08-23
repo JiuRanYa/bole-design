@@ -9,7 +9,7 @@ $date-picker: map.merge(
     header-font-size: 12px,
     panel-width: 300px,
     panel-border: get-css-var('border-base'),
-    panel-shadow: get-css-var('shadow-base'),
+    panel-shadow: 0px 0px 50px 0px get-css-var('shadow-color-light-3'),
     panel-bg-color: get-css-var('bg-color-base'),
     confirm-btn-hover-bg: #f4f4fd
   ),
@@ -25,14 +25,11 @@ $date-picker: map.merge(
   }
 
   &__panel {
-    // box-shadow: var(--bl-date-picker-panel-shadow);
-    border: get-css-var(border-shape) get-css-var(border-color-light-1);
+    width: var(--bl-date-picker-panel-width);
+    box-shadow: var(--bl-date-picker-panel-shadow);
+    // border: get-css-var(border-shape) get-css-var(border-color-light-1);
     border-radius: 12px;
     background: var(--bl-date-picker-panel-bg-color);
-  }
-
-  &--list {
-    width: var(--bl-date-picker-panel-width);
   }
 
   &__panel--body {
@@ -62,10 +59,20 @@ $date-picker: map.merge(
     justify-content: center;
     position: sticky;
     top: 0;
-    border-bottom: get-css-var('border-light-2');
+    border-bottom: 2px get-css-var('border-style') get-css-var('border-color-light-3');
     font-size: get-css-var(date-picker-header-font-size);
     &--day {
       text-align: center;
+    }
+  }
+
+  &__typing {
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    .bl-input {
+      max-width: calc(46%);
+      flex: 1;
     }
   }
 
