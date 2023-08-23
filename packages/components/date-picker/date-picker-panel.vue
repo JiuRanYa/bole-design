@@ -54,37 +54,40 @@ function validateDate(date: string) {
 
 function setValidStartDate(date: string, isStart: boolean = true) {
   if (validateDate(date)) {
-    console.log('123')
     const parsedDate = dayjs(date).format(config.defaultFormat)
     const method = isStart ? root?.startMeta : root?.endMeta
 
     method?.setDate(parsedDate)
   }
 }
-// watch(
-//   () => startDate.value,
-//   () => {
-//     startDate.value && setValidStartDate(startDate.value)
-//   }
-// )
-// watch(
-//   () => endDate.value,
-//   () => {
-//     endDate.value && setValidStartDate(endDate.value, false)
-//   }
-// )
+watch(
+  () => startDate.value,
+  () => {
+    startDate.value && setValidStartDate(startDate.value)
+  }
+)
+watch(
+  () => endDate.value,
+  () => {
+    endDate.value && setValidStartDate(endDate.value, false)
+  }
+)
 watch(
   () => rootStartDate.value,
   () => {
-    startDate.value = rootStartDate.value
+    if (root?.startMeta.extraMeta.allocated) {
+      // startDate.value = rootStartDate.value
+    }
+    console.log(root?.startMeta.extraMeta.allocated, root?.endMeta.extraMeta.allocated)
   }
 )
-watch(
-  () => rootEndDate.value,
-  () => {
-    endDate.value = rootEndDate.value
-  }
-)
+// watch(
+//   () => rootEndDate.value,
+//   () => {
+//     console.log(root?.startMeta.extraMeta.allocated, root?.endMeta.extraMeta.allocated)
+//     // endDate.value = rootEndDate.value
+//   }
+// )
 </script>
 
 <template>
