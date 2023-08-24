@@ -22,10 +22,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .doc-content-wrapper {
-  display: flex;
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 2.5rem;
   .doc-content-container {
     padding-top: 2rem;
     width: 800px;
