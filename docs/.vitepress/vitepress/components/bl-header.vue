@@ -197,7 +197,7 @@ function switchTheme(event: MouseEvent) {
     align-items: center;
   }
   &-title {
-    color: var(--text-active);
+    color: var(--text-reverse);
     font-family: 'Caprasimo Regular';
     margin-right: 24px;
   }

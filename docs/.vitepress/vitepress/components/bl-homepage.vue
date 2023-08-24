@@ -22,7 +22,9 @@ function handleStartClick() {
         支持，面向开发者的工具集
       </div>
       <div class="homepage-main-btn">
-        <Button type="primary" size="middle" @click="handleStartClick">开始使用</Button>
+        <Button size="middle" style="background: #18181b; color: white" @click="handleStartClick"
+          >开始使用</Button
+        >
       </div>
     </div>
   </div>
@@ -52,10 +54,7 @@ function handleStartClick() {
       margin: 1rem 0;
       font-size: 5rem;
       font-weight: 800;
-      background: var(--text-linear-color);
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      -webkit-background-clip: text;
+      color: var(--text-reverse);
     }
     &-desc {
       font-size: 1.4rem;

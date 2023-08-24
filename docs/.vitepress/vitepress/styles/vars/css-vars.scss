@@ -2,18 +2,22 @@ html {
   --bg-color: #fff;
   --body-bg-color: var(--bl-fill-color-background);
   --text-base: #71717a;
+  --text-reverse: #18181b;
   --text-active: #09090b;
   --text-hover: #09090b;
   --text-link-base: #71717a;
   --text-linear-color: linear-gradient(to bottom, #000000 40%, rgba(255, 255, 255, 0));
+  --content-color-base: #18181b;
 
   &.dark {
     --text-base: #fafafa99;
+    --text-reverse: #ffffff;
     --text-active: #fafafa;
     --text-hover: #fafafa;
     --text-link-base: #a1a1a1;
     --bg-color: #131719;
     --body-bg-color: #1b1b1b;
+    --content-color-base: #18181b;
     --text-linear-color: linear-gradient(to bottom right, #ffffff 20%, rgba(255, 255, 255, 0.5));
   }
 }

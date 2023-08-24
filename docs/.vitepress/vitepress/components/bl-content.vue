@@ -24,6 +24,7 @@ defineProps<{ hasSidebar: boolean }>()
   display: flex;
   display: grid;
   grid-template-columns: 1fr 300px;
+  background-image: none;
   gap: 2.5rem;
   .doc-content-wrapper {
     display: flex;
