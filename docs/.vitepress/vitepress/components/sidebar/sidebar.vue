@@ -31,8 +31,7 @@ const { sidebars } = useSidebar()
 .bl-sidebar {
   width: 100%;
   height: calc(100vh - 3.5rem);
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 3rem;
   box-sizing: border-box;
   position: sticky;
   top: 5rem;

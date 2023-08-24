@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import tag from '@/.vitepress/plugins/tag'
-import MarkdownIt from 'markdown-it'
 import { ref } from 'vue'
 import { useToc } from '../../composables/toc'
+import { useActiveSidebarLinks } from '../../composables/active-bar'
 
+const marker = ref()
 const container = ref()
-const localMd = MarkdownIt().use(tag)
 
+useActiveSidebarLinks(container, marker)
 const headers = useToc()
-console.log(headers.value)
 </script>
 
 <template>
@@ -31,11 +30,12 @@ console.log(headers.value)
         </ul>
       </li>
     </ul>
+    <div ref="marker" class="toc-marker" />
   </aside>
 </template>
 <style lang="scss">
 .toc-wrapper {
-  margin-left: 64px;
+  margin-left: 32px;
   height: 100vh;
   position: sticky;
   top: 5rem;
@@ -57,6 +57,11 @@ console.log(headers.value)
           text-decoration: none;
           color: var(--text-hover) !important;
         }
+      }
+
+      .active {
+        font-weight: 500;
+        color: var(--text-active) !important;
       }
 
       ul {
