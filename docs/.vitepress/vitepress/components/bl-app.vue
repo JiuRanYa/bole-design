@@ -20,7 +20,8 @@ onMounted(() => {
 <template>
   <div>
     <LayoutHeader />
-    <div class="homepage-body" :class="{ 'no-sider': !hasSidebar }">
+    <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
+      <img v-if="!hasSidebar" src="/bl-bg.svg" class="homepage-bg" />
       <BlSidebar :hasSidebar="hasSidebar" />
       <BLContent :hasSidebar="hasSidebar">
         <template #content-top>
@@ -45,6 +46,14 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.bg-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 100vw !important;
+}
+.homepage-bg {
+  position: absolute;
+}
 .homepage-body {
   width: 100%;
   margin-left: auto;

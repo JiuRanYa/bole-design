@@ -38,6 +38,7 @@ defineComponent({
   line-height: 1.5;
   font-size: 0.9rem;
   border-radius: 8px;
+  cursor: pointer;
 
   .link-text {
     margin: 0;
