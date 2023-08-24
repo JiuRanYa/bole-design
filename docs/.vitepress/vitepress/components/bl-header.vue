@@ -144,7 +144,7 @@ function switchTheme(event: MouseEvent) {
     top: 0;
     width: 100%;
     z-index: 100;
-    background-color: white;
+    background-color: var(--bg-color);
     border-bottom: var(--bl-border-light-2);
   }
   &-header {
