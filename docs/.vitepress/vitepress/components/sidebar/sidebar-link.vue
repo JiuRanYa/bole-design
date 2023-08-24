@@ -49,6 +49,11 @@ defineComponent({
   transition: color 0.25s;
 }
 
+.active {
+  font-weight: 500;
+  color: var(--text-active);
+}
+
 .link-text {
   line-height: 20px;
   font-size: 14px;

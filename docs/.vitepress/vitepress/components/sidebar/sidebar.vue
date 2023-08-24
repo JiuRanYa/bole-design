@@ -43,7 +43,7 @@ const { sidebars } = useSidebar()
         color: var(--text-active);
         font-size: 14px;
         line-height: 24px;
-        font-weight: 700;
+        font-weight: 600;
         margin: 12px 0;
       }
     }
