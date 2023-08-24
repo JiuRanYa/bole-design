@@ -29,11 +29,13 @@ const { sidebars } = useSidebar()
 
 <style lang="scss" scoped>
 .bl-sidebar {
-  width: 240px;
-  height: 100%;
-  padding: 2rem;
-  padding-left: 40px;
+  width: 100%;
+  height: calc(100vh - 3.5rem);
+  padding-left: 2rem;
+  padding-right: 2rem;
   box-sizing: border-box;
+  position: sticky;
+  top: 5rem;
   .sidebar-groups {
     .sidebar-group {
       &:not(:first-child) {

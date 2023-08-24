@@ -51,8 +51,8 @@ const rootCls = document.documentElement.classList
 const checked = ref(false)
 
 function isActive(routePath: string, link: string) {
-  const routeTop = routePath.split('/').slice(1, 4).pop()
-  const linkTop = link.split('/').slice(1, 4).pop()
+  const routeTop = routePath?.split('/').slice(1, 4).pop()
+  const linkTop = link?.split('/').slice(1, 4).pop()
 
   return routeTop === linkTop
 }
@@ -140,17 +140,16 @@ function switchTheme(event: MouseEvent) {
 }
 .bl {
   &-header-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: white;
     border-bottom: var(--bl-border-light-2);
   }
   &-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
     padding: 0 2rem;
-    width: 100%;
     height: var(--header-height);
-    background-color: transparent;
-    backdrop-filter: blur(8px);
     display: flex;
     margin-left: auto;
     margin-right: auto;

@@ -53,6 +53,8 @@ onMounted(() => {
   justify-content: center;
   grid-template-columns: 240px minmax(0, 1fr);
   align-items: flex-start;
+  position: relative;
+  gap: 2.5rem;
 }
 .no-sider {
   display: flex;

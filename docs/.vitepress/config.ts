@@ -16,6 +16,9 @@ const config = defineConfig({
     docsDir: 'docs'
   },
   markdown: {
+    headers: {
+      level: [1, 2, 3]
+    },
     config: md => markdownPlugin(md)
   }
 })

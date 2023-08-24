@@ -14,6 +14,7 @@
 }
 
 .bl-doc h1 {
+  margin-top: 0;
   letter-spacing: -0.02em;
   line-height: 40px;
   font-size: 28px;
@@ -132,22 +133,12 @@ h3 {
  * Lists
  * -------------------------------------------------------------------------- */
 
-.bl-doc ul,
-.bl-doc ol {
-  padding-left: 1.25rem;
-  margin: 16px 0;
-}
-
 .bl-doc ul {
-  list-style: disc;
+  list-style: none;
 }
 
 .bl-doc ol {
   list-style: decimal;
-}
-
-.bl-doc li + li {
-  margin-top: 8px;
 }
 
 .bl-doc li > ol,

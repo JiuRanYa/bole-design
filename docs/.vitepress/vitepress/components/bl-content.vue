@@ -18,10 +18,8 @@ defineProps<{ hasSidebar: boolean }>()
 </template>
 
 <style lang="scss">
-#page-content {
-  padding-top: var(--header-height);
+.page-content {
 }
 .has-sidebar {
-  padding: 40px;
 }
 </style>
