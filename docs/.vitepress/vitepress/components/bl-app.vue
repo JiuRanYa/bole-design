@@ -48,8 +48,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .bg-container {
   position: relative;
-  overflow: hidden;
-  max-width: 100% !important;
 }
 .homepage-bg {
   position: absolute;

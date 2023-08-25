@@ -39,7 +39,6 @@ function handleStartClick() {
 
 <style lang="scss">
 .homepage {
-  width: 100vw;
   height: calc(100vh - var(--header-height));
 
   &-en {
@@ -55,7 +54,7 @@ function handleStartClick() {
       margin-top: 200px;
     }
     &-two {
-      padding-top: 300px;
+      padding-top: 200px;
     }
     &-logo {
       img {
