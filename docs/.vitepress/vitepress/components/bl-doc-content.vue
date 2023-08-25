@@ -23,8 +23,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .doc-content-wrapper {
   .doc-content-container {
-    padding-top: 2rem;
-    width: 800px;
     h1 {
       margin-top: 0 !important;
     }

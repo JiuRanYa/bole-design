@@ -49,7 +49,7 @@ onMounted(() => {
 .bg-container {
   position: relative;
   overflow: hidden;
-  max-width: 100vw !important;
+  max-width: 100% !important;
 }
 .homepage-bg {
   position: absolute;

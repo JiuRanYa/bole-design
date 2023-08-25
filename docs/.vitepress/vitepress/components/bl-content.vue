@@ -19,6 +19,7 @@ defineProps<{ hasSidebar: boolean }>()
 
 <style lang="scss">
 .page-content {
+  width: 100%;
 }
 .has-sidebar {
   display: flex;
@@ -31,6 +32,10 @@ defineProps<{ hasSidebar: boolean }>()
     display: grid;
     grid-template-columns: 1fr 300px;
     gap: 2.5rem;
+  }
+  .doc-content-container {
+    padding-top: 2rem;
+    width: 800px;
   }
 }
 </style>
