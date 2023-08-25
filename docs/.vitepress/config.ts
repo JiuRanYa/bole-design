@@ -10,10 +10,12 @@ const config = defineConfig({
   lang: 'zh-CN',
   description: 'A VitePress Site',
   head,
+  lastUpdated: true,
   themeConfig: {
     nav,
     sidebars,
-    docsDir: 'docs'
+    docsDir: 'docs',
+    lastUpdatedText: '最近更新时间'
   },
   markdown: {
     headers: {
