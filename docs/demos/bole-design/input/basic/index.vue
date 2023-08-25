@@ -1,5 +1,5 @@
 <template>
-  <Input v-model:value="value" />
+  <Input v-model:value="value" placeholder="Bole Design" />
 
   <br />
   <br />

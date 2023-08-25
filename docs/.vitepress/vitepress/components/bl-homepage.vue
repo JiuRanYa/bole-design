@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vitepress'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import BLComponentDemo from './demo/bl-component-demo.vue'
 
 defineComponent({
@@ -24,9 +24,7 @@ function handleStartClick() {
           支持，面向开发者的工具集
         </div>
         <div class="homepage-main-btn">
-          <Button size="middle" style="background: #18181b; color: white" @click="handleStartClick">
-            开始使用
-          </Button>
+          <Button type="primary" size="middle" @click="handleStartClick"> 开始使用 </Button>
         </div>
       </div>
 
@@ -95,4 +93,16 @@ function handleStartClick() {
     height: 220px;
   }
 }
+</style>
+
+<style lang="scss">
+@use '../../../../dist//bole-design/css/src/index.scss' with (
+  $color-map: (
+    (
+      primary: (
+        base: rgb(24, 24, 27)
+      )
+    )
+  )
+);
 </style>

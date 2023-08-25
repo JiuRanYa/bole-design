@@ -16,18 +16,28 @@
       </div>
     </div>
 
-    <div class="demo-code"></div>
+    <div class="demo-code">
+      <component :is="allDemos[currentNavIndex]"></component>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+import DemoOne from '../home-navbar/demoOne/index.vue'
+import DemoTwo from '../home-navbar/demoTwo/index.vue'
+import DemoThree from '../home-navbar/demoThree/index.vue'
+import DemoFour from '../home-navbar/demoFour/index.vue'
 
 defineComponent({
   name: 'bl-component-demo'
 })
 
 const currentNav = ref('Button')
+const currentNavIndex = computed(() =>
+  navbar.value.findIndex(item => item.nav === currentNav.value)
+)
+const allDemos = [DemoOne, DemoTwo, DemoThree, DemoFour]
 
 function isActive(nav: string) {
   if (nav === currentNav.value) {
@@ -41,26 +51,26 @@ function switchNav(nav: string) {
 function computedStyle(nav: string) {
   if (nav === 'Button') {
     return {
-      '--closed': '82px',
-      '--open': '188px'
+      '--closed': '78px',
+      '--open': '168px'
     }
   }
   if (nav === 'DataInput') {
     return {
-      '--closed': '104px',
-      '--open': '248px'
+      '--closed': '98px',
+      '--open': '224px'
     }
   }
   if (nav === 'DatePicker') {
     return {
-      '--closed': '114px',
-      '--open': '258px'
+      '--closed': '104px',
+      '--open': '234px'
     }
   }
   if (nav === 'Tooltip') {
     return {
-      '--closed': '83px',
-      '--open': '250px'
+      '--closed': '78px',
+      '--open': '226px'
     }
   }
 }
@@ -101,7 +111,7 @@ const navbar = ref([
       display: flex;
       align-items: center;
       margin-right: 20px;
-      background: hsl(240 4.8% 95.9%);
+      background: hsl(240 4.8% 96.9%);
       border: 1px solid var(--bl-border-color-light-2);
       border-radius: 20px;
       padding: 4px 6px;
@@ -112,20 +122,21 @@ const navbar = ref([
       text-rendering: optimizelegibility;
       overflow-x: hidden;
       overflow-y: hidden;
-      height: 34px;
       text-wrap: nowrap;
+      font-size: 14px;
 
       .navbar-item-summary {
-        background: white;
+        background: var(--bg-color);
         border-radius: 12px;
         padding: 2px 10px;
         display: flex;
         flex-wrap: nowrap;
         text-size-adjust: 100%;
+        color: var(--text-reverse);
       }
 
       .navbar-item-desc {
-        margin-left: 12px;
+        margin-left: 8px;
         margin-right: 6px;
         display: flex;
         flex-wrap: wrap;
@@ -144,6 +155,7 @@ const navbar = ref([
     border: 1px solid var(--bl-border-color-light-1);
     border-radius: 12px;
     height: 500px;
+    padding: 24px 32px 32px;
   }
 }
 </style>
