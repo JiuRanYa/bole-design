@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, toRefs, unref } from 'vue'
+import { computed } from 'vue'
 import { optionProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import { Icon } from '@bole-design/components'
