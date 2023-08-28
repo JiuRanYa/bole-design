@@ -13,6 +13,8 @@ import { Portal } from './portal'
 import { Row } from './row'
 import { Select } from './select'
 import { Switch } from './switch'
+import { TabPane } from './tab-pane'
+import { Tabs } from './tabs'
 import { Tooltip } from './tooltip'
 
 import { buildInstall } from './create'
@@ -33,6 +35,8 @@ const components = [
   Row,
   Select,
   Switch,
+  TabPane,
+  Tabs,
   Tooltip
 ]
 
@@ -53,4 +57,6 @@ export * from './portal'
 export * from './row'
 export * from './select'
 export * from './switch'
+export * from './tab-pane'
+export * from './tabs'
 export * from './tooltip'
