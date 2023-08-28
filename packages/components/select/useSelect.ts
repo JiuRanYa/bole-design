@@ -31,17 +31,17 @@ export const useSelectStates = (props: any) => {
   })
 }
 
+// pass the same states in order to get same reference for dom react
 export const useSelect = (props: any, states: ReturnType<typeof useSelectStates>, emit: any) => {
   function handleOptionClick(value: string | number) {
     if (!isSameValue(value, states.emittedValue.value)) {
       setSelectedLabel(value)
-      console.log(states.selectedLabel)
       emit('update:value', value)
     }
     states.currentVisible = false
   }
   function setSelectedLabel(value: string | number) {
-    states.selectedLabel = props.options.find((option: any) => option.value === value).label
+    states.selectedLabel = props.options.find((option: any) => option.value === value)?.label
   }
   function setVisible(visible: boolean) {
     states.currentVisible = visible
@@ -49,6 +49,7 @@ export const useSelect = (props: any, states: ReturnType<typeof useSelectStates>
   }
   onMounted(() => {
     setSelectedLabel(props.value)
+    console.log(states.selectedLabel, props.value)
   })
 
   watch(

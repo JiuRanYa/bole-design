@@ -18,7 +18,7 @@ const emit = defineEmits(['update:value', 'update:visible'])
 
 const _props = defineProps(selectProps)
 const props = useProps('select', _props, {
-  value: 1,
+  value: -1,
   visible: false,
   transitionName: () => ns.ns('drop'),
   listClass: [],

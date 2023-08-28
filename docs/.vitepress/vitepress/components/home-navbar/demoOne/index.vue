@@ -20,19 +20,20 @@
         </div>
 
         <div class="form-label">邮箱</div>
-        <Select :options="options"></Select>
+        <Select v-model:value="value" :options="options"></Select>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { FaceGrinBeamR, FaceSurpriseR, SunR, MoonR } from '@bole-design/icons'
 
 defineComponent({
   name: 'demo-one'
 })
+const value = ref()
 const options = [
   {
     label: '8127439@gmail.com',
