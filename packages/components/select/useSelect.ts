@@ -33,11 +33,6 @@ export const useSelectStates = (props: any) => {
 export const useSelect = (props: any, emit: any) => {
   const states = useSelectStates(props)
 
-  function initValueAndLabel(value: SelectValue) {
-    if (isNull(value)) {
-      return
-    }
-  }
   function handleOptionClick(value: string | number) {
     if (!isSameValue(value, states.emittedValue)) {
       emit('update:value', value)
@@ -46,7 +41,7 @@ export const useSelect = (props: any, emit: any) => {
   }
   function setVisible(visible: boolean) {
     states.currentVisible = visible
-    emit('update:value')
+    emit('update:visible')
   }
   const dropDownVisible = computed(() => {
     return states.currentVisible
@@ -58,8 +53,6 @@ export const useSelect = (props: any, emit: any) => {
     value => {
       if (!states.emittedValue || !isSameValue(value, states.emittedValue)) {
         states.emittedValue = value
-        console.log(value)
-        initValueAndLabel(value)
       }
     }
   )

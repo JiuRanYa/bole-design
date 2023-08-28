@@ -14,7 +14,7 @@ import { selectKey } from '@bole-design/tokens/select'
 defineOptions({
   name: 'Select'
 })
-const emit = defineEmits(['update:value'])
+const emit = defineEmits(['update:value', 'update:visible'])
 
 const _props = defineProps(selectProps)
 const props = useProps('select', _props, {
@@ -112,9 +112,7 @@ watch(
 provide(
   selectKey,
   reactive({
-    props: {
-      value: props.value
-    }
+    props
   })
 )
 useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
