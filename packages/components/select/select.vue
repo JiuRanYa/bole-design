@@ -32,8 +32,7 @@ const props = useProps('select', _props, {
 const wrapper = ref()
 const reference = ref()
 
-const states = useSelectStates(props)
-const { currentVisible } = toRefs(states)
+const { currentVisible } = useSelectStates(props)
 const { handleOptionClick, setVisible, dropDownVisible } = useSelect(props, emit)
 
 const popper = ref<PopperExposed>()

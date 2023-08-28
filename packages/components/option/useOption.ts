@@ -1,4 +1,4 @@
-import { computed, inject, reactive } from 'vue'
+import { computed, inject, reactive, toRefs } from 'vue'
 import { selectKey } from '@bole-design/tokens/select'
 
 export const useOption = (props: any) => {
@@ -7,7 +7,9 @@ export const useOption = (props: any) => {
   const isSelected = computed(() => {
     return select?.props.value === props.value
   })
-  return reactive({
+
+  const states = reactive({
     isSelected
   })
+  return toRefs(states)
 }

@@ -23,36 +23,37 @@ function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
   return newValue === oldValue
 }
 export const useSelectStates = (props: any) => {
-  return reactive({
+  const states = reactive({
     emittedValue: props.value as typeof props.value | null,
     currentVisible: ref(props.visible),
     isSelected: {}
   })
+  return toRefs(states)
 }
 
 export const useSelect = (props: any, emit: any) => {
   const states = useSelectStates(props)
 
   function handleOptionClick(value: string | number) {
-    if (!isSameValue(value, states.emittedValue)) {
+    if (!isSameValue(value, states.emittedValue.value)) {
       emit('update:value', value)
     }
-    states.currentVisible = false
+    states.currentVisible.value = false
   }
   function setVisible(visible: boolean) {
-    states.currentVisible = visible
+    states.currentVisible.value = visible
     emit('update:visible')
   }
   const dropDownVisible = computed(() => {
-    return states.currentVisible
+    return states.currentVisible.value
   })
   onMounted(() => {})
 
   watch(
     () => props.value,
     value => {
-      if (!states.emittedValue || !isSameValue(value, states.emittedValue)) {
-        states.emittedValue = value
+      if (!states.emittedValue.value || !isSameValue(value, states.emittedValue.value)) {
+        states.emittedValue.value = value
       }
     }
   )
