@@ -32,8 +32,9 @@ const props = useProps('select', _props, {
 const wrapper = ref()
 const reference = ref()
 
-const { currentVisible } = useSelectStates(props)
-const { handleOptionClick, setVisible, dropDownVisible } = useSelect(props, emit)
+const states = useSelectStates(props)
+const { currentVisible, selectedLabel } = toRefs(states)
+const { handleOptionClick, setVisible } = useSelect(props, states, emit)
 
 const popper = ref<PopperExposed>()
 const placement = ref<Placement>('bottom-start')
@@ -100,7 +101,7 @@ onMounted(() => {
   }
 })
 watch(
-  () => dropDownVisible.value,
+  () => currentVisible.value,
   value => {
     if (value) {
       fitPopperWidth()
@@ -120,7 +121,7 @@ useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
 <template>
   <div :class="className" ref="wrapper" @click="showListPanel">
     <div ref="reference" :class="selectorClass" tabindex="0">
-      <div :class="ns.be('control')">请选择</div>
+      <div :class="ns.be('control')">{{ selectedLabel ? selectedLabel : '请选择' }}</div>
       <div :class="[ns.be('icon'), ns.be('suffix')]">
         <Icon :icon="ChevronDown" :class="ns.be('arrow')"></Icon>
       </div>
@@ -129,7 +130,7 @@ useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
       ref="popper"
       :style="popperStyle"
       to="body"
-      :visible="dropDownVisible"
+      :visible="currentVisible"
       :transition="props.transitionName"
       :class="[ns.be('popper'), ns.bs('vars')]"
     >

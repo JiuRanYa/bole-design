@@ -1,5 +1,5 @@
 import { isNull } from '@bole-design/common'
-import { onMounted, reactive, ref, defineEmits, toRefs, watch, computed } from 'vue'
+import { onMounted, reactive, ref, watch, computed } from 'vue'
 import { SelectValue } from './.symbol'
 
 function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
@@ -23,44 +23,46 @@ function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
   return newValue === oldValue
 }
 export const useSelectStates = (props: any) => {
-  const states = reactive({
+  return reactive({
     emittedValue: props.value as typeof props.value | null,
-    currentVisible: ref(props.visible),
+    currentVisible: props.visible,
+    selectedLabel: '',
     isSelected: {}
   })
-  return toRefs(states)
 }
 
-export const useSelect = (props: any, emit: any) => {
-  const states = useSelectStates(props)
-
+export const useSelect = (props: any, states: ReturnType<typeof useSelectStates>, emit: any) => {
   function handleOptionClick(value: string | number) {
     if (!isSameValue(value, states.emittedValue.value)) {
+      setSelectedLabel(value)
+      console.log(states.selectedLabel)
       emit('update:value', value)
     }
-    states.currentVisible.value = false
+    states.currentVisible = false
+  }
+  function setSelectedLabel(value: string | number) {
+    states.selectedLabel = props.options.find((option: any) => option.value === value).label
   }
   function setVisible(visible: boolean) {
-    states.currentVisible.value = visible
+    states.currentVisible = visible
     emit('update:visible')
   }
-  const dropDownVisible = computed(() => {
-    return states.currentVisible.value
+  onMounted(() => {
+    setSelectedLabel(props.value)
   })
-  onMounted(() => {})
 
   watch(
     () => props.value,
     value => {
-      if (!states.emittedValue.value || !isSameValue(value, states.emittedValue.value)) {
-        states.emittedValue.value = value
+      if (!states.emittedValue || !isSameValue(value, states.emittedValue)) {
+        setSelectedLabel(value)
+        states.emittedValue = value
       }
     }
   )
 
   return {
     setVisible,
-    dropDownVisible,
     handleOptionClick
   }
 }
