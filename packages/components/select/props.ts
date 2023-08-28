@@ -2,6 +2,11 @@ import { booleanNumberProp, booleanProps, buildProps } from '@bole-design/common
 import { PropType } from 'vue'
 import { SelectRawOption, SelectValue } from './.symbol'
 
+export interface SelectContext {
+  props: {
+    value?: string | number | unknown | unknown[]
+  }
+}
 export const selectProps = buildProps({
   value: [String, Number, Array] as PropType<SelectValue>,
   visible: booleanProps,

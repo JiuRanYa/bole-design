@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { watch, computed, onMounted, ref } from 'vue'
+import { watch, computed, onMounted, ref, toRefs, provide, reactive } from 'vue'
 import { selectProps } from './props'
-import { isNull, useProps } from '@bole-design/common'
+import { useProps } from '@bole-design/common'
 import type { Placement } from '@floating-ui/dom'
 import { Popper, PopperExposed } from '../popper'
 import { Option } from '../option'
 import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
 import { ChevronDown } from '@bole-design/icons'
 import { Icon } from '../icon'
-import { SelectValue } from './.symbol'
+import { useSelect, useSelectStates } from './useSelect'
+import { selectKey } from '@bole-design/tokens/select'
 
 defineOptions({
   name: 'Select'
 })
-
 const emit = defineEmits(['update:value'])
+
 const _props = defineProps(selectProps)
 const props = useProps('select', _props, {
   value: 1,
@@ -30,9 +31,10 @@ const props = useProps('select', _props, {
 
 const wrapper = ref()
 const reference = ref()
-const currentIndex = ref<number>()
-const currentValues = ref<(string | number)[]>([])
-const currentVisible = ref(props.visible)
+
+const states = useSelectStates(props)
+const { currentVisible } = toRefs(states)
+const { handleOptionClick, setVisible, dropDownVisible } = useSelect(props, emit)
 
 const popper = ref<PopperExposed>()
 const placement = ref<Placement>('bottom-start')
@@ -49,7 +51,6 @@ const { x, y } = usePopper({
 })
 
 const ns = useNamespace('select')
-let emittedValue: typeof props.value | null = props.value
 
 const className = computed(() => {
   return {
@@ -78,14 +79,9 @@ const popperStyle = computed(() => {
 function showListPanel() {
   setVisible(!currentVisible.value)
 }
-function setVisible(visible: boolean) {
-  emit('update:value')
-  currentVisible.value = visible
-}
 function handleClickOutSide() {
   setVisible(false)
 }
-
 function fitPopperWidth() {
   requestAnimationFrame(() => {
     if (wrapper.value && popper.value?.wrapper) {
@@ -99,64 +95,27 @@ function fitPopperWidth() {
     }
   })
 }
-function initValueAndLabel(value: string | number) {
-  if (isNull(value)) {
-    currentValues.value = []
-  }
-  currentValues.value[0] = value
-}
-function isSelected(value: string | number) {
-  return currentValues.value[0] === value || false
-}
-function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
-  const isNewArray = Array.isArray(newValue)
-  const isOldArray = Array.isArray(oldValue)
-
-  if (isNewArray !== isOldArray) return false
-
-  if (isNewArray && isOldArray) {
-    if (newValue.length !== oldValue.length) return false
-
-    for (let i = 0, len = newValue.length; i < len; ++i) {
-      if (newValue[i] !== oldValue[i]) return false
-    }
-
-    return true
-  }
-
-  if (isNull(newValue)) return isNull(oldValue)
-
-  return newValue === oldValue
-}
-function handleOptionClick(value: string | number) {
-  if (!isSameValue(value, emittedValue)) {
-    currentValues.value[0] = value
-    emittedValue = value
-    emit('update:value', value)
-  }
-  currentVisible.value = false
-}
 onMounted(() => {
   if (props.visible) {
     fitPopperWidth()
   }
 })
 watch(
-  () => props.value,
-  value => {
-    // initValueAndLabel(value)
-    if (!emittedValue || !isSameValue(value, emittedValue)) {
-      initValueAndLabel(value)
-    }
-  }
-)
-watch(
-  () => currentVisible.value,
+  () => dropDownVisible.value,
   value => {
     if (value) {
       fitPopperWidth()
     }
   }
+)
+
+provide(
+  selectKey,
+  reactive({
+    props: {
+      value: props.value
+    }
+  })
 )
 useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
 </script>
@@ -173,7 +132,7 @@ useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
       ref="popper"
       :style="popperStyle"
       to="body"
-      :visible="currentVisible"
+      :visible="dropDownVisible"
       :transition="props.transitionName"
       :class="[ns.be('popper'), ns.bs('vars')]"
     >
@@ -182,7 +141,6 @@ useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
           :label="option.label"
           :value="option.value"
           v-for="option in props.options"
-          :selected="isSelected(option.value)"
           @click="handleOptionClick(option.value)"
         >
         </Option>
