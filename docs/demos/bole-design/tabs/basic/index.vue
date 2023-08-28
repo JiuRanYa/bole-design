@@ -15,5 +15,5 @@ import { ref } from 'vue'
 defineOptions({
   name: 'Tabs'
 })
-const activeName = ref('first')
+const activeName = ref('account')
 </script>

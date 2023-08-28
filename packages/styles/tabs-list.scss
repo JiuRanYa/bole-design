@@ -1,0 +1,18 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$tabs-list: () !default;
+$tabs-list: map.merge((), $tabs-list);
+
+.#{$namespace}-tabs-list {
+  @include basis;
+  display: flex;
+  padding: 12px;
+  background-color: get-css-var('fill-color-background');
+  border-radius: get-css-var('radius-base');
+
+  &-vars {
+    @include define-preset-values('tabs-list', $tabs-list);
+  }
+}

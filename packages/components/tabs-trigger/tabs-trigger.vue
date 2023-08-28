@@ -13,6 +13,6 @@ defineOptions({
 })
 const ns = useNamespace('tabs-trigger')
 const classNames = computed(() => {
-  return [ns.b()]
+  return [ns.b(), ns.bs('vars')]
 })
 </script>
