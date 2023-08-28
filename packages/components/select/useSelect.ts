@@ -49,7 +49,6 @@ export const useSelect = (props: any, states: ReturnType<typeof useSelectStates>
   }
   onMounted(() => {
     setSelectedLabel(props.value)
-    console.log(states.selectedLabel, props.value)
   })
 
   watch(

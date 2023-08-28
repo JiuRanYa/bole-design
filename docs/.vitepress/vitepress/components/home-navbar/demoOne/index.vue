@@ -20,7 +20,10 @@
         </div>
 
         <div class="form-label">邮箱</div>
+
         <Select v-model:value="value" :options="options"></Select>
+
+        <Button type="primary" style="margin-top: 40px">更新个人资料</Button>
       </div>
     </div>
   </div>

@@ -154,7 +154,6 @@ const navbar = ref([
   .demo-code {
     border: 1px solid var(--bl-border-color-light-1);
     border-radius: 12px;
-    height: 500px;
     padding: 24px 32px 32px;
   }
 }
