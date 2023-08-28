@@ -22,7 +22,7 @@ import { useNamespace } from '@bole-design/hooks'
 import { Icon } from '@bole-design/components'
 import { Check } from '@bole-design/icons'
 
-defineProps(optionProps)
+const props = defineProps(optionProps)
 
 const ns = useNamespace('option')
 const className = computed(() => {

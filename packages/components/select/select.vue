@@ -30,6 +30,7 @@ const props = useProps('select', _props, {
 
 const wrapper = ref()
 const reference = ref()
+const currentIndex = ref<number>()
 const currentValues = ref<(string | number)[]>([])
 const currentVisible = ref(props.visible)
 
@@ -98,14 +99,14 @@ function fitPopperWidth() {
     }
   })
 }
-function initValueAndLabel(value) {
+function initValueAndLabel(value: string | number) {
   if (isNull(value)) {
     currentValues.value = []
   }
   currentValues.value[0] = value
 }
 function isSelected(value: string | number) {
-  return currentValues.value[0] === value || true
+  return currentValues.value[0] === value || false
 }
 function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
   const isNewArray = Array.isArray(newValue)
@@ -127,15 +128,23 @@ function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
 
   return newValue === oldValue
 }
+function handleOptionClick(value: string | number) {
+  if (!isSameValue(value, emittedValue)) {
+    currentValues.value[0] = value
+    emittedValue = value
+    emit('update:value', value)
+  }
+  currentVisible.value = false
+}
 onMounted(() => {
   if (props.visible) {
-    console.log(props.value)
     fitPopperWidth()
   }
 })
 watch(
   () => props.value,
   value => {
+    // initValueAndLabel(value)
     if (!emittedValue || !isSameValue(value, emittedValue)) {
       initValueAndLabel(value)
     }
@@ -174,6 +183,7 @@ useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
           :value="option.value"
           v-for="option in props.options"
           :selected="isSelected(option.value)"
+          @click="handleOptionClick(option.value)"
         >
         </Option>
       </div>

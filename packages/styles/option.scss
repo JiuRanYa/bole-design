@@ -54,9 +54,11 @@ $option: map.merge(
   }
 
   &__icon + &__label {
-    padding-left: 12px;
+    position: absolute;
   }
-  &:label {
-    padding-left: 34px;
+  &__label {
+    display: flex;
+    line-height: 1;
+    padding-left: 24px;
   }
 }
