@@ -1,9 +1,11 @@
 <template>
-  <Tabs v-model="activeName" class="demo-tabs">
-    <TabPane label="User" name="first">User</TabPane>
-    <TabPane label="config" name="second">config</TabPane>
-    <TabPane label="role" name="third">role</TabPane>
-    <TabPane label="tast" name="fourth">task</TabPane>
+  <Tabs v-model:value="activeName" defaultValue="account">
+    <TabsList>
+      <TabsTrigger value="account">Account</TabsTrigger>
+      <TabsTrigger value="password">Password</TabsTrigger>
+    </TabsList>
+    <TabPane value="account">Make changes to your account here.</TabPane>
+    <TabPane value="password">Change your password here.</TabPane>
   </Tabs>
 </template>
 

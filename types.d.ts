@@ -18,6 +18,8 @@ declare module '@vue/runtime-core' {
     Switch: typeof import('bole-design')['Switch']
     TabPane: typeof import('bole-design')['TabPane']
     Tabs: typeof import('bole-design')['Tabs']
+    TabsList: typeof import('bole-design')['TabsList']
+    TabsTrigger: typeof import('bole-design')['TabsTrigger']
     Tooltip: typeof import('bole-design')['Tooltip']
   }
 
