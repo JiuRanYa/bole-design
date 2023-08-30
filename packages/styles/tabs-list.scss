@@ -8,7 +8,7 @@ $tabs-list: map.merge((), $tabs-list);
 .#{$namespace}-tabs-list {
   @include basis;
   display: flex;
-  padding: 12px;
+  padding: 4px;
   background-color: get-css-var('fill-color-background');
   border-radius: get-css-var('radius-base');
 
