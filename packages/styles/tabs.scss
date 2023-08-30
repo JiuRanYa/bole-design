@@ -28,7 +28,7 @@ $tabs: map.merge((), $tabs);
   }
   .is-right {
     margin-left: 24px;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
   .is-top {
@@ -37,6 +37,6 @@ $tabs: map.merge((), $tabs);
   }
   .is-bottom {
     margin-top: 24px;
-    flex-direction: row-reverse;
+    flex-direction: row;
   }
 }

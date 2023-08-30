@@ -4,8 +4,8 @@
       <TabsTrigger value="account">Account</TabsTrigger>
       <TabsTrigger value="password">Password</TabsTrigger>
     </template>
-    <TabPane value="account">Make changes to your account here.</TabPane>
-    <TabPane value="password">Change your password here.</TabPane>
+    <TabsPane value="account">Make changes to your account here.</TabsPane>
+    <TabsPane value="password">Change your password here.</TabsPane>
   </Tabs>
 </template>
 
@@ -13,7 +13,7 @@
 import { ref } from 'vue'
 
 defineOptions({
-  name: 'Tabs'
+  name: 'demo-tabs-basic'
 })
 const activeName = ref('account')
 </script>
