@@ -15,6 +15,7 @@ defineOptions({
   name: 'TabsTrigger'
 })
 
+const emit = defineEmits(['tabClick'])
 const _props = defineProps(tabsPaneProps)
 const props = useProps('tabs-pane', _props, {
   value: ''
@@ -25,4 +26,8 @@ const ns = useNamespace('tabs-trigger')
 const classNames = computed(() => {
   return [ns.b(), ns.bs('vars')]
 })
+
+function switchTabPane() {
+  tabsRoot?.changeTab(props.value)
+}
 </script>
