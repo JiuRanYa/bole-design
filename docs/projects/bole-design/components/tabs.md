@@ -35,4 +35,4 @@ tabs/position
 
 1. 希望在 `Tabs` 提供`customStyle`属性，如果用户传入为`true`，则 `Tabs` 下所有样式均失效，只有 `Trigger` 功能和`API`
 
-2. 支持 `default-class` 和 `active-class` 来制定默认样式和激活样式，这样可以通过全局的 `global config`配合`customStyle` 来实现高度的自定义样式，切全局通用`Tabs`样式
+2. 支持 `default-class` 和 `active-class` 来制定默认样式和激活样式，这样可以通过全局的 `global config`配合`customStyle` 来实现高度的自定义样式，并且全局通用`Tabs`样式
