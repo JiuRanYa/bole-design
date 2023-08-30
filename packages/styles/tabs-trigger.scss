@@ -14,18 +14,18 @@ $tabs-trigger: map.merge(
 .#{$namespace}-tabs-list {
   .#{$namespace}-tabs-trigger {
     @include basis;
-
+    color: get-css-var('content-color-secondary');
     &-vars {
       @include define-preset-values('tabs-trigger', $tabs-trigger);
     }
 
-    padding: 10px;
+    padding: 6px 24px;
     border-radius: inherit;
     cursor: pointer;
 
     &__active {
-      background-color: get-css-var('tabs-trigger-bg-color');
-      color: get-css-var('content-color-reverse');
+      background-color: get-css-var('fill-color-base');
+      color: get-css-var('content-color-base');
     }
   }
 }

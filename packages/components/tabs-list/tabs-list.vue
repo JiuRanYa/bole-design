@@ -15,12 +15,16 @@ defineOptions({
 })
 const _props = defineProps(tabsListProps)
 const props = useProps('tabs-list', _props, {
-  customStyle: false
+  customStyle: false,
+  tabPosition: 'top'
 })
 
 const ns = useNamespace('tabs-list')
+const positionClass = computed(() => {
+  return `is-${props.tabPosition}`
+})
 const classNames = computed(() => {
   if (props.customStyle) return []
-  return [ns.b(), ns.bs('vars')]
+  return [ns.b(), ns.bs('vars'), positionClass.value]
 })
 </script>

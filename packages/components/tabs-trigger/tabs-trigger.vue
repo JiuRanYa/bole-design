@@ -21,10 +21,19 @@ const props = useProps('tabs-pane', _props, {
   value: ''
 })
 
+const active = computed(() => {
+  return props.value === tabsRoot?.props.value
+})
 const tabsRoot = inject(tabsContextKey)
 const ns = useNamespace('tabs-trigger')
 const classNames = computed(() => {
-  return [ns.b(), ns.bs('vars')]
+  return [
+    ns.b(),
+    ns.bs('vars'),
+    {
+      [ns.be('active')]: active.value
+    }
+  ]
 })
 
 function switchTabPane() {

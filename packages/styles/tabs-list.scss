@@ -9,8 +9,8 @@ $tabs-list: map.merge((), $tabs-list);
   @include basis;
   display: flex;
   padding: 4px;
-  background-color: get-css-var('fill-color-background');
   border-radius: get-css-var('radius-base');
+  background-color: get-css-var('fill-color-background');
 
   &-vars {
     @include define-preset-values('tabs-list', $tabs-list);

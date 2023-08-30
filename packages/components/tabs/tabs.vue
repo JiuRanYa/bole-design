@@ -1,6 +1,11 @@
 <template>
   <div :class="classNames" @tabClick="changeTab">
-    <slot></slot>
+    <TabsList :tabPosition="tabPosition">
+      <slot name="trigger"></slot>
+    </TabsList>
+    <div :class="{ [ns.bs('content')]: true }">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -9,12 +14,16 @@ import { useProps } from '@bole-design/common'
 import { tabsProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import { tabsContextKey } from '@bole-design/tokens/tabs'
-import { watch, provide, reactive, computed } from 'vue'
+import { watch, provide, reactive, computed, getCurrentInstance } from 'vue'
+import { TabsList } from '../tabs-list'
 
 defineOptions({
   name: 'Tabs'
 })
 
+const ctx = getCurrentInstance()!
+
+console.log(ctx.slots.trigger)
 const emit = defineEmits(['update:value'])
 const ns = useNamespace('tabs')
 const _props = defineProps(tabsProps)
@@ -28,7 +37,7 @@ const states = reactive({
 })
 
 const classNames = computed(() => {
-  return [ns.be('main'), ns.bs(props.tabPosition)]
+  return [ns.b(), ns.bm(props.tabPosition)]
 })
 
 function changeTab(tabName: string) {
