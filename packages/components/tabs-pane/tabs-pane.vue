@@ -19,7 +19,7 @@ import { useProps } from '@bole-design/common'
 import { tabsContextKey } from '@bole-design/tokens/tabs'
 
 defineOptions({
-  name: 'TabPane'
+  name: 'TabsPane'
 })
 
 const _props = defineProps(tabsPaneProps)

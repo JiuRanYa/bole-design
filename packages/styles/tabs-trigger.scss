@@ -14,7 +14,10 @@ $tabs-trigger: map.merge(
 .#{$namespace}-tabs-list {
   .#{$namespace}-tabs-trigger {
     @include basis;
+
     color: get-css-var('content-color-secondary');
+    line-height: 1.25rem;
+
     &-vars {
       @include define-preset-values('tabs-trigger', $tabs-trigger);
     }
@@ -24,7 +27,7 @@ $tabs-trigger: map.merge(
     cursor: pointer;
 
     &__active {
-      background-color: get-css-var('fill-color-base');
+      background-color: get-css-var('fill-color-background');
       color: get-css-var('content-color-base');
     }
   }
