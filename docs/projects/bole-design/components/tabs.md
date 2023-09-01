@@ -13,7 +13,7 @@ const demos = import.meta.globEager('../../../demos/bole-design/tabs/*/*.vue')
 
 ## 基础用法
 
-您可以通过`TabsTrigger`组件来绑定不同 value 的内容，使得您可以对`Tabs`进行高度定制化
+通过`TabsTrigger`组件来绑定不同 value 的内容，得您可以对`Tabs`进行高度定制化
 
 :::demo
 
