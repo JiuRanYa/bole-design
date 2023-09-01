@@ -1,3 +1,0 @@
-<template>
-  <TabsList />
-</template>
