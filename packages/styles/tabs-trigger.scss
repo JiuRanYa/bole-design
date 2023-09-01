@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$tabs-trigger: () !default;
+$tabs-trigger: map.merge(
+  (
+    bg-color: get-css-var('color-primary-base')
+  ),
+  $tabs-trigger
+);
+
+// only work in tabs list
+.#{$namespace}-tabs-list {
+  .#{$namespace}-tabs-trigger {
+    @include basis;
+
+    color: get-css-var('content-color-secondary');
+    line-height: 1.25rem;
+
+    &-vars {
+      @include define-preset-values('tabs-trigger', $tabs-trigger);
+    }
+
+    padding: 6px 24px;
+    border-radius: inherit;
+    cursor: pointer;
+
+    &__active {
+      background-color: get-css-var('fill-color-background');
+      color: get-css-var('content-color-base');
+    }
+  }
+}

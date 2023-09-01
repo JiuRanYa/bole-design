@@ -49,6 +49,16 @@ date-picker/rangePresets
 
 :::
 
+## 支持输入
+
+可以使用`typing`属性对绑定的值进行格式化,可选值有`fixed`，`since`, `last`,
+
+:::demo
+
+date-picker/typing
+
+:::
+
 ## 格式化
 
 可以使用`valueFormat`属性对绑定的值进行格式化

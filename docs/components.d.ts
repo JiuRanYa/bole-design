@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BlApp: typeof import('./.vitepress/vitepress/components/bl-app.vue')['default']
+    BlComponentDemo: typeof import('./.vitepress/vitepress/components/demo/bl-component-demo.vue')['default']
     BlContent: typeof import('./.vitepress/vitepress/components/bl-content.vue')['default']
     BlDemo: typeof import('./.vitepress/vitepress/components/bl-demo.vue')['default']
     BlDocContent: typeof import('./.vitepress/vitepress/components/bl-doc-content.vue')['default']
@@ -18,6 +19,10 @@ declare module '@vue/runtime-core' {
     BlHomepage: typeof import('./.vitepress/vitepress/components/bl-homepage.vue')['default']
     BlSidebar: typeof import('./.vitepress/vitepress/components/bl-sidebar.vue')['default']
     BlSiderbar: typeof import('./.vitepress/vitepress/components/bl-siderbar.vue')['default']
+    DemoFour: typeof import('./.vitepress/vitepress/components/home-navbar/demoFour/index.vue')['default']
+    DemoOne: typeof import('./.vitepress/vitepress/components/home-navbar/demoOne/index.vue')['default']
+    DemoThree: typeof import('./.vitepress/vitepress/components/home-navbar/demoThree/index.vue')['default']
+    DemoTwo: typeof import('./.vitepress/vitepress/components/home-navbar/demoTwo/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./.vitepress/vitepress/components/sidebar/sidebar.vue')['default']

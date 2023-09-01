@@ -27,6 +27,6 @@
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
     "sass": "^1.62.0",
-    "vitepress": "1.0.0-alpha.73"
+    "vitepress": "^1.0.0-rc.4"
   }
 }

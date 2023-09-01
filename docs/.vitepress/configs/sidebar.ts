@@ -24,7 +24,10 @@ export const siderbarsConfig: SidebarsConfig = {
       },
       {
         text: '布局组件',
-        children: [{ text: 'Row 行', link: '/components/row' }]
+        children: [
+          { text: 'Row 行', link: '/components/row' },
+          { text: 'Tabs 标签页 ', link: '/components/tabs' }
+        ]
       },
       {
         text: '数据录入',

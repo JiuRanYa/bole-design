@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$tabs-pane: () !default;
+$tabs-pane: map.merge((), $tabs-pane);
+
+.#{$namespace}-tabs-pane {
+  @include basis;
+
+  &-vars {
+    @include define-preset-values('tabs-pane', $tabs-pane);
+  }
+}

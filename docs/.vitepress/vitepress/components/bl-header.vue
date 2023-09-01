@@ -51,8 +51,8 @@ const rootCls = document.documentElement.classList
 const checked = ref(false)
 
 function isActive(routePath: string, link: string) {
-  const routeTop = routePath.split('/').slice(1, 4).pop()
-  const linkTop = link.split('/').slice(1, 4).pop()
+  const routeTop = routePath?.split('/').slice(1, 4).pop()
+  const linkTop = link?.split('/').slice(1, 4).pop()
 
   return routeTop === linkTop
 }
@@ -140,6 +140,16 @@ function switchTheme(event: MouseEvent) {
 }
 .bl {
   &-header-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: var(--bg-color);
+    border-bottom: var(--bl-border-light-2);
+  }
+  &-header {
+    padding: 0 2rem;
+    height: var(--header-height);
     border-bottom: var(--bl-border-light-2);
   }
   &-header {
@@ -198,7 +208,7 @@ function switchTheme(event: MouseEvent) {
     align-items: center;
   }
   &-title {
-    color: var(--text-active);
+    color: var(--text-reverse);
     font-family: 'Caprasimo Regular';
     margin-right: 24px;
   }

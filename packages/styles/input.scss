@@ -6,7 +6,7 @@
 $input: () !default;
 $input: map.merge(
   (
-    b-color: transparent,
+    b-color: get-css-var(color-primary-light-8),
     b-color-hover: get-css-var(color-primary-light-2),
     bg-color: get-css-var(fill-color-humble),
     radius: get-css-var(radius-base),
@@ -43,9 +43,13 @@ $input: map.merge(
     border: none;
     background-color: transparent;
     outline: none;
+    width: 100%;
     height: 100%;
     min-width: 0;
     font-size: inherit;
     line-height: get-css-var(input-line-height);
+  }
+  input::placeholder {
+    color: get-css-var(content-color-placeholder);
   }
 }

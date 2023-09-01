@@ -38,6 +38,7 @@ defineComponent({
   line-height: 1.5;
   font-size: 0.9rem;
   border-radius: 8px;
+  cursor: pointer;
 
   .link-text {
     margin: 0;
@@ -47,6 +48,11 @@ defineComponent({
 .link:hover .link-text {
   text-decoration: underline;
   transition: color 0.25s;
+}
+
+.active {
+  font-weight: 500;
+  color: var(--text-active);
 }
 
 .link-text {

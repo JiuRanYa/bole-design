@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-document.title = 'date-picker | Bole Design'
+document.title = 'tabs | Bole Design'
 
 export const router = createRouter({
   history: createWebHistory('/'),
@@ -53,5 +53,5 @@ export const router = createRouter({
 })
 
 router.afterEach(to => {
-  document.title = `date-picker - ${typeof to.name === 'string' ? to.name : 'dev'} | Bole Design`
+  document.title = `tabs - ${typeof to.name === 'string' ? to.name : 'dev'} | Bole Design`
 })
