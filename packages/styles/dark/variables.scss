@@ -1,17 +1,43 @@
 @use 'sass:map';
+@use 'sass:color';
+@use 'sass:math';
 
-// @use '../design/variables.scss' as c;
+@use '../shared/mixins.scss' as *;
+@use '../design/variables.scss' as c;
 
+$color-map: () !default;
+$color-map: map.deep-merge(
+  (
+    primary: (
+      base: #0c6ce9,
+      text: #7b80ff,
+      bg: rgba(123, 128, 255, 0.12)
+    ),
+    info: (
+      base: #3bc9db
+    ),
+    success: (
+      base: #158444
+    ),
+    warning: (
+      base: #fab005
+    ),
+    error: (
+      base: #e0241a
+    )
+  ),
+  $color-map
+);
 $content-color-map: () !default;
 $content-color-map: map.merge(
   (
     primary: rgba(#fff, 0.94),
-    base: rgba(#fff, 0.88),
-    secondary: rgba(#fff, 0.7),
+    base: rgba(235, 244, 255, 0.9),
+    secondary: rgba(217, 232, 252, 0.69),
     disabled: rgba(#fff, 0.4),
     placeholder: rgba(#fff, 0.3),
     humble: rgba(#fff, 0.5),
-    reverse: rgba(#fff, 0.1)
+    reverse: #fff
   ),
   $content-color-map
 );
@@ -19,7 +45,7 @@ $content-color-map: map.merge(
 $bg-color-map: () !default;
 $bg-color-map: map.merge(
   (
-    base: #181a1b,
+    base: #1f2023,
     reverse: #fff
   ),
   $bg-color-map
@@ -65,3 +91,40 @@ $shadow-color-map: map.merge(
   ),
   $shadow-color-map
 );
+
+@mixin define-level-colors($type, $max-level, $mode, $mixed-color) {
+  @for $i from 1 through $max-level {
+    $color-map: map.deep-merge(
+      (
+        $type: (
+          '#{$mode}-#{$i}':
+            color.mix(
+              $mixed-color,
+              map.get($color-map, $type, 'base'),
+              math.percentage(math.div($i, 10))
+            )
+        )
+      ),
+      $color-map
+    ) !global;
+  }
+}
+
+@mixin define-opacity-colors($type, $max-level) {
+  @for $i from 1 through $max-level {
+    $color-map: map.deep-merge(
+      (
+        $type: (
+          'opacity-#{$i}':
+            rgba(map.get($color-map, $type, 'base'), math.percentage(math.div(10 - $i, 10)))
+        )
+      ),
+      $color-map
+    ) !global;
+  }
+}
+@each $type in c.$types {
+  @include define-level-colors($type, 9, 'light', c.$color-white);
+  @include define-level-colors($type, 9, 'dark', c.$color-black);
+  @include define-opacity-colors($type, 9);
+}

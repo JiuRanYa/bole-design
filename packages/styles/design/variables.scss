@@ -24,7 +24,9 @@ $color-map: () !default;
 $color-map: map.deep-merge(
   (
     primary: (
-      base: #339af0
+      base: #006af5,
+      text: #005fdb,
+      bg: rgba(79, 68, 224, 0.06)
     ),
     info: (
       base: #3bc9db
@@ -36,12 +38,151 @@ $color-map: map.deep-merge(
       base: #fab005
     ),
     error: (
-      base: #f03e3e
+      base: #e21d12
     )
   ),
   $color-map
 );
 // colors-end
+// border-end
+$border-color-map: () !default;
+$border-color-map: map.merge(
+  (
+    base: #cbd5e1,
+    light-1: #dee2e6,
+    light-2: #e9ecef,
+    light-3: #f5f8fa,
+    dark-1: #adb5bd,
+    dark-2: #868e96
+  ),
+  $border-color-map
+);
+$border-width: 1px !default;
+$border-style: solid !default;
+$border-shape: get-css-var('border-width') get-css-var('border-style') !default;
+// border-end
+
+//transition-start
+$transition-duration: 250ms !default;
+$transition-timing: ease !default;
+$transition-base: get-css-var('transition-duration') get-css-var('transition-timing') !default;
+
+$transition-map: () !default;
+$transition-map: map.merge(
+  (
+    color: color get-css-var('transition-base'),
+    background: background-color get-css-var('transition-base'),
+    border: border-color get-css-var('transition-base'),
+    shadow: box-shadow get-css-var('transition-base'),
+    opacity: opacity get-css-var('transition-base'),
+    transform: transform get-css-var('transition-base')
+  ),
+  $transition-map
+);
+
+$radius-map: () !default;
+$radius-map: map.merge(
+  (
+    base: 6px,
+    large: 8px,
+    small: 4px
+  ),
+  $radius-map
+);
+
+$fill-color-map: () !default;
+$fill-color-map: map.merge(
+  (
+    base: #fff,
+    secondary: #d9dfe2,
+    disabled: #dee2e6,
+    hover: #f1f5f9,
+    humble: #f3f4f6,
+    background: #f8f9fa,
+    reverse: #131719
+  ),
+  $fill-color-map
+);
+
+$content-color-map: () !default;
+$content-color-map: map.merge(
+  (
+    primary: #212529,
+    base: rgba(25, 39, 57, 0.94),
+    secondary: rgba(27, 43, 65, 0.69),
+    third: #a1adb1,
+    disabled: #adb5bd,
+    placeholder: #94a3b8,
+    humble: #dee2e6,
+    reverse: #fff
+  ),
+  $content-color-map
+);
+
+$shadow-color-map: () !default;
+$shadow-color-map: map.merge(
+  (
+    base: #dee2e6,
+    light-1: rgba(79, 68, 224, 0.1),
+    light-2: #f1f3f5,
+    light-3: rgba(82, 63, 105, 0.15),
+    dark-1: #ced4da,
+    dark-2: #adb5bd
+  ),
+  $shadow-color-map
+);
+$shadow-x: 0 !default;
+$shadow-y: 0 !default;
+$shadow-blur: 6px !default;
+$shadow-shape: get-css-var('shadow-x') get-css-var('shadow-y') get-css-var('shadow-blur') !default;
+$shadow-base: get-css-var('shadow-shape') get-css-var('border-color-base') !default;
+$shadow-border: 0 0 0 1px !default;
+$shadow-focus: 0 0 2px 2px !default;
+
+$font-size-map: () !default;
+$font-size-map: map.merge(
+  (
+    base: 14px,
+    primary: 16px,
+    secondary: 12px
+  ),
+  $font-size-map
+);
+
+$line-height-map: () !default;
+$line-height-map: map.merge(
+  (
+    base: 1.2,
+    secondary: 1
+  ),
+  $line-height-map
+);
+
+$font-family-map: () !default;
+$font-family-map: map.merge(
+  (
+    base: #{-apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji'},
+    mono: #{ui-monospace,
+    SFMono-Regular,
+    'SF Mono',
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    'Courier New',
+    monospace}
+  ),
+  $font-family-map
+);
 
 @mixin define-type-color($type) {
   $colors: map.get($color-map, $type);
@@ -87,132 +228,3 @@ $color-map: map.deep-merge(
   @include define-level-colors($type, 9, 'dark', $color-black);
   @include define-opacity-colors($type, 9);
 }
-
-// border-end
-$border-color-map: () !default;
-$border-color-map: map.merge(
-  (
-    base: #ced4da,
-    light-1: #dee2e6,
-    light-2: #e9ecef,
-    dark-1: #adb5bd,
-    dark-2: #868e96
-  ),
-  $border-color-map
-);
-$border-width: 1px !default;
-$border-style: solid !default;
-$border-shape: get-css-var('border-width') get-css-var('border-style') !default;
-// border-end
-
-//transition-start
-$transition-duration: 250ms !default;
-$transition-timing: ease !default;
-$transition-base: get-css-var('transition-duration') get-css-var('transition-timing') !default;
-
-$transition-map: () !default;
-$transition-map: map.merge(
-  (
-    color: color get-css-var('transition-base'),
-    background: background-color get-css-var('transition-base'),
-    border: border-color get-css-var('transition-base'),
-    shadow: box-shadow get-css-var('transition-base'),
-    opacity: opacity get-css-var('transition-base'),
-    transform: transform get-css-var('transition-base')
-  ),
-  $transition-map
-);
-
-$radius-map: () !default;
-$radius-map: map.merge(
-  (
-    base: 4px,
-    large: 6px,
-    small: 2px
-  ),
-  $radius-map
-);
-
-$fill-color-map: () !default;
-$fill-color-map: map.merge(
-  (
-    base: #fff,
-    secondary: #d9dfe2,
-    disabled: #dee2e6,
-    hover: #e9ecef,
-    humble: #f3f4f6,
-    background: #f8f9fa,
-    reverse: #131719
-  ),
-  $fill-color-map
-);
-
-$content-color-map: () !default;
-$content-color-map: map.merge(
-  (
-    primary: #212529,
-    base: #181c32,
-    secondary: #868e96,
-    third: #a1adb1,
-    disabled: #adb5bd,
-    placeholder: #ced4da,
-    humble: #dee2e6,
-    reverse: #fff
-  ),
-  $content-color-map
-);
-
-$shadow-color-map: () !default;
-$shadow-color-map: map.merge(
-  (
-    base: #dee2e6,
-    light-1: #e9ecef,
-    light-2: #f1f3f5,
-    dark-1: #ced4da,
-    dark-2: #adb5bd
-  ),
-  $shadow-color-map
-);
-$shadow-x: 0 !default;
-$shadow-y: 0 !default;
-$shadow-blur: 6px !default;
-$shadow-shape: get-css-var('shadow-x') get-css-var('shadow-y') get-css-var('shadow-blur') !default;
-$shadow-base: get-css-var('shadow-shape') get-css-var('border-color-base') !default;
-$shadow-border: 0 0 0 1px !default;
-$shadow-focus: 0 0 2px 2px !default;
-
-$font-size-map: () !default;
-$font-size-map: map.merge(
-  (
-    base: 14px,
-    primary: 16px,
-    secondary: 12px
-  ),
-  $font-size-map
-);
-
-$font-family-map: () !default;
-$font-family-map: map.merge(
-  (
-    base: #{-apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji'},
-    mono: #{ui-monospace,
-    SFMono-Regular,
-    'SF Mono',
-    Menlo,
-    Monaco,
-    Consolas,
-    'Liberation Mono',
-    'Courier New',
-    monospace}
-  ),
-  $font-family-map
-);

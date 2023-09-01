@@ -4,11 +4,19 @@ import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
 import { Icon } from './icon'
+import { Input } from './input'
 import { Menu } from './menu'
+import { Message } from './message'
+import { Option } from './option'
 import { Popper } from './popper'
 import { Portal } from './portal'
 import { Row } from './row'
+import { Select } from './select'
 import { Switch } from './switch'
+import { TabsPane } from './tabs-pane'
+import { Tabs } from './tabs'
+import { TabsList } from './tabs-list'
+import { TabsTrigger } from './tabs-trigger'
 import { Tooltip } from './tooltip'
 
 import { buildInstall } from './create'
@@ -20,11 +28,19 @@ const components = [
   CollapseTransition,
   DatePicker,
   Icon,
+  Input,
   Menu,
+  Message,
+  Option,
   Popper,
   Portal,
   Row,
+  Select,
   Switch,
+  TabsPane,
+  Tabs,
+  TabsList,
+  TabsTrigger,
   Tooltip
 ]
 
@@ -36,9 +52,17 @@ export * from './col'
 export * from './collapse-transition'
 export * from './date-picker'
 export * from './icon'
+export * from './input'
 export * from './menu'
+export * from './message'
+export * from './option'
 export * from './popper'
 export * from './portal'
 export * from './row'
+export * from './select'
 export * from './switch'
+export * from './tabs-pane'
+export * from './tabs'
+export * from './tabs-list'
+export * from './tabs-trigger'
 export * from './tooltip'

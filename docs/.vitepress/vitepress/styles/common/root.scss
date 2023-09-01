@@ -10,33 +10,10 @@ body,
   height: 100%;
 }
 
-:root {
-  #app {
-    background: radial-gradient(
-      ellipse 80% 50% at 50% -20%,
-      rgba(120, 119, 198, 0.25),
-      rgba(255, 255, 255, 0)
-    );
-  }
-  .dark {
-    #app {
-      background: radial-gradient(
-        ellipse 80% 50% at 50% -20%,
-        rgba(120, 119, 198, 0.3),
-        rgba(255, 255, 255, 0)
-      );
-    }
-  }
-}
-
-a {
-  text-decoration: none;
-  background-color: transparent;
-}
 body {
   margin: 0;
   font-family: var(--bl-font-family-base);
-  color: var(--bl-content-color-base);
+  color: var(--text-base);
   background-color: var(--bg-color);
   transition: var(--bl-transition-background);
 }
@@ -48,4 +25,10 @@ ul {
 code {
   font-family: var(--bl-font-family-mono);
   line-height: 2;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-link-base);
+  background-color: transparent;
 }

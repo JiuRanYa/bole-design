@@ -14,9 +14,15 @@
 }
 
 .bl-doc h1 {
+  margin-top: 0;
   letter-spacing: -0.02em;
   line-height: 40px;
   font-size: 28px;
+}
+.bl-doc h1,
+h2,
+h3 {
+  color: var(--text-reverse);
 }
 
 .bl-doc h2 {
@@ -24,12 +30,12 @@
     border-top: none;
     margin: 24px 0 16px;
   }
-  margin: 48px 0 16px;
-  border-top: 1px solid var(--bl-c-divider);
-  padding-top: 24px;
+  margin: 48px 0 24px;
+  border-bottom: 1px solid var(--bl-c-divider);
+  padding-bottom: 12px;
   letter-spacing: -0.02em;
   line-height: 32px;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .bl-doc h3 {
@@ -87,6 +93,10 @@
 
 .bl-doc p {
   line-height: 28px;
+
+  code {
+    margin: 0 6px;
+  }
 }
 
 .bl-doc blockquote {
@@ -123,22 +133,12 @@
  * Lists
  * -------------------------------------------------------------------------- */
 
-.bl-doc ul,
-.bl-doc ol {
-  padding-left: 1.25rem;
-  margin: 16px 0;
-}
-
 .bl-doc ul {
-  list-style: disc;
+  list-style: none;
 }
 
 .bl-doc ol {
   list-style: decimal;
-}
-
-.bl-doc li + li {
-  margin-top: 8px;
 }
 
 .bl-doc li > ol,

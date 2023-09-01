@@ -16,6 +16,21 @@ export const router = createRouter({
       component: () => import('../../docs/demos/bole-design/date-picker/preset/index.vue')
     },
     {
+      path: '/range',
+      name: 'range',
+      component: () => import('../../docs/demos/bole-design/date-picker/range/index.vue')
+    },
+    {
+      path: '/rangePresets',
+      name: 'rangePresets',
+      component: () => import('../../docs/demos/bole-design/date-picker/rangePresets/index.vue')
+    },
+    {
+      path: '/trigger',
+      name: 'trigger',
+      component: () => import('../../docs/demos/bole-design/date-picker/trigger/index.vue')
+    },
+    {
       path: '/:catchAll(.*)',
       redirect: '/'
     }

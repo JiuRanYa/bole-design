@@ -6,6 +6,7 @@ export const blRoot = resolve(pkgRoot, 'bole-design')
 export const buildOutput = resolve(projRoot, 'dist')
 export const blOutput = resolve(buildOutput, 'bole-design')
 export const docRoot = resolve(projRoot, './docs')
+export const blPackage = resolve(blRoot, 'package.json')
 export const vpRoot = resolve(docRoot, '.vitepress')
 
 export const excludeFiles = (files: string[]) => {

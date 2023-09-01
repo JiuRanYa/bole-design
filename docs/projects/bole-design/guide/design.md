@@ -19,8 +19,6 @@ Bole Design 针对多项目设计，可扩展的命名空间，统一的 sass �
 
 🔨 TypeScript 编写，完整的类型
 
-💪 900+ 单元测试，为组件的提供良好的稳定性
-
 🎨 支持 CSS 变量，内置暗黑主题
 
 🚩 支持国际化
@@ -28,3 +26,7 @@ Bole Design 针对多项目设计，可扩展的命名空间，统一的 sass �
 🛫 配套 Resolver，支持 unplugin 插件
 
 🩹 优秀的可访问性
+
+## Waiting for implement:
+
+💪 单元测试，为组件的提供良好的稳定性

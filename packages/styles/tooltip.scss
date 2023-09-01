@@ -182,10 +182,11 @@ $tooltip: map.merge(
     }
   }
 
-  @mixin theme($name, $content-color, $border-color, $fill-color) {
+  @mixin theme($name, $content-color, $border-color, $fill-color, $box-shadow) {
     &__popper--#{$name} &__tip {
       color: $content-color;
       background-color: $fill-color;
+      box-shadow: $box-shadow;
     }
 
     &__popper--#{$name} {
@@ -237,12 +238,14 @@ $tooltip: map.merge(
     'light',
     get-css-var('tooltip-content-color'),
     get-css-var('tooltip-border-color'),
-    get-css-var('tooltip-bg-color')
+    get-css-var('tooltip-bg-color'),
+    get-css-var('tooltip-shadow')
   );
   @include theme(
     'dark',
     get-css-var('tooltip-content-color-dark'),
     get-css-var('tooltip-border-color'),
-    get-css-var('tooltip-bg-color-dark')
+    get-css-var('tooltip-bg-color-dark'),
+    get-css-var('tooltip-shadow-dark')
   );
 }

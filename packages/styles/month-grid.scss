@@ -11,9 +11,11 @@ $month-grid: map.merge((), $month-grid);
   &-vars {
     @include define-preset-values('date-picker', $month-grid);
   }
+  display: table;
   width: 100%;
   padding-inline: 22px;
   padding-top: 12px;
+  border-collapse: separate;
 
   &__title {
     display: flex;
@@ -24,9 +26,12 @@ $month-grid: map.merge((), $month-grid);
     padding-left: calc(((100% / 7) - var(--bl-font-size-base)) / 2);
   }
 
+  $prefix: '#{$namespace}-month-grid';
+
   &__days--body {
     tr[role='row'] {
       display: flex;
+      margin: 2px 0;
 
       td {
         width: calc(100% / 7);
@@ -36,14 +41,70 @@ $month-grid: map.merge((), $month-grid);
         justify-content: center;
         border-radius: 50%;
         transition: color 0.2s;
+        position: relative;
 
         &[aria-label]:not([aria-label='']):hover {
           cursor: default;
-          border: 2px solid get-css-var(color-primary-light-2);
+        }
+
+        &[aria-label]:not([aria-label=''], .end, .start):hover {
+          &::before {
+            content: '';
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border: 2px solid get-css-var(color-primary-light-2);
+            border-radius: 50%;
+          }
+        }
+
+        .#{$prefix}__index--inner {
+          display: flex;
+          height: 100%;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
         }
       }
-      td + .current-date {
+      td.today:not(.selected):not(.in-range):not(.start):not(.end) {
         animation: border-flash 1.4s infinite;
+      }
+      td.selected {
+        color: get-css-var(content-color-reverse);
+        border: 2px solid get-css-var(color-primary-opacity-2);
+        background-color: get-css-var(color-primary-opacity-2);
+      }
+      td.start {
+        @extend .selected;
+      }
+      td.start.in-range {
+        &::before {
+          content: '';
+          position: absolute;
+          background-color: get-css-var(color-primary-opacity-9);
+          z-index: -1;
+          inset: -2px -2px;
+          border-top-left-radius: 50%;
+          border-bottom-left-radius: 50%;
+        }
+      }
+      td.in-range + .end {
+        &:not(.in-range)::before {
+          content: '';
+          position: absolute;
+          background-color: get-css-var(color-primary-opacity-9);
+          z-index: -1;
+          inset: -2px -2px;
+          border-top-right-radius: 50%;
+          border-bottom-right-radius: 50%;
+        }
+      }
+      td.end {
+        @extend .selected;
+      }
+      td.in-range:not(.start) {
+        border-radius: 0;
+        background-color: get-css-var(color-primary-opacity-9);
       }
     }
   }

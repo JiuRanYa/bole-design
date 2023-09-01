@@ -1,0 +1,68 @@
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$select: () !default;
+$select: map.merge(
+  (
+    list-b: get-css-var('border-shape') get-css-var('select-list-b-color'),
+    list-b-color: get-css-var('border-color-base')
+  ),
+  $select
+);
+
+.#{$namespace}-select {
+  &-vars {
+    @include define-preset-values('select', $select);
+  }
+
+  @include basis;
+
+  display: inline-flex;
+  width: 100%;
+  cursor: pointer;
+  border: get-css-var(select-list-b);
+  border-radius: get-css-var(radius-base);
+  transition: get-css-var(transition-background);
+  background-color: get-css-var(bg-color-base);
+
+  &:hover {
+    // color: get-css-var(color-primary-text);
+    // background-color: get-css-var('color-primary-bg');
+  }
+
+  &__selector--focused &__arrow {
+    transform: rotate(180deg);
+  }
+
+  &__selector {
+    display: flex;
+    padding: 8px 12px;
+    width: 100%;
+  }
+
+  &__list {
+    width: 100%;
+    margin-top: 6px;
+    box-shadow: get-css-var('shadow-base');
+    border-radius: get-css-var(radius-base);
+    padding: 6px;
+    background-color: get-css-var(bg-color-base);
+  }
+  &__control {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+    min-width: 0;
+    padding: 0;
+    line-height: get-css-var(input-line-height);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

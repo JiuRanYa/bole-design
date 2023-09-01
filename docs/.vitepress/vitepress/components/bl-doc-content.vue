@@ -2,8 +2,9 @@
 import { useData } from 'vitepress'
 import BLTableContent from './doc-content/table-content.vue'
 import { nextTick, onMounted } from 'vue'
+import { useToc } from '../composables/toc'
 
-const { page } = useData()
+const headers = useToc()
 onMounted(() => {
   nextTick(() => {})
 })
@@ -15,6 +16,16 @@ onMounted(() => {
       <Content class="doc-content" />
     </div>
 
-    <BLTableContent v-if="page.headers" />
+    <BLTableContent v-if="headers.length" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.doc-content-wrapper {
+  .doc-content-container {
+    h1 {
+      margin-top: 0 !important;
+    }
+  }
+}
+</style>

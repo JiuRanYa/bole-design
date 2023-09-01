@@ -15,36 +15,37 @@ const { sidebars } = useSidebar()
 </script>
 
 <template>
-  <div v-if="hasSidebar" class="bl-sidebar">
-    <aside>
-      <div class="sidebar-groups">
-        <section v-for="(item, key) of sidebars" :key="key" class="sidebar-group">
-          <p class="sidebar-group__title">
-            {{ item.text }}
-          </p>
-          <SidebarLink v-for="(child, childKey) in item.children" :key="childKey" :item="child" />
-        </section>
-      </div>
-    </aside>
-  </div>
+  <aside v-if="hasSidebar" class="bl-sidebar">
+    <div class="sidebar-groups">
+      <section v-for="(item, key) of sidebars" :key="key" class="sidebar-group">
+        <p class="sidebar-group__title">
+          {{ item.text }}
+        </p>
+        <SidebarLink v-for="(child, childKey) in item.children" :key="childKey" :item="child" />
+      </section>
+    </div>
+  </aside>
 </template>
 
 <style lang="scss" scoped>
 .bl-sidebar {
-  width: 300px;
-  height: 100%;
-  border-right: var(--bl-border-light-2);
-  position: fixed;
-  left: 0;
-  top: var(--header-height);
-  padding: 48px 32px 96px;
+  width: 100%;
+  height: calc(100vh - 3.5rem);
+  padding-left: 3rem;
   box-sizing: border-box;
+  position: sticky;
+  top: 5rem;
   .sidebar-groups {
     .sidebar-group {
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
       &__title {
-        font-size: 1rem;
+        color: var(--text-active);
+        font-size: 14px;
         line-height: 24px;
-        font-weight: 700;
+        font-weight: 600;
+        margin: 12px 0;
       }
     }
   }
