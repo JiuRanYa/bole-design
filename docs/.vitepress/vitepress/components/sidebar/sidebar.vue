@@ -32,6 +32,10 @@ const { sidebars } = useSidebar()
   width: 100%;
   height: calc(100vh - 3.5rem);
   padding-left: 3rem;
+  width: 240px;
+  height: 100%;
+  padding: 2rem;
+  padding-left: 40px;
   box-sizing: border-box;
   position: sticky;
   top: 5rem;
@@ -45,7 +49,6 @@ const { sidebars } = useSidebar()
         font-size: 14px;
         line-height: 24px;
         font-weight: 600;
-        margin: 12px 0;
       }
     }
   }

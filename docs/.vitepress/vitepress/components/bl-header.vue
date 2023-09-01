@@ -150,6 +150,17 @@ function switchTheme(event: MouseEvent) {
   &-header {
     padding: 0 2rem;
     height: var(--header-height);
+    border-bottom: var(--bl-border-light-2);
+  }
+  &-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    width: 100%;
+    height: var(--header-height);
+    background-color: transparent;
+    backdrop-filter: blur(8px);
     display: flex;
     margin-left: auto;
     margin-right: auto;

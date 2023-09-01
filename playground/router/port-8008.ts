@@ -8,7 +8,42 @@ export const router = createRouter({
     {
       path: '/',
       name: 'basic',
-      component: () => import('../../docs/demos/bole-design/tabs/basic/index.vue')
+      component: () => import('../../docs/demos/bole-design/date-picker/basic/index.vue')
+    },
+    {
+      path: '/event',
+      name: 'event',
+      component: () => import('../../docs/demos/bole-design/date-picker/event/index.vue')
+    },
+    {
+      path: '/format',
+      name: 'format',
+      component: () => import('../../docs/demos/bole-design/date-picker/format/index.vue')
+    },
+    {
+      path: '/preset',
+      name: 'preset',
+      component: () => import('../../docs/demos/bole-design/date-picker/preset/index.vue')
+    },
+    {
+      path: '/range',
+      name: 'range',
+      component: () => import('../../docs/demos/bole-design/date-picker/range/index.vue')
+    },
+    {
+      path: '/rangePresets',
+      name: 'rangePresets',
+      component: () => import('../../docs/demos/bole-design/date-picker/rangePresets/index.vue')
+    },
+    {
+      path: '/trigger',
+      name: 'trigger',
+      component: () => import('../../docs/demos/bole-design/date-picker/trigger/index.vue')
+    },
+    {
+      path: '/typing',
+      name: 'typing',
+      component: () => import('../../docs/demos/bole-design/date-picker/typing/index.vue')
     },
     {
       path: '/:catchAll(.*)',

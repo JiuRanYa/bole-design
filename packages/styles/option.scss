@@ -60,5 +60,9 @@ $option: map.merge(
     display: flex;
     line-height: 1;
     margin-left: 24px;
+    padding-left: 12px;
+  }
+  &:label {
+    padding-left: 34px;
   }
 }

@@ -52,6 +52,7 @@ onMounted(() => {
 .homepage-bg {
   position: absolute;
 }
+
 .homepage-body {
   width: 100%;
   margin-left: auto;

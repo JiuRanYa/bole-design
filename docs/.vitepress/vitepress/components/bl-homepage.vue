@@ -64,6 +64,10 @@ function handleStartClick() {
       font-size: 5rem;
       font-weight: 800;
       color: var(--text-reverse);
+      background: var(--text-linear-color);
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
     }
     &-desc {
       font-size: 1.4rem;

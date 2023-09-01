@@ -24,6 +24,7 @@ $input: map.merge(
   margin: 0;
   padding: 0;
   font-size: get-css-var(font-size-base);
+  background-color: get-css-var(input-bg-color);
   border-radius: get-css-var(input-radius);
   transition: get-css-var(transition-color);
   padding: 8px 12px;
