@@ -66,5 +66,4 @@ onMounted(() => {
 defineExpose({
   visible
 })
-console.log(ns.bm('fade'))
 </script>
