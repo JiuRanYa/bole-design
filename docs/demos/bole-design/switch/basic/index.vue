@@ -1,5 +1,5 @@
 <template>
-  <Switch v-model="checked"></Switch>
+  <Switch v-model:value="checked"></Switch>
   <br />
   <p style="margin-top: 10px">checked: {{ checked }}</p>
 </template>

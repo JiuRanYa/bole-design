@@ -38,9 +38,4 @@ defineProps<{ hasSidebar: boolean }>()
     width: 800px;
   }
 }
-@media (min-width: 1400px) {
-  .page-content {
-    max-width: 1400px;
-  }
-}
 </style>

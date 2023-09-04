@@ -23,25 +23,27 @@ onMounted(() => {
 <template>
   <div>
     <LayoutHeader />
-    <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
-      <BlSidebar :hasSidebar="hasSidebar" />
-      <BLContent :hasSidebar="hasSidebar">
-        <template #content-top>
-          <slot name="content-top" />
-        </template>
-        <template #content-bottom>
-          <slot name="content-bottom" />
-        </template>
-        <template #aside-top>
-          <slot name="aside-top" />
-        </template>
-        <template #aside-mid>
-          <slot name="aside-mid" />
-        </template>
-        <template #aside-bottom>
-          <slot name="aside-bottom" />
-        </template>
-      </BLContent>
+    <div class="homepage" :class="{ 'no-bg': !hasSidebar }">
+      <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
+        <BlSidebar :hasSidebar="hasSidebar" />
+        <BLContent :hasSidebar="hasSidebar">
+          <template #content-top>
+            <slot name="content-top" />
+          </template>
+          <template #content-bottom>
+            <slot name="content-bottom" />
+          </template>
+          <template #aside-top>
+            <slot name="aside-top" />
+          </template>
+          <template #aside-mid>
+            <slot name="aside-mid" />
+          </template>
+          <template #aside-bottom>
+            <slot name="aside-bottom" />
+          </template>
+        </BLContent>
+      </div>
     </div>
     <LayoutFooter />
   </div>
@@ -54,6 +56,13 @@ onMounted(() => {
 .homepage-bg {
   position: absolute;
 }
+.homepage.no-bg {
+  background: url('/bl-bg.svg');
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-color: white;
+  padding-bottom: 150px;
+}
 .homepage-body {
   width: 100%;
   margin-left: auto;
@@ -64,12 +73,19 @@ onMounted(() => {
   align-items: flex-start;
   position: relative;
   gap: 2.5rem;
-  background: url('/bl-bg.svg');
-  background-position: 50% 0;
-  background-color: white;
   max-width: 100vw;
+}
+.dark {
+  .homepage {
+    background: none;
+  }
 }
 .no-sider {
   display: flex;
+}
+@media (min-width: 1400px) {
+  .homepage-body {
+    max-width: 1400px;
+  }
 }
 </style>

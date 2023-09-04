@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vitepress'
-import { defineComponent, inject, ref } from 'vue'
+import { defineComponent } from 'vue'
 import BLComponentDemo from './demo/bl-component-demo.vue'
-import { rootKey } from '../tookens'
 
 defineComponent({
   name: 'home-page'
@@ -12,17 +11,12 @@ const router = useRouter()
 function handleStartClick() {
   router.go(`/projects/bole-design/guide/design`)
 }
-
-const { hasSidebar } = inject(rootKey)!
 </script>
 
 <template>
   <div class="homepage">
     <div class="homepage-main">
       <div class="homepage-main-one">
-        <div v-show="!hasSidebar" class="homepage-main-bg">
-          <!-- <img src="/bl-bg.svg" class="homepage-bg" /> -->
-        </div>
         <div class="homepage-main-title">Bole Design</div>
         <div class="homepage-main-desc">
           高度可定制化，全量
