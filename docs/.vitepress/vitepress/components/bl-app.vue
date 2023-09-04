@@ -4,11 +4,14 @@ import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
 import { useSidebar } from '../composables/sidebar'
-import { nextTick, onMounted } from 'vue'
+import { InjectionKey, nextTick, onMounted, provide } from 'vue'
+import { rootKey } from '../tookens/index'
 
 const { hasSidebar } = useSidebar()
 const isClient = typeof window !== 'undefined'
 const rootCls = isClient ? document.documentElement.classList : undefined
+
+provide(rootKey, { hasSidebar })
 
 onMounted(() => {
   nextTick(() => {
@@ -21,7 +24,6 @@ onMounted(() => {
   <div>
     <LayoutHeader />
     <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
-      <img v-if="!hasSidebar" src="/bl-bg.svg" class="homepage-bg" />
       <BlSidebar :hasSidebar="hasSidebar" />
       <BLContent :hasSidebar="hasSidebar">
         <template #content-top>
