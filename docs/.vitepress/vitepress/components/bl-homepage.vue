@@ -21,7 +21,7 @@ const { hasSidebar } = inject(rootKey)!
     <div class="homepage-main">
       <div class="homepage-main-one">
         <div v-show="!hasSidebar" class="homepage-main-bg">
-          <img src="/bl-bg.svg" class="homepage-bg" />
+          <!-- <img src="/bl-bg.svg" class="homepage-bg" /> -->
         </div>
         <div class="homepage-main-title">Bole Design</div>
         <div class="homepage-main-desc">
@@ -43,8 +43,6 @@ const { hasSidebar } = inject(rootKey)!
 
 <style lang="scss" scoped>
 .homepage {
-  height: calc(100vh - var(--header-height));
-
   &-en {
     margin: 0 4px;
   }
@@ -60,7 +58,7 @@ const { hasSidebar } = inject(rootKey)!
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      margin-top: 200px;
+      padding-top: 200px;
     }
     &-two {
       padding-top: 200px;

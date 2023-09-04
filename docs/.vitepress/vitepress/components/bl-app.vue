@@ -64,13 +64,12 @@ onMounted(() => {
   align-items: flex-start;
   position: relative;
   gap: 2.5rem;
+  background: url('/bl-bg.svg');
+  background-position: 50% 0;
+  background-color: white;
+  max-width: 100vw;
 }
 .no-sider {
   display: flex;
-}
-@media (min-width: 1400px) {
-  .homepage-body {
-    max-width: 1400px;
-  }
 }
 </style>
