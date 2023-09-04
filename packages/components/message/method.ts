@@ -3,6 +3,7 @@ import { defaultProps, MessagePlacement } from './props'
 import { isClient, isString, Mutable } from '@bole-design/common'
 import { AppContext, ComponentInternalInstance, VNode, createVNode, render } from 'vue'
 import MessageComp from './message.vue'
+import { instances } from './instance'
 
 export type ManagerOptions = { duration?: number; placement?: MessagePlacement } & Record<
   string,
@@ -35,6 +36,7 @@ function createMessage(
 
   const props = {
     ...options,
+    id,
     onDestroy: () => {
       // clear the vnode
       render(null, container)
@@ -42,7 +44,6 @@ function createMessage(
   }
 
   const vnode = createVNode(MessageComp, props)
-  const vm = vnode.component!
   vnode.appContext = appContext || message._context
 
   const handler: MessageHandler = {
@@ -54,6 +55,8 @@ function createMessage(
   render(vnode, container)
   appendTo.appendChild(container.firstElementChild!)
 
+  const vm = vnode.component!
+
   const instance: MessageContext = {
     id,
     vnode,
@@ -61,6 +64,7 @@ function createMessage(
     handler,
     props: (vnode.component as any).props
   }
+  console.log(vm)
 
   return instance
 }
@@ -94,6 +98,8 @@ const message: MessageFn & Partial<Message> & { _context: AppContext | null } = 
     },
     context
   )
+  instances.push(instance)
+  console.log(instances)
 
   return instance.handler
 }
