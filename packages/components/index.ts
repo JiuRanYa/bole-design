@@ -1,5 +1,8 @@
+import { Avatar } from './avatar'
+import { Badge } from './badge'
 import { Button } from './button'
 import { ButtonGroup } from './button-group'
+import { Checkbox } from './checkbox'
 import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
@@ -22,8 +25,11 @@ import { Tooltip } from './tooltip'
 import { buildInstall } from './create'
 
 const components = [
+  Avatar,
+  Badge,
   Button,
   ButtonGroup,
+  Checkbox,
   Col,
   CollapseTransition,
   DatePicker,
@@ -46,8 +52,11 @@ const components = [
 
 export const install = buildInstall(components)
 
+export * from './avatar'
+export * from './badge'
 export * from './button'
 export * from './button-group'
+export * from './checkbox'
 export * from './col'
 export * from './collapse-transition'
 export * from './date-picker'

@@ -1,0 +1,3 @@
+<template>
+  <Checkbox />
+</template>

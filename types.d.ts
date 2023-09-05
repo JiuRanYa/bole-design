@@ -1,8 +1,11 @@
 // GlobalComponents for Volar
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Avatar: typeof import('bole-design')['Avatar']
+    Badge: typeof import('bole-design')['Badge']
     Button: typeof import('bole-design')['Button']
     ButtonGroup: typeof import('bole-design')['ButtonGroup']
+    Checkbox: typeof import('bole-design')['Checkbox']
     Col: typeof import('bole-design')['Col']
     CollapseTransition: typeof import('bole-design')['CollapseTransition']
     DatePicker: typeof import('bole-design')['DatePicker']
