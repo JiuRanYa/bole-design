@@ -39,4 +39,8 @@ $tabs: map.merge((), $tabs);
     margin-top: 24px;
     flex-direction: row;
   }
+
+  &-content {
+    flex: 1;
+  }
 }

@@ -37,6 +37,33 @@
           <div class="form-content">
             <div class="form-content-title">账户信息</div>
             <div class="form-content-desc">请更新您的账户设置，设置您偏好的语言和时区~</div>
+
+            <div class="form-item">
+              <div class="form-label">姓名</div>
+
+              <Input style="width: 600px" placeholder="Bole Design" />
+              <div class="form-label-desc">这是将在您的个人资料上和电子邮件中显示的名字。</div>
+            </div>
+
+            <div class="form-item">
+              <div class="form-label">生日</div>
+
+              <DatePicker style="width: 600px" v-model:value="birValue" />
+              <div class="form-label-desc">您的出生日期用于计算您的年龄。</div>
+            </div>
+
+            <div class="form-item">
+              <div class="form-label">语言</div>
+
+              <Select
+                style="width: 500px"
+                v-model:value="emailValue"
+                :options="emailSelectOptions"
+                placeholder="Select language"
+              />
+              <div class="form-label-desc">您的出生日期用于计算您的年龄。</div>
+            </div>
+            <Button type="primary" style="margin-top: 20px">更新账户信息</Button>
           </div>
         </TabsPane>
         <TabsPane value="appearance">
@@ -48,8 +75,45 @@
         <TabsPane value="notification">
           <div class="form-content">
             <div class="form-content-title">通知消息</div>
-            <div class="form-content-desc">配置您接收通知的方式。~</div>
+            <div class="form-content-desc">配置您接收通知的方式~</div>
+
+            <div class="form-item">
+              <div class="form-content-title">外观设置</div>
+              <div class="notification-card">
+                <div>
+                  <div class="notification-card-title">通讯邮件</div>
+                  <div class="notification-card-desc">接收关于您的账户活动的电子邮件</div>
+                </div>
+
+                <Switch class="notification-switch" v-model:value="switchValue"></Switch>
+              </div>
+              <div class="notification-card">
+                <div>
+                  <div class="notification-card-title">通讯邮件</div>
+                  <div class="notification-card-desc">接收关于您的账户活动的电子邮件</div>
+                </div>
+
+                <Switch class="notification-switch"></Switch>
+              </div>
+              <div class="notification-card">
+                <div>
+                  <div class="notification-card-title">通讯邮件</div>
+                  <div class="notification-card-desc">接收关于您的账户活动的电子邮件</div>
+                </div>
+
+                <Switch class="notification-switch"></Switch>
+              </div>
+              <div class="notification-card">
+                <div>
+                  <div class="notification-card-title">通讯邮件</div>
+                  <div class="notification-card-desc">接收关于您的账户活动的电子邮件</div>
+                </div>
+
+                <Switch class="notification-switch"></Switch>
+              </div>
+            </div>
           </div>
+          <Button type="primary" style="margin-top: 20px">更新通知消息</Button>
         </TabsPane>
       </Tabs>
     </div>
@@ -57,14 +121,17 @@
 </template>
 
 <script setup lang="ts">
+import dayjs from 'dayjs'
 import { defineComponent, ref } from 'vue'
-import { FaceGrinBeamR, FaceSurpriseR, SunR, MoonR } from '@bole-design/icons'
 
 defineComponent({
   name: 'demo-one'
 })
 const tabValue = ref('profile')
 const value = ref()
+const emailValue = ref()
+const birValue = ref(dayjs().subtract(1, 'day'))
+const switchValue = ref(true)
 const options = [
   {
     label: '8127439@gmail.com',
@@ -76,6 +143,20 @@ const options = [
   },
   {
     label: 'tsxc213901235@gmail.com',
+    value: 3
+  }
+]
+const emailSelectOptions = [
+  {
+    label: 'English',
+    value: 1
+  },
+  {
+    label: 'French',
+    value: 2
+  },
+  {
+    label: 'Chinese',
     value: 3
   }
 ]
@@ -94,12 +175,16 @@ const options = [
     margin-top: 12px;
     font-size: 16px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--bl-color-primary-light-9);
+    border-bottom: 1px solid var(--bl-fill-color-disabled);
   }
 
   .demo-form {
     display: flex;
     margin-top: 24px;
+
+    .bl-tabs {
+      width: 100%;
+    }
 
     .form-sider {
       width: 200px;
@@ -116,7 +201,6 @@ const options = [
     }
 
     .form-content {
-      flex: 1;
       &-title {
         font-weight: 700;
         font-size: 18px;
@@ -128,7 +212,8 @@ const options = [
         margin-top: 8px;
         padding-bottom: 24px;
         margin-bottom: 36px;
-        border-bottom: 1px solid var(--bl-color-primary-light-9);
+        border-bottom: 1px solid var(--bl-fill-color-disabled);
+        color: rgb(113, 113, 122);
       }
       .form-item {
         margin-bottom: 32px;
@@ -142,6 +227,27 @@ const options = [
         &-desc {
           margin-top: 12px;
           font-size: 12px;
+          color: rgb(113, 113, 122);
+        }
+      }
+
+      .notification-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-radius: var(--bl-radius-large);
+        width: 60%;
+        border: 1px solid var(--bl-fill-color-disabled);
+        margin-top: 24px;
+        &-title {
+          font-size: 16px;
+          font-weight: 500;
+          color: var(--text-reverse);
+          margin-bottom: 12px;
+        }
+        &-desc {
+          color: rgb(113, 113, 122);
         }
       }
     }

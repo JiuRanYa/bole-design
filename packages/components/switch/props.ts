@@ -1,7 +1,7 @@
 import { booleanProps, buildProps } from '@bole-design/common'
 
 export const switchProps = buildProps({
-  modelValue: booleanProps,
+  value: booleanProps,
   openIcon: Object,
   closeIcon: Object
 })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vitepress'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import BLComponentDemo from './demo/bl-component-demo.vue'
 
 defineComponent({
@@ -35,21 +35,24 @@ function handleStartClick() {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .homepage {
-  height: calc(100vh - var(--header-height));
-
   &-en {
     margin: 0 4px;
   }
 
   &-main {
+    &-bg {
+      pointer-events: none;
+      position: absolute;
+      z-index: -10;
+    }
     &-one {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      margin-top: 200px;
+      padding-top: 200px;
     }
     &-two {
       padding-top: 200px;
@@ -77,14 +80,6 @@ function handleStartClick() {
         width: 160px;
         height: 50px;
         border-radius: 2rem;
-      }
-    }
-    &-bg {
-      pointer-events: none;
-      position: absolute;
-      bottom: 10vw;
-      img {
-        width: 100vw;
       }
     }
   }

@@ -24,9 +24,8 @@
           <kbd>⌘ K</kbd>
         </div>
         <Switch
-          :open-icon="Sun"
-          :close-icon="Moon"
-          :value="checked"
+          :open-icon="Moon"
+          :close-icon="Sun"
           class="theme-switch switchAppearance"
           @click="switchTheme"
         ></Switch>
@@ -39,7 +38,7 @@
 import { defineComponent, ref } from 'vue'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
-import { Sun, Moon, Bolt } from '@bole-design/icons'
+import { Sun, Moon } from '@bole-design/icons'
 
 defineComponent({
   name: 'header'
@@ -75,7 +74,6 @@ function setClass(dark: boolean): void {
   // @ts-expect-error keep unused declaration, used to force the browser to redraw
   const _ = window.getComputedStyle(css).opacity
   document.head.removeChild(css)
-  checked.value = !dark
 }
 function switchTheme(event: MouseEvent) {
   const x = event.clientX

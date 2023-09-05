@@ -4,11 +4,14 @@ import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
 import { useSidebar } from '../composables/sidebar'
-import { nextTick, onMounted } from 'vue'
+import { InjectionKey, nextTick, onMounted, provide } from 'vue'
+import { rootKey } from '../tookens/index'
 
 const { hasSidebar } = useSidebar()
 const isClient = typeof window !== 'undefined'
 const rootCls = isClient ? document.documentElement.classList : undefined
+
+provide(rootKey, { hasSidebar })
 
 onMounted(() => {
   nextTick(() => {
@@ -20,26 +23,27 @@ onMounted(() => {
 <template>
   <div>
     <LayoutHeader />
-    <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
-      <img v-if="!hasSidebar" src="/bl-bg.svg" class="homepage-bg" />
-      <BlSidebar :hasSidebar="hasSidebar" />
-      <BLContent :hasSidebar="hasSidebar">
-        <template #content-top>
-          <slot name="content-top" />
-        </template>
-        <template #content-bottom>
-          <slot name="content-bottom" />
-        </template>
-        <template #aside-top>
-          <slot name="aside-top" />
-        </template>
-        <template #aside-mid>
-          <slot name="aside-mid" />
-        </template>
-        <template #aside-bottom>
-          <slot name="aside-bottom" />
-        </template>
-      </BLContent>
+    <div class="homepage" :class="{ 'no-bg': !hasSidebar }">
+      <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
+        <BlSidebar :hasSidebar="hasSidebar" />
+        <BLContent :hasSidebar="hasSidebar">
+          <template #content-top>
+            <slot name="content-top" />
+          </template>
+          <template #content-bottom>
+            <slot name="content-bottom" />
+          </template>
+          <template #aside-top>
+            <slot name="aside-top" />
+          </template>
+          <template #aside-mid>
+            <slot name="aside-mid" />
+          </template>
+          <template #aside-bottom>
+            <slot name="aside-bottom" />
+          </template>
+        </BLContent>
+      </div>
     </div>
     <LayoutFooter />
   </div>
@@ -52,6 +56,13 @@ onMounted(() => {
 .homepage-bg {
   position: absolute;
 }
+.homepage.no-bg {
+  background: url('/bl-bg.svg');
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-color: white;
+  padding-bottom: 150px;
+}
 .homepage-body {
   width: 100%;
   margin-left: auto;
@@ -62,6 +73,12 @@ onMounted(() => {
   align-items: flex-start;
   position: relative;
   gap: 2.5rem;
+  max-width: 100vw;
+}
+.dark {
+  .homepage {
+    background: none;
+  }
 }
 .no-sider {
   display: flex;

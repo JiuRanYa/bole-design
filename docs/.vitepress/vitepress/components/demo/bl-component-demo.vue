@@ -111,7 +111,7 @@ const navbar = ref([
       display: flex;
       align-items: center;
       margin-right: 20px;
-      background: hsl(240 4.8% 96.9%);
+      background: var(--bl-fill-color-background);
       border: 1px solid var(--bl-border-color-light-2);
       border-radius: 20px;
       padding: 4px 6px;
