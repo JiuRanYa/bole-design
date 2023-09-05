@@ -1,0 +1,9 @@
+{
+  "framework": "vite",
+  "buildCommand": "pnpm -w run build:internal && pnpm -w run build && pnpm -w run build:icons && pnpm run build",
+  "outputDirectory": ".vitepress/dist",
+  "github": {
+    "silent": true
+  },
+  "ignoreCommand": "[ \"$VERCEL_ENV\" != production ]"
+}
