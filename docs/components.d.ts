@@ -17,8 +17,6 @@ declare module '@vue/runtime-core' {
     BlFooter: typeof import('./.vitepress/vitepress/components/bl-footer.vue')['default']
     BlHeader: typeof import('./.vitepress/vitepress/components/bl-header.vue')['default']
     BlHomepage: typeof import('./.vitepress/vitepress/components/bl-homepage.vue')['default']
-    BlSidebar: typeof import('./.vitepress/vitepress/components/bl-sidebar.vue')['default']
-    BlSiderbar: typeof import('./.vitepress/vitepress/components/bl-siderbar.vue')['default']
     DemoFour: typeof import('./.vitepress/vitepress/components/home-navbar/demoFour/index.vue')['default']
     DemoOne: typeof import('./.vitepress/vitepress/components/home-navbar/demoOne/index.vue')['default']
     DemoThree: typeof import('./.vitepress/vitepress/components/home-navbar/demoThree/index.vue')['default']
