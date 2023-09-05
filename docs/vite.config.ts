@@ -13,15 +13,7 @@ export default defineConfig(() => {
     plugins: [
       Comp({
         dirs: ['.vitepress/vitepress/components'],
-
         allowOverrides: true,
-
-        // custom resolvers
-        resolvers: [
-          // auto import icons
-          // https://github.com/antfu/unplugin-icons
-        ],
-
         // allow auto import and register components used in markdown
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/]
       }),

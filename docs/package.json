@@ -7,7 +7,7 @@
     "serve": "vitepress dev .",
     "plugin:dev": "pnpm run plugin:build --watch .vitepress/plugins",
     "plugin:build": "tsup .vitepress/plugins/markdownTransform.ts --dts --format cjs,esm",
-    "docs:build": "vitepress build docs",
+    "build": "vitepress build",
     "docs:preview": "vitepress preview docs"
   },
   "keywords": [],

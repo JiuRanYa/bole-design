@@ -16,10 +16,15 @@ export const siderbarsConfig: SidebarsConfig = {
     ],
     components: [
       {
+        text: '资源组件',
+        children: [{ text: 'Icon 图标', link: '/components/icon' }]
+      },
+      {
         text: '基础组件',
         children: [
           { text: 'Button 按钮', link: '/components/button' },
-          { text: 'Icon 图标', link: '/components/icon' }
+          { text: 'Avatar 头像', link: '/components/avatar' },
+          { text: 'Badge 徽章', link: '/components/badge' }
         ]
       },
       {
@@ -35,6 +40,7 @@ export const siderbarsConfig: SidebarsConfig = {
           { text: 'Input 输入框', link: '/components/input' },
           { text: 'Switch 开关', link: '/components/switch' },
           { text: 'Select 选择器', link: '/components/select' },
+          { text: 'Checkbox 复选框', link: '/components/checkbox' },
           { text: 'DatePicker 日期选择器', link: '/components/date-picker' }
         ]
       },
