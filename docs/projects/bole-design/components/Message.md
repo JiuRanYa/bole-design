@@ -15,7 +15,7 @@ const demos = import.meta.globEager('../../../demos/bole-design/message/*/*.vue'
 
 :::demo
 
-Message/basic
+message/basic
 
 :::
 
@@ -23,6 +23,6 @@ Message/basic
 
 :::demo
 
-Message/type
+message/type
 
 :::
