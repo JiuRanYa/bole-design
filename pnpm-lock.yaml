@@ -9,6 +9,7 @@ importers:
       '@bole-design/hooks': workspace:*
       '@bole-design/icons': workspace:*
       '@bole-design/internal': workspace:*
+      '@bole-design/styles': workspace:*
       '@bole-design/tokens': workspace:*
       '@bole-design/utils': workspace:*
       '@floating-ui/dom': ^1.2.8
@@ -51,6 +52,7 @@ importers:
       '@bole-design/hooks': link:packages/hooks
       '@bole-design/icons': link:packages/icons
       '@bole-design/internal': link:internal
+      '@bole-design/styles': link:packages/styles
       '@bole-design/tokens': link:packages/tokens
       '@bole-design/utils': link:packages/utils
       '@floating-ui/dom': 1.2.8
@@ -212,9 +214,6 @@ packages:
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
-    peerDependenciesMeta:
-      '@algolia/client-search':
-        optional: true
     dependencies:
       '@algolia/autocomplete-shared': 1.9.3_algoliasearch@4.19.1
       algoliasearch: 4.19.1
@@ -225,9 +224,6 @@ packages:
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
-    peerDependenciesMeta:
-      '@algolia/client-search':
-        optional: true
     dependencies:
       algoliasearch: 4.19.1
     dev: false

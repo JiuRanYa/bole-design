@@ -91,7 +91,7 @@ function handleStartClick() {
 </style>
 
 <style lang="scss">
-@use '../../../../dist//bole-design/css/src/index.scss' with (
+@use '@bole-design/styles/index.scss' with (
   $color-map: (
     (
       primary: (
