@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
 import { Sun, Moon } from '@bole-design/icons'
@@ -46,7 +46,7 @@ defineComponent({
 
 const route = useRoute()
 const nav = useNav()
-const rootCls = document.documentElement.classList
+const rootCls = ref()
 const checked = ref(false)
 
 function isActive(routePath: string, link: string) {
@@ -109,6 +109,9 @@ function switchTheme(event: MouseEvent) {
     )
   })
 }
+onMounted(() => {
+  rootCls.value = document.documentElement.classList
+})
 </script>
 
 <style lang="scss">

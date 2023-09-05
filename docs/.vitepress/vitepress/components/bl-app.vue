@@ -4,12 +4,11 @@ import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
 import { useSidebar } from '../composables/sidebar'
-import { InjectionKey, nextTick, onMounted, provide } from 'vue'
+import { nextTick, onMounted, provide } from 'vue'
 import { rootKey } from '../tookens/index'
 
 const { hasSidebar } = useSidebar()
 const isClient = typeof window !== 'undefined'
-const rootCls = isClient ? document.documentElement.classList : undefined
 
 provide(rootKey, { hasSidebar })
 
