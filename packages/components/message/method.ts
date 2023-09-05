@@ -2,7 +2,7 @@ import { FuzzyOptions, Message, MessageFn, MessageProps, messageTypes } from './
 import { defaultProps, MessagePlacement } from './props'
 import { isClient, isString, Mutable } from '@bole-design/common'
 import { AppContext, ComponentInternalInstance, VNode, createVNode, render } from 'vue'
-import MessageComp from './message.vue'
+import MessageComp from './Message.vue'
 import { instances } from './instance'
 
 export type ManagerOptions = { duration?: number; placement?: MessagePlacement } & Record<

@@ -10,7 +10,8 @@ export const defaultProps: MessageProps = Object.freeze({
   duration: 2000,
   onClose: () => {},
   id: '',
-  offset: 20
+  offset: 20,
+  repeatNum: 1
 })
 
 export type MessagePlacement = 'top' | 'bottom'
@@ -42,5 +43,6 @@ export const messageProps = buildProps({
   },
   offset: {
     type: Number
-  }
+  },
+  repeatNum: Number
 })
