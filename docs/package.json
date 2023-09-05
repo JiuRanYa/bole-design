@@ -8,7 +8,7 @@
     "plugin:dev": "pnpm run plugin:build --watch .vitepress/plugins",
     "plugin:build": "tsup .vitepress/plugins/markdownTransform.ts --dts --format cjs,esm",
     "build": "vitepress build",
-    "build:vercel": "pnpm -C ../internal build && pnpm -C ../packages/icons build && pnpm -C build && vitepress build",
+    "build:vercel": "pnpm -C ../internal build && pnpm -C ../packages/icons build && pnpm -C .. build && vitepress build",
     "docs:preview": "vitepress preview docs"
   },
   "keywords": [],
