@@ -1,7 +1,7 @@
 import { ref, unref } from 'vue'
 import type { Ref } from 'vue'
 import { useEventListener } from '../useEventListener'
-import { MaybeElementRef, MaybeRef } from 'packages/common'
+import { MaybeElementRef, isClient } from '@bole-design/common'
 
 type Fn = () => void
 
@@ -27,7 +27,7 @@ export function useClickOutside(
 
   const shouldIgnore = (event: PointerEvent) => {
     return ignore.some(target => {
-      if (typeof target === 'string') {
+      if (isClient && typeof target === 'string') {
         return Array.from(window.document.querySelectorAll(target)).some(
           el => el === event.target || event.composedPath().includes(el)
         )
@@ -39,16 +39,18 @@ export function useClickOutside(
   }
 
   const cleanup = [
-    useEventListener(document, 'click', listener),
-    useEventListener(
-      window,
-      'pointerdown',
-      e => {
-        const el = target.value
-        if (el) shouldListen = !e.composedPath().includes(el) && !shouldIgnore(e)
-      },
-      { passive: true }
-    )
+    isClient && useEventListener(document, 'click', listener),
+
+    isClient &&
+      useEventListener(
+        window,
+        'pointerdown',
+        e => {
+          const el = target.value
+          if (el) shouldListen = !e.composedPath().includes(el) && !shouldIgnore(e)
+        },
+        { passive: true }
+      )
   ] as Fn[]
 
   const stop = () => cleanup.forEach(fn => fn())

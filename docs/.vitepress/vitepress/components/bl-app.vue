@@ -6,9 +6,7 @@ import BLContent from './bl-content.vue'
 import { useSidebar } from '../composables/sidebar'
 import { nextTick, onMounted, provide } from 'vue'
 import { rootKey } from '../tookens/index'
-
 const { hasSidebar } = useSidebar()
-const isClient = typeof window !== 'undefined'
 
 provide(rootKey, { hasSidebar })
 
