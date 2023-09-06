@@ -15,6 +15,6 @@
     const toPath = [`/${userPreferredPro}`].concat(location.pathname.split('/').slice(2)).join('/')
     // location.pathname =
     //   toPath.endsWith('.html') || toPath.endsWith('/') ? toPath : toPath.concat('/')
-    console.log(toPath.endsWith('.html') || toPath.endsWith('/') ? toPath : toPath.concat('/'))
+    location.pathname = '/projects/bole-design/'
   }
 })()

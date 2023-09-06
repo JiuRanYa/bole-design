@@ -21,6 +21,8 @@ declare module '@vue/runtime-core' {
     DemoOne: typeof import('./.vitepress/vitepress/components/home-navbar/demoOne/index.vue')['default']
     DemoThree: typeof import('./.vitepress/vitepress/components/home-navbar/demoThree/index.vue')['default']
     DemoTwo: typeof import('./.vitepress/vitepress/components/home-navbar/demoTwo/index.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./.vitepress/vitepress/components/sidebar/sidebar.vue')['default']
     SidebarLink: typeof import('./.vitepress/vitepress/components/sidebar/sidebar-link.vue')['default']
     SourceCode: typeof import('./.vitepress/vitepress/components/demo/source-code.vue')['default']
