@@ -89,15 +89,3 @@ function handleStartClick() {
   }
 }
 </style>
-
-<style lang="scss" scoped>
-@use '@bole-design/styles/index.scss' with (
-  $color-map: (
-    (
-      primary: (
-        base: rgb(24, 24, 27)
-      )
-    )
-  )
-);
-</style>

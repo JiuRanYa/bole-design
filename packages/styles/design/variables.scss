@@ -24,7 +24,8 @@ $color-map: () !default;
 $color-map: map.deep-merge(
   (
     primary: (
-      base: #006af5,
+      // base: #006af5,
+      base: rgb(24, 24, 27),
       text: #005fdb,
       bg: rgba(79, 68, 224, 0.06)
     ),
