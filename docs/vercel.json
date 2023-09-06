@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "rewrites": [{ "source": "/(.*)", "destination": "/projects/bole-design/" }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/projects/bole-design.html" }],
   "buildCommand": "pnpm -w run build:internal && pnpm -w run build:icons && pnpm -w run build && pnpm run build",
   "outputDirectory": ".vitepress/dist",
   "github": {
