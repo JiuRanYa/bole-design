@@ -90,7 +90,7 @@ function handleStartClick() {
 }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@bole-design/styles/index.scss' with (
   $color-map: (
     (

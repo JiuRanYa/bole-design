@@ -46,8 +46,7 @@ defineComponent({
 
 const route = useRoute()
 const nav = useNav()
-const rootCls = ref()
-const checked = ref(false)
+const rootCls = ref<DOMTokenList>()
 
 function isActive(routePath: string, link: string) {
   const routeTop = routePath?.split('/').slice(1, 4).pop()
@@ -70,7 +69,9 @@ function setClass(dark: boolean): void {
     )
   )
   document.head.appendChild(css)
-  rootCls[dark ? 'add' : 'remove']('dark')
+  const rootValue = rootCls.value!
+  rootValue[dark ? 'add' : 'remove']('dark')
+
   // @ts-expect-error keep unused declaration, used to force the browser to redraw
   const _ = window.getComputedStyle(css).opacity
   document.head.removeChild(css)
@@ -79,11 +80,11 @@ function switchTheme(event: MouseEvent) {
   const x = event.clientX
   const y = event.clientY
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
-  const isDark = rootCls.contains('dark')
+  const isDark = rootCls.value?.contains('dark')
 
   // @ts-expect-error: Transition API
   const transition = document.startViewTransition(() => {
-    if (rootCls.contains('dark')) {
+    if (rootCls.value?.contains('dark')) {
       setClass(false)
     } else {
       setClass(true)
@@ -110,7 +111,7 @@ function switchTheme(event: MouseEvent) {
   })
 }
 onMounted(() => {
-  rootCls.value = document.documentElement.classList
+  rootCls.value = document.documentElement.classList ?? []
 })
 </script>
 
