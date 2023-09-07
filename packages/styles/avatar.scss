@@ -1,0 +1,41 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$avatar: () !default;
+$avatar: map.merge(
+  (
+    size: 32px,
+    radius: get-css-var('radius-base'),
+    bg-color: get-css-var('fill-color-secondary'),
+    series-span: 8px
+  ),
+  $avatar
+);
+
+.#{$namespace}-avatar {
+  &-vars {
+    @include define-preset-values('avatar', $avatar);
+  }
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: get-css-var('avatar-size');
+  height: get-css-var('avatar-size');
+  line-height: 1;
+
+  vertical-align: middle;
+  user-select: none;
+  background-color: get-css-var('avatar-bg-color');
+  border-radius: get-css-var('avatar-radius');
+
+  & + & {
+    margin-left: get-css-var('avatar-series-span');
+  }
+
+  &--circle {
+    border-radius: 50%;
+  }
+}

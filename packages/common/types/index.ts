@@ -31,6 +31,8 @@ export type Expand<T> = T extends unknown ? { [K in keyof T]: T[K] } : never
 
 export type Side = 'top' | 'left' | 'right' | 'bottom'
 
+export type ComponentSize = 'small' | 'default' | 'large'
+
 export type Alignment = 'start' | 'end'
 
 export type AlignedPlacement = `${Side}-${Alignment}`
