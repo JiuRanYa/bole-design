@@ -19,7 +19,7 @@ avatar/basic
 
 :::demo 圆形头像
 
-avatar/icon
+avatar/circle
 
 :::
 

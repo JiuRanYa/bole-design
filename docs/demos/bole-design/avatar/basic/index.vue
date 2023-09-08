@@ -1,8 +1,9 @@
 <template>
   <div class="avatar-box">
-    <Avatar :icon="User" size="small"></Avatar>
-    <Avatar :icon="User"></Avatar>
-    <Avatar :icon="User" size="large"></Avatar>
+    <Avatar src="https://avatars.githubusercontent.com/u/58846658?v=4" size="small" />
+    <Avatar src="https://avatars.githubusercontent.com/u/58846658?v=4" />
+    <Avatar src="https://avatars.githubusercontent.com/u/58846658?v=4" size="large" />
+    <Avatar src="https://avatars.githubusercontent.com/u/58846658?v=4" :size="50" />
   </div>
 </template>
 

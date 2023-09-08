@@ -1,14 +1,13 @@
 <template>
   <div class="avatar-box">
-    <Avatar circle :icon="User" size="small"></Avatar>
-    <Avatar circle :icon="User"></Avatar>
-    <Avatar circle :icon="User" size="large"></Avatar>
+    <Avatar circle src="https://avatars.githubusercontent.com/u/58846658?v=4" size="small" />
+    <Avatar circle src="https://avatars.githubusercontent.com/u/58846658?v=4" />
+    <Avatar circle src="https://avatars.githubusercontent.com/u/58846658?v=4" size="large" />
+    <Avatar circle src="https://avatars.githubusercontent.com/u/58846658?v=4" :size="50" />
   </div>
 </template>
 
-<script setup lang="ts">
-import { User } from '@bole-design/icons'
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .avatar-box {

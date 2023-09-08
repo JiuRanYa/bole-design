@@ -1,6 +1,6 @@
 <template>
-  <div :class="className">
-    <img v-if="props.src" :alt="props.alt" :style="styles" />
+  <div :class="className" :style="styles">
+    <img v-if="props.src" :alt="props.alt" :src="props.src" :class="ns.be('image')" />
 
     <template v-else-if="icon || $slots.icon">
       <slot name="icon">

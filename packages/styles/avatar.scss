@@ -8,7 +8,8 @@ $avatar: map.merge(
     size: 32px,
     radius: get-css-var('radius-base'),
     bg-color: get-css-var('fill-color-secondary'),
-    series-span: 8px
+    series-span: 8px,
+    image-fit: 'cover'
   ),
   $avatar
 );
@@ -42,6 +43,7 @@ $avatar: map.merge(
   justify-content: center;
   width: get-css-var('avatar-size');
   height: get-css-var('avatar-size');
+  overflow: hidden;
   line-height: 1;
 
   vertical-align: middle;
@@ -55,5 +57,10 @@ $avatar: map.merge(
 
   &--circle {
     border-radius: 50%;
+  }
+
+  &__image {
+    height: 100%;
+    object-fit: get-css-var('avatar-image-fit');
   }
 }
