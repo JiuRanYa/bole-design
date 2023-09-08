@@ -9,6 +9,8 @@ import { series, parallel, src, dest } from 'gulp'
 
 const { existsSync, mkdirSync, emptyDir } = fs
 
+// generate a function using quick sort
+
 const buildOutput = resolve(__dirname, 'dist')
 const distCssBundle = path.resolve(buildOutput, 'bole-design/css')
 const cssDir = resolve(buildOutput, 'bole-design/css')

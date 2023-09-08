@@ -18,6 +18,24 @@ $avatar: map.merge(
     @include define-preset-values('avatar', $avatar);
   }
 
+  &--small {
+    @include define-preset-values(
+      'avatar',
+      (
+        size: 26px
+      )
+    );
+  }
+
+  &--large {
+    @include define-preset-values(
+      'avatar',
+      (
+        size: 40px
+      )
+    );
+  }
+
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;

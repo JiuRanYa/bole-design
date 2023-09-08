@@ -1,8 +1,8 @@
 <template>
   <div class="avatar-box">
-    <Avatar :icon="User" size="small"></Avatar>
-    <Avatar :icon="User"></Avatar>
-    <Avatar :icon="User" size="large"></Avatar>
+    <Avatar circle :icon="User" size="small"></Avatar>
+    <Avatar circle :icon="User"></Avatar>
+    <Avatar circle :icon="User" size="large"></Avatar>
   </div>
 </template>
 
