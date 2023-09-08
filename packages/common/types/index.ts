@@ -1,4 +1,4 @@
-import type { PropType, Ref } from 'vue'
+import type { CSSProperties, PropType, Ref } from 'vue'
 
 export const booleanProps = {
   type: Boolean,
@@ -30,6 +30,10 @@ export type AnyFunction = (...args: any[]) => any
 export type Expand<T> = T extends unknown ? { [K in keyof T]: T[K] } : never
 
 export type Side = 'top' | 'left' | 'right' | 'bottom'
+
+export type ComponentSize = 'small' | 'default' | 'large'
+
+export type StyleType = string | CSSProperties | Array<string | CSSProperties>
 
 export type Alignment = 'start' | 'end'
 

@@ -22,7 +22,6 @@ defineProps<{ hasSidebar: boolean }>()
   width: 100%;
 }
 .has-sidebar {
-  display: flex;
   display: grid;
   grid-template-columns: 1fr 300px;
   background-image: none;

@@ -1,1 +1,3 @@
-export const useArray = () => {};
+export const useArray = () => { };
+
+

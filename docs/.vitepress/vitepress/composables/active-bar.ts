@@ -34,7 +34,6 @@ export function useActiveSidebarLinks(container: Ref<HTMLElement>, marker: Ref<H
           ) as HTMLAnchorElement))
     if (activeLink) {
       activeLink.classList.add('active')
-      console.log(activeLink)
     } else {
     }
   }
