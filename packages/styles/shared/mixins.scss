@@ -29,6 +29,16 @@
   }
 }
 
+@mixin fixed {
+  position: fixed;
+  inset: 0;
+}
+
+@mixin inner-fixed {
+  position: absolute;
+  inset: 0;
+}
+
 @function to-css-var-name($name-units...) {
   // variable prefix is fixed to '--vxp'
   $name: '--bl';

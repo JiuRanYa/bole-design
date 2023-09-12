@@ -1,6 +1,6 @@
 <template>
   <Masker v-model:active="currentActive" :transfer="props.transfer" :inner="props.inner">
-    12323
+    <div role="dialog" :aria-modal="currentActive">123</div>
   </Masker>
 </template>
 

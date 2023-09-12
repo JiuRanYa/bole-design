@@ -1,6 +1,21 @@
 <template>
   <Portal v-if="props.active" :to="transferTo">
     <div ref="wrapper" :class="className">
+      <Transition>
+        <div v-show="currentActive" :class="ns.be('mask')" @click="">
+          <slot name="mask">
+            <div :class="ns.be('mask-inner')"></div>
+          </slot>
+        </div>
+      </Transition>
+
+      <span
+        ref="topTrap"
+        tabindex="0"
+        aria-hidden="true"
+        style="width: 0; height: 0; overflow: hidden; outline: none"
+      ></span>
+
       <Transition v-if="props.transitionName" :name="props.transitionName">
         <slot :show="currentActive"></slot>
       </Transition>
@@ -24,7 +39,14 @@ const props = defineProps(maskerProps)
 const ns = useNamespace('masker')
 
 const className = computed(() => {
-  return [ns.b()]
+  return [
+    ns.b(),
+    ns.bs('vars'),
+    {
+      [ns.bm('inherit')]: transferTo.value !== 'body' && props.inherit,
+      [ns.bm('inner')]: props.inner
+    }
+  ]
 })
 const transferTo = computed(() => {
   return props.inner
