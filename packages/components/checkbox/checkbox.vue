@@ -2,7 +2,7 @@
   <label :class="className">
     <input :class="ns.be('input')" />
 
-    <span></span>
+    <span :class="ns.be('inner')"></span>
   </label>
 </template>
 
