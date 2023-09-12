@@ -8,7 +8,7 @@ export const booleanNumberProp = {
   type: [Boolean, Number],
   default: null
 }
-export const booleanStringProp = {
+export const booleanStringProps = {
   type: [Boolean, String],
   default: null
 }

@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$modal: () !default;
+$modal: map.merge((), $modal);
+
+.#{$namespace}-modal {
+  &-vars {
+    @include define-preset-values('modal', $modal);
+  }
+}

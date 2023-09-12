@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     Input: typeof import('bole-design')['Input']
     Menu: typeof import('bole-design')['Menu']
     Message: typeof import('bole-design')['Message']
+    Modal: typeof import('bole-design')['Modal']
     Option: typeof import('bole-design')['Option']
     Popper: typeof import('bole-design')['Popper']
     Portal: typeof import('bole-design')['Portal']
