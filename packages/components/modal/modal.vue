@@ -1,6 +1,15 @@
 <template>
-  <Masker v-model:active="currentActive" :transfer="props.transfer" :inner="props.inner">
-    <div role="dialog" :aria-modal="currentActive">123</div>
+  <Masker
+    v-model:active="currentActive"
+    :transfer="props.transfer"
+    :inner="props.inner"
+    :class="className"
+  >
+    <div :class="ns.bm('wrap')">
+      <div role="dialog" :aria-modal="currentActive" :class="ns.bm('dialog')" :style="dialogStyle">
+        123
+      </div>
+    </div>
   </Masker>
 </template>
 
@@ -8,7 +17,8 @@
 import { useProps } from '@bole-design/common'
 import { Masker } from '../masker'
 import { modalProps } from './props'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useNamespace } from '@bole-design/hooks'
 
 defineOptions({
   name: 'Modal'
@@ -21,7 +31,18 @@ const props = useProps('modal', _props, {
   inner: false
 })
 
+const ns = useNamespace('modal')
 const currentActive = ref(props.active)
+
+const dialogStyle = computed(() => {
+  return {
+    width: '550px'
+  }
+})
+
+const className = computed(() => {
+  return [ns.b(), ns.bs('vars')]
+})
 
 watch(
   () => props.active,

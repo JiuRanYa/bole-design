@@ -1,6 +1,6 @@
 <template>
   <Portal v-if="props.active" :to="transferTo">
-    <div ref="wrapper" :class="className">
+    <div v-bind="$attrs" ref="wrapper" :class="className">
       <Transition>
         <div v-show="currentActive" :class="ns.be('mask')" @click="">
           <slot name="mask">
@@ -8,13 +8,6 @@
           </slot>
         </div>
       </Transition>
-
-      <span
-        ref="topTrap"
-        tabindex="0"
-        aria-hidden="true"
-        style="width: 0; height: 0; overflow: hidden; outline: none"
-      ></span>
 
       <Transition v-if="props.transitionName" :name="props.transitionName">
         <slot :show="currentActive"></slot>

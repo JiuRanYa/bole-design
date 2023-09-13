@@ -9,4 +9,13 @@ $modal: map.merge((), $modal);
   &-vars {
     @include define-preset-values('modal', $modal);
   }
+
+  &--wrap {
+    position: fixed;
+    inset: 0;
+  }
+
+  &--dialog {
+    max-width: calc(100vw - 32px);
+  }
 }
