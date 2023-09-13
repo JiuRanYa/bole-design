@@ -18,14 +18,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
 import { Portal } from '../portal'
 import { maskerProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
 import { emitEvent, useProps } from '@bole-design/common'
 
-defineComponent({
-  name: 'bl-masker'
+defineOptions({
+  name: 'Masker'
 })
 
 const _props = defineProps(maskerProps)

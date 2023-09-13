@@ -20,6 +20,7 @@ $masker: map.merge(
 
   @include basis;
   @include fixed;
+  z-index: 100;
 
   &__mask {
     @include fixed;

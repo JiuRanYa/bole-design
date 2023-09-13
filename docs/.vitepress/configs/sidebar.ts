@@ -49,8 +49,13 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [
           { text: 'Tooltip 提示', link: '/components/tooltip' },
           { text: 'Popover 气泡', link: '/components/popover' },
+          { text: 'Modal 弹窗', link: '/components/modal' },
           { text: 'Message 消息', link: '/components/message' }
         ]
+      },
+      {
+        text: '其他',
+        children: [{ text: 'Masker 遮罩', link: '/components/masker' }]
       }
     ],
     hooks: [

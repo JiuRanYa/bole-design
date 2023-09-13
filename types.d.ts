@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     DatePicker: typeof import('bole-design')['DatePicker']
     Icon: typeof import('bole-design')['Icon']
     Input: typeof import('bole-design')['Input']
+    Masker: typeof import('bole-design')['Masker']
     Menu: typeof import('bole-design')['Menu']
     Message: typeof import('bole-design')['Message']
     Modal: typeof import('bole-design')['Modal']
