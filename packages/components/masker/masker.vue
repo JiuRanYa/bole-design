@@ -2,7 +2,7 @@
   <Portal v-if="props.active" :to="transferTo">
     <div v-bind="$attrs" ref="wrapper" :class="className">
       <Transition>
-        <div v-show="currentActive" :class="ns.be('mask')" @click="">
+        <div v-show="currentActive" :class="ns.be('mask')" @click="handleMaskClick">
           <slot name="mask">
             <div :class="ns.be('mask-inner')"></div>
           </slot>
@@ -22,12 +22,16 @@ import { computed, defineComponent } from 'vue'
 import { Portal } from '../portal'
 import { maskerProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
+import { emitEvent, useProps } from '@bole-design/common'
 
 defineComponent({
   name: 'bl-masker'
 })
 
-const props = defineProps(maskerProps)
+const _props = defineProps(maskerProps)
+const props = useProps('masker', _props, {
+  closable: false
+})
 
 const ns = useNamespace('masker')
 
@@ -50,6 +54,9 @@ const transferTo = computed(() => {
       : ''
     : props.transfer
 })
-console.log(transferTo.value)
 const currentActive = computed(() => props.active)
+
+function handleMaskClick(event: MouseEvent) {
+  emitEvent(props.onMaskClick, event)
+}
 </script>

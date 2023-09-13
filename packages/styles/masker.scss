@@ -21,8 +21,6 @@ $masker: map.merge(
   @include basis;
   @include fixed;
 
-  pointer-events: none;
-
   &__mask {
     @include fixed;
 
