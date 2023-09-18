@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Portal } from '../portal'
 import { maskerProps } from './props'
 import { useNamespace } from '@bole-design/hooks'
@@ -54,9 +54,20 @@ const transferTo = computed(() => {
       : ''
     : props.transfer
 })
-const currentActive = computed(() => props.active)
+const currentActive = ref(props.active)
 
+function handleMaskClose() {
+  currentActive.value = false
+}
 function handleMaskClick(event: MouseEvent) {
   emitEvent(props.onMaskClick, event)
+  handleMaskClose()
 }
+
+watch(
+  () => props.active,
+  value => {
+    currentActive.value = value
+  }
+)
 </script>
