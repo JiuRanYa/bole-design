@@ -6,9 +6,11 @@
     :class="className"
     @mask-click="handleMaskClick"
   >
-    <div role="dialog" :aria-modal="currentActive" :class="dialogClass" :style="dialogStyle">
-      123
-    </div>
+    <template #default="{ show }">
+      <div role="dialog" :aria-modal="show" :class="dialogClass" :style="dialogStyle">
+        <slot />
+      </div>
+    </template>
   </Masker>
 </template>
 
@@ -28,7 +30,8 @@ const props = useProps('modal', _props, {
   active: false,
   transfer: 'body',
   inner: false,
-  top: '40vh'
+  top: '40vh',
+  transitionName: 'fade-in'
 })
 const emit = defineEmits(['update:active'])
 
@@ -44,18 +47,16 @@ const dialogStyle = computed(() => {
 const dialogClass = computed(() => {
   return [ns.bm('dialog')]
 })
-
 const className = computed(() => {
   return [ns.b(), ns.bs('vars')]
 })
-
 const rect = reactive({
   [ns.nv('dialog-top')]: normalizeStyle(props.top)
 })
+
 function normalizeStyle(value: string | number) {
   return typeof value === 'number' ? `${value}px` : value
 }
-
 function handleClose() {
   currentActive.value = false
   emit('update:active', false)

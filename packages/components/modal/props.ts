@@ -6,5 +6,6 @@ export const modalProps = buildProps({
   active: booleanProps,
   inner: booleanProps,
   transfer: booleanStringProps,
-  top: positionType
+  top: positionType,
+  transitionName: String
 })

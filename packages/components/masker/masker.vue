@@ -1,7 +1,7 @@
 <template>
   <Portal v-if="props.active" :to="transferTo">
     <div v-bind="$attrs" ref="wrapper" :class="className">
-      <Transition>
+      <Transition :name="props.transitionName">
         <div v-show="currentActive" :class="ns.be('mask')" @click="handleMaskClick">
           <slot name="mask">
             <div :class="ns.be('mask-inner')"></div>
@@ -12,6 +12,7 @@
       <Transition v-if="props.transitionName" :name="props.transitionName">
         <slot :show="currentActive"></slot>
       </Transition>
+
       <slot v-else :show="currentActive"></slot>
     </div>
   </Portal>
@@ -30,7 +31,8 @@ defineOptions({
 
 const _props = defineProps(maskerProps)
 const props = useProps('masker', _props, {
-  closable: false
+  closable: false,
+  transitionName: 'zoom-in'
 })
 
 const ns = useNamespace('masker')
