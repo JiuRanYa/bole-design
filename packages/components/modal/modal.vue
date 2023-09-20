@@ -7,7 +7,7 @@
     @mask-click="handleMaskClick"
   >
     <template #default="{ show }">
-      <div role="dialog" :aria-modal="show" :class="dialogClass" :style="dialogStyle">
+      <div v-if="show" role="dialog" :aria-modal="show" :class="dialogClass" :style="dialogStyle">
         <slot />
       </div>
     </template>
