@@ -1,5 +1,5 @@
 <template>
-  <Portal v-if="props.active" :to="transferTo">
+  <Portal v-if="currentActive" :to="transferTo">
     <div v-bind="$attrs" ref="wrapper" :class="className">
       <Transition>
         <div v-show="currentActive" :class="ns.be('mask')" @click="handleMaskClick">
@@ -9,7 +9,7 @@
         </div>
       </Transition>
 
-      <Transition v-if="props.transitionName" :name="props.transitionName">
+      <Transition v-if="props.transitionName" :name="props.transitionName" appear>
         <slot :show="currentActive"></slot>
       </Transition>
 
@@ -38,6 +38,10 @@ const props = useProps('masker', _props, {
 const ns = useNamespace('masker')
 
 console.log(props.transitionName)
+
+setTimeout(() => {
+  currentActive.value = true
+}, 5000)
 
 const className = computed(() => {
   return [
