@@ -81,6 +81,6 @@ $-name: '#{$namespace}-drop';
 
 .zoom-in-enter-from,
 .zoom-in-leave-to {
-  transform: scale3d(0.8, 0.8, 0.8);
+  transform: scale3d(0.95, 0.95, 0.95);
   opacity: 0;
 }
