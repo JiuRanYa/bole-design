@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$modal: () !default;
+$modal: map.merge((), $modal);
+
+.#{$namespace}-modal {
+  &-vars {
+    @include define-preset-values('modal', $modal);
+  }
+
+  &--wrap {
+    position: fixed;
+    inset: 0;
+  }
+
+  &--dialog {
+    position: relative;
+    max-width: calc(100vw - 32px);
+    margin: get-css-var('dialog-top') auto 50px;
+    border: get-css-var('border-color-light-2') get-css-var('border-shape');
+    min-height: 150px;
+    border-radius: get-css-var('radius-large');
+    box-shadow: get-css-var('shadow-base');
+    padding: get-css-var('padding-lg');
+  }
+}

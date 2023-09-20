@@ -1,0 +1,67 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$checkbox: () !default;
+$checkbox: map.merge((), $checkbox);
+
+.#{$namespace}-checkbox {
+  &-vars {
+    @include define-preset-values('checkbox', $checkbox);
+  }
+
+  @include basis;
+
+  position: relative;
+  margin: 0;
+  line-height: 1;
+  transition: get-css-var('transition-background'), get-css-var('transition-border');
+  display: inline-flex;
+  align-items: center;
+
+  &--input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &--checked &--inner {
+    background: get-css-var(content-color-primary);
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(45deg) scaleY(1);
+      border: 1.5px get-css-var(border-style) get-css-var(content-color-reverse);
+      border-left: 0;
+      border-top: 0;
+    }
+  }
+
+  &--inner {
+    position: relative;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+
+    border: get-css-var(border-shape) get-css-var(color-primary-base);
+    border-radius: calc(0.5rem - get-css-var(radius-small));
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: calc(50% - 1px);
+      left: 50%;
+      width: 4px;
+      height: 8px;
+    }
+  }
+
+  &--label {
+    margin-inline-start: 8px;
+  }
+}

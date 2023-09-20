@@ -32,7 +32,7 @@ async function main() {
 
   const markdownTemp = `
 ---
-title: Button
+title: ${compName}
 lang: zh-CN
 ---
 

@@ -30,8 +30,8 @@ const { sidebars } = useSidebar()
 <style lang="scss" scoped>
 .bl-sidebar {
   width: 100%;
-  height: calc(100vh - 3.5rem);
   padding-left: 3rem;
+  margin-top: 1rem;
   box-sizing: border-box;
   position: sticky;
   top: 5rem;

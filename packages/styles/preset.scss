@@ -44,6 +44,7 @@
   @include define-css-var('shadow-base', $shadow-base);
 
   @include define-preset-values('shadow-color', $shadow-color-map);
+  @include define-preset-values('padding', $padding-map);
 
   @each $name in map.keys($shadow-color-map) {
     @include define-css-var(

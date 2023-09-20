@@ -8,8 +8,10 @@ import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
 import { Icon } from './icon'
 import { Input } from './input'
+import { Masker } from './masker'
 import { Menu } from './menu'
 import { Message } from './message'
+import { Modal } from './modal'
 import { Option } from './option'
 import { Popper } from './popper'
 import { Portal } from './portal'
@@ -35,8 +37,10 @@ const components = [
   DatePicker,
   Icon,
   Input,
+  Masker,
   Menu,
   Message,
+  Modal,
   Option,
   Popper,
   Portal,
@@ -62,8 +66,10 @@ export * from './collapse-transition'
 export * from './date-picker'
 export * from './icon'
 export * from './input'
+export * from './masker'
 export * from './menu'
 export * from './message'
+export * from './modal'
 export * from './option'
 export * from './popper'
 export * from './portal'

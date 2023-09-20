@@ -104,6 +104,15 @@ $fill-color-map: map.merge(
   ),
   $fill-color-map
 );
+$padding-map: () !default;
+$padding-map: map.merge(
+  (
+    sm: 12px,
+    base: 18px,
+    lg: 24px
+  ),
+  $padding-map
+);
 
 $content-color-map: () !default;
 $content-color-map: map.merge(
