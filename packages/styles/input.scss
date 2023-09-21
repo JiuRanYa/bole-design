@@ -46,6 +46,7 @@ $input: map.merge(
     height: 100%;
     min-width: 0;
     font-size: inherit;
+    color: inherit;
     line-height: get-css-var(input-line-height);
   }
   input::placeholder {
