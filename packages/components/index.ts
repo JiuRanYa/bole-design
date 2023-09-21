@@ -17,6 +17,7 @@ import { Popper } from './popper'
 import { Portal } from './portal'
 import { Row } from './row'
 import { Select } from './select'
+import { Sheet } from './sheet'
 import { Switch } from './switch'
 import { Tabs } from './tabs'
 import { TabsList } from './tabs-list'
@@ -46,6 +47,7 @@ const components = [
   Portal,
   Row,
   Select,
+  Sheet,
   Switch,
   Tabs,
   TabsList,
@@ -75,6 +77,7 @@ export * from './popper'
 export * from './portal'
 export * from './row'
 export * from './select'
+export * from './sheet'
 export * from './switch'
 export * from './tabs'
 export * from './tabs-list'

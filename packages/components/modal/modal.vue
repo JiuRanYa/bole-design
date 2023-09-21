@@ -36,7 +36,7 @@ const props = useProps('modal', _props, {
   active: false,
   transfer: 'body',
   inner: false,
-  top: '40vh',
+  top: '30vh',
   transitionName: 'fade-in'
 })
 const emit = defineEmits(['update:active'])
