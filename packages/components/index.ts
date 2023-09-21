@@ -6,6 +6,7 @@ import { Checkbox } from './checkbox'
 import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
+import { Dropdown } from './dropdown'
 import { Icon } from './icon'
 import { Input } from './input'
 import { Masker } from './masker'
@@ -36,6 +37,7 @@ const components = [
   Col,
   CollapseTransition,
   DatePicker,
+  Dropdown,
   Icon,
   Input,
   Masker,
@@ -66,6 +68,7 @@ export * from './checkbox'
 export * from './col'
 export * from './collapse-transition'
 export * from './date-picker'
+export * from './dropdown'
 export * from './icon'
 export * from './input'
 export * from './masker'

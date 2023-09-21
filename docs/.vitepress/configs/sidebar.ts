@@ -41,6 +41,7 @@ export const siderbarsConfig: SidebarsConfig = {
           { text: 'Switch 开关', link: '/components/switch' },
           { text: 'Select 选择器', link: '/components/select' },
           { text: 'Checkbox 复选框', link: '/components/checkbox' },
+          { text: 'Dropdown 下拉菜单', link: '/components/dropdown' },
           { text: 'DatePicker 日期选择器', link: '/components/date-picker' }
         ]
       },
@@ -50,6 +51,7 @@ export const siderbarsConfig: SidebarsConfig = {
           { text: 'Tooltip 提示', link: '/components/tooltip' },
           { text: 'Popover 气泡', link: '/components/popover' },
           { text: 'Modal 弹窗', link: '/components/modal' },
+          { text: 'Sheet 抽屉', link: '/components/sheet' },
           { text: 'Message 消息', link: '/components/message' }
         ]
       },
