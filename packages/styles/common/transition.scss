@@ -75,8 +75,8 @@ $-name: '#{$namespace}-drop';
 // zoom-in
 .zoom-in-enter-active,
 .zoom-in-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.3, 1.3, 0.3, 1),
-    transform 0.3s cubic-bezier(0.63, 1.3, 0.43, 1.7);
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946),
+    opacity 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
 
 .zoom-in-enter-from,

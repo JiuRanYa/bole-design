@@ -32,7 +32,7 @@ defineOptions({
 const _props = defineProps(maskerProps)
 const props = useProps('masker', _props, {
   closable: false,
-  transitionName: 'zoom-in'
+  transitionName: ''
 })
 
 const ns = useNamespace('masker')

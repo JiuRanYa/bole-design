@@ -6,6 +6,7 @@ import { Checkbox } from './checkbox'
 import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
 import { DatePicker } from './date-picker'
+import { Dropdown } from './dropdown'
 import { Icon } from './icon'
 import { Input } from './input'
 import { Masker } from './masker'
@@ -17,6 +18,7 @@ import { Popper } from './popper'
 import { Portal } from './portal'
 import { Row } from './row'
 import { Select } from './select'
+import { Sheet } from './sheet'
 import { Switch } from './switch'
 import { Tabs } from './tabs'
 import { TabsList } from './tabs-list'
@@ -35,6 +37,7 @@ const components = [
   Col,
   CollapseTransition,
   DatePicker,
+  Dropdown,
   Icon,
   Input,
   Masker,
@@ -46,6 +49,7 @@ const components = [
   Portal,
   Row,
   Select,
+  Sheet,
   Switch,
   Tabs,
   TabsList,
@@ -64,6 +68,7 @@ export * from './checkbox'
 export * from './col'
 export * from './collapse-transition'
 export * from './date-picker'
+export * from './dropdown'
 export * from './icon'
 export * from './input'
 export * from './masker'
@@ -75,6 +80,7 @@ export * from './popper'
 export * from './portal'
 export * from './row'
 export * from './select'
+export * from './sheet'
 export * from './switch'
 export * from './tabs'
 export * from './tabs-list'
