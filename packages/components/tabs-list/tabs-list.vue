@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import { computed } from 'vue'
 import { tabsListProps } from './props'
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 
 defineOptions({
   name: 'TabsList'

@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import { computed, inject } from 'vue'
 import { tabsPaneProps } from '../tabs-pane/props'
-import { useProps } from '@bole-design/common/props'
-import { tabsContextKey } from '@bole-design/tokens/tabs'
+import { useProps } from '@panda-ui/common/props'
+import { tabsContextKey } from '@panda-ui/tokens/tabs'
 
 defineOptions({
   name: 'TabsTrigger'

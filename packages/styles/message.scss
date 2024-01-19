@@ -6,7 +6,7 @@
 $message: () !default;
 $message: map.merge(
   (
-    bg-color: get-css-var('fill-color-base'),
+    bg-color: get-css-var('bg-color-base'),
     icon-color: red
   ),
   $message
@@ -27,16 +27,29 @@ $message: map.merge(
   bottom: 60px;
   transform: translateX(-60px);
   transition: opacity get-css-var('transition-duration') ease-in-out, transform 0.4s ease-in-out,
-    top 0.4s ease-in-out;
+    bottom 0.4s ease-in-out;
   border-radius: get-css-var('radius-base');
   box-shadow: get-css-var(shadow-base);
   background: get-css-var(message-bg-color);
   display: flex;
 
+	&__vertical {
+		display: flex;
+		flex-direction: column;
+	}
+
   p {
     margin: 0;
   }
 
+	&__header {
+		display: flex;
+		align-items: center;
+	}
+	&__description {
+		margin-top: 6px;
+		font-size: 14px;
+	}
   &__icon {
     display: flex;
     align-items: center;
@@ -57,6 +70,13 @@ $message: map.merge(
       );
     }
   }
+  &--success {
+		@include define-message-style(
+			(
+				icon-color: 'color' success 'foreground'
+			)
+		);
+	}
 }
 
 .#{$namespace}-message--fade-enter-from {

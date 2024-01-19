@@ -30,13 +30,16 @@ export function usePopper(options: UsePopperOptions) {
 
   let stopWatchPopper: WatchStopHandle | null = null
 
-  const state = {
-    x,
-    y
-  }
   function createPopper() {
     const cancelWatchReference = watch(referenceEl, update, { immediate: true })
   }
+
+  const states = {
+    x,
+    y,
+    placement
+  } as const
+
   async function update() {
     const refEl = referenceEl.value
     const popEl = popperEl.value
@@ -50,8 +53,8 @@ export function usePopper(options: UsePopperOptions) {
       middleware: []
     })
 
-    state.x.value = data.x
-    state.y.value = data.y
+    states.x.value = data.x
+    states.y.value = data.y
   }
 
   onMounted(() => {
@@ -61,7 +64,7 @@ export function usePopper(options: UsePopperOptions) {
   })
 
   return {
-    ...state,
+    ...states,
     update
   }
 }

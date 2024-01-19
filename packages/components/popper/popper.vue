@@ -1,7 +1,7 @@
 <template>
   <Portal :to="to">
     <transition :name="props.transition">
-      <div v-if="visible" ref="wrapper" v-bind="$attrs" :class="classNames">
+      <div v-if="visible" ref="wrapper" :class="classNames" v-bind="$attrs" :style="{ zIndex }">
         <slot></slot>
       </div>
     </transition>
@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts">
-import { useProps } from '@bole-design/common'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useProps, useZIndex } from '@panda-ui/common'
+import { computed, defineComponent, ref } from 'vue'
 import { popperProps } from './props'
 import { Portal } from '../portal'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 
 export default defineComponent({
   name: 'Popper',
@@ -34,11 +34,14 @@ export default defineComponent({
       return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
     })
     const to = computed(() => props.to)
+    const getIndex = useZIndex()
+    const zIndex = computed(() => getIndex())
 
     return {
       props,
       wrapper,
       classNames,
+      zIndex,
       to
     }
   }

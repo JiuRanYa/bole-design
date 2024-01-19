@@ -26,10 +26,11 @@ defineProps<{ hasSidebar: boolean }>()
   grid-template-columns: 1fr 300px;
   background-image: none;
   gap: 2.5rem;
+  margin-left: 290px;
   .doc-content-wrapper {
     display: flex;
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 240px;
     gap: 2.5rem;
   }
   .doc-content-container {

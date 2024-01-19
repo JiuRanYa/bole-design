@@ -1,13 +1,13 @@
 {
-  "name": "@bole-design/components",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@panda-ui/components",
+  "version": "1.0.2",
+  "description": "Panda UI components menorepo",
   "main": "index.ts",
   "module": "index.ts",
   "peerDependencies": {
     "vue": "^3.2.0"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Tong Siyuan",
+  "license": "MIT"
 }

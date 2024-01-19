@@ -1,7 +1,7 @@
 // https://vitepress.dev/guide/custom-theme
 import Layout, { globals } from '../vitepress'
 import './style.css'
-import { install } from '@bole-design/components'
+import { install } from '@panda-ui/components'
 
 export default {
   Layout,

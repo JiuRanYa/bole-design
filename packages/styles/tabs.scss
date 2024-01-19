@@ -23,20 +23,16 @@ $tabs: map.merge((), $tabs);
   }
 
   .is-left {
-    margin-right: 24px;
     flex-direction: column;
   }
   .is-right {
-    margin-left: 24px;
     flex-direction: column;
   }
 
   .is-top {
-    margin-bottom: 24px;
     flex-direction: row;
   }
   .is-bottom {
-    margin-top: 24px;
     flex-direction: row;
   }
 

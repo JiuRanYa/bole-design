@@ -1,15 +1,35 @@
-import { computed, inject, reactive, toRefs } from 'vue'
-import { selectKey } from '@bole-design/tokens/select'
+import { computed, ExtractPropTypes, inject, reactive, toRaw, toRefs } from 'vue'
+import { selectKey } from '@panda-ui/tokens/select'
+import { optionProps } from './props'
 
-export const useOption = (props: any) => {
+export const useOption = (props: ExtractPropTypes<typeof optionProps>) => {
   const select = inject(selectKey)
 
   const isSelected = computed(() => {
-    return select?.props.value === props.value
+    const createdOptions = select?.states.createdOptions
+    if (createdOptions?.length && Array.isArray(select?.props.value)) {
+      return select?.props.value.some(op => toRaw(props.value === toRaw(op.value)))
+    }
+    return toRaw(select?.props.value) === toRaw(props.value)
   })
 
-  const states = reactive({
-    isSelected
+  const isHovering = computed(() => {
+    return select?.states.currentIdx === props.index
   })
-  return toRefs(states)
+
+  function hoverItem() {
+    if (!select) return
+
+    select.states.currentIdx = props.index as number
+  }
+
+  const states = reactive({
+    isSelected,
+    isHovering
+  })
+
+  return {
+    ...toRefs(states),
+    hoverItem
+  }
 }

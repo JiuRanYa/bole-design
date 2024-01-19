@@ -24,5 +24,6 @@ $modal: map.merge((), $modal);
     border-radius: get-css-var('radius-large');
     box-shadow: get-css-var('shadow-base');
     padding: get-css-var('padding-lg');
+		background: get-css-var(bg-color-base)
   }
 }

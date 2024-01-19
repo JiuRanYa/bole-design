@@ -1,8 +1,8 @@
 import { FuzzyOptions, Message, MessageFn, MessageProps, messageTypes } from './symbol'
 import { defaultProps, MessagePlacement } from './props'
-import { isClient, isString, Mutable } from '@bole-design/common'
+import { isClient, isString, Mutable } from '@panda-ui/common'
 import { AppContext, ComponentInternalInstance, VNode, createVNode, render } from 'vue'
-import MessageComp from './Message.vue'
+import MessageComp from './message.vue'
 import { instances } from './instance'
 
 export type ManagerOptions = { duration?: number; placement?: MessagePlacement } & Record<
@@ -27,16 +27,29 @@ export type MessageParamsNormalized = Omit<MessageProps, 'id'> & {
 
 let seed = 1
 
+export const closeMessage = (instance: MessageContext) => {
+  const idx = instances.indexOf(instance)
+  if (idx === -1) return
+
+  instances.splice(idx, 1)
+  const { handler } = instance
+  handler.close()
+}
 function createMessage(
   { appendTo, ...options }: MessageParamsNormalized,
   appContext?: AppContext | null
 ) {
   const id = `bl-message-${seed++}`
   const container = document.createElement('div')
+  const userOnClose = options.onClose
 
   const props = {
     ...options,
     id,
+    onClose: () => {
+      userOnClose?.()
+      closeMessage(instance)
+    },
     onDestroy: () => {
       // clear the vnode
       render(null, container)
@@ -64,7 +77,6 @@ function createMessage(
     handler,
     props: (vnode.component as any).props
   }
-  console.log(vm)
 
   return instance
 }
@@ -99,7 +111,6 @@ const message: MessageFn & Partial<Message> & { _context: AppContext | null } = 
     context
   )
   instances.push(instance)
-  console.log(instances)
 
   return instance.handler
 }

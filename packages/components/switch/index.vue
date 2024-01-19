@@ -1,5 +1,5 @@
 <template>
-  <button ref="switchRef" :class="className" role="switch">
+  <button ref="switchRef" :class="className" role="switch" :style="switchStyle">
     <div :class="[ns.bs('signal')]">
       <slot name="icon">
         <Icon v-if="open && props.openIcon" :icon="props.openIcon"></Icon>
@@ -10,64 +10,63 @@
   </button>
 </template>
 
-<script lang="ts">
-import { useNamespace, useEventListener } from '@bole-design/hooks'
-import { computed, defineComponent, ref, h, watch } from 'vue'
-import { useProps } from '@bole-design/common'
-import { Icon } from '@bole-design/components'
+<script lang="ts" setup>
+import { useNamespace, useEventListener } from '@panda-ui/hooks'
+import { computed, ref, watch } from 'vue'
+import { useProps } from '@panda-ui/common'
+import { Icon } from '@panda-ui/components'
 import { switchProps } from './props'
 
-export default defineComponent({
-  name: 'Switch',
-  props: switchProps,
-  emits: ['update:value'],
-  setup(_props, { emit }) {
-    const ns = useNamespace('switch')
-    const props = useProps('switch', _props, {
-      value: {
-        default: false
-      },
-      openIcon: null,
-      closeIcon: null
-    })
+defineOptions({
+  name: 'Switch'
+})
 
-    const className = computed(() => {
-      return [
-        ns.b(),
-        ns.bs('vars'),
-        {
-          [ns.bm('open')]: open.value
-        }
-      ]
-    })
+const emit = defineEmits(['update:value'])
+const _props = defineProps(switchProps)
+const ns = useNamespace('switch')
+const props = useProps('switch', _props, {
+  value: {
+    default: false
+  },
+  openIcon: null,
+  closeIcon: null,
+  size: 'default'
+})
 
-    const switchRef = ref()
-    const open = ref(props.value)
-
-    function toggleState() {
-      open.value = !open.value
+const className = computed(() => {
+  return [
+    ns.b(),
+    ns.bs('vars'),
+    {
+      [ns.bm('open')]: open.value
     }
+  ]
+})
 
-    watch(
-      () => props.value,
-      value => {
-        open.value = value
-      }
-    )
-    watch(open, value => {
-      emit('update:value', value)
-    })
+const switchRef = ref()
+const open = ref(props.value)
 
-    useEventListener(switchRef, 'click', toggleState)
-
+const switchStyle = computed(() => {
+  if (typeof props.size === 'number') {
     return {
-      ns,
-      className,
-      h,
-      switchRef,
-      props,
-      open
+      [ns.ns('height')]: `${props.size}px`
     }
   }
 })
+
+function toggleState() {
+  open.value = !open.value
+}
+
+watch(
+  () => props.value,
+  value => {
+    open.value = value
+  }
+)
+watch(open, value => {
+  emit('update:value', value)
+})
+
+useEventListener(switchRef, 'click', toggleState)
 </script>

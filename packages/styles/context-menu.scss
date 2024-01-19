@@ -1,0 +1,26 @@
+
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$context-menu: () !default;
+$context-menu: map.merge(
+	(
+		padding: 24px,
+	), 
+	$context-menu
+);
+
+.#{$namespace}-context-menu {
+	&-vars {
+		@include define-preset-values('context-menu', $context-menu);
+	}
+
+  @include basis;
+
+	display: inline-block;
+
+	&-content {
+		position: fixed;
+	}
+}

@@ -1,10 +1,16 @@
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { navs } from '../../configs/nav'
-import { useProject } from './project'
+import { BL_PROJECT_STORAGE } from '../tookens'
 
 export const useNav = () => {
-  const project = useProject()
-  const nav = navs[project.value]
+  const project = ref()
 
-  return computed(() => nav)
+  onMounted(() => {
+    project.value = localStorage.getItem(BL_PROJECT_STORAGE) as string
+  })
+  return computed(() => {
+    if (!project.value) return []
+
+    return navs[project.value]
+  })
 }

@@ -1,14 +1,16 @@
 {
-  "name": "@bole-design/icons",
-  "version": "1.2.0",
+  "name": "@panda-ui/icons",
+  "version": "1.0.4",
+  "description": "Panda UI icons monerepo",
   "license": "MIT",
+  "author": "Tong Siyuan",
   "scripts": {
     "build": "tsx scripts/build.ts"
   },
   "type": "module",
   "main": "lib/index.js",
   "module": "es/index.mjs",
-  "types": "types/index.d.ts",
+  "types": "./types/index.d.ts",
   "sideEffects": [
     "dist/*"
   ],

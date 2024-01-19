@@ -1,11 +1,11 @@
-# @bole-design/icons
+# @panda-ui/icons
 
 This package provides svg icons witch vue component (`.vue`), its icons are base the free icons of `fontawesome@6`.
 
 ## Install
 
 ```sh
-pnpm i @bole-design/icons
+pnpm i @panda-ui/icons
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ Icon component name is transformed according to certain rules from the original 
 - Some icons start with number, you need to add a prefix `I` in the front of component name (eg. `7` -> `I7`, `brands/500px` -> `I500pxB`)
 
 ```ts
-import { AngleDown, BellR, GithubB, I500pxB } from '@vexip-ui/icons'
+import { AngleDown, BellR, GithubB, I500pxB } from '@panda-ui/icons'
 ```
 
 > Notes: All icons is default scale to 0.85x (0.85em), because they are so large.

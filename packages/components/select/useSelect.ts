@@ -1,8 +1,16 @@
-import { isNull } from '@bole-design/common'
-import { onMounted, reactive, ref, watch, computed } from 'vue'
-import { SelectValue } from './.symbol'
+import { Placement } from '@floating-ui/dom'
+import { emitEvent, isNull, warnWithPrefix } from '@panda-ui/common'
+import { useHover, usePopper } from '@panda-ui/hooks'
+import { onMounted, reactive, nextTick, watch, computed, ExtractPropTypes, ref, toRaw } from 'vue'
+import { OptionState } from '../option/props'
+import { PopperExposed } from '../popper'
+import { SelectRawOption, SelectValue } from './.symbol'
+import { selectProps } from './props'
+import { useCreatable } from './useCreatable'
 
-function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
+export const DEFAULT_INPUT_PLACEHOLDER = '请填写'
+
+function isSameValue(newValue?: SelectValue, oldValue?: SelectValue) {
   const isNewArray = Array.isArray(newValue)
   const isOldArray = Array.isArray(oldValue)
 
@@ -22,47 +30,202 @@ function isSameValue(newValue: SelectValue, oldValue: SelectValue) {
 
   return newValue === oldValue
 }
-export const useSelectStates = (props: any) => {
-  return reactive({
-    emittedValue: props.value as typeof props.value | null,
-    currentVisible: props.visible,
-    selectedLabel: '',
-    isSelected: {}
-  })
+
+export interface SelectStates {
+  inputValue: string
+  selectedLabel: string
+  emittedValue: any
+  currentVisible: boolean
+  createdOption: Partial<OptionState>
+  // filterable模式下搜索的关键字
+  searchKey: string
+  currentIdx: number
 }
 
-// pass the same states in order to get same reference for dom react
-export const useSelect = (props: any, states: ReturnType<typeof useSelectStates>, emit: any) => {
-  function handleOptionClick(value: string | number) {
-    if (!isSameValue(value, states.emittedValue.value)) {
-      setSelectedLabel(value)
+export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any) => {
+  const wrapper = ref()
+  const reference = ref()
+  const popper = ref<PopperExposed>()
+  const referenceEl = computed(() => reference.value)
+  const popperEl = computed(() => popper.value?.wrapper)
+  const placement = ref<Placement>(props.placement ?? 'bottom')
+  const { x, y, update } = usePopper({ referenceEl, popperEl, placement })
+
+  const { isHover } = useHover(reference)
+
+  const states = reactive<SelectStates>({
+    inputValue: '',
+    selectedLabel: props.placeholder ?? DEFAULT_INPUT_PLACEHOLDER,
+    emittedValue: props.value as typeof props.value | null,
+    currentVisible: false,
+    createdOption: {},
+    searchKey: '',
+    currentIdx: props.defaultFirstOption ? 0 : -1
+  })
+
+  const { createNewOption } = useCreatable(props, states)
+
+  const filteredOptions = computed(() => {
+    if (!props.filterable) return props.options
+
+    const currentOptions = states.createdOption.label
+      ? [states.createdOption].concat(props.options)
+      : props.options
+    return currentOptions.filter(option => option.label?.includes(states.inputValue))
+  })
+
+  const showClearIcon = computed(() => isHover.value && states.emittedValue && props.clearable)
+
+  function handleOptionClick(option: OptionState, isClick = true) {
+    const value = option.value
+
+    if (isClick) {
+      setVisible(false)
+    }
+
+    if (!isSameValue(value, states.emittedValue)) {
+      setSelectedLabel(option.label)
       emit('update:value', value)
     }
-    states.currentVisible = false
+
+    states.createdOption = {}
+    states.searchKey = ''
   }
-  function setSelectedLabel(value: string | number) {
-    states.selectedLabel = props.options.find((option: any) => option.value === value)?.label
+
+  function emitChangeEvent(newValue: SelectValue | undefined, oldValue: SelectValue | undefined) {
+    if (props.onChange) {
+      emitEvent(props.onChange, newValue, oldValue)
+    }
   }
+
+  function handleClearEmitValue() {
+    setSelectedLabel(props.placeholder ?? DEFAULT_INPUT_PLACEHOLDER)
+    emit('update:value', '')
+  }
+
+  function handleClickOutSide() {
+    setVisible(false)
+  }
+
+  function setSelectedLabel(label?: string) {
+    const val = toRaw(props.value)
+
+    const selectedOption = filteredOptions.value.find(opt => opt.value === val)
+
+    states.selectedLabel =
+      label ?? selectedOption?.label ?? props.placeholder ?? DEFAULT_INPUT_PLACEHOLDER
+    states.inputValue = ''
+  }
+
   function setVisible(visible: boolean) {
     states.currentVisible = visible
-    emit('update:visible')
   }
-  onMounted(() => {
-    setSelectedLabel(props.value)
-  })
+
+  function isSelected(option: SelectRawOption) {
+    return states.emittedValue === option.value
+  }
+
+  function onKeyboardSelect() {
+    const option = filteredOptions.value[states.currentIdx]
+
+    if (!option) {
+      return
+    }
+    if (!states.currentVisible) {
+      setVisible(true)
+      return
+    }
+    if (option.created) {
+      states.createdOption = option
+    }
+
+    update()
+    handleOptionClick(option, false)
+  }
+
+  function onKeyboardUp() {
+    const idx = states.currentIdx
+    states.currentIdx = idx <= 0 ? filteredOptions.value.length - 1 : states.currentIdx - 1
+  }
+
+  function onKeyboardDown() {
+    const idx = states.currentIdx
+    states.currentIdx = idx < filteredOptions.value.length - 1 ? states.currentIdx + 1 : 0
+  }
+
+  function onKeyboardDelete(e: KeyboardEvent) {
+    if (states.searchKey.length === 0) {
+      if (states.createdOption.label) {
+        update()
+        states.createdOption = {}
+      }
+    }
+  }
+
+  function onInput(event: any) {
+    const value = event.target.value
+    states.inputValue = value
+
+    return onInputChange()
+  }
+
+  function onInputChange() {
+    if (props.filterable) {
+      states.searchKey = states.inputValue
+    }
+
+    if (props.creatable) {
+      return nextTick(() => {
+        createNewOption(states.inputValue)
+      })
+    }
+  }
+
+  function initCurrentIdx() {
+    states.currentIdx = props.defaultFirstOption ? 0 : -1
+  }
 
   watch(
     () => props.value,
     value => {
       if (!states.emittedValue || !isSameValue(value, states.emittedValue)) {
-        setSelectedLabel(value)
+        emitChangeEvent(value, states.emittedValue)
         states.emittedValue = value
       }
     }
   )
+  watch(
+    () => states.currentVisible,
+    value => {
+      value && initCurrentIdx()
+    }
+  )
+
+  onMounted(() => {
+    props.value && setSelectedLabel()
+  })
 
   return {
+    x,
+    y,
+    wrapper,
+    reference,
+    popper,
+    popperEl,
+    referenceEl,
+    showClearIcon,
+
+    states,
+    onInput,
     setVisible,
-    handleOptionClick
+    isSelected,
+    filteredOptions,
+    onKeyboardUp,
+    onKeyboardDown,
+    onKeyboardDelete,
+    onKeyboardSelect,
+    handleOptionClick,
+    handleClickOutSide,
+    handleClearEmitValue
   }
 }

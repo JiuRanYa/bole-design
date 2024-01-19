@@ -1,4 +1,4 @@
-import { buildProps, booleanStringProps, Placement, booleanProps } from '@bole-design/common'
+import { buildProps, booleanStringProps, Placement, booleanProps } from '@panda-ui/common'
 import { PropType } from 'vue'
 
 export type TriggerType = 'click' | 'hover'

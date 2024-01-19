@@ -1,0 +1,61 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$panel-resize-handle-map: () !default;
+$panel-resize-handle-map: map.merge((), $panel-resize-handle-map);
+
+.#{$namespace}-panel-resize-handle {
+  &-vars {
+    @include define-preset-values('panel-resize-handle', $panel-resize-handle-map);
+  }
+
+	flex: 0 0 6px;
+	border-radius: get-css-var(radius-large);
+	// border: get-css-var(border-shape) get-css-var(border-color-base);
+
+	width: 100%;
+	height: 100%;
+	padding: 0 6px;
+	position: relative;
+	background: transparent;
+	box-sizing: content-box;
+	transition: get-css-var(transition-background);
+
+	$self: &;
+
+	&:hover {
+		#{$self}--bar {
+			background: hsl(get-css-var(hsl-color-primary-base-h) get-css-var(hsl-color-primary-base-s) get-css-var(hsl-color-primary-base-l) / 0.05);
+		}
+	}
+	&__dragging {
+		#{$self}--bar {
+			background: hsl(get-css-var(hsl-color-primary-base-h) get-css-var(hsl-color-primary-base-s) get-css-var(hsl-color-primary-base-l) / 0.05);
+		}
+	}
+	&--bar {
+		width: 100%;
+		height: 100%;
+		border-radius: get-css-var(radius-large);
+		transition: get-css-var(transition-background);
+		background: transparent;
+	}
+	&--preview {
+		position: absolute;
+		height: 32px;
+		width: 6px;
+		border-radius: get-css-var(radius-large);
+		background: get-css-var(color-primary-hover);
+		pointer-events: none;
+		transition: get-css-var(transition-opacity);
+	}
+
+
+}
+
+.#{$namespace}-panel-group-vertical {
+	.#{$namespace}-panel-resize-handle {
+		margin: 6px 0;
+	}
+}

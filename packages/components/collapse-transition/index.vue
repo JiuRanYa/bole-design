@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { RendererElement, defineComponent } from 'vue'
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import { collapseTransitionProps } from './props'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 
 export default defineComponent({
   name: 'collapse-transition',

@@ -1,5 +1,4 @@
 import type { Plugin } from 'vite'
-import path from 'path'
 
 export default function markdownTransform(): Plugin {
   return {
@@ -7,8 +6,6 @@ export default function markdownTransform(): Plugin {
     enforce: 'pre',
     transform(code: string, id: string) {
       if (!id.endsWith('.md')) return
-
-      const componentId = path.basename(id, '.id')
 
       // TODO: add append
     }

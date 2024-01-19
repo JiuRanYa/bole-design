@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import { computed, inject, ref } from 'vue'
 import { DateCell, monthGridProps } from './props'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import dayjs, { Dayjs } from 'dayjs'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { config } from './const'
-import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
 
 dayjs.extend(dayOfYear)
 dayjs.extend(isBetween)

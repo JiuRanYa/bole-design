@@ -1,3 +1,3 @@
-# Bole Design docs
+# Panda UI docs
 
-Docs for Bole Design library, based on vitepress.
+Docs for Panda UI library, based on vitepress.

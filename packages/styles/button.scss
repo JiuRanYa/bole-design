@@ -7,9 +7,9 @@
 $button-size-map: () !default;
 $button-size-map: map.merge(
   (
-    lg: 40px,
-    md: 36px,
-    sm: 24px
+    lg: 46px,
+    md: 40px,
+    sm: 34px
   ),
   $button-size-map
 );
@@ -17,8 +17,8 @@ $button-padding-map: () !default;
 $button-padding-map: map.merge(
   (
     lg: 20px,
-    md: 14px,
-    sm: 10px
+    md: 16px,
+    sm: 12px
   ),
   $button-padding-map
 );
@@ -26,14 +26,14 @@ $button-padding-map: map.merge(
 $button: () !default;
 $button: map.merge(
   (
-    color: get-css-var('content-color-base'),
-    color-hover: get-css-var('color-primary-light-2'),
+    color: get-css-var(color-primary-foreground),
+    color-hover: get-css-var(color-primary-foreground),
     color-disabled: get-css-var('content-color-disabled'),
     b-color: get-css-var('border-color-base'),
-    b-color-hover: get-css-var('color-primary-light-2'),
-    bg-color: get-css-var('fill-color-base'),
-    bg-color-hover: get-css-var('button-bg-color'),
-    v-padding: 0,
+    b-color-hover: get-css-var('color-primary-light-1'),
+    bg-color: get-css-var(color-primary-base),
+    bg-color-hover: get-css-var(color-primary-hover),
+    v-padding: 8px,
     h-padding: map.get($button-padding-map, 'md'),
     height: map.get($button-size-map, 'md'),
     radius: get-css-var('radius-base'),
@@ -64,7 +64,7 @@ $button: map.merge(
   outline: 0;
   border-radius: get-css-var('button-radius');
   background-color: get-css-var('button-bg-color');
-  border: get-css-var('border-shape') get-css-var('button-b-color');
+  border: none;
   padding: get-css-var('button-v-padding') get-css-var('button-h-padding');
 
   transition: get-css-var('transition-color'), get-css-var('transition-background'),
@@ -96,12 +96,12 @@ $button: map.merge(
       &--#{$type} {
         @include define-button-style(
           (
-            color: 'color-white',
-            color-hover: 'color-white',
-            color-focus: 'color-white',
-            color-active: 'color-white',
+            color: 'color' $type 'foreground',
+						color-hover: 'color' $type 'foreground',
+						color-focus: 'color' $type 'foreground',
+						color-active: 'color' $type 'foreground',
             bg-color: 'color' $type 'base',
-            bg-color-hover: 'color' $type 'light-2'
+            bg-color-hover: 'color' $type 'hover'
           )
         );
       }
@@ -122,6 +122,25 @@ $button: map.merge(
       }
     }
   }
+	&--outline {
+		color: get-css-var(color-secondary-foreground);
+		background: get-css-var(bg-color-base);
+		border: get-css-var('border-shape') get-css-var('button-b-color');
+
+		&:hover {
+			color: get-css-var(color-secondary-foreground);
+			background: get-css-var(color-secondary-base);
+		}
+	}
+	&--ghost {
+		color: get-css-var(color-secondary-foreground);
+		background: get-css-var(bg-color-base);
+
+		&:hover {
+			color: get-css-var(color-secondary-foreground);
+			background: get-css-var(color-secondary-base);
+		}
+	}
 
   & + & {
     margin-inline-start: get-css-var('button-series-span');
@@ -169,6 +188,7 @@ $button: map.merge(
   @include disabled('') {
     color: get-css-var('button-color-disabled');
     cursor: not-allowed;
+		border: get-css-var('border-shape') get-css-var('button-b-color');
     background-color: get-css-var('button-bg-color-disabled');
     border-color: get-css-var('button-b-color-disabled');
   }

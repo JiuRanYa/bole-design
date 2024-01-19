@@ -1,10 +1,11 @@
 {
-  "name": "@bole-design/tokens",
-  "version": "1.0.0",
+  "name": "@panda-ui/tokens",
+  "private": true,
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "keywords": [],
-  "author": "",
+  "author": "Tong Siyuan",
   "peerDependencies": {
     "vue": "^3.2.0"
   },

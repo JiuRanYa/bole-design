@@ -25,6 +25,8 @@ async function main() {
 
     import { buildInstall } from './create'
 
+    export * from './create'
+
     const components = [
       ${components.map(toCapitalCase).join(',\n')},
     ]
@@ -46,14 +48,14 @@ async function main() {
       export interface GlobalComponents {
         ${[...components]
           .map(
-            name => `${toCapitalCase(name)}: typeof import('bole-design')['${toCapitalCase(name)}']`
+            name => `${toCapitalCase(name)}: typeof import('panda-ui')['${toCapitalCase(name)}']`
           )
           .join(',\n')}
       }
 
       interface ComponentCustomProperties {
         ${plugins
-          .map(name => `$${name}: typeof import('bole-design')['${toCapitalCase(name)}']`)
+          .map(name => `$${name}: typeof import('panda-ui')['${toCapitalCase(name)}']`)
           .join(',\n')}
       }
     }
@@ -85,6 +87,7 @@ async function main() {
   await ESLint.outputFixes(await eslint.lintFiles(indexPath))
   await ESLint.outputFixes(await eslint.lintFiles(typesPath))
 
+  // 目前不需要自动生成样式文件
   // await runParallel(cpus().length, allComponents, async (component) => {
   //   const scssPath = resolve(rootDir, `style/${component}.scss`);
   //

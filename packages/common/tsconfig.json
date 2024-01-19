@@ -16,7 +16,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@vexip-ui/*": ["../common/*/src"]
+      "@panda-ui/*": ["../common/*/src"]
     }
   },
   "include": ["src"],

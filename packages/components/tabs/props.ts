@@ -1,5 +1,5 @@
-import { buildProps } from '@bole-design/common'
-import { Side } from '@bole-design/common'
+import { buildProps } from '@panda-ui/common'
+import { Side } from '@panda-ui/common'
 import { PropType } from 'vue'
 
 export const tabsProps = buildProps({

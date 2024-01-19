@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$dropdown-item: () !default;
+$dropdown-item: map.merge((), $dropdown-item);
+
+.#{$namespace}-dropdown-item {
+  @include basis;
+  padding: 8px;
+  width: 100%;
+  border-radius: get-css-var('radius-small');
+  font-size: 14px;
+  padding-left: 12px;
+  display: flex;
+  align-items: center;
+	transition: get-css-var(transition-background);
+
+  &:hover {
+    background: get-css-var(fill-color-hover);
+  }
+}

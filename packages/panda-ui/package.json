@@ -1,0 +1,45 @@
+{
+  "name": "panda-ui",
+  "version": "1.13.4",
+  "description": "Panda UI, A high quality Vue 3 components library",
+  "main": "./lib/index.cjs",
+  "module": "./es/index.mjs",
+  "types": "./types/components/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tong Siyuan",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "^3.2.0"
+  },
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./es/index.mjs"
+    },
+    "./es": "./es/index.mjs",
+    "./lib": "./lib/index.js",
+    "./es/*.mjs": "./es/*.mjs",
+    "./es/*": "./es/*.mjs",
+    "./lib/*.js": "./lib/*.js",
+    "./lib/*": "./lib/*.js",
+    "./*": "./*"
+  },
+  "sideEffects": [
+    "dist/*",
+    "styles/**/*.css",
+    "styles/src/**/*.scss",
+    "es/components/*/style/*",
+    "lib/components/*/style/*"
+  ],
+  "dependencies": {
+    "@floating-ui/dom": "^1.2.8",
+    "dayjs": "^1.11.3",
+    "yup": "^1.3.3"
+  },
+  "devDependencies": {
+    "vue": "^3.2.37"
+  }
+}

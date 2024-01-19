@@ -1,10 +1,11 @@
-import { buildProps } from '@bole-design/common'
+import { buildProps } from '@panda-ui/common'
 import { PropType } from 'vue'
 import { MessageProps, MessageType } from './symbol'
 
 export const defaultProps: MessageProps = Object.freeze({
   inherit: false,
   message: '',
+  title: '',
   type: 'info',
   placement: 'top',
   duration: 2000,
@@ -15,12 +16,13 @@ export const defaultProps: MessageProps = Object.freeze({
 })
 
 export type MessagePlacement = 'top' | 'bottom'
-export const messageTypes = ['success', 'error', 'warning', 'info'] as const
+export const messageTypes = ['success', 'error', 'warning', 'info', 'custom'] as const
 export const messageProps = buildProps({
   id: {
     type: String
   },
   message: String,
+  title: String,
   type: {
     type: String as PropType<MessageType>,
     values: messageTypes

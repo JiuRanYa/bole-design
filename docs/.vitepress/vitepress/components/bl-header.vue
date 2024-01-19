@@ -2,8 +2,8 @@
   <div class="bl-header-container">
     <div class="bl-header">
       <div class="bl-header-left">
-        <a class="bl-logo" href="/projects/bole-design/">
-          <span class="bl-title">Bole Design</span>
+        <a class="bl-logo" :href="`/projects/${project}/`">
+          <span class="bl-title">{{ project }}</span>
         </a>
         <div class="bl-nav">
           <a
@@ -20,7 +20,7 @@
       </div>
       <div class="bl-header-right">
         <div class="bl-header-search">
-          <input placeholder="在Bole Design中搜索" />
+          <input placeholder="在Panda UI中搜索" />
           <kbd>⌘ K</kbd>
         </div>
         <Switch
@@ -38,7 +38,8 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { useNav } from '../composables/index'
 import { useRoute } from 'vitepress'
-import { Sun, Moon } from '@bole-design/icons'
+import { Sun, Moon } from '@panda-ui/icons'
+import { BL_PROJECT_STORAGE } from '../tookens'
 
 defineComponent({
   name: 'header'
@@ -48,12 +49,15 @@ const route = useRoute()
 const nav = useNav()
 const rootCls = ref<DOMTokenList>()
 
+const project = ref()
+
 function isActive(routePath: string, link: string) {
   const routeTop = routePath?.split('/').slice(1, 4).pop()
   const linkTop = link?.split('/').slice(1, 4).pop()
 
   return routeTop === linkTop
 }
+
 function setClass(dark: boolean): void {
   const css = document.createElement('style')
   css.type = 'text/css'
@@ -76,6 +80,7 @@ function setClass(dark: boolean): void {
   const _ = window.getComputedStyle(css).opacity
   document.head.removeChild(css)
 }
+
 function switchTheme(event: MouseEvent) {
   const x = event.clientX
   const y = event.clientY
@@ -112,6 +117,7 @@ function switchTheme(event: MouseEvent) {
 }
 onMounted(() => {
   rootCls.value = document.documentElement.classList ?? []
+  project.value = localStorage.getItem(BL_PROJECT_STORAGE) ?? 'panda-ui'
 })
 </script>
 
@@ -142,7 +148,7 @@ onMounted(() => {
 }
 .bl {
   &-header-container {
-    position: sticky;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;

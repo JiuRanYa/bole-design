@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { ComponentSize, StyleType, useProps } from '@bole-design/common'
-import { useNamespace } from '@bole-design/hooks'
+import { Icon } from '../icon'
+import { ComponentSize, StyleType, useProps } from '@panda-ui/common'
+import { useNamespace } from '@panda-ui/hooks'
 import { avatarProps } from './props'
 import { computed } from 'vue'
 
@@ -46,7 +47,6 @@ const className = computed(() => {
 })
 const styles = computed(() => {
   const style: StyleType = {}
-  console.log(style, 123)
 
   if (typeof size.value === 'number') {
     style[ns.cv('size')] = `${size.value}px`

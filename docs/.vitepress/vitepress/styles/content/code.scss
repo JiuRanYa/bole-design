@@ -52,7 +52,9 @@ h3 {
   font-weight: 500;
   user-select: none;
   opacity: 0;
-  transition: color 0.25s, opacity 0.25s;
+  transition:
+    color 0.25s,
+    opacity 0.25s;
 }
 
 .bl-doc .header-anchor:before {
@@ -151,10 +153,10 @@ h3 {
  * -------------------------------------------------------------------------- */
 
 .bl-doc table {
-  display: block;
   border-collapse: collapse;
   margin: 20px 0;
   overflow-x: auto;
+  width: 100%;
 }
 
 .bl-doc tr {
@@ -249,7 +251,9 @@ h3 {
   padding: 3px 6px;
   color: var(--bl-c-text-code);
   background-color: var(--bl-c-mute);
-  transition: color 0.5s, background-color 0.5s;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
 }
 
 .bl-doc h1 > code,
@@ -365,12 +369,16 @@ h3 {
 .bl-doc [class*='language-'] .has-focused-lines .line:not(.has-focus) {
   filter: blur(0.095rem);
   opacity: 0.4;
-  transition: filter 0.35s, opacity 0.35s;
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
 }
 
 .bl-doc [class*='language-'] .has-focused-lines .line:not(.has-focus) {
   opacity: 0.7;
-  transition: filter 0.35s, opacity 0.35s;
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
 }
 
 .bl-doc [class*='language-']:hover .has-focused-lines .line:not(.has-focus) {
@@ -418,7 +426,9 @@ h3 {
   line-height: var(--bl-code-line-height);
   font-size: var(--bl-code-font-size);
   color: var(--bl-code-line-number-color);
-  transition: border-color 0.5s, color 0.5s;
+  transition:
+    border-color 0.5s,
+    color 0.5s;
 }
 
 .bl-doc [class*='language-'] > button.copy {
@@ -440,7 +450,10 @@ h3 {
   background-position: 50%;
   background-size: 20px;
   background-repeat: no-repeat;
-  transition: border-color 0.25s, background-color 0.25s, opacity 0.25s;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s,
+    opacity 0.25s;
 }
 
 .bl-doc [class*='language-']:hover > button.copy,
@@ -495,7 +508,9 @@ h3 {
   font-size: 12px;
   font-weight: 500;
   color: var(--bl-c-code-dimm);
-  transition: color 0.4s, opacity 0.4s;
+  transition:
+    color 0.4s,
+    opacity 0.4s;
 }
 
 .bl-doc [class*='language-']:hover > button.copy + span.lang,

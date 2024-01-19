@@ -30,7 +30,7 @@ $checkbox: map.merge((), $checkbox);
   }
 
   &--checked &--inner {
-    background: get-css-var(content-color-primary);
+    background: get-css-var(color-primary-base);
 
     &::after {
       transform: translate(-50%, -50%) rotate(45deg) scaleY(1);

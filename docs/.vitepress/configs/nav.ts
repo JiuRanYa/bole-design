@@ -3,25 +3,25 @@ function getProjectLink(pro: string, link: string) {
 }
 
 export const navs: Record<string, any> = {
-  'bole-design': [
+  'panda-ui': [
     {
-      link: getProjectLink('bole-design', '/guide/design'),
+      link: getProjectLink('panda-ui', '/guide/design'),
       text: '指南'
     },
     {
-      link: getProjectLink('bole-design', '/components/button'),
+      link: getProjectLink('panda-ui', '/components/button'),
       text: '组件'
     },
     {
-      link: getProjectLink('bole-design', '/hooks/usePopper'),
+      link: getProjectLink('panda-ui', '/hooks/usePopper'),
       text: 'Hooks'
     },
     {
-      link: getProjectLink('bole-design', '/cdn/icon'),
+      link: getProjectLink('panda-ui', '/cdn/icon'),
       text: '图标'
     },
     {
-      link: getProjectLink('bole-design', '/contribute/start'),
+      link: getProjectLink('panda-ui', '/contribute/start'),
       text: '贡献'
     }
   ],
@@ -31,8 +31,14 @@ export const navs: Record<string, any> = {
       text: '项目说明'
     },
     {
-      link: getProjectLink('panda', '/design/index'),
+      link: getProjectLink('panda', '/standard/index'),
       text: '代码规范'
+    }
+  ],
+  chat: [
+    {
+      link: getProjectLink('chat', '/guide/index'),
+      text: '使用指南'
     }
   ]
 }

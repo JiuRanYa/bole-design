@@ -6,17 +6,12 @@ import { markdownPlugin } from './configs/myMarkdown'
 
 // https://vitepress.dev/reference/site-config
 const config = defineConfig({
-  title: 'Bole UI',
+  title: 'Panda UI',
   lang: 'zh-CN',
-  description: 'A VitePress Site',
+  description: '高度可定制化，全量 Typescript 支持，面向开发者的工具集',
   head,
   lastUpdated: true,
-  themeConfig: {
-    nav,
-    sidebars,
-    docsDir: 'docs',
-    lastUpdatedText: '最近更新时间'
-  },
+  themeConfig: {},
   markdown: {
     headers: {
       level: [1, 2, 3]

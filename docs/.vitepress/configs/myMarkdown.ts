@@ -3,7 +3,7 @@ import path from 'path'
 import MarkdownIt from 'markdown-it'
 import mdContainer from 'markdown-it-container'
 import type Token from 'markdown-it/lib/token'
-import { docRoot } from '@bole-design/internal'
+import { docRoot } from '@panda-ui/internal'
 import { highlight } from '../utils/highlight'
 
 const localMd = MarkdownIt()
@@ -19,8 +19,9 @@ export const markdownPlugin = (md: MarkdownIt) => {
     render(tokens: Token[], idx: number, t: any, env: any) {
       const m = tokens[idx].info.trim().match(demoRex)
       const sourceFileToken = tokens[idx + 2]
-      const mdPath = env.path
-      const project = mdPath.split('projects')[1].split('/')[1]
+      // const mdPath = env.path
+      // const project = mdPath.split('projects')[2].split('/')[1]
+      const project = 'panda-ui'
 
       if (!project) {
         throw new Error(`Mark sure to put your md in projects path`)

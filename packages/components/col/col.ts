@@ -1,5 +1,5 @@
 import { computed, CSSProperties, defineComponent, h, inject } from 'vue'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import { colProps } from './props'
 import { ROW_STATE } from '../row/symbol'
 

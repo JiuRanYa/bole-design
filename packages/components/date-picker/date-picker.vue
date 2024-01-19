@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import DatePickerPanel from './date-picker-panel.vue'
-import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
+import { useClickOutside, useNamespace, usePopper } from '@panda-ui/hooks'
 import { computed, provide, reactive, ref, toRef, watch } from 'vue'
-import { Popper, PopperExposed } from '@bole-design/components'
+import { Popper, PopperExposed } from '@panda-ui/components'
 import {
   placementWhiteList,
   useProps,
   doubleDigits,
   Dateable,
-  emitEvent
-} from '@bole-design/common'
+  emitEvent,
+  useZIndex
+} from '@panda-ui/common'
 import { DateMeta, OriginDate, datePickerProps } from './props'
-import { CalendarR } from '@bole-design/icons'
+import { CalendarR } from '@panda-ui/icons'
 import dayjs, { Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-cn'
-import { Button, ButtonGroup, Icon } from '@bole-design/components'
-import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import { Button } from '../button'
+import { ButtonGroup } from '../button-group'
+import { Icon } from '../icon'
+import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
 import { config } from './const'
 
 defineOptions({
@@ -34,7 +37,8 @@ const props = useProps('date-picker', _props, {
   presets: {},
   type: 'static',
   valueFormat: '',
-  typing: null
+  typing: null,
+  to: 'body'
 })
 const ns = useNamespace('date-picker')
 
@@ -82,11 +86,14 @@ const { x, y } = usePopper({
   placement
 })
 
+const getIndex = useZIndex()
+const zIndex = computed(() => getIndex())
 const popperStyle = computed(() => {
   return {
     position: 'absolute',
     left: `${x.value || 0}px`,
     top: `${y.value || 0}px`,
+    zIndex: zIndex.value,
     'transform-origin': 'center top'
   }
 })
@@ -158,13 +165,13 @@ function handlePickDate(date: OriginDate) {
 
 const updateModelValue = (val: Dateable | Dateable[]) => {
   let emitValue = val
-  if (props.valueFormat) {
-    if (isRange && Array.isArray(val)) {
-      emitValue = val.map(d => dayjs(d).format(props.valueFormat))
-    } else {
-      emitValue = dayjs(val as any).format(props.valueFormat)
-    }
-  }
+  // if (props.valueFormat) {
+  //   if (isRange && Array.isArray(val)) {
+  //     emitValue = val
+  //   } else {
+  //     emitValue = val
+  //   }
+  // }
 
   emit('update:value', emitValue)
   emitEvent(props.onChange, emitValue)
@@ -212,11 +219,16 @@ provide(DATE_PICKER_INJECTION_KEY, {
   endMeta,
   updateModelValue
 })
-useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
+useClickOutside(handleClickOutside, { ignore: [panelEle] }, originTriggerRef)
 </script>
 
 <template>
-  <span ref="originTriggerRef" @click="togglePanel">
+  <div
+    :class="ns.bs('trigger')"
+    ref="originTriggerRef"
+    @click="togglePanel"
+    style="display: inline-block"
+  >
     <slot v-if="$slots.trigger" name="trigger" />
     <ButtonGroup v-else-if="presets">
       <Button>
@@ -241,11 +253,11 @@ useClickOutside(originTriggerRef, handleClickOutside, { ignore: [panelEle] })
       </template>
       {{ isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动' }}
     </Button>
-  </span>
+  </div>
 
   <Popper
     :class="popperClass"
-    to="body"
+    :to="props.to"
     ref="popperRef"
     :visible="visible"
     :transition="props.transitionName"

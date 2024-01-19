@@ -1,5 +1,10 @@
 import { logger, run } from './utils'
 import minimist from 'minimist'
+import { copyFile } from 'fs/promises'
+import path from 'node:path'
+import { blPackage } from '@panda-ui/internal'
+import { blOutput } from '@panda-ui/internal'
+import { projRoot } from '@panda-ui/internal'
 
 const args = minimist<{
   d?: boolean
@@ -19,10 +24,11 @@ async function main() {
       NODE_ENV: env
     }
   })
-  await run('pnpm', ['props'])
   await run('pnpm', ['build:style'])
 
-  logger.ln()
+  copyFile(blPackage, path.join(blOutput, 'package.json')), logger.ln()
+  copyFile(path.resolve(projRoot, 'README.md'), path.resolve(blOutput, 'README.md'))
+  copyFile(path.resolve(projRoot, 'types.d.ts'), path.resolve(blOutput, 'types.d.ts'))
 
   if (!process.exitCode) {
     logger.withEndLn(() => logger.success('all builds completed successfully'))

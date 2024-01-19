@@ -1,4 +1,4 @@
-import { Meta } from '@bole-design/components/date-picker/props'
+import { Meta } from '@panda-ui/components/date-picker/props'
 import { ComputedRef, InjectionKey } from 'vue'
 
 export type DatePickerContext = {

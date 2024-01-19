@@ -3,9 +3,11 @@
 // as * 可以强制sass删除namespace
 @use './shared/mixins.scss' as *;
 @use './design/variables.scss' as *;
+@use './animation';
 
 :root {
   @each $type in $types {
+    @include define-base-color($type);
     @include define-type-color($type);
   }
 

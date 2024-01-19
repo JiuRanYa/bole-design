@@ -19,7 +19,7 @@ const prodMode = args.prod
 
 let port = parseFloat(argPort) || 8008
 
-const devDir = resolve(rootDir, 'playground')
+const devDir = resolve(rootDir, 'dev-server')
 
 async function main() {
   port = await queryIdlePort(port)
@@ -28,7 +28,7 @@ async function main() {
 }
 
 async function serveComponent() {
-  const demosDir = resolve(rootDir, 'docs/demos/bole-design')
+  const demosDir = resolve(rootDir, 'docs/demos/panda-ui')
   const allComponents = readdirSync(demosDir).filter(f =>
     statSync(resolve(demosDir, f)).isDirectory()
   )
@@ -42,7 +42,7 @@ async function serveComponent() {
   const router = `
     import { createRouter, createWebHistory } from 'vue-router'
 
-    document.title = '${target} | Bole Design'
+    document.title = '${target} | Panda UI'
 
     export const router = createRouter({
       history: createWebHistory('/'),
@@ -52,7 +52,7 @@ async function serveComponent() {
             return `{
               path: '${index ? `/${demo}` : '/'}',
               name: '${demo}',
-              component: () => import('../../docs/demos/bole-design/${target}/${demo}/index.vue')
+              component: () => import('../../docs/demos/panda-ui/${target}/${demo}/index.vue')
             }`
           })
           .join(',\n')},
@@ -64,7 +64,7 @@ async function serveComponent() {
     })
 
     router.afterEach(to => {
-      document.title = \`${target} - \${typeof to.name === 'string' ? to.name : 'dev'} | Bole Design\`
+      document.title = \`${target} - \${typeof to.name === 'string' ? to.name : 'dev'} | Panda UI\`
     })
   `
 
@@ -118,7 +118,7 @@ async function selectComponent(allComponents: string[]) {
 }
 
 function queryDemoFile(component: string, lang: string) {
-  const compDir = resolve(rootDir, 'docs/demos/bole-design', component)
+  const compDir = resolve(rootDir, 'docs/demos/panda-ui', component)
 
   return readdirSync(compDir).filter(
     f => statSync(resolve(compDir, f)).isDirectory() && existsSync(resolve(compDir, f, `index.vue`))

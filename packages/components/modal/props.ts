@@ -1,4 +1,4 @@
-import { booleanProps, booleanStringProps, buildProps } from '@bole-design/common'
+import { booleanProps, booleanStringProps, buildProps } from '@panda-ui/common'
 
 const positionType = [Number, String]
 
@@ -7,5 +7,8 @@ export const modalProps = buildProps({
   inner: booleanProps,
   transfer: booleanStringProps,
   top: positionType,
-  transitionName: String
+  transitionName: String,
+  width: String,
+  height: String,
+  reverseBackdrop: booleanProps
 })

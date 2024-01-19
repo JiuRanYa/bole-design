@@ -1,0 +1,64 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$card: () !default;
+$card: map.merge(
+	(
+		padding: 24px,
+	), 
+	$card
+);
+
+.#{$namespace}-card {
+	&-vars {
+		@include define-preset-values('card', $card);
+	}
+
+  @include basis;
+
+	display: inline-flex;
+	flex-direction: column;
+	border: get-css-var(border-shape) get-css-var(border-color-light-1);
+	border-radius: get-css-var(radius-large);
+	min-width: 350px;
+	padding: get-css-var(padding-lg);
+
+	&-header {
+		padding-bottom: get-css-var(padding-lg);
+	}
+	&-footer {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		padding-top: get-css-var(padding-lg);
+	}
+	&-title {
+		font-size: 24px;
+		font-weight: 600;
+		line-height: 1;
+	}
+
+	&-description {
+		font-size: 14px;
+		margin-top: 8px;
+		line-height: 1;
+		color: get-css-var(content-color-secondary)
+	}
+	.#{$namespace}-input {
+		width: 100%;
+		margin-top: 6px;
+	}
+	.#{$namespace}-select {
+		width: 100%;
+		margin-top: 6px;
+	}
+	.#{$namespace}-date-picker-trigger {
+		width: 100%;
+		margin-top: 6px;
+		.#{$namespace}-button {
+		}
+		
+	}
+}
+

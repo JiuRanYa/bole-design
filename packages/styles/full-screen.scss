@@ -1,0 +1,40 @@
+
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$full-screen: () !default;
+$full-screen: map.merge(
+  (
+    z-index: get-css-var(z-index-full),
+    inset: 0,
+    width: 100vw,
+    height: 100vh
+  ),
+  $full-screen
+);
+
+.#{$namespace}-full-screen {
+  &-vars {
+    @include define-preset-values('full-screen', $full-screen);
+  }
+
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  @include basis;
+
+  &--full {
+    position: fixed;
+    inset: get-css-var(full-screen-inset);
+    z-index: get-css-var(full-screen-z-index);
+    width: get-css-var(full-screen-width);
+    height: get-css-var(full-screen-height);
+    @include fixed;
+
+    backdrop-filter: blur(4px);
+    color: get-css-var(bg-color-base);
+    transform: translateZ(0);
+  }
+}

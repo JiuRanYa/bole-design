@@ -10,10 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import { tabsProps } from './props'
-import { useNamespace } from '@bole-design/hooks'
-import { tabsContextKey } from '@bole-design/tokens/tabs'
+import { useNamespace } from '@panda-ui/hooks'
+import { tabsContextKey } from '@panda-ui/tokens/tabs'
 import { watch, provide, reactive, computed, getCurrentInstance } from 'vue'
 import { TabsList } from '../tabs-list'
 
@@ -23,7 +23,6 @@ defineOptions({
 
 const ctx = getCurrentInstance()!
 
-console.log(ctx.slots.trigger)
 const emit = defineEmits(['update:value'])
 const ns = useNamespace('tabs')
 const _props = defineProps(tabsProps)

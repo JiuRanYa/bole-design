@@ -1,4 +1,4 @@
-import { buildProps } from '@bole-design/common/props'
+import { buildProps } from '@panda-ui/common/props'
 
 export const menuProps = buildProps({
   options: Object,

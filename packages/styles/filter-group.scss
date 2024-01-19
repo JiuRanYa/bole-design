@@ -1,0 +1,99 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$filter: () !default;
+$filter: map.merge(
+  (
+    height: 400px
+  ),
+  $filter
+);
+
+.#{$namespace}-filter-group {
+  position: relative;
+
+  &__item {
+    position: relative;
+    padding: get-css-var(padding-sm);
+    display: flex;
+
+    .#{$namespace}-filter {
+      width: calc(100% - 100px);
+    }
+
+    &__actions {
+      display: flex;
+      margin-left: auto;
+      color: get-css-var(color-primary-base);
+      cursor: pointer;
+
+      &--add {
+        &:hover {
+          color: get-css-var(color-success-foreground);
+        }
+      }
+
+      &--copy {
+        &:hover {
+          color: get-css-var(color-warning-base);
+        }
+      }
+
+      &--delete {
+        &:hover {
+          color: get-css-var(color-error-base);
+        }
+      }
+
+      .#{$namespace}-icon {
+        height: 36px;
+        margin: 0 6px;
+      }
+
+      &--disabled {
+        color: get-css-var(content-color-placeholder);
+        cursor: not-allowed;
+
+        &:hover {
+          color: get-css-var(content-color-placeholder);
+        }
+      }
+    }
+  }
+
+  &__groups {
+    background: get-css-var(color-primary-foreground);
+    border: get-css-var(border-shape) get-css-var(border-color-base);
+    border-radius: get-css-var(radius-large);
+    margin-bottom: 24px;
+    margin-left: 24px;
+  }
+
+  &__operator {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: get-css-var(font-size-base);
+    line-height: get-css-var(line-height-base);
+    cursor: default;
+
+    &__line {
+      height: 100%;
+      width: 1px;
+      background: get-css-var(border-color-base);
+    }
+
+    &__text {
+      padding: 6px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: get-css-var(border-shape) get-css-var(border-color-base);
+      border-radius: get-css-var(radius-large);
+      background: get-css-var(color-primary-foreground);
+      color: get-css-var(color-primary-base);
+    }
+  }
+}

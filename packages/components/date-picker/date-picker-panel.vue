@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { config, weekDay } from './const'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import { computed, inject, ref, watch } from 'vue'
 import DatePickerCalendar from './date-picker-calendar.vue'
 import { OriginDate, datePickerPanelProps } from './props'
-import { Button } from '@bole-design/components'
-import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
-import input from '../input/input'
+import { Button } from '@panda-ui/components'
+import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
+import Input from '../input/input'
 import dayjs from 'dayjs'
 
 defineOptions({
@@ -51,7 +51,6 @@ const rootEndDate = computed(() => root?.endMeta.getDayjs().format(config.defaul
 function validateDate(date: string) {
   return dayjs(date).isValid()
 }
-
 function setValidStartDate(date: string, isStart: boolean = true) {
   if (validateDate(date)) {
     const parsedDate = dayjs(date).format(config.defaultFormat)
@@ -78,16 +77,8 @@ watch(
     if (root?.startMeta.extraMeta.allocated) {
       // startDate.value = rootStartDate.value
     }
-    console.log(root?.startMeta.extraMeta.allocated, root?.endMeta.extraMeta.allocated)
   }
 )
-// watch(
-//   () => rootEndDate.value,
-//   () => {
-//     console.log(root?.startMeta.extraMeta.allocated, root?.endMeta.extraMeta.allocated)
-//     // endDate.value = rootEndDate.value
-//   }
-// )
 </script>
 
 <template>
@@ -105,10 +96,8 @@ watch(
         <DatePickerCalendar @pick="handlePickValue" />
       </div>
       <div :class="ns.be('action')">
-        <Button @click="handleCancel">取消</Button>
-        <Button style="--bl-button-color: var(--bl-color-primary-text)" @click="confirmValue">
-          确认
-        </Button>
+        <Button type="ghost" @click="handleCancel">取消</Button>
+        <Button type="ghost" @click="confirmValue"> 确认 </Button>
       </div>
     </div>
   </div>

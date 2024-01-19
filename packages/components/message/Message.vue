@@ -1,23 +1,35 @@
 <template>
   <Transition :name="ns.bm('fade')" @before-leave="onClose" @after-leave="$emit('destroy')">
     <div ref="messageRef" v-show="visible" :class="classList" :style="messageStyle" :id="id">
-      <Icon :style="[{ color: props.iconColor }, props.iconStyle]" :class="iconClass">
-        <component :is="iconComponent" />
-      </Icon>
-      <slot>
-        <p>
+      <div :class="ns.be('header')">
+        <Icon
+          v-if="iconComponent"
+          :style="[{ color: props.iconColor }, props.iconStyle]"
+          :class="iconClass"
+        >
+          <component :is="iconComponent" />
+        </Icon>
+        <p v-if="!hasTitleOrDesc">
           {{ props.message }}
         </p>
-      </slot>
+        <div v-else>
+          {{ props.title }}
+        </div>
+      </div>
+
+      <div v-if="hasTitleOrDesc" :class="ns.be('description')">
+        {{ props.message }}
+      </div>
     </div>
   </Transition>
 </template>
 
 <script setup lang="ts">
-import { useNamespace, useSetTimeout } from '@bole-design/hooks'
+import { Icon } from '../icon'
+import { useNamespace, useSetTimeout } from '@panda-ui/hooks'
 import { CSSProperties, computed, nextTick, onMounted, ref } from 'vue'
 import { defaultProps, messageProps } from './props'
-import { useProps } from '@bole-design/common'
+import { useProps, useZIndex } from '@panda-ui/common'
 import { TypeComponentsMap } from './symbol'
 import { getLastOffset, getOffsetOrSpace } from './instance'
 
@@ -30,8 +42,12 @@ const props = useProps('select', _props, defaultProps)
 const ns = useNamespace('message')
 
 // TODO: using useIndex instead
-const zIndex = ref(2000)
+const getIndex = useZIndex()
+const zIndex = computed(() => getIndex())
 const visible = ref(false)
+const hasTitleOrDesc = computed(() => {
+  return props.title ?? false
+})
 
 const messageRef = ref()
 const iconComponent = computed(() => props.icon || TypeComponentsMap[props.type] || '')
@@ -42,7 +58,14 @@ const iconClass = computed(() => {
   }
 })
 const classList = computed(() => {
-  return [ns.b(), ns.bs('vars'), ns.bm(props.type)]
+  return [
+    ns.b(),
+    ns.bs('vars'),
+    ns.bm(props.type),
+    {
+      [ns.be('vertical')]: hasTitleOrDesc.value
+    }
+  ]
 })
 
 const messageStyle = computed<CSSProperties>(() => {

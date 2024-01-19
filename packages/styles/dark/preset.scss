@@ -7,6 +7,10 @@
 :root.dark {
   color-scheme: dark;
 
+  @each $type in c.$types {
+    @include define-base-color($type);
+    @include define-type-color($type);
+  }
   @mixin define-type-color($type) {
     $colors: map.get($color-map, $type);
 

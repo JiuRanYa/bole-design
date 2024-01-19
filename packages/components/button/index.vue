@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :class="classNames">
+  <button type="button" :class="classNames" :disabled="props.disabled">
     <div v-if="icon || $slots.icon" :class="ns.be('icon')">
       <Icon :icon="icon" v-if="icon" />
       <slot v-else name="icon" />
@@ -8,42 +8,36 @@
   </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { buttonProps } from './props'
-import { defineComponent, computed } from 'vue'
-import { useNamespace } from '@bole-design/hooks'
-import { useProps } from '@bole-design/common'
-import { Icon } from '@bole-design/components'
+import { computed } from 'vue'
+import { useNamespace } from '@panda-ui/hooks'
+import { useProps } from '@panda-ui/common'
+import { Icon } from '../icon'
 
-export default defineComponent({
-  name: 'Button',
-  props: buttonProps,
-  setup(_props, { slots }) {
-    const ns = useNamespace('button')
+defineOptions({
+  name: 'Button'
+})
 
-    const props = useProps('button', _props, {
-      type: 'default',
-      size: 'middle',
-      icon: null
-    })
+const ns = useNamespace('button')
 
-    const classNames = computed(() => {
-      return {
-        [ns.b()]: true,
-        [ns.bs('vars')]: true,
-        [ns.bm('inherit')]: props.inherit,
-        [ns.bm(props.type)]: props.type !== 'default',
-        [ns.bm(props.size)]: props.size !== 'middle',
-        [ns.bm('disabled')]: props.disable,
-        [ns.bm('icon-only')]: props.icon && !slots.default
-      }
-    })
+const _props = defineProps(buttonProps)
+const props = useProps('button', _props, {
+  type: 'outline',
+  size: 'middle',
+  icon: null,
+  disabled: false
+})
 
-    return {
-      classNames,
-      ns,
-      props
-    }
+const classNames = computed(() => {
+  return {
+    [ns.b()]: true,
+    [ns.bs('vars')]: true,
+    [ns.bm('inherit')]: props.inherit,
+    [ns.bm(props.type)]: props.type !== 'default',
+    [ns.bm(props.size)]: props.size !== 'middle',
+    [ns.bm('disabled')]: props.disabled
+    // [ns.bm('icon-only')]: props.icon && !slots.default
   }
 })
 </script>

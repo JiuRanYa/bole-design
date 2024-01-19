@@ -3,14 +3,17 @@ import vue from '@vitejs/plugin-vue'
 import vueJSX from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'node:path'
 import glob from 'fast-glob'
-import { blOutput, excludeFiles, pkgRoot } from '@bole-design/internal'
-import { generateExternal } from '@bole-design/internal'
+import { blOutput, excludeFiles, pkgRoot } from '@panda-ui/internal'
+import { generateExternal } from '@panda-ui/internal'
 import DefineOptions from 'unplugin-vue-define-options/vite'
+import dts from 'vite-plugin-dts'
+
+const outDir = 'dist/panda-ui/types'
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
   const input = excludeFiles(
-    await glob('bole-design/*.{js,ts,vue,tsx}', {
+    await glob('panda-ui/*.{js,ts,vue,tsx}', {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true
@@ -26,8 +29,8 @@ export default defineConfig(async () => {
       outDir: 'dist',
       sourcemap: true,
       lib: {
-        entry: resolve(pkgRoot, 'bole-design'),
-        name: 'bole-design'
+        entry: resolve(pkgRoot, 'panda-ui'),
+        name: 'panda-ui'
       },
       rollupOptions: {
         input,
@@ -35,7 +38,7 @@ export default defineConfig(async () => {
           {
             format: 'cjs',
             preserveModules: true,
-            preserveModulesRoot: resolve(pkgRoot, 'bole-design'),
+            preserveModulesRoot: resolve(pkgRoot, 'panda-ui'),
             dir: resolve(blOutput, 'lib'),
             exports: 'named',
             entryFileNames: '[name].cjs'
@@ -44,7 +47,7 @@ export default defineConfig(async () => {
             format: 'es',
             exports: undefined,
             preserveModules: true,
-            preserveModulesRoot: resolve(pkgRoot, 'bole-design'),
+            preserveModulesRoot: resolve(pkgRoot, 'panda-ui'),
             dir: resolve(blOutput, 'es'),
             entryFileNames: '[name].mjs'
           }
@@ -57,6 +60,26 @@ export default defineConfig(async () => {
       },
       chunkSizeWarningLimit: 10000
     },
-    plugins: [vue(), vueJSX(), DefineOptions()]
+    plugins: [
+      vue(),
+      vueJSX(),
+      DefineOptions(),
+
+      dts({
+        include: ['packages', 'index.ts', 'types.d.ts'],
+        exclude: ['node_modules', 'components/*/tests'],
+        outDir,
+        compilerOptions: {
+          sourceMap: false,
+          paths: {
+            'panda-ui': ['.'],
+            'vue-router': ['node_modules/vue-router']
+          },
+          skipDiagnostics: false
+        },
+        copyDtsFiles: true,
+        pathsToAliases: false,
+      })
+    ]
   }
 })

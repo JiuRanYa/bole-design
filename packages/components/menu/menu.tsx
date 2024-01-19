@@ -1,5 +1,5 @@
-import { useProps } from '@bole-design/common/props'
-import { useNamespace } from '@bole-design/hooks'
+import { useProps } from '@panda-ui/common/props'
+import { useNamespace } from '@panda-ui/hooks'
 import { computed, defineComponent } from 'vue'
 import { menuProps } from './props'
 

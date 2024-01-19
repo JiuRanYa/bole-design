@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, provide, reactive, toRef } from 'vue'
 import { rowProps } from './props'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import { ROW_STATE } from './symbol'
 
 export default defineComponent({

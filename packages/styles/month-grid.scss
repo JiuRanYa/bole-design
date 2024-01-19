@@ -29,6 +29,11 @@ $month-grid: map.merge((), $month-grid);
   $prefix: '#{$namespace}-month-grid';
 
   &__days--body {
+		// tr[role='row']:first-of-type {
+		// 	td:not(.in-range) + td[aria-label].in-range:not([aria-label=""]) {
+		// 		background: linear-gradient(to left, get-css-var(color-secondary-base), get-css-var(color-white))
+		// 	}
+		// }
     tr[role='row'] {
       display: flex;
       margin: 2px 0;
@@ -53,7 +58,7 @@ $month-grid: map.merge((), $month-grid);
             position: absolute;
             width: 36px;
             height: 36px;
-            border: 2px solid get-css-var(color-primary-light-2);
+            border: 2px solid get-css-var(color-primary-base);
             border-radius: 50%;
           }
         }
@@ -71,8 +76,8 @@ $month-grid: map.merge((), $month-grid);
       }
       td.selected {
         color: get-css-var(content-color-reverse);
-        border: 2px solid get-css-var(color-primary-opacity-2);
-        background-color: get-css-var(color-primary-opacity-2);
+        border: 2px solid get-css-var(color-primary-base);
+        background-color: get-css-var(color-primary-base);
       }
       td.start {
         @extend .selected;
@@ -81,7 +86,7 @@ $month-grid: map.merge((), $month-grid);
         &::before {
           content: '';
           position: absolute;
-          background-color: get-css-var(color-primary-opacity-9);
+          background-color: get-css-var(color-secondary-base);
           z-index: -1;
           inset: -2px -2px;
           border-top-left-radius: 50%;
@@ -92,7 +97,7 @@ $month-grid: map.merge((), $month-grid);
         &:not(.in-range)::before {
           content: '';
           position: absolute;
-          background-color: get-css-var(color-primary-opacity-9);
+          background-color: get-css-var(color-secondary-base);
           z-index: -1;
           inset: -2px -2px;
           border-top-right-radius: 50%;
@@ -104,7 +109,7 @@ $month-grid: map.merge((), $month-grid);
       }
       td.in-range:not(.start) {
         border-radius: 0;
-        background-color: get-css-var(color-primary-opacity-9);
+          background-color: get-css-var(color-secondary-base);
       }
     }
   }

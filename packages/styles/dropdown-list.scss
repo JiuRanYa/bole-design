@@ -1,0 +1,20 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$dropdown-list: () !default;
+$dropdown-list: map.merge((), $dropdown-list);
+
+.#{$namespace}-dropdown-list {
+  @include basis;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 4px;
+
+  border: get-css-var(border-shape) get-css-var(border-color-light-2);
+  box-shadow: get-css-var(shadow-light-1);
+  border-radius: get-css-var(radius-base);
+  background: get-css-var(bg-color-base);
+}

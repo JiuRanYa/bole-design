@@ -1,7 +1,7 @@
-import { ref, unref } from 'vue'
+import { getCurrentScope, onScopeDispose, ref, unref } from 'vue'
 import type { Ref } from 'vue'
 import { useEventListener } from '../useEventListener'
-import { MaybeElementRef, isClient } from '@bole-design/common'
+import { MaybeElementRef, isClient } from '@panda-ui/common'
 
 type Fn = () => void
 
@@ -11,8 +11,8 @@ type ClickoutSideOptions = {
 
 export function useClickOutside(
   handler: (event?: MouseEvent) => void,
-  target: Ref<HTMLElement | null | undefined> = ref(null),
-  options: ClickoutSideOptions = {}
+  options: ClickoutSideOptions = {},
+  target: Ref<HTMLElement | null | undefined> = ref(null)
 ) {
   const { ignore = [] } = options
   let shouldListen = true
@@ -55,5 +55,7 @@ export function useClickOutside(
 
   const stop = () => cleanup.forEach(fn => fn())
 
-  return stop
+  getCurrentScope() && onScopeDispose(stop)
+
+  return target
 }

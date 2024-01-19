@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { PropType, computed, defineComponent, ref } from 'vue'
-import SourceCode from './demo/source-code.vue'
-import { Code } from '@bole-design/icons'
-import { CollapseTransition } from '@bole-design/components'
+import { computed, defineComponent, ref } from 'vue'
+import SourceCode from './source-code.vue'
+import { Code } from '@panda-ui/icons'
+import { CollapseTransition } from '@panda-ui/components'
 
 defineComponent({
   name: 'bl-demo'

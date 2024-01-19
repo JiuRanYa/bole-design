@@ -1,5 +1,5 @@
 {
-  "name": "@bole-design/internal",
+  "name": "@panda-ui/internal",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.cjs",

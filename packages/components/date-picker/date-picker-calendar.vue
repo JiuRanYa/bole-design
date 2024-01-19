@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useEventListener, useNamespace } from '@bole-design/hooks'
+import { useEventListener, useNamespace } from '@panda-ui/hooks'
 import { computed, inject, nextTick, onMounted, ref } from 'vue'
 import { OriginDate, calendarProps } from './props'
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import MonthGrid from './month-grid.vue'
 import dayjs from 'dayjs'
-import { DATE_PICKER_INJECTION_KEY } from '@bole-design/tokens/date-picker'
+import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
 
 defineOptions({
   name: 'DatePickerCalendar'
@@ -93,7 +93,7 @@ function patchFrontDate(reserve: boolean) {
   }
   renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
 
-  //向上时需要的偏移量是数据改变后的高度
+  //向上时需要的偏移量是数据改变后的高度,需要等待渲染完毕
   nextTick(() => {
     decreaseTrans(reserve)
   })

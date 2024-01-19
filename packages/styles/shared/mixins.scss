@@ -40,7 +40,6 @@
 }
 
 @function to-css-var-name($name-units...) {
-  // variable prefix is fixed to '--vxp'
   $name: '--bl';
 
   @each $unit in $name-units {

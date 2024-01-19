@@ -1,6 +1,6 @@
 {
-  "name": "@bole-design/hooks",
-  "version": "1.0.0",
+  "name": "@panda-ui/hooks",
+  "version": "1.0.1",
   "description": "",
   "main": "index.ts",
   "modules": "index.ts",
@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tong Siyuan",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "@juggle/resize-observer": "^3.4.0"
+  }
 }

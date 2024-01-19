@@ -1,7 +1,5 @@
-import { getProject } from './project'
-
 export const siderbarsConfig: SidebarsConfig = {
-  'bole-design': {
+  'panda-ui': {
     guide: [
       {
         text: '指南',
@@ -20,29 +18,39 @@ export const siderbarsConfig: SidebarsConfig = {
         children: [{ text: 'Icon 图标', link: '/components/icon' }]
       },
       {
-        text: '基础组件',
+        text: '数据展示',
         children: [
-          { text: 'Button 按钮', link: '/components/button' },
           { text: 'Avatar 头像', link: '/components/avatar' },
-          { text: 'Badge 徽章', link: '/components/badge' }
+          { text: 'Badge 徽章', link: '/components/badge' },
+          { text: 'Card 卡片', link: '/components/card' },
+          { text: 'Label 标题', link: '/components/label' },
+          { text: 'Tag 标签', link: '/components/tag' }
         ]
       },
       {
         text: '布局组件',
         children: [
           { text: 'Row 行', link: '/components/row' },
-          { text: 'Tabs 标签页 ', link: '/components/tabs' }
+          { text: 'Tabs 标签页 ', link: '/components/tabs' },
+          { text: 'Panel 拖拽面板 ', link: '/components/panel-group' },
+          { text: 'Scroll Area 滚动容器 ', link: '/components/scroll-area' }
         ]
       },
       {
         text: '数据录入',
         children: [
+          { text: 'Button 按钮', link: '/components/button' },
+          { text: 'Checkbox 复选框', link: '/components/checkbox' },
           { text: 'Input 输入框', link: '/components/input' },
+          // { text: 'Radio 单选框', link: '/components/input' },
           { text: 'Switch 开关', link: '/components/switch' },
           { text: 'Select 选择器', link: '/components/select' },
-          { text: 'Checkbox 复选框', link: '/components/checkbox' },
+          { text: 'ContextMenu 菜单', link: '/components/context-menu' },
           { text: 'Dropdown 下拉菜单', link: '/components/dropdown' },
-          { text: 'DatePicker 日期选择器', link: '/components/date-picker' }
+          { text: 'DatePicker 日期选择器', link: '/components/date-picker' },
+          { text: 'EmojiPicker 表情选择器', link: '/components/emoji-picker' },
+          { text: 'Filter 筛选器', link: '/components/filter' },
+          { text: 'FilterGroup 筛选器组合', link: '/components/filter-group' }
         ]
       },
       {
@@ -57,15 +65,27 @@ export const siderbarsConfig: SidebarsConfig = {
       },
       {
         text: '其他',
-        children: [{ text: 'Masker 遮罩', link: '/components/masker' }]
+        children: [
+          { text: 'Masker 遮罩', link: '/components/masker' },
+          { text: 'Full Screen 遮罩', link: '/components/full-screen' }
+        ]
       }
     ],
     hooks: [
       {
-        text: 'Hooks',
+        text: '功能',
         children: [
           { text: 'usePopper', link: '/hooks/usePopper' },
-          { text: 'useClickOutside', link: '/hooks/useClickOutside' }
+          { text: 'useNamespace', link: '/hooks/useNamespace' }
+        ]
+      },
+      {
+        text: '事件',
+        children: [
+          { text: 'useClickOutside', link: '/hooks/useClickOutside' },
+          { text: 'useEventListener', link: '/hooks/useEventListener' },
+          { text: 'useSetTimeout', link: '/hooks/useSetTimeout' },
+          { text: 'useResizeObserver', link: '/hooks/useResizeObserver' }
         ]
       }
     ],
@@ -76,7 +96,8 @@ export const siderbarsConfig: SidebarsConfig = {
           { text: '指南', link: '/cdn/icon' },
           { text: 'Solid', link: '/cdn/solid' },
           { text: 'Brands', link: '/cdn/brands' },
-          { text: 'Regular', link: '/cdn/regular' }
+          { text: 'Regular', link: '/cdn/regular' },
+          { text: 'Mixpanel', link: '/cdn/mixpanel' }
         ]
       }
     ],
@@ -95,7 +116,27 @@ export const siderbarsConfig: SidebarsConfig = {
     guide: [
       {
         text: '指南',
-        children: [{ text: '设计', link: '/guide/index' }]
+        children: [
+          { text: '设计', link: '/guide/design' },
+          { text: '开始使用', link: '/guide/start' }
+        ]
+      }
+    ],
+    standard: [
+      {
+        text: '代码规范',
+        children: [{ text: '引入', link: '/standard/index' }]
+      }
+    ]
+  },
+  chat: {
+    guide: [
+      {
+        text: '指南',
+        children: [
+          { text: 'sso认证', link: '/guide/sso' },
+          { text: '开始使用', link: '/guide/start' }
+        ]
       }
     ]
   }
@@ -112,31 +153,4 @@ type ConfigItem = {
 
 type SidebarsConfig = Record<string, Record<string, SideConfigItem[]>>
 
-export const getSidebars = () => {
-  // TODO: not use project, return all sidebars
-  const project = getProject()
-
-  const defaultSiderbars = siderbarsConfig[project]
-
-  const sidebars: typeof defaultSiderbars = JSON.parse(JSON.stringify(defaultSiderbars))
-
-  for (const dir in sidebars) {
-    const items = sidebars[dir]
-    const prefix = `/projects/${project}`
-
-    items.forEach(item => {
-      const children = item.children
-      if (children) {
-        children.forEach(child => {
-          child.link = `${prefix}${child.link}`
-        })
-      }
-    })
-  }
-
-  return sidebars
-}
-
-const sidebars = getSidebars()
-
-export default sidebars
+export default siderbarsConfig

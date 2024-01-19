@@ -1,19 +1,36 @@
 <script setup lang="ts">
-import BlSidebar from './sidebar/sidebar.vue'
+import BlSidebar from './common/sidebar/sidebar.vue'
 import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
+import SwitchProject from './common/switch-project/index.vue'
 import { useSidebar } from '../composables/sidebar'
-import { nextTick, onMounted, provide } from 'vue'
-import { rootKey } from '../tookens/index'
+import { onMounted, provide } from 'vue'
+import { rootKey, supportProjects } from '../tookens/index'
 const { hasSidebar } = useSidebar()
 
 provide(rootKey, { hasSidebar })
 
+const defaultPro = 'panda-ui'
+const localStorageProName = 'bl-userPreferredPro'
+
 onMounted(() => {
-  nextTick(() => {
-    // rootCls?.add('dark')
-  })
+  let userPreferredPro = localStorage.getItem(localStorageProName) ?? defaultPro
+
+  !localStorage.getItem(localStorageProName) &&
+    localStorage.setItem(localStorageProName, userPreferredPro)
+
+  const targetPath = `/projects/${userPreferredPro}/`
+
+  if (!supportProjects.includes(userPreferredPro)) {
+    userPreferredPro = defaultPro
+    localStorage.setItem(localStorageProName, userPreferredPro)
+    window.location.pathname = targetPath
+  }
+
+  if (!window.location.pathname.includes(targetPath)) {
+    window.location.pathname = targetPath
+  }
 })
 </script>
 
@@ -22,7 +39,7 @@ onMounted(() => {
     <LayoutHeader />
     <div class="homepage" :class="{ 'no-bg': !hasSidebar }">
       <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
-        <BlSidebar :hasSidebar="hasSidebar" />
+        <BlSidebar v-if="hasSidebar" :hasSidebar="hasSidebar" />
         <BLContent :hasSidebar="hasSidebar">
           <template #content-top>
             <slot name="content-top" />
@@ -43,6 +60,8 @@ onMounted(() => {
       </div>
     </div>
     <LayoutFooter />
+
+    <SwitchProject />
   </div>
 </template>
 
@@ -53,12 +72,14 @@ onMounted(() => {
 .homepage-bg {
   position: absolute;
 }
+.homepage {
+  margin-top: var(--header-height);
+}
 .homepage.no-bg {
   background: url('/bl-bg.svg');
   background-position: 50% 0;
   background-repeat: no-repeat;
   background-color: white;
-  padding-bottom: 150px;
 }
 .homepage-body {
   width: 100%;

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress'
-import BLTableContent from './doc-content/table-content.vue'
+import BLTableContent from './common/doc-content/table-content.vue'
 import { nextTick, onMounted } from 'vue'
 import { useToc } from '../composables/toc'
 

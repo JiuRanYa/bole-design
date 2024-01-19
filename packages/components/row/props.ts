@@ -1,4 +1,4 @@
-import { booleanProps, buildProps } from '@bole-design/common'
+import { booleanProps, buildProps } from '@panda-ui/common'
 import { PropType } from 'vue'
 
 export type AlignType =

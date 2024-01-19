@@ -53,7 +53,7 @@ import {
   Upload,
   User,
   Xmark
-} from '@bole-design/icons'
+} from '@panda-ui/icons'
 import { ClassType, StyleType } from './local/types'
 import { ComputedRef, computed, inject } from 'vue'
 import { ensureArray } from '../utils/transform'

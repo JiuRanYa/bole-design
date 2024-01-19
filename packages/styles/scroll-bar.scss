@@ -1,0 +1,35 @@
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$scroll-bar-map: () !default;
+$scroll-bar-map: map.merge(
+  (
+  ),
+  $scroll-bar-map
+);
+.#{$namespace}-scroll-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 6px;
+	opacity: 0;
+	transition: get-css-var(transition-opacity);
+
+	&__show {
+		opacity: 1;
+	}
+	&__track {
+		height: 100%;
+		border-radius: 2px;
+		// background: get-css-var(color-secondary-base);
+	}
+
+	&__bar {
+		background: get-css-var(color-secondary-base);
+		border-radius: get-css-var(radius-large);
+	}
+}
+

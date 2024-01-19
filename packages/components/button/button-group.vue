@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import { buttonGroupProps } from './props'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 import { computed } from 'vue'
 
 defineOptions({

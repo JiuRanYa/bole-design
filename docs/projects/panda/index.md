@@ -5,5 +5,5 @@ lang: zh-CN
 ---
 
 <ClientOnly>
-  <BlHomepage />
+  <PdHomepage />
 </ClientOnly>

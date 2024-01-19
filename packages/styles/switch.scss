@@ -6,12 +6,12 @@ $switch: () !default;
 $switch: map.merge(
   (
     bg-color: get-css-var('fill-color-secondary'),
-    bg-color-open: get-css-var('color-primary-base'),
+    bg-color-open: get-css-var('bg-color-reverse'),
     duration: 0.2s,
     height: 22px,
     width: calc(get-css-var('switch-height') * 2),
     signal-size: calc(var(--bl-switch-height) - 4px),
-    signal-bg-color: #fff,
+    signal-bg-color: get-css-var(bg-color-base),
     icon-color: get-css-var('color-black')
   ),
   $switch

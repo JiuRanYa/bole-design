@@ -1,0 +1,47 @@
+@use '../design/variables.scss' as *;
+@use '../shared' as *;
+
+$root-name: #{$namespace}-modal-fade;
+
+.#{$root-name} {
+  @at-root {
+    &-enter-active,
+    &-leave-active {
+      pointer-events: none;
+      user-select: none;
+      animation-duration: 100ms;
+			transform-origin: center;
+    }
+
+    &-enter-active {
+      animation-name: #{$root-name}-in;
+    }
+
+    &-leave-to {
+      animation-name: #{$root-name}-out;
+    }
+  }
+  @keyframes #{$root-name}-in {
+    0% {
+			opacity: 0;
+			transform: scale(0.9);
+		}
+
+    100% {
+			opacity: 1;
+			transform: scale(1);
+    }
+  }
+
+  @keyframes #{$root-name}-out {
+    0% {
+		  opacity: 1;
+			transform: scale(1);
+    }
+
+    100% {
+			opacity: 0;
+			transform: scale(0.9);
+    }
+  }
+}

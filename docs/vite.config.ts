@@ -28,9 +28,14 @@ export default defineConfig(() => {
     },
     optimizeDeps: {
       include: [
-        '@bole-design/icons',
-        ...Object.keys(pkg.dependencies).filter((dep: string) => !dep.includes('bole-design'))
+        '@panda-ui/icons',
+        ...Object.keys(pkg.dependencies).filter((dep: string) => !dep.includes('panda-ui'))
       ]
+    },
+    build: {
+      commonjsOptions: {
+        esmExternals: true
+      }
     },
     server: {
       host: true

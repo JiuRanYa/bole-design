@@ -7,8 +7,8 @@ $masker: () !default;
 $masker: map.merge(
   (
     z-index: get-css-var('z-index-masker'),
-    bg-color: get-css-var('color-white'),
-    opacity: 45%
+    bg-color: rgba(get-css-var('bg-color-base'), 0.8),
+    opacity: 1
   ),
   $masker
 );
@@ -26,14 +26,22 @@ $masker: map.merge(
     @include fixed;
 
     backdrop-filter: blur(4px);
-    color: get-css-var('masker-bg-color');
+		color: get-css-var(bg-color-base);
     transform: translateZ(0);
 
     &-inner {
       width: 100%;
+			background: currentColor;
+			opacity: 0.8;
       height: 100%;
-      background-color: currentcolor;
-      opacity: get-css-var('masker-opacity');
     }
   }
+
+	$self: &;
+
+	&--reverse {
+		#{$self}__mask {
+			color: get-css-var(bg-color-reverse);
+		}
+	}
 }

@@ -1,5 +1,5 @@
 import { PropType } from 'vue'
-import { buildProps, Dateable, eventProp, Placement } from '@bole-design/common'
+import { buildProps, Dateable, eventProp, Placement } from '@panda-ui/common'
 import { datePickerSharedProps } from './shared'
 import type { Dayjs } from 'dayjs'
 
@@ -23,7 +23,8 @@ export const datePickerProps = buildProps({
   type: String as PropType<DatePickerType>,
   value: [Number, String, Date, Array] as PropType<Dateable | Dateable[]>,
   valueFormat: String,
-  onChange: eventProp<(value: string | number | string[] | number[] | null) => void>()
+  onChange: eventProp<(value: string | number | string[] | number[] | null) => void>(),
+  to: String,
 })
 
 export const calendarProps = buildProps({

@@ -17,8 +17,9 @@ async function main() {
   const solid = await generateVueIcons('solid', '', '')
   const brands = await generateVueIcons('brands', 'brands', 'B')
   const regular = await generateVueIcons('regular', 'regular', 'R')
+  const mixpanel = await generateVueIcons('mixpanel', 'mixpanel', 'M')
 
-  const exports = solid.exports + brands.exports + regular.exports
+  const exports = solid.exports + brands.exports + regular.exports + mixpanel.exports
 
   await writeFile(resolve(rootDir, 'vue/index.ts'), exports, 'utf-8')
 
@@ -38,7 +39,7 @@ async function main() {
   console.log(green('start generating types...'))
 
   const types = `
-    declare module '@bole-design/icons' {
+    declare module '@panda-ui/icons' {
       import type {
         DefineComponent,
         ComponentOptionsMixin,
@@ -61,7 +62,7 @@ async function main() {
         Readonly<ExtractPropTypes<{}>>,
         {}
       >
-      ${solid.types + brands.types + regular.types}
+      ${solid.types + brands.types + regular.types + mixpanel.types}
     }
 
     export {}

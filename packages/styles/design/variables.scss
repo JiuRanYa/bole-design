@@ -6,7 +6,7 @@
 
 $namespace: 'bl' !default;
 
-$types: primary, info, success, warning, error;
+$types: primary, secondary, success, warning, error;
 
 $color-black: #000 !default;
 $color-white: #fff !default;
@@ -14,60 +14,114 @@ $color-white: #fff !default;
 $bg-color-map: () !default;
 $bg-color-map: map.merge(
   (
-    base: #fff,
+    base: rgb(255, 255, 255),
     reverse: #131719
   ),
   $bg-color-map
 );
-// colors-start
+
+$hsl-color-map: () !default;
+$hsl-color-map: map.deep-merge(
+	(
+    primary: (
+      base: (get-css-var(hsl-color-primary-base-h) get-css-var(hsl-color-primary-base-s) get-css-var(hsl-color-primary-base-l)),
+			base-h: 222,
+			base-s: 47%,
+			base-l: 11%,
+			foreground: 0 0% 98%,
+    ),
+    secondary: (
+      base: (get-css-var(hsl-color-secondary-base-h) get-css-var(hsl-color-secondary-base-s) get-css-var(hsl-color-secondary-base-l)),
+			base-h: 240,
+			base-s: 4.8%,
+			base-l: 94%,
+      foreground: (get-css-var(hsl-color-secondary-foreground-h) get-css-var(hsl-color-secondary-foreground-s) get-css-var(hsl-color-secondary-foreground-l)),
+			foreground-h: 222,
+			foreground-s: 47%,
+			foreground-l: 11%,
+    ),
+    success: (
+      base: (get-css-var(hsl-color-success-base-h) get-css-var(hsl-color-success-base-s) get-css-var(hsl-color-success-base-l)),
+			base-h: 114,
+			base-s: 57%,
+			base-l: 51%,
+      foreground: (get-css-var(hsl-color-success-foreground-h) get-css-var(hsl-color-success-foreground-s) get-css-var(hsl-color-success-foreground-l)),
+			foreground-h: 114,
+			foreground-s: 57%,
+			foreground-l: 51%,
+    ),
+    warning: (
+      base: (get-css-var(hsl-color-warning-base-h) get-css-var(hsl-color-warning-base-s) get-css-var(hsl-color-warning-base-l)),
+			base-h: 43,
+			base-s: 100%,
+			base-l: 65%,
+    ),
+    error: (
+      // base: 355 100% 62%,
+      base: (get-css-var(hsl-color-error-base-h) get-css-var(hsl-color-error-base-s) get-css-var(hsl-color-error-base-l)),
+			base-h: 345,
+			base-s: 100%,
+			base-l: 62%,
+    )
+	),
+	$hsl-color-map
+);
+// colors-session
 $color-map: () !default;
 $color-map: map.deep-merge(
   (
     primary: (
-      // base: #006af5,
-      base: rgb(24, 24, 27),
+      base: hsl(get-css-var(hsl-color-primary-base)),
+			hover: hsl(get-css-var(hsl-color-primary-base) / .8),
       text: #005fdb,
+			foreground: hsl(0 0% 98%),
       bg: rgba(79, 68, 224, 0.06)
     ),
-    info: (
-      base: #3bc9db
+    secondary: (
+      base: hsl(get-css-var(hsl-color-secondary-base)),
+			hover: hsl(get-css-var(hsl-color-secondary-base) / .8),
+			foreground: hsl(222 47% 11%)
     ),
     success: (
-      base: #20c997
+      base: hsla(get-css-var(hsl-color-success-base-h), get-css-var(hsl-color-success-base-s), get-css-var(hsl-color-success-base-l), 0.15),
+      hover: hsla(get-css-var(hsl-color-success-base-h), get-css-var(hsl-color-success-base-s), get-css-var(hsl-color-success-base-l), 0.10),
+      foreground: hsl(get-css-var(hsl-color-success-base)),
     ),
     warning: (
-      base: #fab005
+      base: hsla(44, 100%, 50%, .8),
+			hover: hsl(get-css-var(hsl-color-warning-base) / .8),
+			foreground: hsl(0 0% 98%),
     ),
     error: (
-      base: #e21d12
+      base: hsl(get-css-var(hsl-color-error-base)),
+      hover: hsl(get-css-var(hsl-color-error-base) / .8),
+			foreground: hsl(0 0% 98%),
     )
   ),
   $color-map
 );
-// colors-end
-// border-end
+
+// border-session
 $border-color-map: () !default;
 $border-color-map: map.merge(
   (
-    base: #cbd5e1,
-    light-1: #dee2e6,
-    light-2: #e9ecef,
-    light-3: #f5f8fa,
+    base: hsl(214.3 31.8% 91.4%),
+    light-1: hsla(214.3,31.8%,91.4%, .8),
+    light-2: hsla(214.3,31.8%,91.4%, .7),
+    light-3: hsla(214.3,31.8%,91.4%, .6),
     dark-1: #adb5bd,
-    dark-2: #868e96
+    dark-2: #868e96,
   ),
   $border-color-map
 );
 $border-width: 1px !default;
 $border-style: solid !default;
 $border-shape: get-css-var('border-width') get-css-var('border-style') !default;
-// border-end
 
-//transition-start
+// transiton-session
 $transition-duration: 250ms !default;
 $transition-timing: ease !default;
 $transition-base: get-css-var('transition-duration') get-css-var('transition-timing') !default;
-
 $transition-map: () !default;
 $transition-map: map.merge(
   (
@@ -81,6 +135,7 @@ $transition-map: map.merge(
   $transition-map
 );
 
+// radius-session
 $radius-map: () !default;
 $radius-map: map.merge(
   (
@@ -91,19 +146,22 @@ $radius-map: map.merge(
   $radius-map
 );
 
+// fill-session
 $fill-color-map: () !default;
 $fill-color-map: map.merge(
   (
     base: #fff,
     secondary: #d9dfe2,
     disabled: #dee2e6,
-    hover: #f1f5f9,
+    hover: get-css-var(color-secondary-base),
     humble: #f3f4f6,
     background: #f8f9fa,
     reverse: #131719
   ),
   $fill-color-map
 );
+
+// padding-session
 $padding-map: () !default;
 $padding-map: map.merge(
   (
@@ -114,11 +172,13 @@ $padding-map: map.merge(
   $padding-map
 );
 
+// content-session
 $content-color-map: () !default;
 $content-color-map: map.merge(
   (
     primary: #212529,
-    base: rgba(25, 39, 57, 0.94),
+    base: get-css-var(color-secondary-foreground),
+		hover: hsl(get-css-var(color-secondary-foreground) / 0.6),
     secondary: rgba(27, 43, 65, 0.69),
     third: #a1adb1,
     disabled: #adb5bd,
@@ -129,12 +189,13 @@ $content-color-map: map.merge(
   $content-color-map
 );
 
+// shadow-session
 $shadow-color-map: () !default;
 $shadow-color-map: map.merge(
   (
     base: #dee2e6,
     light-1: rgba(79, 68, 224, 0.1),
-    light-2: #f1f3f5,
+    light-2: rgba(0,0,0,.05),
     light-3: rgba(82, 63, 105, 0.15),
     dark-1: #ced4da,
     dark-2: #adb5bd
@@ -149,6 +210,7 @@ $shadow-base: get-css-var('shadow-shape') get-css-var('border-color-base') !defa
 $shadow-border: 0 0 0 1px !default;
 $shadow-focus: 0 0 2px 2px !default;
 
+// font-size-session
 $font-size-map: () !default;
 $font-size-map: map.merge(
   (
@@ -159,6 +221,7 @@ $font-size-map: map.merge(
   $font-size-map
 );
 
+// line-height-session
 $line-height-map: () !default;
 $line-height-map: map.merge(
   (
@@ -168,6 +231,7 @@ $line-height-map: map.merge(
   $line-height-map
 );
 
+// font-family-session
 $font-family-map: () !default;
 $font-family-map: map.merge(
   (
@@ -199,6 +263,13 @@ $font-family-map: map.merge(
 
   @each $name in map.keys($colors) {
     @include define-css-var(('color', $type, $name), map.get($colors, $name));
+  }
+}
+@mixin define-base-color($type) {
+  $colors: map.get($hsl-color-map, $type);
+
+  @each $name in map.keys($colors) {
+    @include define-css-var(('hsl-color', $type, $name), map.get($colors, $name));
   }
 }
 @mixin define-level-colors($type, $max-level, $mode, $mixed-color) {
@@ -234,7 +305,7 @@ $font-family-map: map.merge(
 }
 
 @each $type in $types {
-  @include define-level-colors($type, 9, 'light', $color-white);
-  @include define-level-colors($type, 9, 'dark', $color-black);
-  @include define-opacity-colors($type, 9);
+  // @include define-level-colors($type, 9, 'light', $color-white);
+  // @include define-level-colors($type, 9, 'dark', $color-black);
+  // @include define-opacity-colors($type, 9);
 }

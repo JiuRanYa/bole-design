@@ -1,0 +1,366 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$filter: () !default;
+$filter: map.merge(
+  (
+    height: 400px
+  ),
+  $filter
+);
+
+@mixin trigger() {
+  background-color: get-css-var(color-secondary-base);
+  border-radius: get-css-var(radius-large);
+}
+
+.#{$namespace}-filter {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-height: get-css-var(filter-height);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  @include basis;
+
+  &-vars {
+    @include define-preset-values('filter', $filter);
+  }
+
+  &__filters {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 12px;
+    align-items: center;
+
+    &__data {
+      display: flex;
+      align-items: center;
+      border: get-css-var(border-shape) get-css-var(border-color-base);
+      height: 36px;
+      line-height: 1;
+      padding: 0 get-css-var(padding-sm);
+      color: get-css-var(content-color-base);
+      border-radius: get-css-var(radius-large);
+      cursor: pointer;
+      transition: get-css-var(transition-background);
+
+      &--trigger {
+        @include trigger();
+      }
+
+      .#{$namespace}-icon:first-of-type {
+        svg {
+          fill: none;
+        }
+      }
+
+      .#{$namespace}-icon {
+        color: get-css-var(color-primary-base);
+      }
+
+      &--delete {
+        margin-left: 10px;
+        transition: get-css-var(transition-color);
+
+        &:hover {
+          color: get-css-var(color-error-base);
+        }
+      }
+
+      &:hover {
+        @include trigger();
+      }
+    }
+  }
+
+  &__button {
+    @include basis;
+    display: inline-flex;
+    padding: get-css-var(padding-sm);
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+    cursor: pointer;
+    transition: get-css-var(transition-background);
+
+    .#{$namespace}-icon {
+      color: get-css-var(color-primary-base);
+    }
+
+    &:hover {
+      @include trigger();
+    }
+
+    &--trigger {
+      @include trigger();
+    }
+  }
+
+  &__dropdown {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 360px;
+    min-width: 320px;
+    border-radius: get-css-var(radius-large);
+    border: get-css-var(border-shape) get-css-var(border-color-base);
+    max-height: get-css-var(filter-height);
+    background: get-css-var(bg-color-base);
+  }
+
+  &__search {
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    padding: get-css-var(padding-sm);
+
+    .#{$namespace}-input {
+      width: 100%;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: get-css-var(padding-sm);
+    padding-top: 0;
+    margin: 0;
+
+    li {
+      padding: 8px get-css-var(padding-sm);
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      transition: get-css-var(transition-background);
+      cursor: pointer;
+
+      .#{$namespace}-icon {
+        color: get-css-var(color-primary-base);
+        margin-inline-end: 8px;
+        svg {
+          fill: none;
+        }
+      }
+
+      &:hover {
+        @include trigger();
+      }
+    }
+  }
+
+  &__panel {
+    position: relative;
+    height: get-css-var(filter-height);
+    transition: all 1.5s ease-in-out;
+
+    hr {
+      border: none;
+      border-top: get-css-var(border-shape) get-css-var(border-color-base);
+      height: 0;
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border-bottom: get-css-var(border-shape) get-css-var(border-color-base);
+      height: 40px;
+
+      .#{$namespace}-icon {
+        color: get-css-var(color-primary-base);
+        svg {
+          fill: none;
+        }
+      }
+    }
+
+    &__content {
+      padding: get-css-var(padding-sm);
+      height: calc(100% - 80px);
+
+      .#{$namespace}-select__list {
+        position: relative;
+        max-height: get-css-var(filter-height);
+        overflow-y: auto;
+      }
+
+      .#{$namespace}-date-picker-trigger {
+        width: 100%;
+        .#{$namespace}-button-vars {
+          width: 100%;
+        }
+      }
+    }
+
+    &__back {
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      color: get-css-var(color-primary-base);
+    }
+
+    &__input {
+      height: fit-content;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      .#{$namespace}-input {
+        width: 100%;
+      }
+
+      &--error {
+        .#{$namespace}-input {
+          border-color: get-css-var(color-error-base);
+        }
+      }
+
+      &__between {
+        margin-top: 8px;
+      }
+    }
+
+    &__error {
+      margin: 6px 0;
+      color: get-css-var(color-error-base);
+    }
+
+    &__multi {
+      height: calc(100% - 50px);
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+
+      &__add {
+        display: flex;
+        margin-bottom: 6px;
+
+        .#{$namespace}-button {
+          height: 36px;
+          padding: 10px 6px;
+          margin-left: auto;
+
+          .#{$namespace}-icon {
+            color: get-css-var(color-primary-base);
+          }
+        }
+      }
+
+      &__input {
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        .#{$namespace}-input {
+          width: 100%;
+          margin-bottom: 6px;
+        }
+
+        &--error {
+          .#{$namespace}-input {
+            border-color: get-css-var(color-error-base);
+          }
+        }
+
+        &--delete {
+          margin-bottom: 6px;
+          margin-left: 6px;
+          color: get-css-var(color-primary-base);
+
+          &:hover {
+            color: get-css-var(color-error-base);
+          }
+        }
+      }
+
+      &__error {
+        margin: 6px 0;
+        color: get-css-var(color-error-base);
+      }
+    }
+
+    &__container {
+      overflow-y: scroll;
+      height: calc(100% - 50px);
+      &__radio {
+        margin: 0;
+        li {
+          padding: get-css-var(padding-sm);
+          input {
+            margin: 0;
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+
+    &__add {
+      position: absolute;
+      display: block;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: get-css-var(radius-large);
+      border-bottom-right-radius: get-css-var(radius-large);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      text-align: center;
+      background-color: hsl(get-css-var(hsl-color-primary-base) / 0.6);
+      color: get-css-var(color-primary-foreground);
+      cursor: default;
+      &--active {
+        background-color: hsl(get-css-var(hsl-color-primary-base));
+      }
+    }
+
+    &__radio {
+      padding: 0;
+    }
+
+    &__boolean {
+      display: flex;
+      justify-content: center;
+      margin: 18px;
+
+      &__false {
+        margin-left: 24px;
+      }
+
+      input[type='radio'] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      label:before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        border: 3px solid get-css-var(color-secondary-base);
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+
+      input[type='radio']:checked + label:before {
+        border-color: get-css-var(color-primary-base);
+      }
+
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+}

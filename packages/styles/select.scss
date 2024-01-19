@@ -26,6 +26,16 @@ $select: map.merge(
   border-radius: get-css-var(radius-base);
   transition: get-css-var(transition-background);
   background-color: get-css-var(bg-color-base);
+	position: relative;
+	// height: get-css-var('input-height');
+
+
+	&--popper {
+		margin: 5px 0;
+    box-shadow: get-css-var('shadow-base');
+    border-radius: get-css-var(radius-base);
+		background: get-css-var(bg-color-base)
+	}
 
   &:hover {
     // color: get-css-var(color-primary-text);
@@ -38,31 +48,71 @@ $select: map.merge(
 
   &__selector {
     display: flex;
-    padding: 8px 12px;
+    padding: 8px 10px;
     width: 100%;
+		font-size: get-css-var(font-size-base);
+		line-height: get-css-var(line-height-base);
+		border-radius: get-css-var(radius-base);
+    background-color: get-css-var(bg-color-base);
   }
+
+	&__input { 
+		height: 18px;
+		display: inline-block;
+		border: none;
+		width: 100%;
+		padding: 0;
+		outline: none;
+		background: inherit;
+
+		&:hover {
+			border: none;
+			box-shadow: none;
+		}
+		&:focus-within {
+			border: none;
+			box-shadow: none;
+		}
+	}
 
   &__list {
     width: 100%;
-    margin-top: 6px;
-    box-shadow: get-css-var('shadow-base');
-    border-radius: get-css-var(radius-base);
     padding: 6px;
-    background-color: get-css-var(bg-color-base);
   }
+	&-tag-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 8px;
+
+		.#{$namespace}-tag + .#{$namespace}-tag{
+			margin-inline-start: 0;
+		}
+	}
   &__control {
     position: relative;
     display: flex;
+		flex-wrap: wrap;
     align-items: center;
     flex: 1 0 0;
     min-width: 0;
     padding: 0;
-    line-height: get-css-var(input-line-height);
+		font-size: get-css-var(font-size-base);
+		line-height: get-css-var(line-height-base);
+		color: get-css-var(content-color-secondary);
+
+		input::placeholder {
+			color: get-css-var(content-color-secondary);
+		}
   }
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &__clear {
+		position: absolute;
   }
 }

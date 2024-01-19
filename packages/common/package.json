@@ -1,7 +1,8 @@
 {
-  "name": "@bole-design/common",
-  "private": true,
+  "name": "@panda-ui/common",
+  "version": "1.0.1",
   "license": "MIT",
+  "author": "Tong Siyuan",
   "main": "index.ts",
   "peerDependencies": {
     "vue": "^3.2.0"

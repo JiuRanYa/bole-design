@@ -4,7 +4,9 @@
     :transfer="props.transfer"
     :inner="props.inner"
     :class="className"
+    :reverse="props.reverseBackdrop"
     @mask-click="handleMaskClick"
+    :transition-name="props.transitionName"
   >
     <template #default="{ show }">
       <div
@@ -21,11 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import { Masker } from '../masker'
 import { modalProps } from './props'
 import { computed, reactive, ref, watch } from 'vue'
-import { useNamespace } from '@bole-design/hooks'
+import { useNamespace } from '@panda-ui/hooks'
 
 defineOptions({
   name: 'Modal'
@@ -37,8 +39,12 @@ const props = useProps('modal', _props, {
   transfer: 'body',
   inner: false,
   top: '30vh',
-  transitionName: 'fade-in'
+  width: '550px',
+  height: '',
+  transitionName: () => ns.ns('modal-fade'),
+  reverseBackdrop: false
 })
+
 const emit = defineEmits(['update:active'])
 
 const ns = useNamespace('modal')
@@ -47,7 +53,9 @@ const currentActive = ref(props.active)
 const dialogStyle = computed(() => {
   return {
     ...rect,
-    width: '550px'
+    width: props.width,
+    height: props.height,
+    boxShadow: props.reverseBackdrop ? 'none' : ''
   }
 })
 const dialogClass = computed(() => {

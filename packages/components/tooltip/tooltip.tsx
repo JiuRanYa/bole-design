@@ -9,15 +9,15 @@ import {
   watch
 } from 'vue'
 import { toolTipProps } from './props'
-import { placementWhiteList, triggerWhiteList, useProps } from '@bole-design/common'
+import { placementWhiteList, triggerWhiteList, useProps } from '@panda-ui/common'
 import {
   useNamespace,
   useEventListener,
   useClickOutside,
   usePopper,
   useSetTimeout
-} from '@bole-design/hooks'
-import { Popper, PopperExposed } from '@bole-design/components'
+} from '@panda-ui/hooks'
+import { Popper, PopperExposed } from '@panda-ui/components'
 
 const TEXT_VNODE = createTextVNode('').type
 
@@ -39,7 +39,7 @@ export default defineComponent({
       },
       visible: false,
       transfer: true,
-      reverse: true,
+      reverse: false,
       trigger: {
         default: 'hover',
         validator: value => triggerWhiteList.includes(value)
@@ -88,7 +88,7 @@ export default defineComponent({
       }
     })
 
-    useClickOutside(originTriggerEl, handleClickOutside, { ignore: [popperEl] })
+    useClickOutside(handleClickOutside, { ignore: [popperEl] }, originTriggerEl)
 
     const classNames = computed(() => {
       return [ns.b(), ns.bs('vars'), props.inherit && ns.bm('inherit')]
@@ -144,10 +144,10 @@ export default defineComponent({
     }
 
     useEventListener(trigger, 'click', handleToggerClick)
-    useEventListener(trigger, 'mouseenter', handleTriggerEnter)
-    useEventListener(trigger, 'mouseleave', handleTriggerLeave)
-    useEventListener(popperEl, 'mouseenter', handleTriggerEnter)
-    useEventListener(popperEl, 'mouseleave', handleTriggerLeave)
+    useEventListener(trigger, 'pointerenter', handleTriggerEnter)
+    useEventListener(trigger, 'pointerleave', handleTriggerLeave)
+    useEventListener(popperEl, 'pointerenter', handleTriggerEnter)
+    useEventListener(popperEl, 'pointerleave', handleTriggerLeave)
 
     const transferTarget = computed(() => {
       if (props.transfer === true) {

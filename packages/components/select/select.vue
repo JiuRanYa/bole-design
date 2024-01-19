@@ -1,24 +1,29 @@
 <script setup lang="ts">
-import { watch, computed, onMounted, ref, toRefs, provide, reactive } from 'vue'
+import { watch, computed, onMounted, ref, provide, reactive } from 'vue'
 import { selectProps } from './props'
-import { useProps } from '@bole-design/common'
+import { useProps } from '@panda-ui/common'
 import type { Placement } from '@floating-ui/dom'
-import { Popper, PopperExposed } from '../popper'
+import { Popper } from '../popper'
 import { Option } from '../option'
-import { useClickOutside, useNamespace, usePopper } from '@bole-design/hooks'
-import { ChevronDown } from '@bole-design/icons'
+import { useClickOutside, useNamespace } from '@panda-ui/hooks'
+import { ChevronDown } from '@panda-ui/icons'
 import { Icon } from '../icon'
-import { useSelect, useSelectStates } from './useSelect'
-import { selectKey } from '@bole-design/tokens/select'
+import { Input } from '../input'
+import { Tag } from '../tag'
+import { useSelect } from './useSelect'
+import { selectKey } from '@panda-ui/tokens/select'
+import { Xmark } from '@panda-ui/icons'
+import { ScrollArea } from '../scroll-area'
 
 defineOptions({
   name: 'Select'
 })
+
 const emit = defineEmits(['update:value', 'update:visible'])
 
 const _props = defineProps(selectProps)
 const props = useProps('select', _props, {
-  value: -1,
+  value: null,
   visible: false,
   transitionName: () => ns.ns('drop'),
   listClass: [],
@@ -26,31 +31,41 @@ const props = useProps('select', _props, {
   options: {
     default: () => [],
     static: true
-  }
-})
-
-const wrapper = ref()
-const reference = ref()
-
-const states = useSelectStates(props)
-const { currentVisible, selectedLabel } = toRefs(states)
-const { handleOptionClick, setVisible } = useSelect(props, states, emit)
-
-const popper = ref<PopperExposed>()
-const placement = ref<Placement>('bottom-start')
-const popperEl = computed(() => popper.value?.wrapper)
-
-const referenceEl = computed(() => {
-  return reference.value
-})
-
-const { x, y } = usePopper({
-  referenceEl,
-  popperEl,
-  placement
+  },
+  placement: 'bottom-start',
+  to: 'body',
+  filterable: false,
+  creatable: false,
+  clearable: false
 })
 
 const ns = useNamespace('select')
+const {
+  x,
+  y,
+  wrapper,
+  popper,
+  popperEl,
+  reference,
+  referenceEl,
+
+  states,
+  setVisible,
+  showClearIcon,
+  onInput,
+  filteredOptions,
+  onKeyboardUp,
+  onKeyboardDown,
+  onKeyboardSelect,
+  onKeyboardDelete,
+  handleOptionClick,
+  handleClickOutSide,
+  handleClearEmitValue,
+  isSelected
+} = useSelect(props, emit)
+
+const placement = ref<Placement>(props.placement)
+const dropMargin = computed(() => ns.bm(placement.value))
 
 const className = computed(() => {
   return {
@@ -64,23 +79,26 @@ const selectorClass = computed(() => {
   return [
     ns.be('selector'),
     {
-      [ns.bem('selector', 'focused')]: currentVisible.value
+      [ns.bem('selector', 'focused')]: states.currentVisible
     }
   ]
 })
 const popperStyle = computed(() => {
   return {
-    'transform-origin': 'center top',
     position: 'absolute',
+    'transform-origin': fitTransform.value,
     left: `${x.value || 0}px`,
     top: `${y.value || 0}px`
   }
 })
+
+const fitTransform = computed(() => {
+  const isTop = props.placement.startsWith('top')
+  return `center ${isTop ? 'bottom' : 'top'}`
+})
+
 function showListPanel() {
-  setVisible(!currentVisible.value)
-}
-function handleClickOutSide() {
-  setVisible(false)
+  setVisible(!states.currentVisible)
 }
 function fitPopperWidth() {
   requestAnimationFrame(() => {
@@ -95,13 +113,9 @@ function fitPopperWidth() {
     }
   })
 }
-onMounted(() => {
-  if (props.visible) {
-    fitPopperWidth()
-  }
-})
+
 watch(
-  () => currentVisible.value,
+  () => states.currentVisible,
   value => {
     if (value) {
       fitPopperWidth()
@@ -109,40 +123,82 @@ watch(
   }
 )
 
+onMounted(() => {})
 provide(
   selectKey,
   reactive({
-    props
+    props,
+    states
   })
 )
-useClickOutside(referenceEl, handleClickOutSide, { ignore: [popperEl] })
+useClickOutside(handleClickOutSide, { ignore: [popperEl] }, referenceEl)
 </script>
 
 <template>
   <div :class="className" ref="wrapper" @click="showListPanel">
     <div ref="reference" :class="selectorClass" tabindex="0">
-      <div :class="ns.be('control')">{{ selectedLabel ? selectedLabel : '请选择' }}</div>
+      <div :class="ns.be('control')">
+        <input
+          v-model="states.inputValue"
+          :readonly="!props.filterable"
+          :placeholder="states.selectedLabel"
+          :class="ns.be('input')"
+          @input="onInput"
+          @keydown.delete.stop="onKeyboardDelete"
+          @keydown.up.stop.prevent="onKeyboardUp"
+          @keydown.down.stop.prevent="onKeyboardDown"
+          @keydown.enter.stop.prevent="onKeyboardSelect"
+        />
+      </div>
       <div :class="[ns.be('icon'), ns.be('suffix')]">
-        <Icon :icon="ChevronDown" :class="ns.be('arrow')"></Icon>
+        <Icon
+          :icon="ChevronDown"
+          :class="ns.be('arrow')"
+          :style="{ opacity: showClearIcon ? '0%' : '' }"
+        ></Icon>
+        <Transition name="fade-in">
+          <Icon
+            v-if="showClearIcon"
+            :icon="Xmark"
+            @click.stop="handleClearEmitValue"
+            :scale="1.1"
+            :class="ns.be('clear')"
+          ></Icon>
+        </Transition>
       </div>
     </div>
     <Popper
       ref="popper"
       :style="popperStyle"
-      to="body"
-      :visible="currentVisible"
+      :to="props.to"
+      :visible="states.currentVisible"
       :transition="props.transitionName"
-      :class="[ns.be('popper'), ns.bs('vars')]"
+      :class="[ns.be('popper'), ns.bs('vars'), ns.bm('popper')]"
     >
-      <div :class="[ns.be('list'), props.listClass]">
-        <Option
-          :label="option.label"
-          :value="option.value"
-          v-for="option in props.options"
-          @click="handleOptionClick(option.value)"
-        >
-        </Option>
-      </div>
+      <ScrollArea
+        max-height="200px"
+        :view-class="[ns.be('scroll-area')]"
+        :style="{ width: '100%' }"
+      >
+        <div :class="[ns.be('list'), dropMargin, props.listClass]">
+          <slot v-if="$slots.prepend" name="prepend"></slot>
+          <Option
+            v-for="(option, idx) in filteredOptions"
+            :index="idx"
+            :label="option.label"
+            :value="option.value"
+            @click="handleOptionClick(option)"
+          >
+            <slot
+              name="option"
+              :option="option"
+              :index="idx"
+              :isSelected="isSelected(option)"
+            ></slot>
+          </Option>
+          <slot v-if="$slots.append" name="append"></slot>
+        </div>
+      </ScrollArea>
     </Popper>
   </div>
 </template>

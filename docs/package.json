@@ -1,8 +1,9 @@
 {
-  "name": "@bole-design/docs",
+  "name": "@panda-ui/docs",
   "type": "module",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Panda UI docs",
+  "author": "Tong Siyuan",
   "scripts": {
     "serve": "vitepress dev .",
     "plugin:dev": "pnpm run plugin:build --watch .vitepress/plugins",
@@ -22,12 +23,15 @@
     "unplugin-vue-components": "^0.24.1"
   },
   "dependencies": {
-    "@bole-design/components": "workspace:*",
-    "@bole-design/internal": "workspace:*",
-    "@bole-design/styles": "workspace:*",
+    "@panda-ui/components": "workspace:*",
+    "@panda-ui/internal": "workspace:*",
+    "@panda-ui/styles": "workspace:*",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
+    "panda-ui": "workspace:^",
     "sass": "^1.62.0",
-    "vitepress": "^1.0.0-rc.4"
+    "simplebar-vue": "^2.3.3",
+    "vitepress": "^1.0.0-rc.4",
+    "vuedraggable": "^4.1.0"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "name": "@panda-ui/playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "serve": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@panda-ui/styles": "workspace:*",
+    "unplugin-vue-components": "^0.24.1",
+    "vue-router": "^4.1.6"
+  }
+}
