@@ -25,6 +25,7 @@
     "build": "tsx ./scripts/build.ts",
     "build:meta": "tsx ./scripts/meta.ts",
     "build:style": "gulp --require sucrase/register/ts",
+    "build:docs": "pnpm -C docs build",
     "build:icons": "pnpm -C packages/icons build",
     "build:hooks": "pnpm -C packages/hooks build",
     "build:internal": "pnpm -C internal build",
