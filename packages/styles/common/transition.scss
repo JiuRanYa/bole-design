@@ -29,11 +29,11 @@
 $-name: '#{$namespace}-drop';
 @mixin -start {
   opacity: 0%;
-  transform: scaleY(0.9);
+  transform: translateZ(0) scaleY(0.9);
 }
 @mixin -end {
   opacity: 100%;
-  transform: scaleY(1);
+  transform: scaleY(1) translateZ(0) ;
 }
 .#{$-name} {
   transform-origin: center top;
@@ -41,7 +41,7 @@ $-name: '#{$namespace}-drop';
     &-enter-active {
       animation: {
         name: #{$-name}-in;
-        duration: 100ms;
+        duration: 120ms;
 				animation-timing-function: cubic-bezier(0.9, 0.7, 1, 0.9);
       }
     }
@@ -49,7 +49,7 @@ $-name: '#{$namespace}-drop';
     &-leave-active {
       animation: {
         name: #{$-name}-out;
-        duration: 100ms;
+        duration: 120ms;
 				animation-timing-function: cubic-bezier(0.9, 0.7, 1, 0.9);
       }
     }

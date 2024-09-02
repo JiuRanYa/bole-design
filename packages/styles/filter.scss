@@ -2,17 +2,14 @@
 @use './shared' as *;
 @use './design' as *;
 
-$filter: () !default;
-$filter: map.merge(
-  (
-    height: 400px
-  ),
-  $filter
+$filter: (
+  ) !default;
+$filter: map.merge((height: 400px),
+    $filter
 );
 
 @mixin trigger() {
   background-color: get-css-var(color-secondary-base);
-  border-radius: get-css-var(radius-large);
 }
 
 .#{$namespace}-filter {
@@ -25,8 +22,11 @@ $filter: map.merge(
   text-overflow: ellipsis;
   @include basis;
 
-  &-vars {
+  &-popper {
+    position: absolute;
+    width: fit-content;
     @include define-preset-values('filter', $filter);
+    font-size: get-css-var(font-size-base);
   }
 
   &__filters {
@@ -39,25 +39,21 @@ $filter: map.merge(
       display: flex;
       align-items: center;
       border: get-css-var(border-shape) get-css-var(border-color-base);
-      height: 36px;
+      height: 34px;
       line-height: 1;
       padding: 0 get-css-var(padding-sm);
       color: get-css-var(content-color-base);
       border-radius: get-css-var(radius-large);
       cursor: pointer;
       transition: get-css-var(transition-background);
+      border-radius: get-css-var(radius-large);
 
       &--trigger {
         @include trigger();
       }
 
-      .#{$namespace}-icon:first-of-type {
-        svg {
-          fill: none;
-        }
-      }
-
       .#{$namespace}-icon {
+        margin-inline-end: 6px;
         color: get-css-var(color-primary-base);
       }
 
@@ -80,11 +76,13 @@ $filter: map.merge(
     @include basis;
     display: inline-flex;
     padding: get-css-var(padding-sm);
+    padding: get-css-var(button-v-padding) get-css-var(button-h-padding);
     align-items: center;
     gap: 6px;
     line-height: 1;
     cursor: pointer;
     transition: get-css-var(transition-background);
+    border-radius: get-css-var(radius-large);
 
     .#{$namespace}-icon {
       color: get-css-var(color-primary-base);
@@ -125,7 +123,6 @@ $filter: map.merge(
   &__list {
     list-style: none;
     flex: 1 1 auto;
-    overflow: auto;
     padding: get-css-var(padding-sm);
     padding-top: 0;
     margin: 0;
@@ -134,13 +131,16 @@ $filter: map.merge(
       padding: 8px get-css-var(padding-sm);
       line-height: 1;
       display: flex;
+      height: 38px;
       align-items: center;
       transition: get-css-var(transition-background);
       cursor: pointer;
+      border-radius: get-css-var(radius-large);
 
       .#{$namespace}-icon {
         color: get-css-var(color-primary-base);
         margin-inline-end: 8px;
+
         svg {
           fill: none;
         }
@@ -173,6 +173,7 @@ $filter: map.merge(
 
       .#{$namespace}-icon {
         color: get-css-var(color-primary-base);
+
         svg {
           fill: none;
         }
@@ -186,14 +187,18 @@ $filter: map.merge(
       .#{$namespace}-select__list {
         position: relative;
         max-height: get-css-var(filter-height);
-        overflow-y: auto;
       }
 
       .#{$namespace}-date-picker-trigger {
         width: 100%;
+
         .#{$namespace}-button-vars {
           width: 100%;
         }
+      }
+
+      hr {
+       margin: 8px 0
       }
     }
 
@@ -209,6 +214,7 @@ $filter: map.merge(
       display: flex;
       justify-content: center;
       flex-direction: column;
+
       .#{$namespace}-input {
         width: 100%;
       }
@@ -257,7 +263,13 @@ $filter: map.merge(
         height: fit-content;
         display: flex;
         align-items: center;
+
         .#{$namespace}-input {
+          width: 100%;
+          margin-bottom: 6px;
+        }
+
+        .#{$namespace}-input-number {
           width: 100%;
           margin-bottom: 6px;
         }
@@ -286,17 +298,15 @@ $filter: map.merge(
     }
 
     &__container {
-      overflow-y: scroll;
       height: calc(100% - 50px);
-      &__radio {
-        margin: 0;
-        li {
-          padding: get-css-var(padding-sm);
-          input {
-            margin: 0;
-            margin-right: 6px;
-          }
-        }
+    }
+
+    &__radio {
+      margin: 0;
+      padding: 0;
+
+      .#{$namespace}-radio-group--vertical {
+        gap: 16px;
       }
     }
 
@@ -318,49 +328,17 @@ $filter: map.merge(
       background-color: hsl(get-css-var(hsl-color-primary-base) / 0.6);
       color: get-css-var(color-primary-foreground);
       cursor: default;
+      font-weight: 600;
+
       &--active {
         background-color: hsl(get-css-var(hsl-color-primary-base));
       }
-    }
-
-    &__radio {
-      padding: 0;
     }
 
     &__boolean {
       display: flex;
       justify-content: center;
       margin: 18px;
-
-      &__false {
-        margin-left: 24px;
-      }
-
-      input[type='radio'] {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-
-      label:before {
-        content: '';
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-right: 8px;
-        border: 3px solid get-css-var(color-secondary-base);
-        border-radius: 50%;
-        vertical-align: middle;
-      }
-
-      input[type='radio']:checked + label:before {
-        border-color: get-css-var(color-primary-base);
-      }
-
-      label {
-        cursor: pointer;
-      }
     }
   }
 }

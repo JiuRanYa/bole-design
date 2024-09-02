@@ -1,55 +1,55 @@
-<template>
-  <FilterGroup v-model:rulesGroup="rulesGroup">
-    <template #filter="{ filter }">
-      <Filter :ruleOptions="ruleOptions" v-model:rules="filter.rules">
-        <template #rule="{ rule }">
-         【{{ rule.label }}】
-        </template>
-        <template #filter> 自定义筛选按钮 </template>
-      </Filter>
-    </template>
-    <template #actions="{ index, filter, addFilter, copyFilter, removeFilter }">
-      <div @click="addFilter(index)">[add]</div>
-      <div @click="copyFilter(index)">[copy]</div>
-      <div @click="removeFilter(index)">[remove]</div>
-    </template>
-  </FilterGroup>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Filter } from '@panda-ui/components'
+import type { RuleData, RuleOption } from '@panda-ui/components/filter/types'
+import { InputType, Category, LogicalOperator } from '@panda-ui/components/filter/types'
 
-const rulesGroup = ref([
-  [
+const ruleDataGroup = ref<RuleData>({
+  category: Category.LOGIGAL,
+  operator: LogicalOperator.OR,
+  val: [
     {
       field: 'count',
-      label: '数量',
+      label: 'count',
       operator: { label: '不等于', value: 'NOT_EQUALS' },
-      value: '123',
-      inputType: 'input'
-    }
-  ],
-  [
+      val: '123',
+      inputType: InputType.INPUT,
+      category: Category.PRIMARY,
+    },
     {
-      field: 'filterText',
-      label: '过滤名称',
-      operator: { label: '等于', value: 'EQUALS' },
-      value: '名称a',
-      inputType: 'input'
+      category: Category.LOGIGAL,
+      operator: LogicalOperator.AND,
+      val: [
+        {
+          field: 'dateField',
+          label: '时间date字段',
+          operator: { label: '等于', value: 'EQUALS' },
+          val: '2023-12-28',
+          inputType: InputType.DATE,
+          category: Category.PRIMARY,
+        },
+        {
+          field: 'count',
+          label: '数量',
+          operator: { label: '等于', value: 'EQUALS' },
+          val: 12,
+          inputType: InputType.INPUTNUMBER,
+          category: Category.PRIMARY,
+        },
+      ]
     }
   ]
-])
+})
 
-const ruleOptions = [
+const ruleOptions: RuleOption[] = [
   {
     field: 'filterText',
     label: '过滤名称',
     operators: [
       { label: '等于', value: 'EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input'
+    inputType: InputType.INPUT,
   },
   {
     field: 'count',
@@ -61,9 +61,9 @@ const ruleOptions = [
       { label: '小于', value: 'LESS_THAN' },
       { label: '大于等于', value: 'GREATER_THAN_EQUALS' },
       { label: '小于等于', value: 'LESS_THAN_EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input'
+    inputType: InputType.INPUT,
   },
   {
     field: 'dateField',
@@ -74,9 +74,39 @@ const ruleOptions = [
       { label: '等于', value: 'EQUALS' },
       { label: '不等于', value: 'NOT_EQUALS' },
       { label: '小于', value: 'LESS_THAN' },
-      { label: '小于等于', value: 'LESS_THAN_EQUALS' }
+      { label: '小于等于', value: 'LESS_THAN_EQUALS' },
     ],
-    inputType: 'date'
-  }
+    inputType: InputType.DATE,
+  },
+  {
+    field: 'textContent',
+    label: '客诉内容',
+    operators: [
+      { label: '包含', value: 'AND' },
+      { label: '包含其中之一', value: 'OR' },
+    ],
+    inputType: InputType.MULTIINPUT,
+  },
 ]
+
+function setRuleDataGroup(index: number, ruleData: RuleData) {
+  if (ruleDataGroup.value.operator === LogicalOperator.OR) {
+    ruleDataGroup.value.val[index] = ruleData ? ruleData : null
+  } else {
+    ruleDataGroup.value = ruleData
+  }
+}
 </script>
+
+<template>
+  <FilterGroup v-model:ruleDataGroup="ruleDataGroup">
+    <template #filter="{ filter, index }">
+      <Filter v-model:ruleData="filter.ruleData" :rule-options="ruleOptions"
+        @change="setRuleDataGroup(index, filter.ruleData)">
+        <template #trigger>
+          筛选按钮
+        </template>
+      </Filter>
+    </template>
+  </FilterGroup>
+</template>

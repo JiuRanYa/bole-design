@@ -1,8 +1,8 @@
 import { reactive } from 'vue'
-import { tabsProps } from './props'
+import type { tabsProps } from './props'
 
-export const useTabsStates = (props: typeof tabsProps) => {
+export function useTabsStates(props: typeof tabsProps) {
   return reactive({
-    currentValue: props.value
+    currentValue: props.value,
   })
 }

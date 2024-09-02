@@ -12,7 +12,9 @@ const headers = useToc()
 
 <template>
   <aside ref="container" class="toc-wrapper">
-    <h3 class="toc-content__heading">On This Page</h3>
+    <h3 class="toc-content__heading">
+      On This Page
+    </h3>
     <ul class="toc-items">
       <li v-for="{ link, title, children } in headers" :key="link" class="toc-item">
         <a class="toc-link" :href="link" :title="title">
@@ -33,6 +35,7 @@ const headers = useToc()
     <div ref="marker" class="toc-marker" />
   </aside>
 </template>
+
 <style lang="scss">
 .toc-wrapper {
   margin-left: 32px;
@@ -42,6 +45,10 @@ const headers = useToc()
   .toc-content__heading {
     font-size: 14px;
     margin-top: 12px;
+  }
+  ul {
+    list-style: none;
+    margin-left: 0;
   }
 
   .toc-items {

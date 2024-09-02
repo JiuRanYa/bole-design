@@ -1,8 +1,19 @@
+<script setup lang="ts">
+import { Message } from '@panda-ui/components'
+
+function openMessage() {
+  Message({
+    message: 'Success message',
+    type: 'success',
+  })
+}
+</script>
+
 <template>
   <Button
     @click="
       $message.info({
-        message: 'Info message'
+        message: 'Info message',
       })
     "
   >
@@ -12,7 +23,7 @@
     type="success"
     @click="
       $message.success({
-        message: 'success message'
+        message: 'success message',
       })
     "
   >
@@ -22,7 +33,7 @@
     type="error"
     @click="
       $message.error({
-        message: 'error message'
+        message: 'error message',
       })
     "
   >
@@ -32,21 +43,10 @@
     type="warning"
     @click="
       $message.warning({
-        message: 'warning message'
+        message: 'warning message',
       })
     "
   >
     warning
   </Button>
 </template>
-
-<script setup lang="ts">
-import { Message } from '@panda-ui/components'
-
-function openMessage() {
-  Message({
-    message: 'Success message',
-    type: 'success'
-  })
-}
-</script>

@@ -3,12 +3,12 @@ import { writeFile } from 'node:fs/promises'
 import prettier from 'prettier'
 import { ESLint } from 'eslint'
 import {
-  rootDir,
-  prettierConfig,
-  logger,
-  hooks as allHooks,
   components as allComponents,
-  toCapitalCase
+  hooks as allHooks,
+  logger,
+  prettierConfig,
+  rootDir,
+  toCapitalCase,
 } from './utils'
 
 const ignores: any[] = []
@@ -17,6 +17,7 @@ const plugins: any[] = []
 async function main() {
   const exportComponents = allComponents.filter(c => !ignores.includes(c))
   const components = exportComponents.filter(c => !plugins.includes(c))
+  logger.info('Start bootstrap for components...')
 
   const index = `
     ${exportComponents
@@ -37,8 +38,6 @@ async function main() {
   `
 
   const hooksIndex = `
-    ${allHooks.map(hook => `import { ${hook} } from './${hook}'`).join('\n')}
-
     ${allHooks.map(hook => `export * from './${hook}'`).join('\n')}
   `
 
@@ -48,7 +47,7 @@ async function main() {
       export interface GlobalComponents {
         ${[...components]
           .map(
-            name => `${toCapitalCase(name)}: typeof import('panda-ui')['${toCapitalCase(name)}']`
+            name => `${toCapitalCase(name)}: typeof import('panda-ui')['${toCapitalCase(name)}']`,
           )
           .join(',\n')}
       }
@@ -71,21 +70,23 @@ async function main() {
   await writeFile(
     indexPath,
     prettier.format(index, { ...prettierConfig, parser: 'typescript' }),
-    'utf-8'
+    'utf-8',
   )
   await writeFile(
     hookIndexPath,
     prettier.format(hooksIndex, { ...prettierConfig, parser: 'typescript' }),
-    'utf-8'
+    'utf-8',
   )
   await writeFile(
     typesPath,
     prettier.format(types, { ...prettierConfig, parser: 'typescript' }),
-    'utf-8'
+    'utf-8',
   )
 
   await ESLint.outputFixes(await eslint.lintFiles(indexPath))
   await ESLint.outputFixes(await eslint.lintFiles(typesPath))
+
+  logger.success('Bootstrap for components success')
 
   // 目前不需要自动生成样式文件
   // await runParallel(cpus().length, allComponents, async (component) => {
@@ -97,7 +98,7 @@ async function main() {
   // });
 }
 
-main().catch(error => {
+main().catch((error) => {
   logger.error(error)
   process.exit(1)
 })

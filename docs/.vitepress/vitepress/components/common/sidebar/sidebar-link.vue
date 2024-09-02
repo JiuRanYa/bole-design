@@ -1,32 +1,31 @@
-<template>
-  <a
-    :class="{
-      link: true,
-      active: isActive(route.path, realLink)
-    }"
-    :href="realLink"
-  >
-    <p class="link-text">{{ item.text }}</p>
-  </a>
-</template>
-
 <script setup lang="ts">
 import { computed, defineComponent } from 'vue'
+import { useRoute } from 'vitepress'
 import type { Link } from '../../../type'
 import { isActive } from '../../../utils/index'
-import { useRoute } from 'vitepress'
 
 const props = defineProps<{
   item: Link
 }>()
 
 defineComponent({
-  name: 'bl-sidebar-link'
+  name: 'BlSidebarLink',
 })
 const route = useRoute()
 const project = computed(() => route.path.split('/')[2])
 const realLink = computed(() => `/projects/${project.value}${props.item.link}`)
 </script>
+
+<template>
+  <a
+    class="link" :class="{
+      active: isActive(route.path, realLink),
+    }"
+    :href="realLink"
+  >
+    <p class="link-text">{{ item.text }}</p>
+  </a>
+</template>
 
 <style lang="scss" scoped>
 .link:not(.flex) {

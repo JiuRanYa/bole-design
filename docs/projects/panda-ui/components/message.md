@@ -1,13 +1,10 @@
 ---
-title: Button
+title: Message
 lang: zh-CN
+description: 一个简洁的信息提示组件
 ---
 
 # Message
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/message/*/*.vue')
-</script>
 
 一个简洁的信息提示组件
 
@@ -43,6 +40,16 @@ message/custom
 :::demo
 
 message/title
+
+:::
+
+## 自定义渲染
+
+`renderer`属性允许您传入一个自定义的渲染函数，在需要高度自定义`Message`组件内容时非常实用
+
+:::demo
+
+message/renderer
 
 :::
 

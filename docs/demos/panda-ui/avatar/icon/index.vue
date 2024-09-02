@@ -1,14 +1,14 @@
-<template>
-  <div class="avatar-box">
-    <Avatar circle :icon="User" size="small"></Avatar>
-    <Avatar circle :icon="User"></Avatar>
-    <Avatar circle :icon="User" size="large"></Avatar>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { User } from '@panda-ui/icons'
 </script>
+
+<template>
+  <div class="avatar-box">
+    <Avatar circle :icon="User" size="small" />
+    <Avatar circle :icon="User" />
+    <Avatar circle :icon="User" size="large" />
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .avatar-box {

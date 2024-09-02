@@ -1,10 +1,12 @@
-import { watch, onMounted, ref, Ref, WatchStopHandle, watchEffect } from 'vue'
-import { computePosition } from '@floating-ui/dom'
-import type { Placement, VirtualElement } from '@floating-ui/dom'
+import type { Ref } from 'vue'
+import { computed, onMounted, ref, shallowRef, unref, watchEffect } from 'vue'
+import { computePosition, flip, hide } from '@floating-ui/dom'
+import type { Middleware, Placement, VirtualElement } from '@floating-ui/dom'
+import { isClient } from '@panda-ui/common'
 
 interface UsePopperOptions {
   /*
-   *	弹出位置
+   * 弹出位置
    * */
   placement: Ref<Placement>
   /**
@@ -14,57 +16,99 @@ interface UsePopperOptions {
   /**
    * 参考元素，popper 元素的位置计算依据
    */
-  referenceEl: Ref<Element | VirtualElement | null | undefined>
+  reference?: Ref<Element | VirtualElement | null | undefined>
   /**
    * popper 元素
    */
-  popperEl: Ref<HTMLElement | null | undefined>
+  popper?: Ref<HTMLElement | null | undefined>
+  /**
+   * 是否是下拉元素，需要处理transition-origin
+   */
+  isDrop?: boolean
 }
 
 export function usePopper(options: UsePopperOptions) {
-  const { placement } = options
-  const referenceEl = options.referenceEl ?? ref(null)
-  const popperEl = options.popperEl ?? ref(null)
-  const x = ref<number>()
-  const y = ref<number>()
+  const { placement, transfer, popper, isDrop } = options
+  const reference: Ref<HTMLElement | null | undefined>
+    = (options.reference as any) ?? shallowRef(null)
+  const popperEl = options.popper ?? ref(null)
+  const middleware: Middleware[] = [
+    flip(),
+    hide({
+      strategy: 'escaped', // 'referenceHidden' by default
+    }),
+  ]
 
-  let stopWatchPopper: WatchStopHandle | null = null
+  const transferTo = computed(() => {
+    return typeof transfer?.value === 'boolean' ? (transfer.value ? 'body' : '') : transfer?.value
+  })
 
-  function createPopper() {
-    const cancelWatchReference = watch(referenceEl, update, { immediate: true })
+  if (isDrop) {
+    middleware.push({
+      name: 'origin',
+      fn({ placement, elements }) {
+        const origin = setPopperDropOrigin(placement)
+
+        if (origin)
+          elements.floating.style.transformOrigin = origin
+
+        return {}
+      },
+    })
   }
 
-  const states = {
-    x,
-    y,
-    placement
-  } as const
-
   async function update() {
-    const refEl = referenceEl.value
+    const refEl = unref(reference)
     const popEl = popperEl.value
-    const middleware = ref({})
 
-    if (!refEl || !popEl) return
+    if (!refEl || !popEl)
+      return
 
-    const data = await computePosition(refEl, popEl, {
-      strategy: 'absolute',
+    const { strategy, x, y } = await computePosition(refEl, popEl, {
       placement: placement.value,
-      middleware: []
+      middleware,
     })
 
-    states.x.value = data.x
-    states.y.value = data.y
+    const style: Partial<CSSStyleDeclaration> = {
+      position: strategy,
+      top: `${y}px`,
+      left: `${x}px`,
+    }
+
+    Object.assign(popEl.style, style)
+  }
+
+  const updatePopper = () => {
+    if (!isClient)
+      return
+
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() =>
+        update().then(resolve),
+      )
+    })
   }
 
   onMounted(() => {
-    watchEffect(() => {
-      createPopper()
+    requestAnimationFrame(() => {
+      watchEffect(update)
     })
   })
 
+  function setPopperDropOrigin(placement: Placement) {
+    if (placement !== 'left' && placement !== 'right') {
+      const [start, end] = placement.split('-')
+
+      return start === 'bottom' || (start !== 'top' && end === 'start')
+        ? 'center top'
+        : 'center bottom'
+    }
+  }
+
   return {
-    ...states,
-    update
+    updatePopper,
+    reference,
+    popper,
+    transferTo,
   }
 }

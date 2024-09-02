@@ -29,14 +29,25 @@ $month-grid: map.merge((), $month-grid);
   $prefix: '#{$namespace}-month-grid';
 
   &__days--body {
-		// tr[role='row']:first-of-type {
-		// 	td:not(.in-range) + td[aria-label].in-range:not([aria-label=""]) {
-		// 		background: linear-gradient(to left, get-css-var(color-secondary-base), get-css-var(color-white))
-		// 	}
-		// }
+
     tr[role='row'] {
       display: flex;
       margin: 2px 0;
+
+      .before-range {
+        background-color: get-css-var(color-secondary-base);
+        border-radius: 0;
+        &:first-child {
+          background: linear-gradient(to left, get-css-var(color-secondary-base), get-css-var(color-white))
+        }
+      }
+      .is-end:not(.end) ~ td {
+        background-color: get-css-var(color-secondary-base);
+        border-radius: 0;
+        &:last-child {
+          background: linear-gradient(to right, get-css-var(color-secondary-base), get-css-var(color-white))
+        }
+      }
 
       td {
         width: calc(100% / 7);
@@ -104,12 +115,33 @@ $month-grid: map.merge((), $month-grid);
           border-bottom-right-radius: 50%;
         }
       }
+      td.before-range + .end {
+        &:not(.in-range)::before {
+          content: '';
+          position: absolute;
+          background-color: get-css-var(color-secondary-base);
+          z-index: -1;
+          inset: -2px -2px;
+          border-top-right-radius: 50%;
+          border-bottom-right-radius: 50%;
+        }
+      }
       td.end {
         @extend .selected;
       }
       td.in-range:not(.start) {
         border-radius: 0;
-          background-color: get-css-var(color-secondary-base);
+        background-color: get-css-var(color-secondary-base);
+        &:first-child {
+          border-radius: 4px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        &:last-child {
+          border-radius: 4px;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
       }
     }
   }

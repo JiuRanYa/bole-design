@@ -1,6 +1,5 @@
 ---
 title: Guild | Panda UI
-page: true
 lang: zh-CN
 ---
 
@@ -28,5 +27,4 @@ import { createApp } from 'vue'
 import { install } from 'panda-ui'
 
 createApp(App).use(install).mount('#app')
-
 ```

@@ -1,15 +1,12 @@
 ---
 title: row
 lang: zh-CN
+description: 一维栅格布局组件，基于列来定义区域块
 ---
 
 # Row
 
 一维栅格布局组件，基于列来定义区域块
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/row/*/*.vue')
-</script>
 
 ## 基本用法
 

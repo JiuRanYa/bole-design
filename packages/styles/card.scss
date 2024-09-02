@@ -42,7 +42,7 @@ $card: map.merge(
 	&-description {
 		font-size: 14px;
 		margin-top: 8px;
-		line-height: 1;
+		line-height: 1.2;
 		color: get-css-var(content-color-secondary)
 	}
 	.#{$namespace}-input {

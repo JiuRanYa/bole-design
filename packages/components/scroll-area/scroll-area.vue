@@ -1,42 +1,26 @@
-<template>
-  <div :class="ns.b()" :style="wrapperStyle">
-    <div ref="wrapperRef" :class="wrapperClass" @scroll="handleScroll">
-      <component :is="props.tag" :class="[ns.bm('view'), ...props.viewClass]" ref="viewRef">
-        <slot />
-      </component>
-
-      <Bar
-        ref="barRef"
-        :move="thumbState.top"
-        :barLength="barSizePercentage"
-        :barOpacity="thumbState.barOpacity"
-        :dragging="thumbState.dragging"
-      />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import Bar from './bar.vue'
 import { computed, provide } from 'vue'
 import { useProps } from '@panda-ui/common'
-import { ScrollAreaInstance, scrollAreaProps } from './props'
 import { useNamespace } from '@panda-ui/hooks'
-import { useScroll } from './useScroll'
 import { scrollAreaKey } from '@panda-ui/tokens/scroll-area'
+import type { ScrollAreaInstance } from './props'
+import { scrollAreaProps } from './props'
+import { useScroll } from './useScroll'
+import Bar from './bar.vue'
 
 defineOptions({
-  name: 'ScrollArea'
+  name: 'ScrollArea',
 })
 
 const _props = defineProps(scrollAreaProps)
 const props = useProps('ScrollArea', _props, {
   tag: 'div',
-  height: null,
+  height: '',
   maxHeight: null,
   watchResize: false,
   viewClass: [],
-  wrapperClass: []
+  wrapperClass: [],
+  mode: 'vertical',
 })
 
 const ns = useNamespace('scroll-area')
@@ -46,12 +30,13 @@ const wrapperClass = computed(() => {
 const wrapperStyle = computed(() => {
   return {
     height: props.height,
-    maxHeight: props.maxHeight
+    maxHeight: props.maxHeight,
   }
 })
 
 const {
   wrapperRef,
+  containerRef,
   viewRef,
   barRef,
   handleScroll,
@@ -59,15 +44,35 @@ const {
   thumbState,
   scrollTo,
   handleTrackPointerDown,
-  handleThumbPointerDown
+  handleThumbPointerDown,
 } = useScroll(props)
 
 provide(scrollAreaKey, {
   handleTrackPointerDown,
-  handleThumbPointerDown
+  handleThumbPointerDown,
 })
 
 defineExpose<ScrollAreaInstance>({
-  scrollTo
+  scrollTo,
 })
 </script>
+
+<template>
+  <div ref="containerRef" :class="ns.b()" :style="wrapperStyle">
+    <div ref="wrapperRef" :class="wrapperClass" @scroll="handleScroll">
+      <component :is="props.tag" ref="viewRef" :class="[ns.bm('view'), ...props.viewClass]">
+        <slot />
+      </component>
+
+      <Bar
+        ref="barRef"
+        :mode="props.mode"
+        :offset="thumbState.offset"
+        :bar-length="barSizePercentage"
+        :bar-opacity="thumbState.barOpacity"
+        :dragging="thumbState.dragging"
+        :always-show="props.alwaysShow"
+      />
+    </div>
+  </div>
+</template>

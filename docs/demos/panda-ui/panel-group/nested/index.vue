@@ -2,17 +2,23 @@
   <div class="wrapper">
     <PanelGroup>
       <Panel>
-        <div class="inner">1</div>
+        <div class="inner">
+          1
+        </div>
       </Panel>
       <PanelResizeHandle />
       <Panel>
         <PanelGroup direction="vertical">
           <Panel>
-            <div class="inner">2</div>
+            <div class="inner">
+              2
+            </div>
           </Panel>
           <PanelResizeHandle />
           <Panel>
-            <div class="inner">3</div>
+            <div class="inner">
+              3
+            </div>
           </Panel>
         </PanelGroup>
       </Panel>

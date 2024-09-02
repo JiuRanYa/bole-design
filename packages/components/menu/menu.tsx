@@ -16,8 +16,8 @@ export default defineComponent({
         ns.b(),
         ns.bs('vars'),
         {
-          [ns.bm('inherit')]: props.inherit
-        }
+          [ns.bm('inherit')]: props.inherit,
+        },
       ]
     })
 
@@ -27,10 +27,10 @@ export default defineComponent({
 
     return () => {
       return (
-        <ul class={classNames.value} role={'menu'} tabindex={-1}>
+        <ul class={classNames.value} role="menu" tabindex={-1}>
           {slots.default ? slots.default() : renderMenus()}
         </ul>
       )
     }
-  }
+  },
 })

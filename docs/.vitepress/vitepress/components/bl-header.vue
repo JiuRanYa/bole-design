@@ -1,48 +1,16 @@
-<template>
-  <div class="bl-header-container">
-    <div class="bl-header">
-      <div class="bl-header-left">
-        <a class="bl-logo" :href="`/projects/${project}/`">
-          <span class="bl-title">{{ project }}</span>
-        </a>
-        <div class="bl-nav">
-          <a
-            v-for="item in nav"
-            :href="item.link"
-            :class="{
-              link: true,
-              active: isActive(route.path, item.link)
-            }"
-          >
-            {{ item.text }}
-          </a>
-        </div>
-      </div>
-      <div class="bl-header-right">
-        <div class="bl-header-search">
-          <input placeholder="在Panda UI中搜索" />
-          <kbd>⌘ K</kbd>
-        </div>
-        <Switch
-          :open-icon="Moon"
-          :close-icon="Sun"
-          class="theme-switch switchAppearance"
-          @click="switchTheme"
-        ></Switch>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vitepress'
+import { Moon, Sun } from '@panda-ui/icons'
 import { useNav } from '../composables/index'
-import { useRoute } from 'vitepress'
-import { Sun, Moon } from '@panda-ui/icons'
 import { BL_PROJECT_STORAGE } from '../tookens'
+import { SUPPORT_PROJECTS } from '@/.vitepress/configs/projects'
+import type { ConfigItem } from '@/.vitepress/configs/sidebar'
+import siderbarsConfig from '@/.vitepress/configs/sidebar'
+import { getProjectLink } from '@/.vitepress/configs'
 
 defineComponent({
-  name: 'header'
+  name: 'Header',
 })
 
 const route = useRoute()
@@ -50,12 +18,43 @@ const nav = useNav()
 const rootCls = ref<DOMTokenList>()
 
 const project = ref()
+const inputSearchKey = ref('')
+const visible = ref(false)
 
+function toKebabCase(str: string) {
+  return str
+    .split(' ')
+    .map(i => i.toLowerCase())
+    .join('-')
+}
+
+const currentProject: any = computed(() => {
+  const selected = SUPPORT_PROJECTS.find(x => toKebabCase(x.title) === project.value)
+  return selected || SUPPORT_PROJECTS[0]
+})
+
+const components = computed(() => {
+  return siderbarsConfig['panda-ui'].components
+    .reduce((res, item) => {
+      res.push(...item.children)
+      return res
+    }, [] as ConfigItem[])
+    .filter(i => i.text.toLowerCase().includes(inputSearchKey.value.toLowerCase()))
+})
+
+const router = useRouter()
+function switchProject() {
+  router.go('/projects/select-pro/')
+}
 function isActive(routePath: string, link: string) {
   const routeTop = routePath?.split('/').slice(1, 4).pop()
   const linkTop = link?.split('/').slice(1, 4).pop()
 
   return routeTop === linkTop
+}
+function handleSelectComp() {
+  visible.value = false
+  inputSearchKey.value = ''
 }
 
 function setClass(dark: boolean): void {
@@ -69,8 +68,8 @@ function setClass(dark: boolean): void {
 				-o-transition: none !important;
 				-ms-transition: none !important;
 				transition: none !important;
-			}`
-    )
+			}`,
+    ),
   )
   document.head.appendChild(css)
   const rootValue = rootCls.value!
@@ -89,11 +88,10 @@ function switchTheme(event: MouseEvent) {
 
   // @ts-expect-error: Transition API
   const transition = document.startViewTransition(() => {
-    if (rootCls.value?.contains('dark')) {
+    if (rootCls.value?.contains('dark'))
       setClass(false)
-    } else {
+    else
       setClass(true)
-    }
   })
 
   transition.ready.then(() => {
@@ -105,21 +103,92 @@ function switchTheme(event: MouseEvent) {
     // const clipPath = [`inset(5% 100% 5% -50%)`, 'inset(45% 0% 45% 50%)', 'inset(0)']
     document.documentElement.animate(
       {
-        clipPath: !isDark ? clipPath : [...clipPath].reverse()
+        clipPath: !isDark ? clipPath : [...clipPath].reverse(),
       },
       {
         duration: 500,
         easing: 'ease-in',
-        pseudoElement: !isDark ? '::view-transition-new(root)' : '::view-transition-old(root)'
-      }
+        pseudoElement: !isDark ? '::view-transition-new(root)' : '::view-transition-old(root)',
+      },
     )
   })
 }
+
+function handleKeyboard(e: KeyboardEvent) {
+  // cmd + k
+  if (e.metaKey && e.code === 'KeyK')
+    visible.value = !visible.value
+}
+
+const inputRef = ref<HTMLInputElement>()
+
+watch(visible, () => (visible.value ? inputRef.value?.focus() : inputRef.value?.blur()))
+
 onMounted(() => {
   rootCls.value = document.documentElement.classList ?? []
   project.value = localStorage.getItem(BL_PROJECT_STORAGE) ?? 'panda-ui'
+
+  document.addEventListener('keydown', handleKeyboard)
 })
 </script>
+
+<template>
+  <div class="bl-header-container">
+    <div class="bl-header">
+      <div class="bl-header-left">
+        <a class="bl-logo" :href="`/projects/${project}/`">
+          <span class="bl-title">{{ project }}</span>
+        </a>
+        <div class="bl-nav">
+          <a
+            v-for="item in nav"
+            :href="item.link"
+            class="link" :class="{
+              active: isActive(route.path, item.link),
+            }"
+          >
+            {{ item.text }}
+          </a>
+        </div>
+      </div>
+      <div class="bl-header-right">
+        <Dropdown v-model:visible="visible" placement="bottom-start">
+          <div class="bl-header-search">
+            <input ref="inputRef" v-model="inputSearchKey" placeholder="在Panda UI中搜索">
+            <kbd>⌘ K</kbd>
+          </div>
+
+          <template #drop>
+            <DropdownList style="width: 220px">
+              <ScrollArea max-height="400px">
+                <DropdownItem v-for="comp in components">
+                  <a
+                    style="display: inline-block; width: 100%"
+                    :href="getProjectLink('panda-ui', comp.link)"
+                    @click="handleSelectComp"
+                  >
+                    {{ comp.text }}
+                  </a>
+                </DropdownItem>
+              </ScrollArea>
+            </DropdownList>
+          </template>
+        </Dropdown>
+        <Switch
+          :open-icon="Moon"
+          :close-icon="Sun"
+          class="theme-switch switchAppearance"
+          @click="switchTheme"
+        />
+        <img
+          :src="currentProject?.icon"
+          style="margin-inline-start: 24px; height: 25px; cursor: pointer"
+          @click="switchProject"
+        >
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss">
 .switchAppearance.switchAppearanceTransition {
@@ -175,8 +244,8 @@ onMounted(() => {
       display: flex;
       align-items: center;
       line-height: 1;
-      padding-left: 30px;
       margin-right: 60px;
+      width: 220px;
       input {
         border: none;
         background-color: transparent;

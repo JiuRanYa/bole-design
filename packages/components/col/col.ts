@@ -1,7 +1,8 @@
-import { computed, CSSProperties, defineComponent, h, inject } from 'vue'
+import type { CSSProperties } from 'vue'
+import { computed, defineComponent, h, inject } from 'vue'
 import { useNamespace } from '@panda-ui/hooks'
-import { colProps } from './props'
 import { ROW_STATE } from '../row/symbol'
+import { colProps } from './props'
 
 export default defineComponent({
   name: 'Col',
@@ -25,12 +26,11 @@ export default defineComponent({
       const style: CSSProperties = {}
 
       if (rowState) {
-        if (typeof rowState.gap === 'number') {
+        if (typeof rowState.gap === 'number')
           style.paddingLeft = style.paddingRight = `${rowState.gap / 2}px`
-        }
-        if (Array.isArray(rowState.gap)) {
+
+        if (Array.isArray(rowState.gap))
           style.paddingLeft = style.paddingRight = `${rowState.gap[0] / 2}px`
-        }
       }
 
       return style
@@ -45,7 +45,7 @@ export default defineComponent({
         },
         {
           default: () => slots.default && slots.default(),
-        }
+        },
       )
   },
 })

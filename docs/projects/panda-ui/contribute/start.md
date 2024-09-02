@@ -18,10 +18,10 @@ pnpm -v
 所以在启动项目前，你应该编译这俩个包
 
 ```shell
-pnpm build:icons
-
-pnpm build:internal
+pnpm build-common
 ```
+
+该命令会帮您自动编译好`internal`和`icons`包
 
 ## 网站预览
 

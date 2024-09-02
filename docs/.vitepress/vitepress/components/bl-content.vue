@@ -7,12 +7,16 @@ defineProps<{ hasSidebar: boolean }>()
 <template>
   <main
     id="page-content"
-    :class="{ 'page-content': true, 'has-sidebar': hasSidebar }"
-    class="bl-doc"
+    :class="{ 'has-sidebar': hasSidebar }"
+    class="bl-doc page-content"
   >
     <BLDocContent>
-      <template #content-top><slot name="content-top" /></template>
-      <template #content-bottom><slot name="content-bottom" /></template>
+      <template #content-top>
+        <slot name="content-top" />
+      </template>
+      <template #content-bottom>
+        <slot name="content-bottom" />
+      </template>
     </BLDocContent>
   </main>
 </template>

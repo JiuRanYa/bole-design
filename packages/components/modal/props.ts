@@ -1,4 +1,4 @@
-import { booleanProps, booleanStringProps, buildProps } from '@panda-ui/common'
+import { booleanProps, booleanStringProps, buildProps, eventProp } from '@panda-ui/common'
 
 const positionType = [Number, String]
 
@@ -10,5 +10,9 @@ export const modalProps = buildProps({
   transitionName: String,
   width: String,
   height: String,
-  reverseBackdrop: booleanProps
+  reverseBackdrop: booleanProps,
+  onShow: eventProp(),
+  onClose: eventProp(),
+  onHide: eventProp(),
+  dialogClass: String,
 })

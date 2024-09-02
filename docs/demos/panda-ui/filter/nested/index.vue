@@ -1,62 +1,64 @@
-<template>
-  <Filter :ruleOptions="ruleOptions" v-model:rules="rules" />
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { RuleData, RuleOption } from '@panda-ui/components/filter/types'
+import { InputType, Category, LogicalOperator } from '@panda-ui/components/filter/types'
 
-const defaultRules = [
-  {
-    field: 'email',
-    label: '邮箱',
-    operator: { label: '等于', value: 'EQUALS' },
-    value: '111@uio.com',
-    inputType: 'input'
-  },
-  {
-    field: 'emailChild',
-    label: '邮箱-child',
-    inputType: 'input',
-    operator: { label: '等于', value: 'EQUALS' },
-    value: '222@uio.com'
-  }
-]
+const ruleData = ref<RuleData>({
+  category: Category.LOGIGAL,
+  operator: LogicalOperator.AND,
+  val: [
+    {
+      category: Category.PRIMARY,
+      field: 'email',
+      label: '邮箱',
+      operator: { label: '等于', value: 'EQUALS' },
+      val: '111@uio.com',
+      inputType: InputType.INPUT,
+    },
+    {
+      category: Category.PRIMARY,
+      field: 'emailChild',
+      label: '邮箱-child',
+      inputType: InputType.INPUT,
+      operator: { label: '等于', value: 'EQUALS' },
+      val: '222@uio.com',
+    }
+  ]
+})
 
-const rules = ref(defaultRules)
-
-const ruleOptions = [
+const ruleOptions: RuleOption[] = [
   {
     field: 'email',
     label: '邮箱',
     operators: [
       { label: '等于', value: 'EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input'
+    inputType: InputType.INPUT,
   },
   {
     field: 'num',
     label: '客诉数量',
     operators: [
       { label: '包含', value: 'AND' },
-      { label: '包含其中之一', value: 'OR' }
+      { label: '包含其中之一', value: 'OR' },
     ],
-    inputType: 'multiInput'
+    inputType: InputType.MULTIINPUT,
   },
   {
     field: 'customField',
     label: '自定义字段',
-    inputType: 'custom'
+    inputType: InputType.CUSTOM,
   },
   {
     field: 'emailChild',
     label: '邮箱-child',
     operators: [
       { label: '等于', value: 'EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input',
-    parentField: 'customField'
+    inputType: InputType.INPUT,
+    parentField: 'customField',
   },
   {
     field: 'dateFieldChild',
@@ -67,10 +69,10 @@ const ruleOptions = [
       { label: '等于', value: 'EQUALS' },
       { label: '不等于', value: 'NOT_EQUALS' },
       { label: '小于', value: 'LESS_THAN' },
-      { label: '小于等于', value: 'LESS_THAN_EQUALS' }
+      { label: '小于等于', value: 'LESS_THAN_EQUALS' },
     ],
-    inputType: 'date',
-    parentField: 'customField'
+    inputType: InputType.DATE,
+    parentField: 'customField',
   },
   {
     field: 'countChild',
@@ -82,16 +84,16 @@ const ruleOptions = [
       { label: '小于', value: 'LESS_THAN' },
       { label: '大于等于', value: 'GREATER_THAN_EQUALS' },
       { label: '小于等于', value: 'LESS_THAN_EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input',
-    parentField: 'customField'
+    inputType: InputType.INPUT,
+    parentField: 'customField',
   },
   {
     field: 'customFieldChild',
     label: '自定义字段-child',
-    inputType: 'custom',
-    parentField: 'customField'
+    inputType: InputType.CUSTOM,
+    parentField: 'customField',
   },
   {
     field: 'dateFieldChildChild',
@@ -102,10 +104,14 @@ const ruleOptions = [
       { label: '等于', value: 'EQUALS' },
       { label: '不等于', value: 'NOT_EQUALS' },
       { label: '小于', value: 'LESS_THAN' },
-      { label: '小于等于', value: 'LESS_THAN_EQUALS' }
+      { label: '小于等于', value: 'LESS_THAN_EQUALS' },
     ],
-    inputType: 'date',
-    parentField: 'customFieldChild'
-  }
+    inputType: InputType.DATE,
+    parentField: 'customFieldChild',
+  },
 ]
 </script>
+
+<template>
+  <Filter v-model:ruleData="ruleData" :rule-options="ruleOptions" />
+</template>

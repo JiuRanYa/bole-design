@@ -1,3 +1,48 @@
+<script setup lang="ts">
+import { defineComponent, ref } from 'vue'
+import { BilibiliB, User, YoutubeB } from '@panda-ui/icons'
+import dayjs from 'dayjs'
+
+defineComponent({
+  name: '',
+})
+
+const value = ref<number>(1)
+const roleValue = ref('member')
+const roleValue2 = ref('owner')
+const activeName = ref('password')
+const currentDate = ref(dayjs().format('YYYY-MM-DD'))
+
+const roleOptions = [
+  {
+    label: 'Owner',
+    value: 'owner',
+  },
+  {
+    label: 'Member',
+    value: 'member',
+  },
+  {
+    label: 'Contributor',
+    value: 'contro',
+  },
+]
+const options = [
+  {
+    label: 'Vue',
+    value: 'vue',
+  },
+  {
+    label: 'React',
+    value: 'react',
+  },
+  {
+    label: 'Vanila',
+    value: 'vanila',
+  },
+]
+</script>
+
 <template>
   <div class="card-wrapper">
     <div class="card-col">
@@ -13,12 +58,14 @@
           </div>
           <div style="margin-top: 12px">
             <Label>Frame</Label>
-            <Select v-model:value="value" :options="options"></Select>
+            <Select v-model:value="value" :options="options" />
           </div>
         </CardBody>
         <CardFooter>
           <Button>Cancel</Button>
-          <Button type="primary">Deploy</Button>
+          <Button type="primary">
+            Deploy
+          </Button>
         </CardFooter>
       </Card>
       <Card>
@@ -34,7 +81,7 @@
                 These cookies are essential in order to use the website and use its features.
               </CardDescription>
             </div>
-            <Switch></Switch>
+            <Switch />
           </div>
           <div style="display: flex; align-items: center; margin-top: 20px">
             <div>
@@ -43,7 +90,7 @@
                 These cookies allow the website to provide personalized functionality
               </CardDescription>
             </div>
-            <Switch value></Switch>
+            <Switch value />
           </div>
           <div style="display: flex; align-items: center; margin-top: 20px">
             <div>
@@ -52,11 +99,13 @@
                 These cookies help to improve the performance of the website.
               </CardDescription>
             </div>
-            <Switch></Switch>
+            <Switch />
           </div>
         </CardBody>
         <CardFooter>
-          <Button style="width: 100%">Save Setting</Button>
+          <Button style="width: 100%">
+            Save Setting
+          </Button>
         </CardFooter>
       </Card>
     </div>
@@ -74,39 +123,51 @@
               size="large"
             />
             <div class="user-content">
-              <div class="user-name">Tong Siyuan</div>
-              <CardDescription class="user-role"> Team Members </CardDescription>
+              <div class="user-name">
+                Tong Siyuan
+              </div>
+              <CardDescription class="user-role">
+                Team Members
+              </CardDescription>
             </div>
             <Select
               v-model:value="roleValue"
               style="width: 140px"
               class="user-role-select"
               :options="roleOptions"
-              :fitPopper="false"
-            ></Select>
+              :fit-popper="false"
+            />
           </div>
           <div class="user-wrapper">
             <Avatar circle src="https://ui.shadcn.com/avatars/03.png" size="large" />
             <div class="user-content">
-              <div class="user-name">Tang Xiaofei</div>
-              <CardDescription class="user-role"> Team Members </CardDescription>
+              <div class="user-name">
+                Tang Xiaofei
+              </div>
+              <CardDescription class="user-role">
+                Team Members
+              </CardDescription>
             </div>
             <Select
               v-model:value="roleValue2"
               style="width: 140px"
               class="user-role-select"
               :options="roleOptions"
-              :fitPopper="false"
-            ></Select>
+              :fit-popper="false"
+            />
           </div>
         </CardBody>
       </Card>
       <Card>
         <CardHeader>
-          <Tabs v-model:value="activeName" defaultValue="account" tab-position="top">
+          <Tabs v-model:value="activeName" default-value="account" tab-position="top">
             <template #trigger>
-              <TabsTrigger style="width: 50%" value="account">Account</TabsTrigger>
-              <TabsTrigger style="width: 50%" value="password">Password</TabsTrigger>
+              <TabsTrigger style="width: 50%" value="account">
+                Account
+              </TabsTrigger>
+              <TabsTrigger style="width: 50%" value="password">
+                Password
+              </TabsTrigger>
             </template>
             <TabsPane value="account">
               <Card style="min-width: 100%">
@@ -127,7 +188,9 @@
                   </div>
                 </CardBody>
                 <CardFooter>
-                  <Button style="width: 100%" type="primary">Save</Button>
+                  <Button style="width: 100%" type="primary">
+                    Save
+                  </Button>
                 </CardFooter>
               </Card>
             </TabsPane>
@@ -139,14 +202,16 @@
                 </CardHeader>
                 <CardBody>
                   <Label>Current Password</Label>
-                  <Input placeholder="Confirm your current password"> </Input>
+                  <Input placeholder="Confirm your current password" />
                   <div style="margin-top: 20px">
                     <Label>New Password</Label>
-                    <Input placeholder="Enter your new password"> </Input>
+                    <Input placeholder="Enter your new password" />
                   </div>
                 </CardBody>
                 <CardFooter>
-                  <Button style="width: 100%" type="primary">Save</Button>
+                  <Button style="width: 100%" type="primary">
+                    Save
+                  </Button>
                 </CardFooter>
               </Card>
             </TabsPane>
@@ -162,11 +227,11 @@
         </CardHeader>
         <CardBody>
           <Button style="width: 45%">
-            <Icon :icon="BilibiliB" style="margin-right: 12px"></Icon>
+            <Icon :icon="BilibiliB" style="margin-right: 12px" />
             <Label>Bilibili</Label>
           </Button>
           <Button style="width: 45%">
-            <Icon :icon="YoutubeB" style="margin-right: 12px"></Icon>
+            <Icon :icon="YoutubeB" style="margin-right: 12px" />
             <Label> Youtube </Label>
           </Button>
           <Label style="margin-top: 20px">Email</Label>
@@ -177,7 +242,9 @@
           </div>
 
           <CardFooter>
-            <Button style="width: 100%" type="primary">Create account</Button>
+            <Button style="width: 100%" type="primary">
+              Create account
+            </Button>
           </CardFooter>
         </CardBody>
       </Card>
@@ -202,15 +269,23 @@
               size="large"
             />
             <div class="user-content">
-              <div class="user-name">Tong Siyuan</div>
-              <CardDescription class="user-role"> Team Members </CardDescription>
+              <div class="user-name">
+                Tong Siyuan
+              </div>
+              <CardDescription class="user-role">
+                Team Members
+              </CardDescription>
             </div>
           </div>
           <div class="user-wrapper">
             <Avatar circle src="https://ui.shadcn.com/avatars/03.png" size="large" />
             <div class="user-content">
-              <div class="user-name">Tang Xiaofei</div>
-              <CardDescription class="user-role"> Team Members </CardDescription>
+              <div class="user-name">
+                Tang Xiaofei
+              </div>
+              <CardDescription class="user-role">
+                Team Members
+              </CardDescription>
             </div>
           </div>
         </CardBody>
@@ -218,52 +293,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { defineComponent } from 'vue'
-import { ref } from 'vue'
-import { BilibiliB, YoutubeB, User } from '@panda-ui/icons'
-import dayjs from 'dayjs'
-
-defineComponent({
-  name: ''
-})
-
-const value = ref<number>(1)
-const roleValue = ref('member')
-const roleValue2 = ref('owner')
-const activeName = ref('password')
-const currentDate = ref(dayjs().format('YYYY-MM-DD'))
-
-const roleOptions = [
-  {
-    label: 'Owner',
-    value: 'owner'
-  },
-  {
-    label: 'Member',
-    value: 'member'
-  },
-  {
-    label: 'Contributor',
-    value: 'contro'
-  }
-]
-const options = [
-  {
-    label: 'Vue',
-    value: 'vue'
-  },
-  {
-    label: 'React',
-    value: 'react'
-  },
-  {
-    label: 'Vanila',
-    value: 'vanila'
-  }
-]
-</script>
 
 <style lang="scss" scoped>
 .card-wrapper {

@@ -1,0 +1,168 @@
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$time-picker-map: () !default;
+$time-picker-map: map.merge(
+    (
+      cell-height: '28px',
+      panel-border: get-css-var('border-base'),
+      panel-shadow: 0px 0px 50px 0px get-css-var('shadow-color-light-3'),
+      panel-bg-color: get-css-var('fill-color-base'),
+      height: get-css-var(input-height-middle)
+    ),
+    $time-picker-map
+);
+
+.#{$namespace}-time-picker {
+  @include basis;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  height: get-css-var(time-picker-height);
+
+  &-vars {
+    @include define-preset-values('time-picker', $time-picker-map);
+  }
+
+  &__selector {
+    display: flex;
+    min-width: 0;
+    flex: 1 0 0;
+    border: get-css-var(border-base);
+    height: get-css-var(input-height);
+    padding: get-css-var(input-v-padding) get-css-var(input-h-padding);
+    border-radius: get-css-var(radius-base);
+    transition: get-css-var(transition-background);
+
+    &:hover {
+      background: get-css-var(input-hover-bg);
+    }
+  }
+
+  &__placeholder {
+    color: get-css-var(content-color-placeholder);
+  }
+
+  &__suffix {
+    margin-inline-start: 4px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &__control {
+    flex: 1 0 0;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+    outline: none;
+  }
+
+  &__input {
+    display: flex;
+    text-align: center;
+    outline: none;
+  }
+
+  &__unit {
+    padding: 0 2px;
+  }
+
+  &__trigger {
+    display: inline-block;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    border: get-css-var(border-shape) get-css-var(border-color-light-1);
+    width: auto;
+    box-shadow: var(--bl-time-picker-panel-shadow);
+    border-radius: 12px;
+    background: get-css-var(time-picker-panel-bg-color);
+    margin: 6px 0;
+  }
+  &__list {
+    display: flex;
+    height: 100%;
+  }
+
+  &__action {
+    display: flex;
+    padding: 8px;
+    justify-content: space-between;
+    border-top: get-css-var(border-shape) get-css-var(border-color-light-1);
+  }
+
+  &__panels {
+    display: flex;
+    height: 244px;
+  }
+
+  &__exchange {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 6px;
+    padding-top: 40px;
+    border-left: get-css-var(border-shape) get-css-var(border-color-light-1);
+    border-right: get-css-var(border-shape) get-css-var(border-color-light-1);
+  }
+
+  &__unit {
+    cursor: auto;
+
+    &--focused {
+      background: get-css-var(color-primary-base);
+      color: get-css-var(color-white);
+      transition: get-css-var(transition-background);
+    }
+  }
+
+  &__column {
+    width: 74px;
+
+    &+& {
+      border-left: get-css-var(border-shape) get-css-var(border-color-light-1);
+    }
+
+    &__cell {
+      padding: 8px 8px;
+      height: 34px;
+      list-style: none;
+
+      &--active {
+        background: get-css-var(color-secondary-base);
+      }
+      &:hover  {
+        background: get-css-var(color-secondary-hover);
+      }
+
+      &--inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: get-css-var(transition-background);
+      }
+    }
+
+    &__title {
+      display: flex;
+      font-weight: 600;
+      margin: 12px;
+      justify-content: center;
+    }
+
+    &__wrapper {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

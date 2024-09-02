@@ -1,15 +1,12 @@
 ---
 title: Sheet
 lang: zh-CN
+description: 扩展对话框组件以显示与屏幕主要内容相补充的内容。
 ---
 
 # Sheet
 
 扩展对话框组件以显示与屏幕主要内容相补充的内容。
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/sheet/*/*.vue')
-</script>
 
 ## 基础用法
 
@@ -36,13 +33,16 @@ sheet/closeble
 | 名称           | 说明                        | 类型      | 默认值       | 始于 |
 | -------------- | --------------------------- | --------- | ------------ | ---- |
 | active         | 绑定的值                    | `boolean` | `false`      | -    |
-| size           | sheet内容的宽度             | `370px`   | `false`      | -    |
+| size           | sheet 内容的宽度            | `370px`   | `false`      | -    |
 | closeble       | 需要提供的预设值            | `boolean` | `true`       | -    |
 | transitionName | Sheet 内容的 Trasntion 效果 | `string`  | `move-right` | -    |
 | maskTransition | 遮罩层的 Trasntion 效果     | `string`  | `fade`       | -    |
 
 ## Sheet 事件
 
-| 名称        | 说明             | 类型         | 默认值 | 始于 |
-| ----------- | ---------------- | ------------ | ------ | ---- |
-| onMaskClick | 点击遮罩层时触发 | `() => void` | `null` | -    |
+| 名称        | 说明                         | 类型         | 默认值       | 始于      |
+| ----------- | ---------------------------- | ------------ | ------------ | --------- |
+| show        | 展示时过渡效果完全结束时触发 | `() => void` | `() => void` | `v1.15.9` |
+| hide        | 关闭时过渡效果完全结束时触发 | `() => void` | `() => void` | `v1.15.9` |
+| close       | 用户触发关闭时触发           | `() => void` | `() => void` | `v1.15.9` |
+| onMaskClick | 点击遮罩层时触发             | `() => void` | `null`       | -         |

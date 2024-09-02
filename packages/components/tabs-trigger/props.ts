@@ -1,5 +1,10 @@
-import { buildProps } from '@panda-ui/common'
+import { booleanProps, buildProps } from '@panda-ui/common'
 
 export const tabsTriggerProps = buildProps({
-  value: String
+  value: String,
+  disabled: booleanProps,
 })
+
+export interface TabsTriggerState {
+  el: HTMLDivElement
+}

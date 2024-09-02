@@ -1,9 +1,4 @@
 ---
-title: A Vue 3 UI Framework
-page: true
+title: Panda
 lang: zh-CN
 ---
-
-<ClientOnly>
-  <PdHomepage />
-</ClientOnly>

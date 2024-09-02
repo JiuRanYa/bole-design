@@ -1,6 +1,6 @@
 import { buildProps } from '@panda-ui/common'
-import { PropType } from 'vue'
-import { MessageProps, MessageType } from './symbol'
+import type { PropType } from 'vue'
+import type { MessageProps, MessageType } from './symbol'
 
 export const defaultProps: MessageProps = Object.freeze({
   inherit: false,
@@ -12,39 +12,43 @@ export const defaultProps: MessageProps = Object.freeze({
   onClose: () => {},
   id: '',
   offset: 20,
-  repeatNum: 1
+  repeatNum: 1,
+  renderer: undefined,
 })
 
 export type MessagePlacement = 'top' | 'bottom'
 export const messageTypes = ['success', 'error', 'warning', 'info', 'custom'] as const
 export const messageProps = buildProps({
   id: {
-    type: String
+    type: String,
+  },
+  renderer: {
+    type: Function as PropType<() => any>,
   },
   message: String,
   title: String,
   type: {
     type: String as PropType<MessageType>,
-    values: messageTypes
+    values: messageTypes,
   },
   placement: {
-    type: String as PropType<MessagePlacement>
+    type: String as PropType<MessagePlacement>,
   },
   onClose: {
-    type: Function
+    type: Function as PropType<() => any>,
   },
   duration: {
-    type: Number
+    type: Number,
   },
   icon: {
-    type: Object as PropType<Record<string, any> | (() => any)>
+    type: Object as PropType<Record<string, any> | (() => any)>,
   },
   iconColor: String,
   iconStyle: {
-    type: String as PropType<Record<string, any>>
+    type: String as PropType<Record<string, any>>,
   },
   offset: {
-    type: Number
+    type: Number,
   },
-  repeatNum: Number
+  repeatNum: Number,
 })

@@ -1,7 +1,7 @@
-export type PanelData = {
+export interface PanelData {
   constraints: PanelConstraints
 }
-export type PanelConstraints = {
+export interface PanelConstraints {
   defaultSizePercentage?: number | undefined
   maxSizePercentage: number | undefined
   minSizePercentage: number | undefined

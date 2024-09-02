@@ -1,17 +1,12 @@
-<template>
-  <transition :name="ns.b()" v-on="on">
-    <slot />
-  </transition>
-</template>
-
 <script lang="ts">
-import { RendererElement, defineComponent } from 'vue'
+import type { RendererElement } from 'vue'
+import { defineComponent } from 'vue'
 import { useProps } from '@panda-ui/common'
-import { collapseTransitionProps } from './props'
 import { useNamespace } from '@panda-ui/hooks'
+import { collapseTransitionProps } from './props'
 
 export default defineComponent({
-  name: 'collapse-transition',
+  name: 'CollapseTransition',
   props: collapseTransitionProps,
   setup(_props) {
     const props = useProps('collapse-transition', _props, {})
@@ -19,7 +14,8 @@ export default defineComponent({
 
     const on = {
       beforeEnter(el: RendererElement) {
-        if (!el.dataset) el.dataset = {}
+        if (!el.dataset)
+          el.dataset = {}
 
         el.dataset.oldPaddingTop = el.style.paddingTop
         el.dataset.oldPaddingBottom = el.style.paddingBottom
@@ -35,7 +31,8 @@ export default defineComponent({
           el.style.maxHeight = `${el.scrollHeight}px`
           el.style.paddingTop = el.dataset.oldPaddingTop
           el.style.paddingBottom = el.dataset.oldPaddingBottom
-        } else {
+        }
+        else {
           el.style.maxHeight = 0
           el.style.paddingTop = el.dataset.oldPaddingTop
           el.style.paddingBottom = el.dataset.oldPaddingBottom
@@ -50,7 +47,8 @@ export default defineComponent({
       },
 
       beforeLeave(el: RendererElement) {
-        if (!el.dataset) el.dataset = {}
+        if (!el.dataset)
+          el.dataset = {}
         el.dataset.oldPaddingTop = el.style.paddingTop
         el.dataset.oldPaddingBottom = el.style.paddingBottom
         el.dataset.oldOverflow = el.style.overflow
@@ -72,14 +70,20 @@ export default defineComponent({
         el.style.overflow = el.dataset.oldOverflow
         el.style.paddingTop = el.dataset.oldPaddingTop
         el.style.paddingBottom = el.dataset.oldPaddingBottom
-      }
+      },
     }
 
     return {
       props,
       ns,
-      on
+      on,
     }
-  }
+  },
 })
 </script>
+
+<template>
+  <transition :name="ns.b()" v-on="on">
+    <slot />
+  </transition>
+</template>

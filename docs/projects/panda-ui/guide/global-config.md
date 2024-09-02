@@ -33,7 +33,6 @@ createApp(App)
     }
   })
   .mount('#app')
-
 ```
 
 ### 命名空间
@@ -50,8 +49,8 @@ createApp(App).use(install, { prefix: 'PD' })
 
 ```vue
 <template>
-  <PDButton></PDButton>
-  <PDInput></PDInput>
+  <PDButton />
+  <PDInput />
 </template>
 ```
 

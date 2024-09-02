@@ -9,7 +9,7 @@ type FunctionMap = [
   'fullscreenElement',
   'fullscreenEnabled',
   'fullscreenchange',
-  'fullscreenerror'
+  'fullscreenerror',
 ]
 
 const functionsMap = [
@@ -19,7 +19,7 @@ const functionsMap = [
     'fullscreenElement',
     'fullscreenEnabled',
     'fullscreenchange',
-    'fullscreenerror'
+    'fullscreenerror',
   ],
   // New WebKit
   [
@@ -28,7 +28,7 @@ const functionsMap = [
     'webkitFullscreenElement',
     'webkitFullscreenEnabled',
     'webkitfullscreenchange',
-    'webkitfullscreenerror'
+    'webkitfullscreenerror',
   ],
   // Old WebKit
   [
@@ -37,7 +37,7 @@ const functionsMap = [
     'webkitCurrentFullScreenElement',
     'webkitCancelFullScreen',
     'webkitfullscreenchange',
-    'webkitfullscreenerror'
+    'webkitfullscreenerror',
   ],
   [
     'mozRequestFullScreen',
@@ -45,7 +45,7 @@ const functionsMap = [
     'mozFullScreenElement',
     'mozFullScreenEnabled',
     'mozfullscreenchange',
-    'mozfullscreenerror'
+    'mozfullscreenerror',
   ],
   [
     'msRequestFullscreen',
@@ -53,8 +53,8 @@ const functionsMap = [
     'msFullscreenElement',
     'msFullscreenEnabled',
     'MSFullscreenChange',
-    'MSFullscreenError'
-  ]
+    'MSFullscreenError',
+  ],
 ] as FunctionMap[]
 
 let map!: FunctionMap
@@ -74,7 +74,7 @@ const notSupportedResult = {
   full: computed(() => false),
   enter: noop,
   exit: noop,
-  toggle: noop
+  toggle: noop,
 }
 
 const subscriptions = new Set<Ref<boolean>>()
@@ -87,18 +87,17 @@ if (isClient && map) {
     EVENT,
     () => {
       const full = !!document[ELEMENT]
-      subscriptions.forEach(s => {
+      subscriptions.forEach((s) => {
         s.value = full
       })
     },
-    false
+    false,
   )
 }
 
 export function useFullScreen(target: Ref<HTMLElement | null | undefined> = ref(null)) {
-  if (!isClient || !supported) {
+  if (!isClient || !supported)
     return { ...notSupportedResult }
-  }
 
   const [REQUEST, EXIT, ELEMENT] = map
   const full = ref(false)
@@ -127,9 +126,8 @@ export function useFullScreen(target: Ref<HTMLElement | null | undefined> = ref(
 
   subscriptions.add(full)
 
-  if (getCurrentScope()) {
+  if (getCurrentScope())
     onScopeDispose(exit)
-  }
 
   return {
     supported,
@@ -137,6 +135,6 @@ export function useFullScreen(target: Ref<HTMLElement | null | undefined> = ref(
     full: computed(() => full.value),
     enter,
     exit,
-    toggle
+    toggle,
   }
 }

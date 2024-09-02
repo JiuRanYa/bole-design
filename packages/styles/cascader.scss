@@ -1,0 +1,115 @@
+
+@use 'sass:map';
+@use './shared' as *;
+@use './design' as *;
+
+$cascader: () !default;
+$cascader: map.merge(
+	(
+    list-b: get-css-var('border-shape') get-css-var('cascader-list-b-color'),
+    list-b-color: get-css-var('border-color-base')
+	), 
+	$cascader
+);
+
+.#{$namespace}-cascader {
+  &-vars {
+    @include define-preset-values('cascader', $cascader);
+  }
+
+  @include basis;
+
+  display: inline-flex;
+  width: 100%;
+  cursor: pointer;
+  transition: get-css-var(transition-background);
+  background-color: get-css-var(bg-color-base);
+	position: relative;
+  height: get-css-var(input-height);
+
+	&--selector {
+		position: relative;
+		display: inline-flex;
+		width: 100%;
+		padding: 8px 10px;
+		border: get-css-var(cascader-list-b);
+		border-radius: get-css-var(radius-base);
+	}
+	&--disabled {
+		color: get-css-var(content-color-disabled);
+	}
+
+	&__panels {
+		display: flex;
+    box-shadow: get-css-var('shadow-base');
+    border-radius: get-css-var(radius-base);
+		background: get-css-var(bg-color-base)
+	}
+//
+	&__panel {
+		padding: 8px;
+		min-width: 180px;
+		max-width: 280px;
+
+		& + & {
+			border-left: get-css-var(cascader-list-b);
+		}
+	}
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+	}
+
+  &__control {
+		flex: auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-wrap: nowrap;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+	&--popper {
+		padding: 5px 0;
+	}
+
+  &__list {
+    width: 100%;
+    padding: 6px;
+  }
+
+	&__placeholder {
+		color: get-css-var(content-color-placeholder);
+	}
+
+  &__arrow {
+    position: absolute;
+    right: 10px;
+  }
+
+	&__input { 
+		height: 18px;
+		display: inline-block;
+		border: none;
+		width: 100%;
+		padding: 0;
+		outline: none;
+		color: inherit;
+		background: inherit;
+		cursor: pointer;
+
+		&:hover {
+			border: none;
+			box-shadow: none;
+		}
+		&:focus-within {
+			border: none;
+			box-shadow: none;
+		}
+	}
+}

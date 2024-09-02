@@ -1,4 +1,4 @@
-import { MaybeArray } from '../types'
+import type { MaybeArray } from '../types'
 
 export function emitEvent<A extends any[]>(handlers: MaybeArray<(...args: A) => void>, ...args: A) {
   if (Array.isArray(handlers)) {
@@ -7,7 +7,8 @@ export function emitEvent<A extends any[]>(handlers: MaybeArray<(...args: A) => 
 
       typeof handler === 'function' && handler(...args)
     }
-  } else {
+  }
+  else {
     typeof handlers === 'function' && handlers(...args)
   }
 }

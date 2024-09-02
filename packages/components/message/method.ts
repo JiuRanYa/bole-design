@@ -1,15 +1,19 @@
-import { FuzzyOptions, Message, MessageFn, MessageProps, messageTypes } from './symbol'
-import { defaultProps, MessagePlacement } from './props'
-import { isClient, isString, Mutable } from '@panda-ui/common'
-import { AppContext, ComponentInternalInstance, VNode, createVNode, render } from 'vue'
+import type { Mutable } from '@panda-ui/common'
+import { isClient, isString } from '@panda-ui/common'
+import type { AppContext, ComponentInternalInstance, VNode } from 'vue'
+import { createVNode, render } from 'vue'
+import type { FuzzyOptions, Message, MessageFn, MessageProps } from './symbol'
+import { messageTypes } from './symbol'
+import type { MessagePlacement } from './props'
+import { defaultProps } from './props'
 import MessageComp from './message.vue'
 import { instances } from './instance'
 
-export type ManagerOptions = { duration?: number; placement?: MessagePlacement } & Record<
+export type ManagerOptions = { duration?: number, placement?: MessagePlacement } & Record<
   string,
   unknown
 >
-export type MessageContext = {
+export interface MessageContext {
   id: string
   vnode: VNode
   handler: MessageHandler
@@ -27,9 +31,10 @@ export type MessageParamsNormalized = Omit<MessageProps, 'id'> & {
 
 let seed = 1
 
-export const closeMessage = (instance: MessageContext) => {
+export function closeMessage(instance: MessageContext) {
   const idx = instances.indexOf(instance)
-  if (idx === -1) return
+  if (idx === -1)
+    return
 
   instances.splice(idx, 1)
   const { handler } = instance
@@ -37,7 +42,7 @@ export const closeMessage = (instance: MessageContext) => {
 }
 function createMessage(
   { appendTo, ...options }: MessageParamsNormalized,
-  appContext?: AppContext | null
+  appContext?: AppContext | null,
 ) {
   const id = `bl-message-${seed++}`
   const container = document.createElement('div')
@@ -53,7 +58,7 @@ function createMessage(
     onDestroy: () => {
       // clear the vnode
       render(null, container)
-    }
+    },
   }
 
   const vnode = createVNode(MessageComp, props)
@@ -62,7 +67,7 @@ function createMessage(
   const handler: MessageHandler = {
     close: () => {
       vm.exposed!.visible.value = false
-    }
+    },
   }
 
   render(vnode, container)
@@ -75,7 +80,7 @@ function createMessage(
     vnode,
     vm,
     handler,
-    props: (vnode.component as any).props
+    props: (vnode.component as any).props,
   }
 
   return instance
@@ -86,36 +91,36 @@ function normalizeOptions(options: FuzzyOptions) {
 
   const normalized = {
     ...defaultProps,
-    ...userOptions
+    ...userOptions,
   }
 
-  if (!normalized.appendTo) {
+  if (!normalized.appendTo)
     normalized.appendTo = document.body
-  }
 
   return normalized
 }
 
 const message: MessageFn & Partial<Message> & { _context: AppContext | null } = (
   options = {},
-  context
+  context,
 ) => {
-  if (!isClient) return { close: () => undefined }
+  if (!isClient)
+    return { close: () => undefined }
 
   const normalizedOptions = normalizeOptions(options)
 
   const instance = createMessage(
     {
-      ...normalizedOptions
+      ...normalizedOptions,
     },
-    context
+    context,
   )
   instances.push(instance)
 
   return instance.handler
 }
 
-messageTypes.forEach(type => {
+messageTypes.forEach((type) => {
   message[type] = (options = {}, appContext) => {
     const normalized = normalizeOptions(options)
     return message({ ...normalized, type }, appContext)

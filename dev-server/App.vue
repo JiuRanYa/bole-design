@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+defineComponent({
+  name: 'App',
+})
+</script>
+
 <template>
   <div class="dev">
     <div class="dev-nav">
@@ -12,22 +23,11 @@
     </div>
     <main class="dev-main">
       <router-view v-slot="{ Component }">
-        <component :is="Component"></component>
+        <component :is="Component" />
       </router-view>
     </main>
   </div>
 </template>
-
-<script setup lang="ts">
-import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-defineComponent({
-  name: 'app'
-})
-</script>
 
 <style lang="scss" scoped>
 .dev {
@@ -56,6 +56,7 @@ defineComponent({
     height: calc(100% - 50px);
     padding: 20px;
     border: 1px solid var(--bl-border-color-light-1);
+    overflow: auto;
   }
 }
 </style>

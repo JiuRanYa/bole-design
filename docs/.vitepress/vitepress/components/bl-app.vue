@@ -1,68 +1,85 @@
 <script setup lang="ts">
+import { onMounted, provide } from 'vue'
+import { useRoute, useRouter } from 'vitepress'
+import { useSidebar } from '../composables/sidebar'
+import { rootKey } from '../tookens/index'
 import BlSidebar from './common/sidebar/sidebar.vue'
 import LayoutHeader from './bl-header.vue'
 import LayoutFooter from './bl-footer.vue'
 import BLContent from './bl-content.vue'
-import SwitchProject from './common/switch-project/index.vue'
-import { useSidebar } from '../composables/sidebar'
-import { onMounted, provide } from 'vue'
-import { rootKey, supportProjects } from '../tookens/index'
+import { supportProjects } from '@/.vitepress/configs/projects'
+
 const { hasSidebar } = useSidebar()
 
 provide(rootKey, { hasSidebar })
 
-const defaultPro = 'panda-ui'
-const localStorageProName = 'bl-userPreferredPro'
+const route = useRoute()
+
+const router = useRouter()
 
 onMounted(() => {
-  let userPreferredPro = localStorage.getItem(localStorageProName) ?? defaultPro
+  const defaultPro = 'panda-ui'
+  const localStorageProName = 'bl-userPreferredPro'
+  const path = route.path
+  const hasLocalStorage = localStorage.getItem(localStorageProName)
+  const splitPaths = path.split('/')
 
-  !localStorage.getItem(localStorageProName) &&
-    localStorage.setItem(localStorageProName, userPreferredPro)
+  let pathProject = ''
+  splitPaths.forEach((path) => {
+    if (supportProjects.includes(path))
+      pathProject = path
+  })
 
-  const targetPath = `/projects/${userPreferredPro}/`
+  if (supportProjects.includes(pathProject)) {
+    if (localStorage.getItem(localStorageProName) !== pathProject) {
+      localStorage.setItem(localStorageProName, pathProject)
 
-  if (!supportProjects.includes(userPreferredPro)) {
-    userPreferredPro = defaultPro
-    localStorage.setItem(localStorageProName, userPreferredPro)
-    window.location.pathname = targetPath
+      router.go(`/projects/${pathProject}/`)
+      window.location.reload()
+    }
+    return
   }
 
-  if (!window.location.pathname.includes(targetPath)) {
-    window.location.pathname = targetPath
+  if (hasLocalStorage) {
+    const toProject = localStorage.getItem(localStorageProName) ?? ''
+    if (supportProjects.includes(toProject))
+      router.go(`/projects/${toProject}/`)
+    else
+      localStorage.setItem(localStorageProName, defaultPro)
+  }
+  else {
+    localStorage.setItem(localStorageProName, 'select-pro')
+
+    router.go(`/projects/select-pro/`)
   }
 })
 </script>
 
 <template>
-  <div>
-    <LayoutHeader />
-    <div class="homepage" :class="{ 'no-bg': !hasSidebar }">
-      <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
-        <BlSidebar v-if="hasSidebar" :hasSidebar="hasSidebar" />
-        <BLContent :hasSidebar="hasSidebar">
-          <template #content-top>
-            <slot name="content-top" />
-          </template>
-          <template #content-bottom>
-            <slot name="content-bottom" />
-          </template>
-          <template #aside-top>
-            <slot name="aside-top" />
-          </template>
-          <template #aside-mid>
-            <slot name="aside-mid" />
-          </template>
-          <template #aside-bottom>
-            <slot name="aside-bottom" />
-          </template>
-        </BLContent>
-      </div>
+  <LayoutHeader />
+  <div class="homepage" :class="{ 'no-bg': !hasSidebar }">
+    <div class="homepage-body" :class="{ 'no-sider': !hasSidebar, 'bg-container': !hasSidebar }">
+      <BlSidebar v-if="hasSidebar" :has-sidebar="hasSidebar" />
+      <BLContent :has-sidebar="hasSidebar">
+        <template #content-top>
+          <slot name="content-top" />
+        </template>
+        <template #content-bottom>
+          <slot name="content-bottom" />
+        </template>
+        <template #aside-top>
+          <slot name="aside-top" />
+        </template>
+        <template #aside-mid>
+          <slot name="aside-mid" />
+        </template>
+        <template #aside-bottom>
+          <slot name="aside-bottom" />
+        </template>
+      </BLContent>
     </div>
-    <LayoutFooter />
-
-    <SwitchProject />
   </div>
+  <LayoutFooter />
 </template>
 
 <style lang="scss" scoped>

@@ -1,15 +1,12 @@
 ---
 title: Panel Group
 lang: zh-CN
+description: 一个可以支持更改大小的面板集合
 ---
 
 # Panel Group
 
 一个可以支持更改大小的面板集合
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/panel-group/*/*.vue')
-</script>
 
 ## 基础用法
 
@@ -93,7 +90,5 @@ panel-group/draggable
 ## 类型补充
 
 ```typescript
-
 type PanelDirection = 'horizontal' | 'vertical'
-
 ```

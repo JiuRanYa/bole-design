@@ -1,13 +1,5 @@
-<template>
-  <EmojiPicker v-model:value="emoji" @select="handleSelect">
-    <div class="emoji-picker-trigger">
-      <Icon :icon="FaceSmileWink"></Icon>
-    </div>
-  </EmojiPicker>
-</template>
-
 <script setup lang="ts">
-import { Emoji } from '@panda-ui/components/emoji-picker/props'
+import type { Emoji } from '@panda-ui/components/emoji-picker/props'
 import { FaceSmileWink } from '@panda-ui/icons'
 import { ref, watch } from 'vue'
 
@@ -21,6 +13,14 @@ function handleSelect(emoji: Emoji) {
   console.log(emoji)
 }
 </script>
+
+<template>
+  <EmojiPicker v-model:value="emoji" @select="handleSelect">
+    <div class="emoji-picker-trigger">
+      <Icon :icon="FaceSmileWink" />
+    </div>
+  </EmojiPicker>
+</template>
 
 <style lang="scss">
 .emoji-picker-trigger {

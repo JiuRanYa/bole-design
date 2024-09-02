@@ -1,9 +1,15 @@
 <template>
   <ContextMenu>
     <template #trigger>
-      <div class="context-menu-trigger">Click here</div>
+      <div class="context-menu-trigger">
+        Click here
+      </div>
     </template>
-    <template #content> <div class="menu-content">content</div> </template>
+    <template #content>
+      <div class="menu-content">
+        content
+      </div>
+    </template>
   </ContextMenu>
 </template>
 
@@ -21,5 +27,7 @@
 .menu-content {
   border: 1px dashed var(--bl-border-color-base);
   padding: 20px;
+  z-index: 100;
+  background: var(--bl-fill-color-base);
 }
 </style>

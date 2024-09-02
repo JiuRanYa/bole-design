@@ -2,7 +2,7 @@ import { computed } from 'vue'
 
 export const defaultProject = 'panda-ui'
 
-export const useProject = () => {
+export function useProject() {
   const project = defaultProject
 
   return computed(() => {

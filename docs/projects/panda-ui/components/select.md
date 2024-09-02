@@ -1,13 +1,10 @@
 ---
-title: Button
+title: Select
 lang: zh-CN
+description: Select选择器
 ---
 
 # Select
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/select/*/*.vue')
-</script>
 
 ## 基础用法
 
@@ -16,6 +13,16 @@ const demos = import.meta.globEager('../../../demos/panda-ui/select/*/*.vue')
 :::demo
 
 select/basic
+
+:::
+
+## 不同尺寸
+
+通过`size`属性可以指定选择器的大小
+
+:::demo
+
+select/size
 
 :::
 
@@ -84,3 +91,11 @@ select/extra
 | fitPopper      | list列表是否和trigger元素等宽         | `boolean`            | `true`    | -        |
 | listClass      | list上的class类，可用于自定义样式     | `string[]`           | ``        | -        |
 | transitionName | 下拉列表的transition名称              | `string`             | `bl-drop` | -        |
+
+## Select slots
+
+| 名称    | 说明                 | 类型    | 默认值 | 始于    |
+| ------- | -------------------- | ------- | ------ | ------- |
+| prepend | list前置内容插槽     | `VNode` | ``     | v1.14.4 |
+| append  | list后置内容插槽     | `VNode` | ``     | v1.14.4 |
+| empty   | 定制Select空状态内容 | `VNode` | ``     | v1.14.4 |

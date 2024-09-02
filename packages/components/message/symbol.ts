@@ -1,7 +1,7 @@
-import { AppContext, ComponentPublicInstance, ExtractPropTypes } from 'vue'
-import { MessagePlacement, messageProps } from './props'
-import { MessageHandler } from './method'
+import type { AppContext, ComponentPublicInstance, ExtractPropTypes } from 'vue'
 import { CircleCheck, CircleExclamation, CircleInfo, CircleXmark } from '@panda-ui/icons'
+import type { MessagePlacement, messageProps } from './props'
+import type { MessageHandler } from './method'
 
 export interface MessageFn {
   (options?: FuzzyOptions, appContext?: null | AppContext): MessageHandler
@@ -28,7 +28,7 @@ export const TypeComponentsMap = {
   info: CircleInfo,
   error: CircleXmark,
   warning: CircleExclamation,
-  custom: ''
+  custom: '',
 }
 
 export type MessageTypedFn = (

@@ -1,0 +1,133 @@
+
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$input-number: () !default;
+$input-number: map.merge(
+  (
+    b-color: get-css-var(border-color-base),
+    b-color-hover: get-css-var(color-primary-base),
+    bg-color: get-css-var(fill-color-humble),
+    radius: get-css-var(radius-base),
+		padding-block: 8px,
+		padding-inline: 10px,
+		height: get-css-var(input-height-middle),
+		disabled-color: get-css-var(fill-color-humble),
+		warning-b-color: get-css-var(color-error-base),
+		warning-color: get-css-var(color-error-base),
+		control-color: get-css-var(content-color-secondary)
+  ),
+  $input-number
+);
+.#{$namespace}-input-number {
+  &-vars {
+    @include define-preset-values('input-number', $input-number);
+  }
+	height: get-css-var(input-number-height);
+	border: get-css-var(border-base);
+	box-sizing: border-box;
+  border-radius: get-css-var(input-number-radius);
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+	align-items: center;
+  padding: get-css-var(input-number-padding-block) get-css-var(input-number-padding-inline);
+	transition: get-css-var(transition-base);
+	color: get-css-var(content-color-base);
+  font-size: get-css-var(font-size-base);
+	position: relative;
+
+  &--small {
+    @include define-preset-values('input-number',
+      (
+        height: get-css-var(input-height-small),
+        padding-block: 6px
+      )
+    );
+  }
+
+  &--large {
+    @include define-preset-values('input-number',
+      (
+        height: get-css-var(input-height-large),
+        padding-block: 10px
+      )
+    );
+  }
+
+	&--warning {
+		color: get-css-var(input-number-warning-color);
+		border: get-css-var(border-shape) get-css-var(input-number-warning-b-color) !important;
+	}
+
+	&:focus-within {
+		border: var(--bl-border-shape) var(--bl-input-number-b-color-hover);
+	}
+
+	&--disabled {
+		cursor: not-allowed;
+		background: get-css-var(input-number-disabled-color);
+	}
+
+
+	&__input {
+		box-sizing: border-box;
+    margin: 0;
+    font-size: inherit;
+    list-style: none;
+    width: 100%;
+		height: 100%;
+    text-align: start;
+    background-color: transparent;
+		border-radius: inherit;
+    border: 0;
+    outline: 0;
+    transition: all get-css-var(transition-base) linear;
+		color: inherit;
+		font-size: inherit;
+    appearance: textfield;
+		-webkit-appearance: none;
+
+    &::placeholder {
+      color: get-css-var(content-color-placeholder);
+    }
+		
+		/* Chrome, Safari, Edge, Opera */
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		/* Firefox */
+		&[type=number] {
+			appearance: textfield;
+			-moz-appearance: textfield;
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+		}
+	}
+
+
+	&__control {
+		position: absolute;
+		right: 8px;
+		height: 100%;
+		display: flex;
+		color: inherit;
+		gap: 4px;
+
+		&--increase, &--decrease {
+			color: get-css-var(input-number-control-color);
+			cursor: pointer;
+		}
+		&--increase {
+		}
+		&--decrease {
+		}
+	}
+}

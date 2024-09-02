@@ -1,14 +1,14 @@
 import { resolve } from 'node:path'
-import { readdirSync, statSync, existsSync, lstatSync, rmdirSync, unlinkSync } from 'node:fs'
+import { existsSync, lstatSync, readdirSync, rmdirSync, statSync, unlinkSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { createServer } from 'node:net'
 import { execa } from 'execa'
-import { bgYellow, bgCyan, bgGreen, bgRed, yellow, cyan, green, red, lightBlue } from 'kolorist'
+import { bgCyan, bgGreen, bgRed, bgYellow, cyan, green, lightBlue, red, yellow } from 'kolorist'
 import prompts from 'prompts'
 
 import type { Options } from 'execa'
 import type { ParsedArgs } from 'minimist'
 import type { Config } from 'prettier'
-import { createServer } from 'net'
 
 export const rootDir = resolve(fileURLToPath(import.meta.url), '../..')
 
@@ -29,10 +29,10 @@ export const prettierConfig: Config = {
     {
       files: '*.md',
       options: {
-        embeddedLanguageFormatting: 'off'
-      }
-    }
-  ]
+        embeddedLanguageFormatting: 'off',
+      },
+    },
+  ],
 }
 
 type LogFn = () => void
@@ -75,11 +75,11 @@ export const logger = {
   },
   errorText: (msg: string) => {
     console.error(`${red(msg)}`)
-  }
+  },
 }
 
 export function bin(name: string) {
-  return resolve(rootDir, 'node_modules/.bin/' + name)
+  return resolve(rootDir, `node_modules/.bin/${name}`)
 }
 
 export async function run(bin: string, args: string[], opts: Options = {}) {
@@ -98,13 +98,12 @@ function allCapital(value: string) {
 
 // 短横线命名
 export function toKebabCase(value: string) {
-  if (allCapital(value)) {
+  if (allCapital(value))
     return value.toLocaleLowerCase()
-  }
 
   return (
-    value.charAt(0).toLowerCase() +
-    value
+    value.charAt(0).toLowerCase()
+    + value
       .slice(1)
       .replace(/([A-Z])/g, '-$1')
       .toLowerCase()
@@ -114,8 +113,8 @@ export function toKebabCase(value: string) {
 // 全大写命名
 export function toCapitalCase(value: string) {
   return (
-    value.charAt(0).toUpperCase() +
-    value.slice(1).replace(/-([a-z])/g, (_, char) => (char ? char.toUpperCase() : ''))
+    value.charAt(0).toUpperCase()
+    + value.slice(1).replace(/-([a-z])/g, (_, char) => (char ? char.toUpperCase() : ''))
   )
 }
 
@@ -123,9 +122,8 @@ export function toCapitalCase(value: string) {
 export function toCamelCase(value: string) {
   const capitalName = toCapitalCase(value)
 
-  if (allCapital(capitalName)) {
+  if (allCapital(capitalName))
     return capitalName.toLocaleLowerCase()
-  }
 
   return capitalName.charAt(0).toLowerCase() + capitalName.slice(1)
 }
@@ -133,22 +131,21 @@ export function toCamelCase(value: string) {
 export const hooksDir = resolve(rootDir, 'packages/hooks')
 export const componentsDir = resolve(rootDir, 'packages/components')
 export const iconDir = resolve(rootDir, 'docs/public/icon')
+export const publicDir = resolve(rootDir, 'dist/panda-ui')
 
-export const components = readdirSync(componentsDir).filter(f => {
+export const components = readdirSync(componentsDir).filter((f) => {
   const path = resolve(componentsDir, f)
 
-  if (!statSync(path).isDirectory()) {
+  if (!statSync(path).isDirectory())
     return false
-  }
 
   return existsSync(`${path}/index.ts`)
 })
-export const hooks = readdirSync(hooksDir).filter(f => {
+export const hooks = readdirSync(hooksDir).filter((f) => {
   const path = resolve(hooksDir, f)
 
-  if (!statSync(path).isDirectory()) {
+  if (!statSync(path).isDirectory())
     return false
-  }
 
   return existsSync(`${path}/index.ts`)
 })
@@ -156,12 +153,13 @@ export const hooks = readdirSync(hooksDir).filter(f => {
 export function fuzzyMatch(partials: string[], total: string[], includeAll = false) {
   const matched: string[] = []
 
-  partials.forEach(partial => {
+  partials.forEach((partial) => {
     for (const target of total) {
       if (target.match(partial)) {
         matched.push(target)
 
-        if (!includeAll) break
+        if (!includeAll)
+          break
       }
     }
   })
@@ -172,13 +170,14 @@ export function fuzzyMatch(partials: string[], total: string[], includeAll = fal
 export function fuzzyMatchComponent(
   partialComponents: string[],
   includeAll = false,
-  allComponents = components
+  allComponents = components,
 ) {
   const matched = fuzzyMatch(partialComponents, allComponents, includeAll)
 
   if (matched.length) {
     return matched
-  } else {
+  }
+  else {
     logger.withBothLn(() => logger.error(`Any component matches '${partialComponents}'!`))
     process.exit(1)
   }
@@ -187,7 +186,7 @@ export function fuzzyMatchComponent(
 export async function specifyComponent(
   args: ParsedArgs,
   allComponents = components,
-  required = true
+  required = true,
 ) {
   const matchedComponents = args._.length ? fuzzyMatchComponent(args._, true, allComponents) : ['']
 
@@ -201,11 +200,12 @@ export async function specifyComponent(
         message: 'Select a component:',
         choices: (matchedComponents.length > 1 ? matchedComponents : allComponents).map(name => ({
           title: name,
-          value: name
-        }))
+          value: name,
+        })),
       })
     ).component
-  } else {
+  }
+  else {
     component = matchedComponents[0] || ''
   }
 
@@ -220,7 +220,7 @@ export async function specifyComponent(
 export async function runParallel<T>(
   maxConcurrency: number,
   source: T[],
-  iteratorFn: (item: T, source: T[]) => Promise<any>
+  iteratorFn: (item: T, source: T[]) => Promise<any>,
 ) {
   const ret: Array<Promise<any>> = []
   const executing: Array<Promise<any>> = []
@@ -235,9 +235,8 @@ export async function runParallel<T>(
 
       executing.push(e)
 
-      if (executing.length >= maxConcurrency) {
+      if (executing.length >= maxConcurrency)
         await Promise.race(executing)
-      }
     }
   }
 
@@ -245,9 +244,8 @@ export async function runParallel<T>(
 }
 
 export function emptyDir(dir: string) {
-  if (!existsSync(dir)) {
+  if (!existsSync(dir))
     return
-  }
 
   for (const file of readdirSync(dir)) {
     const abs = resolve(dir, file)
@@ -255,31 +253,32 @@ export function emptyDir(dir: string) {
     if (lstatSync(abs).isDirectory()) {
       emptyDir(abs)
       rmdirSync(abs)
-    } else {
+    }
+    else {
       unlinkSync(abs)
     }
   }
 }
-export const queryIdlePort = (startPort: number, host = 'localhost', maxTry = 20) => {
+export function queryIdlePort(startPort: number, host = 'localhost', maxTry = 20) {
   const server = createServer()
 
   return new Promise<number>((resolve, reject) => {
-    const close = () => {
-      server.off('error', onError)
-      server.close()
-    }
-
     const onError = (error: Error & { code?: string }) => {
       if (error.code === 'EADDRINUSE') {
-        if (maxTry-- <= 0) {
+        if (maxTry-- <= 0)
           close()
-        }
 
         server.listen(++startPort, host)
-      } else {
+      }
+      else {
         close()
         reject(error)
       }
+    }
+
+    const close = () => {
+      server.off('error', onError)
+      server.close()
     }
 
     server.on('error', onError)
@@ -290,10 +289,10 @@ export const queryIdlePort = (startPort: number, host = 'localhost', maxTry = 20
   })
 }
 
-export function mkDirAndFile(path: string) {
-  const compose = path.split('/')
+export function mkDirAndFile(_path: string) {
+  // const compose = path.split('/')
 
-  compose.reduce((cur, path) => {
-    console.log(cur)
-  }, compose[1])
+  // compose.reduce((cur, path) => {
+  //   console.log(cur)
+  // }, compose[1])
 }

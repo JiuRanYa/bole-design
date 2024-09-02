@@ -1,5 +1,6 @@
-import { buildProps, booleanStringProps, Placement, booleanProps } from '@panda-ui/common'
-import { PropType } from 'vue'
+import type { Placement } from '@panda-ui/common'
+import { booleanProps, booleanStringProps, buildProps } from '@panda-ui/common'
+import type { PropType } from 'vue'
 
 export type TriggerType = 'click' | 'hover'
 
@@ -15,5 +16,5 @@ export const toolTipProps = buildProps({
   mouseEnterDelay: Number,
   mouseLeaveDelay: Number,
   noArrow: booleanProps,
-  transition: String
+  transition: String,
 })

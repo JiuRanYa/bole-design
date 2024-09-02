@@ -1,11 +1,11 @@
-import { getHighlighter } from 'shiki'
+import { createHighlighter } from 'shiki'
 
-const highlighter = await getHighlighter({
-  themes: ['material-theme-palenight'],
-  langs: ['javascript', 'vue']
+const highlighter = await createHighlighter({
+  themes: ['slack-dark'],
+  langs: ['javascript', 'vue'],
 })
 
-export const highlight = (str: string) => {
-  str = highlighter.codeToHtml(str, { lang: 'vue' })
+export function highlight(str: string) {
+  str = highlighter.codeToHtml(str, { lang: 'vue', theme: 'slack-dark' })
   return str
 }

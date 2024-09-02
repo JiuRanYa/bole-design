@@ -1,4 +1,4 @@
-import { MaybeRef } from 'packages/common'
+import type { MaybeRef } from '@panda-ui/common'
 import { computed, unref } from 'vue'
 
 // export const PROVIDED_NAMESPACE = '__bl-provided-namespace'
@@ -42,7 +42,7 @@ export function useNamespace(block: string, namespace: MaybeRef<string> = global
    * @returns a map that is transformed origin style map's key to cv(key)
    */
   const cvm = (map: Record<string, string>, style: Record<string, string> = {}) => {
-    Object.keys(map).forEach(name => {
+    Object.keys(map).forEach((name) => {
       style[cv(name)] = map[name]
     })
 
@@ -72,7 +72,7 @@ export function useNamespace(block: string, namespace: MaybeRef<string> = global
     cvm,
     gcv,
     nv,
-    gnv
+    gnv,
   }
 }
 

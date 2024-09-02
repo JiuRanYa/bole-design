@@ -9,10 +9,10 @@
   line-height: inherit;
 }
 @mixin basis($inherit: true) {
-  font-family: get-css-var('font-family-base');
   font-size: get-css-var('font-size-base');
-  font-variant-numeric: tabular-nums;
   line-height: get-css-var('line-height-base');
+  font-family: get-css-var('font-family-base');
+  // font-variant-numeric: tabular-nums;
   color: get-css-var('content-color-base');
 
   &,

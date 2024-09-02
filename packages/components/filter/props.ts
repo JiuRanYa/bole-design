@@ -1,29 +1,34 @@
-import { buildProps } from '@panda-ui/common'
-import { PropType } from 'vue'
-import { RuleOption, RuleData } from './types'
+import { booleanProps, buildProps } from '@panda-ui/common'
+import type { PropType } from 'vue'
+import type { RuleData, RuleOption } from './types'
 
 export const basicFilterPanelProps = {
   isAddActive: {
     type: Boolean,
-    default: false
+    default: false,
   },
   currentFilterValue: {
-    type: [String, Number, Array, Boolean] as PropType<string | number | any[] | boolean>,
+    type: null,
     required: true,
-    default: ''
-  }
+    default: '',
+  },
 }
 
 export const filterDropdownProps = {
   ruleOptions: {
     type: Array as PropType<RuleOption[]>,
-    default: []
-  }
+    default: [],
+  },
 }
 
 export const filterProps = buildProps({
-  rules: Array as PropType<RuleData[]>,
-  visible: Boolean,
-  readonly: Boolean,
-  ruleOptions: { type: Array as PropType<RuleOption[]>, default: [] }
+  ruleData: Object as PropType<RuleData | null>,
+  readonly: booleanProps,
+  ruleOptions: { type: Array as PropType<RuleOption[]>, default: [] },
+  onChange: {
+    type: Function as PropType<(value: RuleData | null) => void>,
+    default: () => {},
+  },
+  transitionName: String,
+  to: String,
 })

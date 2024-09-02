@@ -1,6 +1,6 @@
-import { Ref } from 'vue'
-import { PanelData } from '../panel/types'
-import { PanelDirection } from './types'
+import type { Ref } from 'vue'
+import type { PanelData } from '../panel/types'
+import type { PanelDirection } from './types'
 
 export interface PanelGroupStates {
   layout: number[]
@@ -10,4 +10,5 @@ export interface PanelGroupStates {
   direction: PanelDirection
   gridColToFlexGrowMap: number[]
   showPreviewDots: boolean
+  previewDots: number[]
 }

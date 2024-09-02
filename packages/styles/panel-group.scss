@@ -2,69 +2,81 @@
 @use './shared' as *;
 @use './design' as *;
 
-$panel-group-map: () !default;
-$panel-group-map: map.merge((), $panel-group-map);
+$panel-group-map: (
+  ) !default;
+$panel-group-map: map.merge((), $panel-group-map
+);
 
 .#{$namespace}-panel-group {
-	display: flex;
-	position: relative;
+  display: flex;
+  position: relative;
 
-	$self: &;
+  $self: &;
 
   &-vars {
     @include define-preset-values('panel-group', $panel-group-map);
   }
 
   @include basis;
-	width: 100%;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 
-	&-gutter {
-		width: 6px;
-		border: 1px solid red;
-	}
+  &-gutter {
+    width: 6px;
+    border: 1px solid red;
+  }
 
-	&-vertical {
-		flex-direction: column;
+  &-vertical {
+    flex-direction: column;
 
-		.#{$namespace}-panel-resize-handle {
-			&--preview {
-				height: 6px;
-				width: 32px;
-			}
-		}
-	}
+    .#{$namespace}-panel-resize-handle {
+      &--preview {
+        height: 6px;
+        width: 32px;
+      }
+    }
+  }
 
-	&-vertical > &__preview {
-		height: calc(100% + 18px);
-		width: 6px;
-		top: -12px;
-		left: calc(100% + 10px);
-		flex-direction: column;
-	}
+  &-vertical>&__preview {
+    height: calc(100% + 18px);
+    width: 6px;
+    top: -12px;
+    left: calc(100% + 10px);
+    flex-direction: column;
+  }
 
-	&__preview {
-		display: flex;
-		position: absolute;
-		bottom: -10px;
-		width: calc(100% + 18px);
-		left: -12px;
+  &__preview {
+    display: flex;
+    position: absolute;
+    bottom: -10px;
+    width: calc(100% + 18px);
+    left: -12px;
 
-		&-box {
-			flex: 1;
-			display: flex;
-			position: relative;
-		}
-		&-dot {
-			width: 6px;
-			height: 6px;
-			background: get-css-var(color-secondary-base);
-			border-radius: 50%;
-			// position: absolute;
-			// right: -14px;
-		}
-	}
+    &-box {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
 
+    &-dot {
+      width: 6px;
+      height: 6px;
+      background: get-css-var(color-secondary-base);
+      border-radius: 50%;
+      // position: absolute;
+      // right: -14px;
+    }
+  }
+
+}
+
+.#{$namespace}-panel-group-horizontal.#{$namespace}-panel-group-nested {
+  .#{$namespace}-panel-resize-handle {
+    &--preview {
+      height: 32px;
+      width: 6px;
+    }
+  }
 }

@@ -1,42 +1,44 @@
-<template>
-  <li
-    ref="wrapper"
-    :class="className"
-    role="option"
-    :aria-disabled="disabled ? 'true' : undefined"
-    :aria-selected="isSelected"
-    @mouseenter="hoverItem"
-  >
-    <slot>
-      <Icon v-if="isSelected" :icon="Check" :class="ns.be('icon')" />
-      <span :class="ns.be('label')">
-        {{ label || value }}
-      </span>
-    </slot>
-  </li>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
-import { optionProps } from './props'
 import { useNamespace } from '@panda-ui/hooks'
 import { Icon } from '@panda-ui/components'
-import { Check } from '@panda-ui/icons'
-import { useOption } from './useOption'
+import { AngleRight, Check } from '@panda-ui/icons'
+import { useProps } from '@panda-ui/common'
+import { optionProps } from './props'
+
+const _props = defineProps(optionProps)
 
 const ns = useNamespace('option')
 
-const props = defineProps(optionProps)
-const { isSelected, isHovering, hoverItem } = useOption(props)
+const props = useProps('option', _props, {
+  expandable: false,
+})
 
 const className = computed(() => {
   return [
     ns.b(),
     ns.bs('vars'),
     {
-      [ns.be('hover')]: isHovering.value
-    }
+      [ns.bm('disabled')]: props.disabled,
+    },
   ]
 })
-const disabled = false
 </script>
+
+<template>
+  <li
+    :class="className"
+    role="option"
+    :aria-disabled="disabled ? 'true' : undefined"
+    :aria-selected="selected"
+  >
+    <slot>
+      <Icon v-if="selected" :icon="Check" :class="ns.be('icon')" />
+      <span :class="ns.be('label')">
+        {{ label || value }}
+      </span>
+
+      <Icon v-if="props.expandable" :scale="0.9" :icon="AngleRight" :class="ns.be('arrow')" />
+    </slot>
+  </li>
+</template>

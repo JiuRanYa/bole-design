@@ -1,36 +1,56 @@
 <template>
   <Row :gap="[16, 24]">
     <Col :span="12">
-      <div class="content">col-12</div>
+      <div class="content">
+        col-12
+      </div>
     </Col>
     <Col :span="12">
-      <div class="content">col-12</div>
+      <div class="content">
+        col-12
+      </div>
     </Col>
     <Col :span="12">
-      <div class="content">col-12</div>
+      <div class="content">
+        col-12
+      </div>
     </Col>
     <Col :span="12">
-      <div class="content">col-12</div>
+      <div class="content">
+        col-12
+      </div>
     </Col>
   </Row>
   <Row :gap="[8, 16]" style="margin-top: 24px">
     <Col :span="4">
-      <div class="content">col-4</div>
+      <div class="content">
+        col-4
+      </div>
     </Col>
     <Col :span="4">
-      <div class="content">col-4</div>
+      <div class="content">
+        col-4
+      </div>
     </Col>
     <Col :span="4">
-      <div class="content">col-4</div>
+      <div class="content">
+        col-4
+      </div>
     </Col>
     <Col :span="4">
-      <div class="content">col-4</div>
+      <div class="content">
+        col-4
+      </div>
     </Col>
     <Col :span="4">
-      <div class="content">col-4</div>
+      <div class="content">
+        col-4
+      </div>
     </Col>
     <Col :span="4">
-      <div class="content">col-4</div>
+      <div class="content">
+        col-4
+      </div>
     </Col>
   </Row>
 </template>

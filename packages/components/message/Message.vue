@@ -1,51 +1,28 @@
-<template>
-  <Transition :name="ns.bm('fade')" @before-leave="onClose" @after-leave="$emit('destroy')">
-    <div ref="messageRef" v-show="visible" :class="classList" :style="messageStyle" :id="id">
-      <div :class="ns.be('header')">
-        <Icon
-          v-if="iconComponent"
-          :style="[{ color: props.iconColor }, props.iconStyle]"
-          :class="iconClass"
-        >
-          <component :is="iconComponent" />
-        </Icon>
-        <p v-if="!hasTitleOrDesc">
-          {{ props.message }}
-        </p>
-        <div v-else>
-          {{ props.title }}
-        </div>
-      </div>
-
-      <div v-if="hasTitleOrDesc" :class="ns.be('description')">
-        {{ props.message }}
-      </div>
-    </div>
-  </Transition>
-</template>
-
 <script setup lang="ts">
-import { Icon } from '../icon'
 import { useNamespace, useSetTimeout } from '@panda-ui/hooks'
-import { CSSProperties, computed, nextTick, onMounted, ref } from 'vue'
-import { defaultProps, messageProps } from './props'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import { useProps, useZIndex } from '@panda-ui/common'
+import { Icon } from '../icon'
+import { Renderer } from '../renderer'
+import { defaultProps, messageProps } from './props'
 import { TypeComponentsMap } from './symbol'
 import { getLastOffset, getOffsetOrSpace } from './instance'
 
 defineOptions({
-  name: 'Message'
+  name: 'Message',
 })
 const _props = defineProps(messageProps)
+
+defineEmits(['destroy'])
+
 const props = useProps('select', _props, defaultProps)
 
 const ns = useNamespace('message')
 
-// TODO: using useIndex instead
 const getIndex = useZIndex()
 const zIndex = computed(() => getIndex())
 const visible = ref(false)
-const hasTitleOrDesc = computed(() => {
+const hasTitle = computed(() => {
   return props.title ?? false
 })
 
@@ -54,7 +31,7 @@ const iconComponent = computed(() => props.icon || TypeComponentsMap[props.type]
 
 const iconClass = computed(() => {
   return {
-    [ns.be('icon')]: true
+    [ns.be('icon')]: true,
   }
 })
 const classList = computed(() => {
@@ -63,15 +40,15 @@ const classList = computed(() => {
     ns.bs('vars'),
     ns.bm(props.type),
     {
-      [ns.be('vertical')]: hasTitleOrDesc.value
-    }
+      [ns.be('vertical')]: hasTitle.value,
+    },
   ]
 })
 
-const messageStyle = computed<CSSProperties>(() => {
+const messageStyle = computed(() => {
   return {
     bottom: `${offset.value}px`,
-    zIndex: zIndex.value
+    zIndex: zIndex.value,
   }
 })
 const { timer } = useSetTimeout()
@@ -87,7 +64,7 @@ function close() {
 function startTimer() {
   timer.close = setTimeout(() => {
     close()
-  }, props.duration)
+  }, props.duration + 400)
 }
 
 onMounted(() => {
@@ -100,6 +77,45 @@ onMounted(() => {
 
 defineExpose({
   visible,
-  bottom
+  bottom,
 })
 </script>
+
+<template>
+  <Transition :name="ns.bm('fade')" @before-leave="onClose" @after-leave="$emit('destroy')">
+    <div v-show="visible" :id="id" ref="messageRef" :class="classList" :style="messageStyle">
+      <div v-if="!props.renderer && hasTitle" :class="ns.be('header')">
+        <Icon
+          v-if="iconComponent"
+          :style="[{ color: props.iconColor }, props.iconStyle]"
+          :class="iconClass"
+        >
+          <component :is="iconComponent" />
+        </Icon>
+        <p>
+          {{ props.title }}
+        </p>
+      </div>
+
+      <template v-if="!hasTitle">
+        <Icon
+          v-if="iconComponent"
+          :style="[{ color: props.iconColor }, props.iconStyle]"
+          :class="iconClass"
+        >
+          <component :is="iconComponent" />
+        </Icon>
+      </template>
+
+      <div v-if="!props.renderer" :class="ns.be('description')">
+        {{ props.message }}
+      </div>
+
+      <Renderer
+        v-if="typeof props.renderer === 'function'"
+        :renderer="props.renderer"
+        :data="props"
+      />
+    </div>
+  </Transition>
+</template>

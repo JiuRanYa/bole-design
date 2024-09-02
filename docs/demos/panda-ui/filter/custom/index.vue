@@ -1,43 +1,40 @@
-<template>
-  <Filter :ruleOptions="ruleOptions" v-model:rules="rules">
-    <template #rule="{ rule }">
-      {{ rule.label }}
-    </template>
-    <template #filter> 自定义筛选按钮 </template>
-  </Filter>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { RuleData, RuleOption } from '@panda-ui/components/filter/types'
+import { InputType, Category, LogicalOperator } from '@panda-ui/components/filter/types'
 
-const defaultRules = [
-  {
-    field: 'filterText',
-    label: '过滤名称',
-    operator: { label: '等于', value: 'EQUALS' },
-    value: '名称a',
-    inputType: 'input'
-  },
-  {
-    field: 'count',
-    label: '数量',
-    operator: { label: '不等于', value: 'NOT_EQUALS' },
-    value: '123',
-    inputType: 'input'
-  }
-]
+const ruleData = ref<RuleData>({
+  category: Category.LOGIGAL,
+  operator: LogicalOperator.AND,
+  val: [
+    {
+      category: Category.PRIMARY,
+      operator: { label: "等于", value: "EQUALS" },
+      val: "测试名称",
+      field: "filterText",
+      label: "过滤名称",
+      inputType: InputType.INPUT
+    },
+    {
+      category: Category.PRIMARY,
+      operator: { label: "等于", value: "EQUALS" },
+      val: "100",
+      field: "count",
+      label: "数量",
+      inputType: InputType.INPUT
+    }
+  ]
+})
 
-const rules = ref(defaultRules)
-
-const ruleOptions = [
+const ruleOptions: RuleOption[] = [
   {
     field: 'filterText',
     label: '过滤名称',
     operators: [
       { label: '等于', value: 'EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input'
+    inputType: InputType.INPUT,
   },
   {
     field: 'count',
@@ -49,9 +46,9 @@ const ruleOptions = [
       { label: '小于', value: 'LESS_THAN' },
       { label: '大于等于', value: 'GREATER_THAN_EQUALS' },
       { label: '小于等于', value: 'LESS_THAN_EQUALS' },
-      { label: '不等于', value: 'NOT_EQUALS' }
+      { label: '不等于', value: 'NOT_EQUALS' },
     ],
-    inputType: 'input'
+    inputType: InputType.INPUT,
   },
   {
     field: 'dateField',
@@ -62,9 +59,20 @@ const ruleOptions = [
       { label: '等于', value: 'EQUALS' },
       { label: '不等于', value: 'NOT_EQUALS' },
       { label: '小于', value: 'LESS_THAN' },
-      { label: '小于等于', value: 'LESS_THAN_EQUALS' }
+      { label: '小于等于', value: 'LESS_THAN_EQUALS' },
     ],
-    inputType: 'date'
-  }
+    inputType: InputType.DATE,
+  },
 ]
 </script>
+
+<template>
+  <Filter v-model:ruleData="ruleData" :rule-options="ruleOptions">
+    <template #rule="{ rule }">
+      {{ rule.label }}
+    </template>
+    <template #trigger>
+      自定义筛选按钮
+    </template>
+  </Filter>
+</template>

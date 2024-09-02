@@ -1,13 +1,10 @@
 ---
 title: Filter
 lang: zh-CN
+description: 筛选器组件
 ---
 
 # Filter
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/filter/*/*.vue')
-</script>
 
 ## 基础用法
 
@@ -19,16 +16,17 @@ filter/basic
 
 :::
 
-当在`operator`中设置`isBetween: true`:
+指定`operator`中的`isBetween`, 可以进行范围输入
 
-- 对于`inputType`为`input`的选项， 面板将会渲染两个输入框。
-- 对于`inputType`为`date`的选项，板将会默认渲染`type`为`range`的`DatePicker`组件。
+:::warning
 
-**注意，`isBetween` 字段只对以上两种 `inputType` 生效。**
+`isBetween` 字段目前只支持`InputType.INPUT`和`InputType.DATE`
 
-## 筛选器默认值
+:::
 
-通过`rules`可以给筛选器设置默认规则。
+## 默认规则
+
+通过`ruleData`可以给筛选器设置默认规则。
 
 :::demo
 
@@ -36,21 +34,33 @@ filter/default
 
 :::
 
-## 筛选器下拉项目设置校验规则
+## 只读状态
 
-通过在`ruleOptions`的项目中设置`validationSchema`字段可以添加校验规则。其中`validationSchema`需要符合`yup`的设置规则，可参考：[Yup](https://www.npmjs.com/package/yup)
-
-**注意：校验规则仅当`inputType`为`input`和`multiInput`时才生效。如果没有传入`validationSchema`，则不会进行任何校验。**
+通过`readonly`可以设置筛选器为只读状态。此时不能新增筛选规则，也不能触发任何事件。
 
 :::demo
 
-filter/validation
+filter/readonly
 
 :::
 
-## 支持多层嵌套的可选项
+## props透传
 
-通过`parentField`可以设置可选项的父选项，其中父选项的`inputType`必须为`custom`。
+在`Filter`组件内置了许多通用组件如`Input`、`Select`
+
+通过`optionProps`字段可以为内置组件配置`props`
+
+:::demo
+
+filter/props
+
+:::
+
+## 规则嵌套
+
+规则嵌套适用于具有`层级关系`的规则
+
+指定`parentField`可以设置可选项的父选项，其中父选项的`inputType`必须为`custom`。
 
 同时，一个`inputType`为`custom`的子选项也可以设置为其他子项的父选项，构成多层嵌套。
 
@@ -60,30 +70,27 @@ filter/nested
 
 :::
 
-## 默认打开筛选面板
+## 校验规则
 
-通过`visible`可以设置初次渲染时，筛选面板为可见状态
+在`ruleOptions`中设置`validationSchema`字段可以添加校验规则。
 
-:::demo
-
-filter/visible
-
-:::
-
-## 筛选器只读状态
-
-通过`readonly`可以设置筛选器为只读状态。此时不能新增筛选规则，也不能触发任何事件。
+其中`validationSchema`需要符合`yup`的设置规则，可参考：[Yup](https://www.npmjs.com/package/yup)
 
 :::demo
 
-filter/readonly
+filter/validation
 
 :::
-**请注意，当 `readonly=true` 时，即使将 `visible` 属性设置为 `true`，筛选面板也不会打开。**
 
-## 自定义筛选项目和筛选按钮
+:::warning
 
-可以通过 rule 插槽来自定义筛选项目，filter 插槽来自定义筛选按钮
+校验规则当前仅支持`Input`类型
+
+:::
+
+## 自定义插槽
+
+可以通过 rule 插槽来自定义筛选项目，trigger 插槽来自定义筛选按钮
 
 :::demo
 
@@ -95,42 +102,65 @@ filter/custom
 
 | 名称        | 类型           | 说明                     | 默认值 | 始于 |
 | ----------- | -------------- | ------------------------ | ------ | ---- |
-| rules       | `RuleData[]`   | 筛选器绑定的值           | -      | -    |
+| ruleData       | `RuleData` \| `null` | 筛选器绑定的值   |  -      | -  |
+| readonly       | `boolean`   | 筛选器只读属性           | -      | -    |
 | ruleOptions | `RuleOption[]` | 需传入的筛选器可选项列表 | []     | -    |
 
-## 类型
+## Filter 事件
+
+| 名称   | 说明                 | 类型                        | 始于 |
+| ------ | -------------------- | --------------------------- | ---- |
+| change | 绑定值发生改变时触发 | (value: `RuleData` \| `null`) => void | -    |
+
+## 补充类型
 
 ```ts
- enum InputType {
+enum InputType {
   INPUT = 'input',
   MULTIINPUT = 'multiInput',
+  INPUTNUMBER = 'inputNumber',
+  MULTIINPUTNUMBER = 'MultiInputNumber',
   SELECT = 'select',
   RADIO = 'radio',
   CHECKBOX = 'checkbox',
   DATE = 'date',
   CUSTOM = 'custom',
-  BOOLEAN = 'boolean'
+  BOOLEAN = 'boolean',
+  CASCADER = 'cascader',
 }
 
-type Operator = {
+enum LogicalOperator {
+  AND = 'and',
+  OR = 'or',
+}
+
+interface Operator {
   label: string
   value: string
   isBetween?: boolean
 }
 
-type Choice = {
-  val: string
+interface Choice {
+  value: string
   label: string
 }
 
-type RuleData = {
+interface RuleDataVal {
+  category: Category
+  operator: Operator
+  val: any
   field: string
   label: string
-  operator: Operator
-  value: string | number | boolean | any[]
   inputType: InputType
-} & {
-  [key: string]: any
+}
+
+interface RuleData {
+  category: Category
+  operator: Operator | LogicalOperator
+  val: any
+  field?: string
+  label?: string
+  inputType?: InputType
 }
 
 type RuleOption = {
@@ -141,6 +171,9 @@ type RuleOption = {
   choices?: Choice[]
   options?: RuleOption[]
   parentField?: string
+  validationSchema?: any
+  optionProps?: Record<string, any>
+  cascaderOptions?: CascaderOption[]
 } & {
   [key: string]: any
 }

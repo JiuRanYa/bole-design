@@ -1,15 +1,12 @@
 ---
 title: Button
 lang: zh-CN
+description: 一个基础的按钮组件
 ---
 
 # Button
 
 一个基础的按钮组件
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/button/*/*.vue')
-</script>
 
 ## 基本用法
 
@@ -31,9 +28,19 @@ button/color
 
 ## 禁用状态
 
-:::demo 使用 `disable` 设置组件的禁用状态
+:::demo 使用 `disabled` 设置组件的禁用状态
 
 button/disable
+
+:::
+
+## 不同尺寸
+
+使用 `size` 设置按钮大小
+
+:::demo
+
+button/size
 
 :::
 
@@ -64,7 +71,7 @@ button/group
 | 名称    | 说明           | 类型                                                        | 默认值    | 始于 |
 | ------- | -------------- | ----------------------------------------------------------- | --------- | ---- |
 | type    | 按钮的类型     | `default \| primary \| warn \| success \| warning \| error` | `default` | -    |
-| disable | 是否禁用按钮   | `Boolean`                                                   | `false`   | -    |
+| disabled | 是否禁用按钮   | `Boolean`                                                   | `false`   | -    |
 | icon    | 按钮的前置图标 | `svg`                                                       | `null`    | -    |
 
 ## ButtonGroup 参数

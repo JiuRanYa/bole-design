@@ -1,15 +1,15 @@
-import { ref, computed, type Ref } from 'vue'
+import { type Ref, computed, ref } from 'vue'
 
 /**
- * @param key: localStorage key
+ * @param key: localStorage key.
  * @param initialValue: localStorage initialValue
  * @param raw: if set to true, hook will not attempt to JSON serialize stored values.
- * @returns
+ * @returns [state, setState, remove]
  */
 export function useLocalStorage<T>(
   key: string,
   initialValue?: T,
-  raw: boolean = false
+  raw: boolean = false,
 ): [Ref<T>, (value: T) => void, () => void] {
   const state = ref()
   const serializer = raw ? String : JSON.stringify
@@ -21,14 +21,16 @@ export function useLocalStorage<T>(
       if (localStorageValue !== null) {
         initialValue && localStorage.setItem(key, serializer(initialValue))
 
-        return initialValue ? initialValue : deserializer(localStorageValue)
-      } else {
+        return initialValue || deserializer(localStorageValue)
+      }
+      else {
         initialValue && localStorage.setItem(key, serializer(initialValue))
         return initialValue
       }
-    } catch {
+    }
+    catch {
       // if storage is string, return initialValue or storage value
-      return initialValue ? initialValue : localStorageValue
+      return initialValue || localStorageValue
     }
   })
 
@@ -41,7 +43,8 @@ export function useLocalStorage<T>(
     try {
       localStorage.removeItem(key)
       setState(undefined)
-    } catch {
+    }
+    catch {
       // If user is in private mode or has storage restriction
       // localStorage can throw. Also JSON.stringify can throw.
     }
@@ -52,7 +55,8 @@ export function useLocalStorage<T>(
 
     state.value = initializer.value
     initialValue && localStorage.setItem(key, serializedState)
-  } catch {
+  }
+  catch {
     // If user is in private mode or has storage restriction
     // localStorage can throw. Also JSON.stringify can throw.
   }

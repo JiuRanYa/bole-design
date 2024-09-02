@@ -1,26 +1,25 @@
 <script setup lang="ts">
 import { useEventListener, useNamespace } from '@panda-ui/hooks'
 import { computed, inject, nextTick, onMounted, ref } from 'vue'
-import { OriginDate, calendarProps } from './props'
 import { useProps } from '@panda-ui/common'
-import MonthGrid from './month-grid.vue'
 import dayjs from 'dayjs'
-import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
+import { calendarProps } from './props'
+import MonthGrid from './month-grid.vue'
+import { DATE_PICKER_INJECTION_KEY } from './token'
 
 defineOptions({
-  name: 'DatePickerCalendar'
+  name: 'DatePickerCalendar',
 })
 const _props = defineProps(calendarProps)
 
 // requestAnimationFrame frame task has down
 let ticking = false
 const ns = useNamespace('date-picker')
-const props = useProps('calendar', _props, {
-  value: ''
+useProps('calendar', _props, {
+  value: '',
 })
 const renderDate = ref()
 
-const emit = defineEmits(['pick'])
 const rootValue = inject(DATE_PICKER_INJECTION_KEY)
 const bufferRefTop = ref<HTMLElement>()
 const bufferRefBot = ref<HTMLElement>()
@@ -28,9 +27,8 @@ const calendarRef = ref<HTMLDivElement>()
 const monthRef = ref<InstanceType<typeof MonthGrid>[]>()
 
 function initRenderDate() {
-  const isRange = rootValue?.isRange.value
-  const startDate = isRange ? rootValue?.currentValue.value[0] : rootValue?.currentValue.value
-  const currentDate = dayjs(startDate as string).format('YYYY-MM')
+  const startDate = rootValue?.startMeta.getDate()
+  const currentDate = dayjs(startDate).format('YYYY-MM')
 
   const front = calculateMonthFront(currentDate, 3)
   const back = calculateMonthBack(currentDate, 2)
@@ -44,7 +42,7 @@ function calculateMonthFront(date: string, len = renderDate.value.length / 2) {
     res.unshift(
       dayjs(date)
         .subtract(i + 1, 'month')
-        .format('YYYY-MM')
+        .format('YYYY-MM'),
     )
   }
 
@@ -57,7 +55,7 @@ function calculateMonthBack(date: string, len = renderDate.value.length / 2) {
     res.push(
       dayjs(date)
         .add(i + 1, 'month')
-        .format('YYYY-MM')
+        .format('YYYY-MM'),
     )
   }
 
@@ -71,9 +69,9 @@ function patchBackDate(reserve: boolean) {
   const temp = [...renderDate.value]
   const len = temp.length
 
-  for (let i = 0; i < len / 2; i++) {
+  for (let i = 0; i < len / 2; i++)
     reserve ? temp.shift() : temp.pop()
-  }
+
   renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
 
   // 向上时需要的偏移量是数据改变前的高度,不需要等待渲染完毕
@@ -88,12 +86,12 @@ function patchFrontDate(reserve: boolean) {
   const temp = [...renderDate.value]
   const len = temp.length
 
-  for (let i = 0; i < len / 2; i++) {
+  for (let i = 0; i < len / 2; i++)
     reserve ? temp.shift() : temp.pop()
-  }
+
   renderDate.value = reserve ? [...appendDate, ...temp] : [...temp, ...appendDate]
 
-  //向上时需要的偏移量是数据改变后的高度,需要等待渲染完毕
+  // 向上时需要的偏移量是数据改变后的高度,需要等待渲染完毕
   nextTick(() => {
     decreaseTrans(reserve)
   })
@@ -105,19 +103,19 @@ const botTranslate = ref(0.5e6)
 
 const topTranslateStyle = computed(() => {
   return {
-    transform: `translate3D(0, ${topTranslate.value}px, 0)`
+    transform: `translate3D(0, ${topTranslate.value}px, 0)`,
   }
 })
 const bottomTranslateStyle = computed(() => {
   return {
-    transform: `translate3D(0, ${botTranslate.value}px, 0)`
+    transform: `translate3D(0, ${botTranslate.value}px, 0)`,
   }
 })
 
 function scrollStep() {
-  if (!ticking) {
-    window.requestAnimationFrame(scrollUpdate)
-  }
+  if (!ticking)
+    requestAnimationFrame(scrollUpdate)
+
   ticking = true
 }
 
@@ -130,17 +128,16 @@ function scrollUpdate() {
   const topLimit = Math.min(topTranslate.value, botTranslate.value)
   const botLimit = botTrans + bufferTopH - calendarH
 
-  const shouldIncreaseTop = topTranslate.value < botTranslate.value ? true : false
-  const shouldDecreaseTop = botTranslate.value < topTranslate.value ? true : false
+  const shouldIncreaseTop = topTranslate.value < botTranslate.value
+  const shouldDecreaseTop = botTranslate.value < topTranslate.value
 
   // 向下
-  if (scrollTop > lastScrollTop) {
-    scrollTop >= botLimit ? patchBackDate(shouldIncreaseTop) : null
-  }
+  if (scrollTop > lastScrollTop && scrollTop >= botLimit)
+    patchBackDate(shouldIncreaseTop)
+
   // 向上
-  if (scrollTop < lastScrollTop) {
-    scrollTop <= topLimit ? patchFrontDate(shouldDecreaseTop) : null
-  }
+  if (scrollTop < lastScrollTop && scrollTop <= topLimit)
+    patchFrontDate(shouldDecreaseTop)
 
   ticking = false
   lastScrollTop = scrollTop
@@ -168,10 +165,6 @@ function scrollToView() {
   botTranslate.value = topTranslate.value + (bufferRefTop.value?.offsetHeight ?? 0)
 }
 
-function handlePickDate(date: OriginDate) {
-  emit('pick', date)
-}
-
 onMounted(() => {
   renderDate.value = initRenderDate()
   nextTick(() => {
@@ -182,23 +175,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="ns.be('calendar')" ref="calendarRef">
-    <div :class="ns.bem('calendar', 'buffer')" :style="topTranslateStyle" ref="bufferRefTop">
+  <div ref="calendarRef" :class="ns.be('calendar')">
+    <div ref="bufferRefTop" :class="ns.bem('calendar', 'buffer')" :style="topTranslateStyle">
       <MonthGrid
         v-for="date in renderDate?.slice(0, 3)"
-        :value="date"
+        :key="date"
         ref="monthRef"
-        @pick="handlePickDate"
+        :value="date"
       />
     </div>
-    <div :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle" ref="bufferRefBot">
+    <div ref="bufferRefBot" :class="ns.bem('calendar', 'buffer')" :style="bottomTranslateStyle">
       <MonthGrid
         v-for="date in renderDate?.slice(3)"
-        :value="date"
+        :key="date"
         ref="monthRef"
-        @pick="handlePickDate"
+        :value="date"
       />
     </div>
-    <div class="full-height" style="height: 1e6px"></div>
+    <div class="full-height" style="height: 1e6px" />
   </div>
 </template>

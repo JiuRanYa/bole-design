@@ -3,50 +3,73 @@
 @use './shared' as *;
 @use './design' as *;
 
-$input: () !default;
-$input: map.merge(
-  (
-    b-color: get-css-var(border-color-base),
-    b-color-hover: get-css-var(color-primary-base),
-    bg-color: get-css-var(fill-color-humble),
-    radius: get-css-var(radius-base),
-    line-height: get-css-var(line-height-base),
-		height: 36px,
-    shadow: 0 0 0 4px get-css-var(shadow-color-light-1)
-  ),
-  $input
+$input: (
+  ) !default;
+$input: map.merge((b-color: get-css-var(border-color-base),
+      b-color-hover: get-css-var(color-primary-base),
+      bg-color: get-css-var(bg-color-base),
+      bg-color-hover: get-css-var(bg-color-base),
+      radius: get-css-var(radius-base),
+      line-height: get-css-var(line-height-base),
+      height: get-css-var(input-height),
+      shadow: 0 0 0 4px get-css-var(shadow-color-light-1)),
+    $input
 );
+
 .#{$namespace}-input {
   &-vars {
     @include define-preset-values('input', $input);
   }
+
   display: inline-flex;
   border: get-css-var(border-shape) get-css-var(input-b-color);
   margin: 0;
   padding: 0;
   font-size: get-css-var(font-size-base);
   border-radius: get-css-var(input-radius);
-  transition: get-css-var(transition-color),get-css-var('transition-border');
+  transition: get-css-var(transition-color),
+  get-css-var('transition-border');
   padding: 8px 10px;
-	height: get-css-var('input-height');
-	box-sizing: border-box;
+  height: get-css-var('input-height');
+  box-sizing: border-box;
+  background-color: get-css-var('input-bg-color');
 
   &:hover {
-    background-color: get-css-var(fill-color-base);
+    border: get-css-var(border-shape) get-css-var(input-b-color-hover);
+    background-color: get-css-var(input-bg-color-hover);
   }
-	&:focus{
-		box-shadow: 2px 2px 6px rgba(0,0,0, 0.05);
+
+  &:focus {
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05);
     border: get-css-var(border-shape) get-css-var(input-b-color-hover);
-	}
-	&:focus-within {
-		box-shadow: 2px 2px 6px rgba(0,0,0, 0.05);
+  }
+
+  &:focus-within {
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05);
     border: get-css-var(border-shape) get-css-var(input-b-color-hover);
-	}
+  }
 
   &--wrapper {
-		display: inline-flex;
-		align-items: center;
-	}
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &--small {
+    @include define-preset-values('input',
+      (
+        height: get-css-var(input-height-small),
+      )
+    );
+  }
+
+  &--large {
+    @include define-preset-values('input',
+      (
+        height: get-css-var(input-height-large),
+      )
+    );
+  }
+
   &--control {
     border: none;
     background-color: transparent;
@@ -56,24 +79,29 @@ $input: map.merge(
     min-width: 0;
     font-size: inherit;
     color: inherit;
-		padding: 0;
+    padding: 0;
     line-height: get-css-var(input-line-height);
   }
-	&__icon {
-		display: flex;
-		align-items: center;
-	}
-	&__prefix {
-		margin-inline-end: 4px;
-	}
-	&__before {
-		display: inline-block;
-		margin-inline-end: 12px;
-	}
-	&__after {
-		display: inline-block;
-		margin-inline-start: 12px;
-	}
+
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &__prefix {
+    margin-inline-end: 4px;
+  }
+
+  &__before {
+    display: inline-block;
+    margin-inline-end: 12px;
+  }
+
+  &__after {
+    display: inline-block;
+    margin-inline-start: 12px;
+  }
+
   input::placeholder {
     color: get-css-var(content-color-placeholder);
   }

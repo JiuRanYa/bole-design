@@ -1,10 +1,13 @@
-import { buildProps } from '@panda-ui/common'
-import { PropType } from 'vue'
-import { RuleOption, RuleData } from './types'
+import { booleanProps, buildProps } from '@panda-ui/common'
+import type { PropType } from 'vue'
+import type { RuleData, RuleOption } from './types'
 
 export const filterGroupProps = buildProps({
-  rulesGroup: Array as PropType<RuleData[][]>,
-  visible: Boolean,
-  readonly: Boolean,
-  ruleOptions: Array as PropType<RuleOption[]>
+  ruleDataGroup: Object as PropType<RuleData | null>,
+  readonly: booleanProps,
+  ruleOptions: Array as PropType<RuleOption[]>,
+  onChange: {
+    type: Function as PropType<(value: RuleData | null) => void>,
+    default: () => { },
+  },
 })

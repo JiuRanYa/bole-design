@@ -1,37 +1,30 @@
-<template>
-  <Portal :to="to">
-    <transition :name="props.transition">
-      <div v-if="visible" ref="wrapper" :class="classNames" v-bind="$attrs" :style="{ zIndex }">
-        <slot></slot>
-      </div>
-    </transition>
-  </Portal>
-</template>
-
 <script lang="ts">
 import { useProps, useZIndex } from '@panda-ui/common'
 import { computed, defineComponent, ref } from 'vue'
-import { popperProps } from './props'
-import { Portal } from '../portal'
 import { useNamespace } from '@panda-ui/hooks'
+import { Portal } from '../portal'
+import { popperProps } from './props'
 
 export default defineComponent({
   name: 'Popper',
-  props: popperProps,
-  inheritAttrs: false,
   components: {
-    Portal
+    Portal,
   },
+  inheritAttrs: false,
+  props: popperProps,
   setup(_props) {
     const ns = useNamespace('popper')
     const props = useProps('popper', _props, {
-      to: 'body',
+      to: '',
       visible: false,
-      transition: ''
+      alive: false,
+      transition: '',
     })
     const wrapper = ref<HTMLElement>()
     const classNames = computed(() => {
-      return [ns.b(), props.to !== 'body' && ns.bm('inherit')]
+      return [ns.b(), {
+        [ns.bm('inherit')]: props.to !== 'body' && props.inherit,
+      }]
     })
     const to = computed(() => props.to)
     const getIndex = useZIndex()
@@ -42,8 +35,35 @@ export default defineComponent({
       wrapper,
       classNames,
       zIndex,
-      to
+      to,
     }
-  }
+  },
 })
 </script>
+
+<template>
+  <Portal :to="to">
+    <transition
+      :name="props.transition"
+      @before-enter="props.onBeforeEnter"
+      @enter="props.onEnter"
+      @after-enter="props.onAfterEnter"
+      @enter-cancelled="props.onEnterCancelled"
+      @before-leave="props.onBeforeLeave"
+      @leave="props.onLeave"
+      @after-leave="props.onAfterLeave"
+      @leave-cancelled="props.onLeaveCancelled"
+    >
+      <div
+        v-if="props.alive || props.visible"
+        v-show="!props.alive || props.visible"
+        v-bind="$attrs"
+        ref="wrapper"
+        :class="classNames"
+        :style="{ zIndex }"
+      >
+        <slot />
+      </div>
+    </transition>
+  </Portal>
+</template>

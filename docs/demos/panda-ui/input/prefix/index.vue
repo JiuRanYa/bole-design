@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { User } from '@panda-ui/icons'
+</script>
+
 <template>
   <Input>
     <template #prefix>
@@ -5,7 +9,3 @@
     </template>
   </Input>
 </template>
-
-<script setup lang="ts">
-import { User } from '@panda-ui/icons'
-</script>

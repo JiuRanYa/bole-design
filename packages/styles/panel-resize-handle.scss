@@ -50,8 +50,6 @@ $panel-resize-handle-map: map.merge((), $panel-resize-handle-map);
 		pointer-events: none;
 		transition: get-css-var(transition-opacity);
 	}
-
-
 }
 
 .#{$namespace}-panel-group-vertical {

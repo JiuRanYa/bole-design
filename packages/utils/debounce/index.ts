@@ -5,9 +5,8 @@
  * @param delay 防抖的限制时间，默认 100ms
  */
 export function debounce<T extends (...args: any[]) => any>(method: T, delay = 100) {
-  if (typeof method !== 'function') {
+  if (typeof method !== 'function')
     return method
-  }
 
   let timer: ReturnType<typeof setTimeout>
 

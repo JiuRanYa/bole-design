@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { computed, defineComponent, ref } from 'vue'
-import SourceCode from './source-code.vue'
 import { Code } from '@panda-ui/icons'
 import { CollapseTransition } from '@panda-ui/components'
+import SourceCode from './source-code.vue'
 
-defineComponent({
-  name: 'bl-demo'
-})
 const props = defineProps<{
   demos: {
     type: object
@@ -15,16 +12,20 @@ const props = defineProps<{
   path: string
   desc?: string
 }>()
+defineComponent({
+  name: 'BlDemo',
+})
 const showCode = ref(false)
 
 const targetDemo = computed(() => {
   const keys = Object.keys(props.demos)
 
-  const targetPath = keys.filter(key => key.includes(props.path))?.[0]
+  const targetPath = keys.filter(key => key.includes(props.path))?.[0] as keyof typeof props.demos
 
-  if (targetPath) {
-    return props.demos[targetPath].default
-  }
+  if (targetPath)
+    return props.demos[targetPath]
+  else
+    return ''
 })
 
 const decodedDescription = computed(() => decodeURIComponent(props.desc!))
@@ -37,10 +38,10 @@ function expandCode() {
 <template>
   <div class="demo-box">
     <div class="demo-box-top">
-      <p v-if="decodedDescription" v-html="decodedDescription"></p>
+      <p v-if="decodedDescription" v-html="decodedDescription" />
 
       <div class="demo-container" style="">
-        <component v-if="targetDemo" :is="targetDemo"></component>
+        <component :is="targetDemo" v-if="targetDemo" />
       </div>
     </div>
 
@@ -51,7 +52,7 @@ function expandCode() {
     </div>
 
     <CollapseTransition>
-      <SourceCode :source="source" v-if="showCode" />
+      <SourceCode v-if="showCode" :source="source" />
     </CollapseTransition>
   </div>
 </template>

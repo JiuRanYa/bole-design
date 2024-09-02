@@ -1,3 +1,6 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <div class="avatar-box">
     <Avatar src="https://avatars.githubusercontent.com/u/58846658?v=4" size="small" />
@@ -6,10 +9,6 @@
     <Avatar src="https://avatars.githubusercontent.com/u/58846658?v=4" :size="50" />
   </div>
 </template>
-
-<script setup lang="ts">
-import { User } from '@panda-ui/icons'
-</script>
 
 <style lang="scss" scoped>
 .avatar-box {

@@ -1,15 +1,12 @@
 ---
 title: Tabs
 lang: zh-CN
+description: 一个可以高度定制化的标签页组件
 ---
 
 # Tabs
 
 一个可以高度定制化的标签页组件
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/tabs/*/*.vue')
-</script>
 
 ## 基础用法
 
@@ -31,11 +28,31 @@ tabs/position
 
 :::
 
-## Tabs类型补充
+## Tabs 事件
+
+Tabs 内置了一些事件供您使用，例如`tabClick`
+
+:::warning
+
+如果您在 Tab 上设置了 disabled，事件也会被正常触发，但是不会改变值
+
+:::
+
+:::demo
+
+tabs/event
+
+:::
+
+## Tabs 类型补充
 
 ```typescript
-
 export type Side = 'top' | 'left' | 'right' | 'bottom'
+
+export interface TabsTriggerEmitState {
+  name: string
+  disabled: boolean
+}
 ```
 
 ## Tabs 参数
@@ -43,7 +60,14 @@ export type Side = 'top' | 'left' | 'right' | 'bottom'
 | 名称        | 说明                                             | 类型   | 默认值 | 始于      |
 | ----------- | ------------------------------------------------ | ------ | ------ | --------- |
 | value       | 设置当前激活的标签页，可以使用`v-model` 双向绑定 | ``     | `null` | `v1.1.13` |
-| tabPosition | tab标签的位置                                    | `Side` | `top`  |
+| tabPosition | tab 标签的位置                                   | `Side` | `top`  | `v1.1.13` |
+
+## TabsTrigger 参数
+
+| 名称     | 说明                  | 类型    | 默认值 | 始于      |
+| -------- | --------------------- | ------- | ------ | --------- |
+| value    | 当前 Tab 的值         | ``      | `null` | `v1.1.13` |
+| disabled | 是否禁用该 TabTrigger | `false` | `top`  | `v1.1.13` |
 
 ## 计划新增特性
 

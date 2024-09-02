@@ -1,11 +1,3 @@
-<template>
-  <Select v-model:value="value" :options="cities" placeholder="Select" filterable>
-    <template #option="{ option, index, isSelected }">
-      {{ `${index + 1}、${option.label}: ${isSelected}` }}
-    </template>
-  </Select>
-</template>
-
 <script lang="ts" setup>
 import { ref } from 'vue'
 
@@ -13,30 +5,38 @@ const value = ref('')
 const cities = [
   {
     value: 'Beijing',
-    label: 'Beijing'
+    label: 'Beijing',
   },
   {
     value: 'Shanghai',
-    label: 'Shanghai'
+    label: 'Shanghai',
   },
   {
     value: 'Nanjing',
-    label: 'Nanjing'
+    label: 'Nanjing',
   },
   {
     value: 'Chengdu',
-    label: 'Chengdu'
+    label: 'Chengdu',
   },
   {
     value: 'Shenzhen',
-    label: 'Shenzhen'
+    label: 'Shenzhen',
   },
   {
     value: 'Guangzhou',
-    label: 'Guangzhou'
-  }
+    label: 'Guangzhou',
+  },
 ]
 </script>
+
+<template>
+  <Select v-model:value="value" :options="cities" placeholder="Select" filterable>
+    <template #option="{ option, index, isSelected }">
+      {{ `${index + 1}、${option.label}: ${isSelected}` }}
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 .bl-select {

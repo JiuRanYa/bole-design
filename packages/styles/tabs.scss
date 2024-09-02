@@ -9,6 +9,13 @@ $tabs: map.merge((), $tabs);
   display: flex;
   flex-direction: column;
 
+  &--transition-box {
+    background: get-css-var(fill-color-base);
+    position: absolute;
+    transition: all .25s ease-in-out;
+    border-radius: inherit;
+  }
+
   &--left {
     flex-direction: row;
   }
@@ -24,19 +31,24 @@ $tabs: map.merge((), $tabs);
 
   .is-left {
     flex-direction: column;
+    margin-right: 8px;
   }
   .is-right {
     flex-direction: column;
+    margin-left: 8px;
   }
 
   .is-top {
     flex-direction: row;
+    margin-bottom: 8px;
   }
   .is-bottom {
     flex-direction: row;
+    margin-top: 8px;
   }
 
   &-content {
-    flex: 1;
+		flex: auto;
+		overflow: auto;
   }
 }

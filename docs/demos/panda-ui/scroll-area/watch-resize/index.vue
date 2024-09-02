@@ -1,15 +1,3 @@
-<template>
-  <ScrollArea height="300px" :watchResize="true">
-    <div v-for="t in tags" class="scroll-area-item">
-      {{ t }}
-    </div>
-  </ScrollArea>
-
-  <Button type="secondary" @click="overflowScroll" class="btn-overflow">
-    {{ len === 3 ? '溢出' : '取消溢出' }}
-  </Button>
-</template>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
@@ -23,7 +11,19 @@ function overflowScroll() {
 }
 </script>
 
-<style lang="scss">
+<template>
+  <ScrollArea height="300px" :watch-resize="true">
+    <div v-for="t in tags" class="scroll-area-item">
+      {{ t }}
+    </div>
+  </ScrollArea>
+
+  <Button type="secondary" class="btn-overflow" @click="overflowScroll">
+    {{ len === 3 ? '溢出' : '取消溢出' }}
+  </Button>
+</template>
+
+<style lang="scss" scoped>
 .scroll-area-item {
   height: 60px;
   margin: 10px;

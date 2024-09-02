@@ -1,30 +1,29 @@
 <script setup lang="ts">
 import { useProps } from '@panda-ui/common'
 import { computed, inject, ref } from 'vue'
-import { DateCell, monthGridProps } from './props'
 import { useNamespace } from '@panda-ui/hooks'
-import dayjs, { Dayjs } from 'dayjs'
-import dayOfYear from 'dayjs/plugin/dayOfYear'
-import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import dayjs from 'dayjs'
+import dayOfYear from 'dayjs/plugin/dayOfYear.js'
+import isBetween from 'dayjs/plugin/isBetween.js'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js'
+import { monthGridProps } from './props'
+import type { DateCell } from './props'
 import { config } from './const'
-import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
+import { DATE_PICKER_INJECTION_KEY } from './token'
 
+defineOptions({
+  name: 'MonthGrid',
+})
+const _props = defineProps(monthGridProps)
 dayjs.extend(dayOfYear)
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)
 
-defineOptions({
-  name: 'MonthGrid'
-})
-
-const rootValue = inject(DATE_PICKER_INJECTION_KEY)
-const emit = defineEmits(['pick'])
+const rootValue = inject(DATE_PICKER_INJECTION_KEY)!
 const ns = useNamespace('month-grid')
 
-const _props = defineProps(monthGridProps)
 const props = useProps('month-grid', _props, {
-  value: ''
+  value: '',
 })
 
 const tableRef = ref<HTMLElement>()
@@ -47,14 +46,15 @@ const weekDay = computed(() => {
 // 该月需要渲染多少行
 const daysRowNum = computed(() => {
   let res = Math.ceil(daysInMonth.value / 7)
-  if (weekDay.value === 0 || daysInMonth.value % 7 === 0) res += 1
+  if (weekDay.value === 0 || daysInMonth.value % 7 === 0)
+    res += 1
   return res
 })
-const startFormatDate = computed(() => {
-  return rootValue?.startMeta.getDayjs().format(config.defaultFormat)
+const startDate = computed(() => {
+  return new Date(rootValue.startMeta.dateMeta.year, rootValue.startMeta.dateMeta.month, rootValue.startMeta.dateMeta.day)
 })
-const endFormatDate = computed(() => {
-  return rootValue?.endMeta.getDayjs().format(config.defaultFormat)
+const endDate = computed(() => {
+  return new Date(rootValue.endMeta.dateMeta.year, rootValue.endMeta.dateMeta.month, rootValue.endMeta.dateMeta.day)
 })
 const startAllocated = computed(() => {
   return rootValue?.startMeta.extraMeta.allocated
@@ -77,9 +77,9 @@ const rows = computed(() => {
         cellIndex: j,
         text: day,
         isCurrent: rootValue?.currentValue.value === dateStr,
-        date: dayjs_!.toDate(),
+        date: day ? dayjs_!.toDate() : undefined,
         dayjs: dayjs_,
-        dateStr
+        dateStr,
       })
     }
   }
@@ -93,9 +93,9 @@ function getDayAriaLabel(row: number, cell: number) {
 
   // when weekDay equals to 0, it mains Sunday, offset add one
   if (weekDay.value === 0) {
-    if (start === 0) {
+    if (start === 0)
       return cell === 7 ? '1' : ''
-    }
+
     start = (row - 2) * 7 + 1
     day = start + cell
   }
@@ -106,87 +106,125 @@ function getDayAriaLabel(row: number, cell: number) {
 function getWeekDayByDate(date: string) {
   return dayjs(date).day()
 }
+function sameDay(d1?: Date, d2?: Date) {
+  if (!d1 || !d2)
+    return false
 
-function calcEmitValue(date: Dayjs) {
-  return {
-    year: date.year(),
-    month: date.month() + 1,
-    day: date.date()
-  }
+  return d1.getFullYear() === d2.getFullYear()
+    && d1.getMonth() === d2.getMonth()
+    && d1.getDate() === d2.getDate()
 }
+
 function handlePickDate(e: Event) {
   const target = (e.target as HTMLElement).closest('td')
 
-  if (!target || target.tagName !== 'TD' || !target.ariaLabel) return
+  if (!target || target.tagName !== 'TD' || !target.ariaLabel)
+    return
 
   const day = target.ariaLabel
-  const dayjs_ = dayjs(`${props.value}-${day}`)
-  const date = dayjs(`${props.value}-${day}`).format(config.defaultFormat)
-  const emitValue = calcEmitValue(dayjs_)
-  const isRange = rootValue?.isRange.value
+  const date = dayjs(`${props.value}-${day}`)
 
-  if (!isRange) {
-    emit('pick', emitValue)
+  // 如果不是范围选择终止
+  if (!rootValue.isRange.value) {
+    rootValue?.startMeta.setDateMeta({
+      year: date.get('year'),
+      month: date.get('month'),
+      day: date.get('date'),
+    })
+
+    return
   }
 
-  if (isRange) {
-    if (!startAllocated.value || (startAllocated.value && endAllocated.value)) {
-      rootValue.startMeta.setDate(date)
-      rootValue.startMeta.extraMeta.allocated = true
+  // 如果全部指派, 重置
+  if (startAllocated.value && endAllocated.value) {
+    rootValue.startMeta.extraMeta.allocated = false
+    rootValue.endMeta.extraMeta.allocated = false
+  }
 
-      let shouldPatchEnd = startAllocated.value && endAllocated.value
-      shouldPatchEnd ? (rootValue.endMeta.extraMeta.allocated = false) : null
+  // 分别指派开始时间和结束时间
+  if (!rootValue?.startMeta.extraMeta.allocated) {
+    rootValue?.startMeta.setDateMeta({
+      year: date.get('year'),
+      month: date.get('month'),
+      day: date.get('date'),
+    })
+    rootValue.startMeta.extraMeta.allocated = true
 
-      return
-    }
-
-    if (!endAllocated.value) {
-      const startDate = rootValue.startMeta.getDate()
-      const endDate = date
-
-      const needChange = dayjs(endDate).isSameOrBefore(startDate)
-      const emitStart = needChange ? endDate : startDate
-      const emitEnd = needChange ? startDate : endDate
-
-      rootValue.startMeta.setDate(emitStart)
-      rootValue.endMeta.setDate(emitEnd)
-
-      rootValue.endMeta.extraMeta.allocated = true
-    }
+    return
+  }
+  if (!rootValue?.endMeta.extraMeta.allocated) {
+    rootValue?.endMeta.setDateMeta({
+      year: date.get('year'),
+      month: date.get('month'),
+      day: date.get('date'),
+    })
+    rootValue.endMeta.extraMeta.allocated = true
   }
 }
 function isInRange(date: DateCell['dateStr']) {
   return (
-    startAllocated.value &&
-    endAllocated.value &&
-    dayjs(date).isBetween(startFormatDate.value, endFormatDate.value, null, '[)')
+    startAllocated.value
+    && endAllocated.value
+    && dayjs(date).isBetween(startDate.value, endDate.value, null, '[)')
   )
 }
-
-function getCellClass(cell: DateCell) {
+function isStartDate(date: DateCell['dateStr']) {
+  return (
+    startAllocated.value
+    && endAllocated.value
+    && isInRange(date)
+    && dayjs(date).startOf('month').format(config.defaultFormat) === date
+  )
+}
+function isEndDate(date: DateCell['dateStr']) {
+  return (
+    startAllocated.value
+    && endAllocated.value
+    && isInRange(date)
+    && dayjs(date).endOf('month').format(config.defaultFormat) === date
+  )
+}
+function getCellClass(cell: DateCell, row: DateCell[], currentIdx: number) {
   const dateStr = cell.dateStr
 
+  const start = (cell: DateCell) => sameDay(cell.date, startDate.value) && startAllocated.value
+  const end = (cell: DateCell) => sameDay(cell.date, endDate.value) && endAllocated.value
+  const selected = cell.dateStr === rootValue?.currentValue.value
+
+  const isBeforeStartRange = () => {
+    if (currentIdx < row.findIndex(cell => end(cell)) && row.every(cell => !start(cell)) && !cell.dateStr)
+      return true
+
+    return row.find(cell => isStartDate(cell.dateStr))
+      && !cell.dateStr
+      && row.every(cell => !start(cell)
+      && !isEndDate(cell.dateStr))
+  }
+
   return {
-    today: now === dateStr,
-    selected: cell.dateStr === rootValue?.currentValue.value,
-    start: cell.dateStr === startFormatDate.value && startAllocated.value,
-    end: cell.dateStr === endFormatDate.value && endAllocated.value,
-    'in-range': isInRange(cell.dateStr)
+    'today': now === dateStr,
+    'selected': selected,
+    'start': start(cell),
+    'end': end(cell),
+    'in-range': isInRange(cell.dateStr),
+    'is-end': isEndDate(cell.dateStr),
+    'before-range': isBeforeStartRange(),
   }
 }
+
 defineExpose({ tableRef })
 </script>
 
 <template>
-  <table :class="className" :aria-label="value" ref="tableRef" @click="handlePickDate">
+  <table ref="tableRef" :class="className" :aria-label="value" @click="handlePickDate">
     <thead :class="ns.be('title')">
       {{
         monthTitle
       }}
     </thead>
     <tbody :class="ns.bem('days', 'body')">
-      <tr role="row" v-for="(row, idx) in rows" :key="idx">
-        <td part="data" v-for="cell in row" :class="getCellClass(cell)" :aria-label="cell.text">
+      <tr v-for="(row, idx) in rows" :key="idx" role="row">
+        <td v-for="(cell, i) in row" :key="cell.dateStr" part="data" :class="getCellClass(cell, row, i)" :aria-label="cell.text">
           {{ cell.text }}
         </td>
       </tr>

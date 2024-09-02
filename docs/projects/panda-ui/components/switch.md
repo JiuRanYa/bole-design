@@ -1,15 +1,12 @@
 ---
 title: Switch
 lang: zh-CN
+description: 开关选择器
 ---
 
 # Switch
 
 开关选择器
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/switch/*/*.vue')
-</script>
 
 ## 基础用法
 

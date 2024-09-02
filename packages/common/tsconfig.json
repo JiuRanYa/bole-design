@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
-    "allowJs": false,
-    "strict": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "noUnusedLocals": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "sourceMap": false,
-    "outDir": "dist",
-    "declaration": true,
-    "types": ["vite/client"],
     "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
     "paths": {
       "@panda-ui/*": ["../common/*/src"]
-    }
+    },
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
+    "allowJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "outDir": "dist",
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

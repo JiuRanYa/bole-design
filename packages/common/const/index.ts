@@ -1,4 +1,4 @@
-import { Placement } from '../types'
+import type { Placement } from '../types'
 
 export const placementWhiteList = Object.freeze([
   'top',
@@ -12,7 +12,7 @@ export const placementWhiteList = Object.freeze([
   'left-end',
   'right',
   'right-start',
-  'right-end'
+  'right-end',
 ] as Placement[])
 
 export const triggerWhiteList = Object.freeze(['click', 'hover'])

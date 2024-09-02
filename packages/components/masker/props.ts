@@ -9,5 +9,8 @@ export const maskerProps = buildProps({
   closable: booleanProps,
   reverse: booleanProps,
   maskClose: booleanProps,
-  onMaskClick: eventProp<(event: MouseEvent) => void>()
+  onMaskClick: eventProp<(event: MouseEvent) => void>(),
+  onShow: eventProp(),
+  onClose: eventProp(),
+  onHide: eventProp(),
 })

@@ -1,44 +1,51 @@
-import {
-  nextTick,
+import type {
   ExtractPropTypes,
-  ref,
-  reactive,
-  computed,
-  onMounted,
-  watch,
-  onUpdated
 } from 'vue'
-import { scrollAreaProps } from './props'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  onUpdated,
+  reactive,
+  ref,
+  watch,
+} from 'vue'
 import { useResizeObserver } from '@panda-ui/hooks'
+import { emitEvent } from '@panda-ui/common'
+import type { ScrollDirection, scrollAreaProps } from './props'
+import { ALIGN_MAP } from './utils'
 
 export function useScroll(props: ExtractPropTypes<typeof scrollAreaProps>) {
   const barRef = ref()
   const viewRef = ref<HTMLElement>()
-  const wrapperRef = ref<HTMLElement>()
+  const wrapperRef = ref()
+  const containerRef = ref()
   const thumbState = reactive({
-    top: 0,
+    offset: 0,
     barOpacity: 0,
-    dragging: false
+    dragging: false,
   })
   const wrapperState = reactive({
-    offsetHeight: 0,
-    scrollHeight: 0
+    offsetLength: 0,
+    scrollLength: 0,
+    lastScroll: 0,
+    direction: '',
   })
 
   function handleTrackPointerDown(e: PointerEvent) {
-    updateThumbAndWrapperTop(e.clientY)
+    updateThumbAndWrapperOffset((e as any)[attrAlignMap.value.client])
   }
 
   function handleThumbPointerDown(e: PointerEvent) {
     // 排除非鼠标左键以及其他非标准触控设备
-    if (e.button !== 0) {
+    if (e.button !== 0)
       return false
-    }
 
     e.stopPropagation()
     e.preventDefault()
 
-    if (!wrapperRef.value || !barRef.value) return false
+    if (!wrapperRef.value || !barRef.value)
+      return false
 
     document.addEventListener('pointermove', handlePointerMove)
     document.addEventListener('pointerup', handlePointerUp)
@@ -46,36 +53,44 @@ export function useScroll(props: ExtractPropTypes<typeof scrollAreaProps>) {
     thumbState.dragging = true
   }
 
-  function updateThumbAndWrapperTop(currentCursorPos: number) {
-    if (!barRef.value || !wrapperRef.value || !thumbSizePixel.value) return
+  function updateThumbAndWrapperOffset(currentCursorPos: number) {
+    if (!barRef.value || !wrapperRef.value || !thumbSizePixel.value)
+      return
+    const direction = attrAlignMap.value.direction
 
-    const offset = currentCursorPos - wrapperRef.value.getBoundingClientRect()['top']
+    const offset = currentCursorPos - wrapperRef.value.getBoundingClientRect()[direction]
     const halfThumbSize = thumbSizePixel.value / 2
-    const thmubStatePercentage = (offset - halfThumbSize) / wrapperState.offsetHeight
+    const thmubStatePercentage = (offset - halfThumbSize) / wrapperState.offsetLength
 
-    const { scrollHeight, offsetHeight } = wrapperRef.value
-    const thumbMaxTop = ((scrollHeight - offsetHeight) / offsetHeight) * 100
-    const thumbPatchTop =
-      ((thmubStatePercentage * wrapperState.scrollHeight) / wrapperState.offsetHeight) * 100
+    const scrollAttr = attrAlignMap.value.scroll
+    const scrollLengthAttr = attrAlignMap.value.scrollLength
+    const offsetAttr = attrAlignMap.value.offsetLength
+
+    const offsetLength = wrapperRef.value[offsetAttr]
+    const scrollLength = wrapperRef.value[scrollLengthAttr]
+
+    const thumbMaxOffset = ((scrollLength - offsetLength) / offsetLength) * 100
+    const thumbPatchTop
+      = ((thmubStatePercentage * wrapperState.scrollLength) / wrapperState.offsetLength) * 100
 
     // Outer scroll area ignore case
     if (offset < 0) {
-      thumbState.top = 0
-      wrapperRef.value.scrollTop = 0
+      thumbState.offset = 0
+      wrapperRef.value[scrollAttr] = 0
       return
     }
-    if (offset + halfThumbSize >= wrapperState.offsetHeight) {
-      thumbState.top = thumbMaxTop
-      wrapperRef.value.scrollTop = scrollHeight
+    if (offset + halfThumbSize >= wrapperState.offsetLength) {
+      thumbState.offset = thumbMaxOffset
+      wrapperRef.value[scrollAttr] = scrollLength
       return
     }
 
-    thumbState.top = Math.max(0, Math.min(thumbPatchTop, thumbMaxTop))
-    wrapperRef.value.scrollTop = thmubStatePercentage * wrapperState.scrollHeight
+    thumbState.offset = Math.max(0, Math.min(thumbPatchTop, thumbMaxOffset))
+    wrapperRef.value[scrollAttr] = thmubStatePercentage * wrapperState.scrollLength
   }
 
   function handlePointerMove(e: PointerEvent) {
-    requestAnimationFrame(() => updateThumbAndWrapperTop(e.clientY))
+    requestAnimationFrame(() => updateThumbAndWrapperOffset((e as any)[attrAlignMap.value.client]))
   }
 
   function handlePointerUp(e: PointerEvent) {
@@ -85,44 +100,78 @@ export function useScroll(props: ExtractPropTypes<typeof scrollAreaProps>) {
     thumbState.dragging = false
   }
 
-  function handleScroll() {
+  function handleScroll(e: Event) {
     const update = () => {
-      if (!barRef.value || !wrapperRef.value) return
+      if (!barRef.value || !wrapperRef.value)
+        return
 
-      const { scrollTop, offsetHeight } = wrapperRef.value
+      const scroll = wrapperRef.value[attrAlignMap.value.scroll]
+      const offsetLength = containerRef.value[attrAlignMap.value.offsetLength]
 
-      thumbState.top = (scrollTop / offsetHeight) * 100
+      thumbState.offset = (scroll / offsetLength) * 100
+
+      // 判断滚动方向
+      if (scroll > wrapperState.lastScroll)
+        wrapperState.direction = 'forward'
+      else if (scroll < wrapperState.lastScroll)
+        wrapperState.direction = 'backward'
+
+      wrapperState.lastScroll = scroll <= 0 ? 0 : scroll
+
+      props.onScroll
+      && emitEvent(props.onScroll, {
+        originEvent: e,
+        el: wrapperRef.value,
+        thumbLength: thumbSizePixel.value!,
+        isDragging: thumbState.dragging,
+        direction: wrapperState.direction as ScrollDirection,
+      })
     }
 
     requestAnimationFrame(update)
   }
 
   const thumbSizePercentage = computed(() => {
-    if (!wrapperRef.value) return
+    if (!wrapperRef.value)
+      return
 
-    return (wrapperState.offsetHeight / wrapperState.scrollHeight) * 100
+    return (wrapperState.offsetLength / wrapperState.scrollLength) * 100
   })
 
   const thumbSizePixel = computed(() => {
-    if (!wrapperRef.value || !thumbSizePercentage.value) return
+    if (!wrapperRef.value || !thumbSizePercentage.value)
+      return
 
-    return (thumbSizePercentage.value / 100) * wrapperState.offsetHeight
+    return (thumbSizePercentage.value / 100) * wrapperState.offsetLength
+  })
+
+  const attrAlignMap = computed(() => {
+    return ALIGN_MAP[props.mode]
   })
 
   function updateDOMState() {
-    if (!wrapperRef.value) return
+    if (!wrapperRef.value)
+      return
 
-    wrapperState.offsetHeight = wrapperRef.value.offsetHeight
-    wrapperState.scrollHeight = wrapperRef.value.scrollHeight
-    thumbState.barOpacity = wrapperRef.value.offsetHeight === wrapperRef.value.scrollHeight ? 0 : 1
+    const offsetLength = containerRef.value[attrAlignMap.value.offsetLength]
+    const scrollLength = wrapperRef.value[attrAlignMap.value.scrollLength]
+
+    wrapperState.offsetLength = offsetLength
+    wrapperState.scrollLength = scrollLength
+    thumbState.barOpacity = props.alwaysShow ? 1 : offsetLength === scrollLength ? 0 : 1
   }
 
   function scrollTo(option: ScrollToOptions) {
+    if (!wrapperRef.value.scrollTo)
+      return
+
     wrapperRef.value?.scrollTo(option)
   }
 
   onMounted(() => {
-    updateDOMState()
+    nextTick(() => {
+      updateDOMState()
+    })
   })
 
   onUpdated(() => {
@@ -131,7 +180,7 @@ export function useScroll(props: ExtractPropTypes<typeof scrollAreaProps>) {
 
   watch(
     () => props.watchResize,
-    watchResize => {
+    (watchResize) => {
       if (watchResize) {
         nextTick(() => {
           const { observeResize } = useResizeObserver()
@@ -139,7 +188,7 @@ export function useScroll(props: ExtractPropTypes<typeof scrollAreaProps>) {
         })
       }
     },
-    { immediate: true }
+    { immediate: true },
   )
 
   return {
@@ -148,9 +197,10 @@ export function useScroll(props: ExtractPropTypes<typeof scrollAreaProps>) {
     barSizePercentage: thumbSizePercentage,
     thumbState,
     wrapperRef,
+    containerRef,
     scrollTo,
     handleScroll,
     handleTrackPointerDown,
-    handleThumbPointerDown
+    handleThumbPointerDown,
   }
 }

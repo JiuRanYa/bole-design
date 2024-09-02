@@ -1,55 +1,51 @@
-<template>
-  <BasicFilterPanel
-    :isAddActive="isActive"
-    :currentFilterValue="selectedChoice"
-    @back="emit('back')"
-  >
-    <Select
-      :class="ns.be('select')"
-      :fitPopper="true"
-      v-model:value="selectedChoice"
-      :options="currentChoices"
-      :to="`.${ns.be('content')}`"
-    ></Select>
-  </BasicFilterPanel>
-</template>
-
 <script setup lang="ts">
-import { computed, ref, watch, reactive, inject } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { useNamespace } from '@panda-ui/hooks'
-import BasicFilterPanel from './basic-filter-panel.vue'
-import { FILTER_INJECTION_KEY, Choice, InputType } from '../types'
+import type { SelectOption } from '@panda-ui/components'
 import { Select } from '@panda-ui/components'
-
-const { editData, currentOption } = inject(FILTER_INJECTION_KEY)
+import { FILTER_INJECTION_KEY, InputType } from '../types'
+import type { Choice } from '../types'
+import BasicFilterPanel from './basic-filter-panel.vue'
 
 defineOptions({
-  name: 'SelectFilterPanel'
+  name: 'SelectFilterPanel',
 })
 const emit = defineEmits(['back'])
 
 const ns = useNamespace('filter__panel')
+const { editData, currentOption } = inject(FILTER_INJECTION_KEY)!
 
-const currentChoices = reactive(
-  currentOption.value?.choices.map((choice: Choice) => {
-    return { label: choice.label, value: choice.val }
-  })
-)
-const selectedChoice = ref(
-  editData.value && editData.value.inputType === InputType.SELECT ? editData.value.value : ''
-)
+const emittedValue = ref()
+const selectedValue = ref(editData.value?.val?.value)
 
-const isActive = computed(() => !!selectedChoice.value)
+const isActive = computed(() => !!selectedValue.value)
+const currentChoices = computed<Choice[]>(() => currentOption.value?.choices || [])
+
+function handleSelect(value: SelectOption) {
+  emittedValue.value = { ...value }
+}
 
 watch(
   editData,
   () => {
-    if (editData.value && editData.value.inputType === InputType.SELECT) {
-      selectedChoice.value = editData.value.value
-    }
+    if (editData.value && editData.value.inputType === InputType.SELECT)
+      selectedValue.value = editData.value.val?.value
   },
   {
-    deep: true
-  }
+    deep: true,
+  },
 )
 </script>
+
+<template>
+  <BasicFilterPanel :is-add-active="isActive" :current-filter-value="emittedValue" @back="emit('back')">
+    <Select
+      v-model:value="selectedValue"
+      :class="ns.be('select')"
+      :fit-popper="true"
+      :options="currentChoices"
+      v-bind="currentOption?.optionProps"
+      @select="handleSelect"
+    />
+  </BasicFilterPanel>
+</template>

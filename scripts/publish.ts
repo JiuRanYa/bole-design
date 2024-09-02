@@ -1,9 +1,9 @@
+import fs from 'node:fs'
 import prompts from 'prompts'
-import { run } from './utils'
 import type { Project } from '@pnpm/find-workspace-packages'
 import { projRoot } from '@panda-ui/internal'
-import fs from 'node:fs'
 import findWorkspacePackages from '@pnpm/find-workspace-packages'
+import { run } from './utils'
 
 const versionChoices = ['patch', 'minor', 'major']
 const publicDir = 'dist/panda-ui'
@@ -16,7 +16,7 @@ async function main() {
   try {
     await run('npm', ['version', semm])
     await run('git', ['push'], {
-      env: process.env
+      env: process.env,
     })
 
     // update version
@@ -26,11 +26,11 @@ async function main() {
     const writeVersion = async (project: Project) => {
       await project.writeProjectManifest({
         ...project.manifest,
-        version: version
+        version,
       } as any)
     }
     const pkgs = Object.fromEntries(
-      (await getWorkspacePackages()).map(pkg => [pkg.manifest.name!, pkg])
+      (await getWorkspacePackages()).map(pkg => [pkg.manifest.name!, pkg]),
     )
     const pandaUI = pkgs['panda-ui']
 
@@ -40,7 +40,7 @@ async function main() {
     await run('git', ['add', '.'], {})
     await run('git', ['commit', '-m', `v${version}: release new version`], {})
     await run('git', ['push'], {
-      env: process.env
+      env: process.env,
     })
 
     const publicArgs = [
@@ -48,16 +48,17 @@ async function main() {
       '--registry',
       'http://34.219.210.151:8212/',
       '--access',
-      'public'
+      'public',
     ]
 
     await run('npm', publicArgs, {
-      cwd: publicDir
+      cwd: publicDir,
     })
-  } catch {
+  }
+  catch {
     await run('git', ['revert', 'HEAD'], {})
     await run('git', ['push'], {
-      env: process.env
+      env: process.env,
     })
   }
 }
@@ -71,22 +72,21 @@ async function queryVersion() {
         message: 'Which semantic version you want:',
         choices: versionChoices.map(comp => ({
           title: comp,
-          value: comp
+          value: comp,
         })),
-        onState: function (this: any) {
+        onState(this: any) {
           this.fallback = { title: this.input, value: this.input }
 
-          if (this.suggestions.length === 0) {
+          if (this.suggestions.length === 0)
             this.value = this.fallback.value
-          }
-        }
+        },
       },
       {
         onCancel: () => {
           console.log('Canceled by user, exiting...')
           process.exit(1)
-        }
-      }
+        },
+      },
     )
   ).version
 

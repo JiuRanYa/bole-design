@@ -1,7 +1,9 @@
 <template>
   <ContextMenu>
     <template #trigger>
-      <div class="context-menu-trigger">click here</div>
+      <div class="context-menu-trigger">
+        click here
+      </div>
     </template>
     <template #content>
       <Dropdown>
@@ -15,13 +17,15 @@
                 :scale="0.8"
                 style="position: relative; inset-inline-start: 6px; margin-right: 6px"
               >
-                <AngleRight></AngleRight>
+                <AngleRight />
               </Icon>
             </DropdownItem>
             <template #drop>
               <DropdownList>
                 <DropdownItem>子选项一</DropdownItem>
-                <DropdownItem disabled> 子选项二 </DropdownItem>
+                <DropdownItem disabled>
+                  子选项二
+                </DropdownItem>
                 <DropdownItem>子选项三</DropdownItem>
               </DropdownList>
             </template>

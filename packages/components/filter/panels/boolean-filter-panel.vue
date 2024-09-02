@@ -1,50 +1,46 @@
-<template>
-  <BasicFilterPanel :isAddActive="true" :currentFilterValue="radioValue" @back="emit('back')">
-    <div :class="ns.be('boolean')">
-      <div @click="select(true)">
-        <input type="radio" name="true" :checked="radioValue" />
-        <label for="true">是</label>
-      </div>
-      <div :class="ns.be('boolean__false')" @click="select(false)">
-        <input type="radio" name="false" :checked="!radioValue" />
-        <label for="false">否</label>
-      </div>
-    </div>
-  </BasicFilterPanel>
-</template>
-
 <script setup lang="ts">
-import { ref, watch, inject } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { useNamespace } from '@panda-ui/hooks'
-import BasicFilterPanel from './basic-filter-panel.vue'
+import { Radio, RadioGroup } from '@panda-ui/components'
 import { FILTER_INJECTION_KEY, InputType } from '../types'
-
-const { editData } = inject(FILTER_INJECTION_KEY)
+import BasicFilterPanel from './basic-filter-panel.vue'
 
 defineOptions({
-  name: 'BooleanFilterPanel'
+  name: 'BooleanFilterPanel',
 })
+
 const emit = defineEmits(['back'])
+
+const { editData, currentOption } = inject(FILTER_INJECTION_KEY)!
 
 const ns = useNamespace('filter__panel')
 
-const radioValue = ref<boolean>(
-  editData.value && editData.value.inputType === InputType.BOOLEAN ? editData.value.value : true
+const radioValue = ref(
+  editData.value && currentOption.value?.field === editData.value?.field
+    ? editData.value?.val ? '是' : '否'
+    : '是',
 )
-
-const select = (value: boolean) => {
-  radioValue.value = value
-}
+const emittedValue = computed(() => radioValue.value === '是')
 
 watch(
   editData,
   () => {
-    if (editData.value && editData.value.inputType === InputType.BOOLEAN) {
-      radioValue.value = editData.value.value
-    }
+    if (editData.value && editData.value.inputType === InputType.BOOLEAN)
+      radioValue.value = editData.value.val
   },
   {
-    deep: true
-  }
+    deep: true,
+  },
 )
 </script>
+
+<template>
+  <BasicFilterPanel :is-add-active="true" :current-filter-value="emittedValue" @back="emit('back')">
+    <div :class="ns.be('boolean')">
+      <RadioGroup v-model:value="radioValue">
+        <Radio label="是" />
+        <Radio label="否" />
+      </RadioGroup>
+    </div>
+  </BasicFilterPanel>
+</template>

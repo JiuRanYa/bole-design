@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vitepress'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import BLComponentDemo from './demo/bl-component-demo.vue'
 
 defineComponent({
-  name: 'home-page'
+  name: 'HomePage',
 })
 const router = useRouter()
-
-const oTags = ['Javascript', 'Typescript', 'UI', 'Design', 'Web', 'Front-end']
-const tags = ref([...oTags, ...oTags, ...oTags])
 
 function handleStartClick() {
   router.go(`/projects/panda-ui/guide/design`)
@@ -20,14 +17,18 @@ function handleStartClick() {
   <div class="homepage">
     <div class="homepage-main">
       <div class="homepage-main-one">
-        <div class="homepage-main-title">Panda UI</div>
+        <div class="homepage-main-title">
+          Panda UI
+        </div>
         <div class="homepage-main-desc">
           高度可定制化，全量
           <span class="homepage-en"> Typescript </span>
           支持，面向开发者的工具集
         </div>
         <div class="homepage-main-btn">
-          <Button type="primary" size="middle" @click="handleStartClick"> 开始使用 </Button>
+          <Button type="primary" size="middle" @click="handleStartClick">
+            开始使用
+          </Button>
         </div>
       </div>
 
@@ -42,31 +43,28 @@ function handleStartClick() {
         <div class="homepage-main-four-desc">
           <span>
             Panda UI 针对多项目设计，可扩展的命名空间，统一的 sass 设计，
-            <br />计划提供不同的原子类样式的统一预设，
-            <br />可做到无暇接入现有项目，并按需提供了高质量的hooks
+            <br>计划提供不同的原子类样式的统一预设，
+            <br>可做到无暇接入现有项目，并按需提供了高质量的hooks
           </span>
         </div>
       </div>
-
-      <div class="homepage-main-three">
-        <div class="homepage-main-three-title"></div>
-        <div class="homepage-main-three-mask">
-          <div class="homepage-main-three-wrapper">
-            <div v-for="tag in tags" class="homepage-main-three-tag">
-              {{ tag }}
-            </div>
-          </div>
-
-          <div class="homepage-main-three-wrapper" data-reverse="true">
-            <div v-for="tag in tags.reverse()" class="homepage-main-three-tag">
-              {{ tag }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="homepage-main-five">
-        <div class=""></div>
-      </div>
+      <!---->
+      <!-- <div class="homepage-main-three"> -->
+      <!--   <div class="homepage-main-three-title"></div> -->
+      <!--   <div class="homepage-main-three-mask"> -->
+      <!--     <div class="homepage-main-three-wrapper"> -->
+      <!--       <div v-for="tag in tags" class="homepage-main-three-tag"> -->
+      <!--         {{ tag }} -->
+      <!--       </div> -->
+      <!--     </div> -->
+      <!---->
+      <!--     <div class="homepage-main-three-wrapper" data-reverse="true"> -->
+      <!--       <div v-for="tag in tags.reverse()" class="homepage-main-three-tag"> -->
+      <!--         {{ tag }} -->
+      <!--       </div> -->
+      <!--     </div> -->
+      <!--   </div> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -78,7 +76,6 @@ function handleStartClick() {
   }
 
   &-main {
-    height: 500vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -169,6 +166,7 @@ function handleStartClick() {
         background-size: 0% 100%;
         animation: scroll-reveal linear forwards;
         animation-timeline: view();
+        animation-delay: 220ms;
         background-repeat: no-repeat;
         letter-spacing: 0.3em;
       }

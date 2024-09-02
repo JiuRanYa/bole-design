@@ -1,27 +1,27 @@
 {
   "name": "@panda-ui/icons",
+  "type": "module",
   "version": "1.0.4",
   "description": "Panda UI icons monerepo",
-  "license": "MIT",
   "author": "Tong Siyuan",
-  "scripts": {
-    "build": "tsx scripts/build.ts"
-  },
-  "type": "module",
-  "main": "lib/index.js",
-  "module": "es/index.mjs",
-  "types": "./types/index.d.ts",
+  "license": "MIT",
   "sideEffects": [
     "dist/*"
   ],
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "require": "./lib/index.js",
-      "import": "./es/index.mjs",
-      "types": "./types/index.d.ts"
+      "import": "./es/index.mjs"
     },
-    "./es": "./es/index.mjs",
-    "./lib": "./lib/index.js",
+    "./es": {
+      "types": "./types/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./types/index.d.ts",
+      "require": "./lib/index.js"
+    },
     "./es/*.mjs": "./es/*.mjs",
     "./es/*": "./es/*.mjs",
     "./lib/*.js": "./lib/*.js",
@@ -29,6 +29,9 @@
     "./package.json": "./package.json",
     "./*": "./*"
   },
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "types": "./types/index.d.ts",
   "files": [
     "dist",
     "es",
@@ -36,6 +39,12 @@
     "types",
     "vue"
   ],
+  "scripts": {
+    "build": "tsx scripts/build.ts"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.25"
+  },
   "devDependencies": {
     "@types/node": "^18.7.23",
     "@types/prettier": "^2.7.1",
@@ -44,8 +53,5 @@
     "fs-extra": "^10.1.0",
     "kolorist": "^1.6.0",
     "prettier": "^2.7.1"
-  },
-  "peerDependencies": {
-    "vue": "^3.2.25"
   }
 }

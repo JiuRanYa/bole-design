@@ -1,21 +1,20 @@
+import { resolve } from 'node:path'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Comp from 'unplugin-vue-components/vite'
-import { resolve } from 'node:path'
-import { readdirSync, statSync, existsSync, readFileSync } from 'node:fs'
 import DefineOptions from 'unplugin-vue-define-options/vite'
 
 const demos = process.env.DEMOS
-const port = parseInt(process.env.PORT || '') || 8008
+const port = Number.parseInt(process.env.PORT || '') || 8008
 
 const componentsDir = resolve(__dirname, '../packages/components')
-const components = readdirSync(componentsDir).filter(f => {
+const components = readdirSync(componentsDir).filter((f) => {
   const path = resolve(componentsDir, f)
 
-  if (!statSync(path).isDirectory()) {
+  if (!statSync(path).isDirectory())
     return false
-  }
 
   return existsSync(`${path}/index.ts`)
 })
@@ -27,13 +26,13 @@ export default defineConfig(() => {
     optimizeDeps: {
       include: [
         '@panda-ui/icons',
-        ...Object.keys(pkg.dependencies).filter((dep: string) => !dep.includes('panda-ui'))
-      ]
+        ...Object.keys(pkg.dependencies).filter((dep: string) => !dep.includes('panda-ui')),
+      ],
     },
     build: {
       commonjsOptions: {
-        esmExternals: true
-      }
+        esmExternals: true,
+      },
     },
     plugins: [
       vue(),
@@ -44,35 +43,35 @@ export default defineConfig(() => {
         resolvers: [
           {
             type: 'component',
-            resolve: name => {
+            resolve: (name) => {
               const kebabName = toKebabCase(name)
 
               if (components.includes(kebabName)) {
                 return {
                   name,
-                  from: `@panda-ui/components/${kebabName}/index.ts`
+                  from: `@panda-ui/components/${kebabName}/index.ts`,
                 }
               }
-            }
-          }
-        ]
-      })
+            },
+          },
+        ],
+      }),
     ],
     define: {
       __DEMOS__: demos,
-      __PORT__: JSON.stringify(port)
+      __PORT__: JSON.stringify(port),
     },
     server: {
       port,
-      host: true
-    }
+      host: true,
+    },
   }
 })
 
 function toKebabCase(value: string) {
   return (
-    value.charAt(0).toLowerCase() +
-    value
+    value.charAt(0).toLowerCase()
+    + value
       .slice(1)
       .replace(/([A-Z])/g, '-$1')
       .toLowerCase()

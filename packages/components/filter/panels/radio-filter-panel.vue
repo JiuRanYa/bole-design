@@ -1,62 +1,43 @@
-<template>
-  <BasicFilterPanel :isAddActive="isActive" :currentFilterValue="selected" @back="emit('back')">
-    <div :class="ns.be('panel__container')">
-      <ul :class="radioClass">
-        <li
-          v-for="choice in currentOption.choices"
-          :key="choice.val"
-          @click="selectChoice(choice.val)"
-        >
-          <input
-            type="radio"
-            :id="choice.val"
-            :value="choice.val"
-            :checked="choice.val === selected"
-          />
-          <label :for="choice.val">{{ choice.label }}</label>
-        </li>
-      </ul>
-    </div>
-  </BasicFilterPanel>
-</template>
-
 <script setup lang="ts">
-import { computed, ref, watch, inject } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { useNamespace } from '@panda-ui/hooks'
-import BasicFilterPanel from './basic-filter-panel.vue'
+import { Radio, RadioGroup, ScrollArea } from '@panda-ui/components'
 import { FILTER_INJECTION_KEY, InputType } from '../types'
-
-const { editData, currentOption } = inject(FILTER_INJECTION_KEY)
+import BasicFilterPanel from './basic-filter-panel.vue'
 
 defineOptions({
-  name: 'RadioFilterPanel'
+  name: 'RadioFilterPanel',
 })
+
 const emit = defineEmits(['back'])
 
+const { editData, currentOption } = inject(FILTER_INJECTION_KEY)!
+
 const ns = useNamespace('filter')
-const radioClass = computed(() => {
-  return [ns.be('list'), ns.be('panel__radio')]
-})
+const selectedValue = ref(editData.value?.val)
 
-const selected = ref(
-  editData.value && editData.value.inputType === InputType.RADIO ? editData.value.value : ''
-)
-
-const isActive = computed(() => selected.value !== '')
-
-const selectChoice = (selectedChoice: string) => {
-  selected.value = selectedChoice
-}
+const isActive = computed(() => selectedValue.value !== '')
 
 watch(
   editData,
   () => {
-    if (editData.value && editData.value.inputType === InputType.RADIO) {
-      selected.value = editData.value.value
-    }
+    if (editData.value && editData.value.inputType === InputType.RADIO)
+      selectedValue.value = editData.value.val
   },
   {
-    deep: true
-  }
+    deep: true,
+  },
 )
 </script>
+
+<template>
+  <BasicFilterPanel :is-add-active="isActive" :current-filter-value="selectedValue" @back="emit('back')">
+    <div :class="[ns.be('panel__container'), ns.be('panel__radio')]">
+      <ScrollArea height="100%">
+        <RadioGroup v-model:value="selectedValue" vertical>
+          <Radio v-for="choice in (currentOption?.choices || [])" :key="choice.value" :label="choice.label" />
+        </RadioGroup>
+      </ScrollArea>
+    </div>
+  </BasicFilterPanel>
+</template>

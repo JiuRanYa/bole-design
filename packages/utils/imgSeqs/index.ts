@@ -1,4 +1,4 @@
-import { isNumber, getBase64BySrc, isFunction, toCapitalCase } from '@panda-ui/common'
+import { getBase64BySrc, isFunction, isNumber, toCapitalCase } from '@panda-ui/common'
 
 interface StopConfig {
   fin?: boolean
@@ -86,24 +86,23 @@ export default class LoadImageFrames {
   private initImgSeqState() {
     const stat = new Proxy(
       {
-        loaded: false
+        loaded: false,
       },
       {
         set: (target, p, newValue) => {
           const k = p as keyof typeof target
-          if (p === 'loaded') {
+          if (p === 'loaded')
             this.execAllCbs('loaded')
-          }
+
           target[k] = newValue
           return true
         },
         get(target, key) {
           const k = key as keyof typeof target
-          if (Object.keys(target).includes(k)) {
+          if (Object.keys(target).includes(k))
             return target[k]
-          }
-        }
-      }
+        },
+      },
     )
     this.state = stat
   }
@@ -111,15 +110,13 @@ export default class LoadImageFrames {
   private execAllCbs(name: string) {
     const funcs = this.callbacks[name]
 
-    if (funcs?.length) {
+    if (funcs?.length)
       funcs.forEach(func => func())
-    }
   }
 
   private checkContainer() {
-    if (!this.container) {
+    if (!this.container)
       console.warn('Please ensure that the el DOM node exists.')
-    }
   }
 
   private async loadImgBase64(path: string[]) {
@@ -129,30 +126,29 @@ export default class LoadImageFrames {
   }
 
   private async patchSrcToNodes(start: number, end: number) {
-    if (start === end) return
+    if (start === end)
+      return
 
     const waitForLoadImgPath = []
 
     for (let i = start; i <= end; i++) {
       // img not loaded
-      if (this.loadState[i] === 0) {
+      if (this.loadState[i] === 0)
         waitForLoadImgPath.push(this.imgSeq[i])
-      }
     }
 
     const loadedImgs = await this.loadImgBase64(waitForLoadImgPath)
 
     for (let i = start; i < end + 1; i++) {
-      if (this.imgTags[i].src !== loadedImgs[i]) {
+      if (this.imgTags[i].src !== loadedImgs[i])
         this.imgTags[i].src = loadedImgs[i - start]
-      }
     }
   }
 
   private async initNodes() {
-    this.loadState = new Array(this.imgSeq.length).fill(0)
+    this.loadState = Array.from({ length: this.imgSeq.length }).fill(0) as any
 
-    this.imgSeq.forEach((path, idx) => {
+    this.imgSeq.forEach(() => {
       const img = document.createElement('img')
 
       img.style.display = 'none'
@@ -179,7 +175,7 @@ export default class LoadImageFrames {
 
     this.queue.push({
       funcName: 'loop',
-      params: [startFrame, endFrame]
+      params: [startFrame, endFrame],
     })
     return this
   }
@@ -194,11 +190,10 @@ export default class LoadImageFrames {
   }
 
   onLoaded(callback: AFunction) {
-    if (this.callbacks['loaded']) {
-      this.callbacks['loaded'].push(callback)
-    } else {
-      this.callbacks['loaded'] = [callback]
-    }
+    if (this.callbacks.loaded)
+      this.callbacks.loaded.push(callback)
+    else
+      this.callbacks.loaded = [callback]
 
     return this
   }
@@ -222,30 +217,29 @@ export default class LoadImageFrames {
       if (shouldStop) {
         clearInterval(this.interval)
 
-        if (this.stopConfig.callback) {
+        if (this.stopConfig.callback)
           this.stopConfig.callback()
-        }
+
         return
       }
 
-      for (let i = 0; i < this.imgTags.length; i++) {
+      for (let i = 0; i < this.imgTags.length; i++)
         this.imgTags[i].style.display = 'none'
-      }
 
       this.imgTags[this.currentFrame].style.display = 'block'
 
-      if (this.currentFrame === this.activeFrames?.length) {
+      if (this.currentFrame === this.activeFrames?.length)
         this.currentFrame = 0
-      } else {
+
+      else
         this.currentFrame++
-      }
     }, (1000 * this.speed) / this.activeFrames.length)
   }
 
   setSpeed(speed: number) {
     this.queue.push({
       funcName: 'setSpeed',
-      params: [speed]
+      params: [speed],
     })
     return this
   }
@@ -262,7 +256,7 @@ export default class LoadImageFrames {
   stopAnimation(config: StopConfig) {
     this.queue.push({
       funcName: 'stopAnimation',
-      params: [config]
+      params: [config],
     })
     return this
   }
@@ -276,16 +270,17 @@ export default class LoadImageFrames {
     const params = callback ? [callback] : []
     this.queue.push({
       funcName: 'click',
-      params
+      params,
     })
 
     return this
   }
+
   private async realClick(callback?: AFunction) {
     this.container?.addEventListener('click', () => {
-      if (callback && isFunction(callback)) {
+      if (callback && isFunction(callback))
         callback()
-      }
+
       this.toggle()
     })
   }
@@ -293,11 +288,12 @@ export default class LoadImageFrames {
   addFrames(s: number, e: number) {
     this.queue.push({
       funcName: 'addFrames',
-      params: [s, e]
+      params: [s, e],
     })
 
     return this
   }
+
   private async realAddFrames(s: number, e: number) {
     this.activeFrames = [...this.activeFrames, ...this.imgSeq.slice(s, e)]
 
@@ -307,6 +303,7 @@ export default class LoadImageFrames {
   private getRealFuncName(funcName: string) {
     return `real${toCapitalCase(funcName)}`
   }
+
   private isEventTask(target: any) {
     return this.eventTasks.includes(target.funcName)
   }
@@ -314,9 +311,8 @@ export default class LoadImageFrames {
   async toggle() {
     const task = this.queue[this.taskIdx]
 
-    if (!task) {
+    if (!task)
       return
-    }
 
     if (task && !this.isEventTask(task)) {
       const funcName = this.getRealFuncName(task.funcName)

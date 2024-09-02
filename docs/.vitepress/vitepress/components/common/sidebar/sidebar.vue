@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue'
-import SidebarLink from './sidebar-link.vue'
-import { useSidebar } from '../../../composables/sidebar'
 import Simplebar from 'simplebar-vue'
+import { useSidebar } from '../../../composables/sidebar'
+import SidebarLink from './sidebar-link.vue'
 import 'simplebar-vue/dist/simplebar.min.css'
 
-defineComponent({
-  name: 'bl-sidebar'
+defineProps({
+  hasSidebar: Boolean,
 })
 
-defineProps({
-  hasSidebar: Boolean
+defineComponent({
+  name: 'BlSidebar',
 })
 
 const { sidebars } = useSidebar()
 
 const style = ref({
-  overflow: 'hidden'
+  overflow: 'hidden',
 })
 </script>
 

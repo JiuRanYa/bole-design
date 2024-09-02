@@ -1,11 +1,10 @@
+import path, { resolve } from 'node:path'
 import fs from 'fs-extra'
-import path from 'path'
 import dartSass from 'sass'
 import gulpSass from 'gulp-sass'
-import { resolve } from 'node:path'
 import cleanCss from 'gulp-clean-css'
 import autoPrefixer from 'gulp-autoprefixer'
-import { series, parallel, src, dest } from 'gulp'
+import { dest, parallel, series, src } from 'gulp'
 
 const { existsSync, mkdirSync, emptyDir } = fs
 
@@ -33,7 +32,7 @@ function copySassSource() {
   ensureEmptyDir(resolve(cssDir, 'src'))
 
   return src(path.resolve(__dirname, 'packages/styles/**')).pipe(
-    dest(path.resolve(distCssBundle, 'src'))
+    dest(path.resolve(distCssBundle, 'src')),
   )
 }
 

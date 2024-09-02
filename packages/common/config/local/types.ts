@@ -1,5 +1,3 @@
-import { CSSProperties } from 'vue'
-
 export interface LocalConfig {
   locale: string
 }

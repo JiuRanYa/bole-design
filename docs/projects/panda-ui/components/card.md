@@ -1,15 +1,12 @@
 ---
 title: Card
 lang: zh-CN
+description: 一个卡片组件
 ---
 
 # Card
 
 一个卡片组件，对于构建表单更加友好
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/card/*/*.vue')
-</script>
 
 ## 基础用法
 

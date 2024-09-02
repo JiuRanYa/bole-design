@@ -1,13 +1,10 @@
 ---
-title: Button
+title: Badge
 lang: zh-CN
+description: Badge组件
 ---
 
 # Badge
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/badge/*/*.vue')
-</script>
 
 ## 基础用法
 

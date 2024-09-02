@@ -1,16 +1,22 @@
 <template>
   <div class="wrapper">
     <PanelGroup direction="vertical" grid>
-      <Panel :minSizePercentage="20">
-        <div class="inner">Min-size: 20</div>
+      <Panel :min-size-percentage="20">
+        <div class="inner">
+          Min-size: 20
+        </div>
       </Panel>
       <PanelResizeHandle />
-      <Panel :minSizePercentage="20">
-        <div class="inner">Min-size: 20</div>
+      <Panel :min-size-percentage="20">
+        <div class="inner">
+          Min-size: 20
+        </div>
       </Panel>
       <PanelResizeHandle />
       <Panel>
-        <div class="inner">Min-size: 0</div>
+        <div class="inner">
+          Min-size: 0
+        </div>
       </Panel>
     </PanelGroup>
   </div>

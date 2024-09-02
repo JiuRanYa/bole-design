@@ -1,5 +1,5 @@
-import { SelectStates } from 'packages/components/select/useSelect'
-import { InjectionKey } from 'vue'
+import type { SelectStates } from 'packages/components/select/useSelect'
+import type { InjectionKey } from 'vue'
 
 export interface SelectContext {
   props: {

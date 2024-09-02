@@ -1,13 +1,10 @@
 ---
-title: Button
+title: Avatar
 lang: zh-CN
+description: 头像组件
 ---
 
 # Avatar
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/avatar/*/*.vue')
-</script>
 
 ## 基础用法
 

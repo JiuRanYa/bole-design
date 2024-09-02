@@ -1,15 +1,15 @@
-<template>
-  <Icon :icon="Sun" :scale="2"></Icon>
-  <Icon :icon="SunR" :scale="2"></Icon>
-  <Icon :icon="Moon" :scale="2"></Icon>
-  <Icon :icon="MoonR" :scale="2"></Icon>
-  <Icon :icon="Flag" :scale="2"></Icon>
-  <Icon :icon="FlagR" :scale="2"></Icon>
-</template>
-
 <script setup lang="ts">
-import { Sun, SunR, Flag, FlagR, Moon, MoonR } from '@panda-ui/icons'
+import { Flag, FlagR, Moon, MoonR, Sun, SunR } from '@panda-ui/icons'
 </script>
+
+<template>
+  <Icon :icon="Sun" :scale="2" />
+  <Icon :icon="SunR" :scale="2" />
+  <Icon :icon="Moon" :scale="2" />
+  <Icon :icon="MoonR" :scale="2" />
+  <Icon :icon="Flag" :scale="2" />
+  <Icon :icon="FlagR" :scale="2" />
+</template>
 
 <style scoped>
 .bl-icon {

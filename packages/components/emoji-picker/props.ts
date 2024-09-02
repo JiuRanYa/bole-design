@@ -1,23 +1,23 @@
 import { buildProps } from '@panda-ui/common'
+import type { PropType } from 'vue'
 import { dropdownProps } from '../dropdown/props'
-import { PropType } from 'vue'
 
 export const emojiPickerProps = buildProps({
   ...dropdownProps,
   value: Object as PropType<InnerEmoji>,
   size: Number,
-  onSelect: Function as PropType<(emoji: Emoji) => void>
+  onSelect: Function as PropType<(emoji: Emoji) => void>,
 })
 
-export type InnerEmoji = {
+export interface InnerEmoji {
   n: string[]
   u: string
   a: string
 }
 
-export type Emoji = {
+export interface Emoji {
   n: string[]
   u: string
   a: string
-  parsed: string
+  parsed?: string
 }

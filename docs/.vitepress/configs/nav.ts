@@ -1,4 +1,4 @@
-function getProjectLink(pro: string, link: string) {
+export function getProjectLink(pro: string, link: string) {
   return `/projects/${pro}${link}`
 }
 
@@ -6,41 +6,47 @@ export const navs: Record<string, any> = {
   'panda-ui': [
     {
       link: getProjectLink('panda-ui', '/guide/design'),
-      text: '指南'
+      text: '指南',
     },
     {
       link: getProjectLink('panda-ui', '/components/button'),
-      text: '组件'
+      text: '组件',
     },
     {
       link: getProjectLink('panda-ui', '/hooks/usePopper'),
-      text: 'Hooks'
+      text: 'Hooks',
     },
     {
       link: getProjectLink('panda-ui', '/cdn/icon'),
-      text: '图标'
+      text: '图标',
     },
     {
       link: getProjectLink('panda-ui', '/contribute/start'),
-      text: '贡献'
-    }
+      text: '贡献',
+    },
   ],
-  panda: [
+  'panda': [
     {
       link: getProjectLink('panda', '/guide/index'),
-      text: '项目说明'
+      text: '项目说明',
     },
     {
       link: getProjectLink('panda', '/standard/index'),
-      text: '代码规范'
-    }
+      text: '代码规范',
+    },
   ],
-  chat: [
+  'raccoon': [
     {
-      link: getProjectLink('chat', '/guide/index'),
-      text: '使用指南'
-    }
-  ]
+      link: getProjectLink('raccoon', '/guide/index'),
+      text: '使用指南',
+    },
+  ],
+  'sso': [
+    {
+      link: getProjectLink('sso', '/guide/index'),
+      text: '使用指南',
+    },
+  ],
 }
 function getNav() {
   // const project = getProject()

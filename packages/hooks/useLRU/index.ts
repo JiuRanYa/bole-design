@@ -4,7 +4,7 @@ export function useLRU(capacity: number) {
   useLRU.prototype.get = (key: string) => {
     if (cache.has(key)) {
       // 存在即更新
-      let temp = cache.get(key)
+      const temp = cache.get(key)
       cache.delete(key)
       cache.set(key, temp)
 
@@ -17,7 +17,8 @@ export function useLRU(capacity: number) {
     if (cache.has(key)) {
       // 存在即更新（删除后加入）
       cache.delete(key)
-    } else if (cache.size >= capacity) {
+    }
+    else if (cache.size >= capacity) {
       // 不存在即加入
       // 缓存超过最大值，则移除最近没有使用的
       cache.delete(cache.keys().next().value)
@@ -79,13 +80,4 @@ export function useLRU(capacity: number) {
 //     this.cache.set(key, value)
 //     this.updateLocalStorage()
 //   }
-// }
-
-// function setMapToLocalStorage(map: any, localStorageName: string | undefined) {
-//   if (!map || !localStorageName) {
-//     return
-//   }
-//
-//   const cacheRef = useLocalStorage(localStorageName, '')
-//   cacheRef.value = map
 // }

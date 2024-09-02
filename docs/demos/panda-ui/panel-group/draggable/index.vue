@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import draggable from 'vuedraggable'
+
+const panelData = ref([
+  {
+    content: 1,
+  },
+  {
+    content: 2,
+  },
+  {
+    content: 3,
+  },
+])
+</script>
+
 <template>
   <div class="wrapper">
     <draggable
@@ -8,7 +25,9 @@
     >
       <template #item="{ element }">
         <Panel>
-          <div class="inner">{{ element.content }}</div>
+          <div class="inner">
+            {{ element.content }}
+          </div>
           <PanelResizeHandle />
         </Panel>
       </template>
@@ -16,22 +35,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-import draggable from 'vuedraggable'
-
-const panelData = ref([
-  {
-    content: 1
-  },
-  {
-    content: 2
-  },
-  {
-    content: 3
-  }
-])
-</script>
 <style lang="scss" scoped>
 .wrapper {
   width: 100%;

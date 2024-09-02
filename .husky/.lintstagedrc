@@ -1,0 +1,10 @@
+{
+  "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}": ["eslint --fix"],
+  "{!(package)*.json,*.code-snippets,.!(browserslist|npm)*rc}": [
+    "eslint --fix"
+  ],
+  "package.json": ["eslint --fix"],
+  "*.{css,scss,html}": ["eslint --fix"],
+  "*.md": ["eslint --fix"],
+  "*.vue": ["eslint --fix"]
+}

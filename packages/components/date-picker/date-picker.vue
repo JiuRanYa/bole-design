@@ -1,136 +1,221 @@
 <script setup lang="ts">
-import DatePickerPanel from './date-picker-panel.vue'
 import { useClickOutside, useNamespace, usePopper } from '@panda-ui/hooks'
 import { computed, provide, reactive, ref, toRef, watch } from 'vue'
-import { Popper, PopperExposed } from '@panda-ui/components'
-import {
-  placementWhiteList,
-  useProps,
-  doubleDigits,
+import type { PopperExposed } from '@panda-ui/components'
+import { Popper } from '@panda-ui/components'
+import type {
   Dateable,
-  emitEvent,
-  useZIndex
 } from '@panda-ui/common'
-import { DateMeta, OriginDate, datePickerProps } from './props'
-import { CalendarR } from '@panda-ui/icons'
-import dayjs, { Dayjs } from 'dayjs'
-import 'dayjs/locale/zh-cn'
-import { Button } from '../button'
-import { ButtonGroup } from '../button-group'
+import {
+  emitEvent,
+  isString,
+  placementWhiteList,
+  useIcons,
+  useProps,
+  useZIndex,
+} from '@panda-ui/common'
+import type { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat.js'
 import { Icon } from '../icon'
-import { DATE_PICKER_INJECTION_KEY } from '@panda-ui/tokens/date-picker'
+import { ButtonGroup } from '../button-group'
+import { Button } from '../button'
+import { useColumn } from '../time-picker/helper'
 import { config } from './const'
+import { datePickerProps } from './props'
+import type { DateMeta } from './props'
+import DatePickerPanel from './date-picker-panel.vue'
+import { DATE_PICKER_INJECTION_KEY } from './token'
 
 defineOptions({
-  name: 'DatePicker'
+  name: 'DatePicker',
 })
 
-const emit = defineEmits(['update:value'])
 const _props = defineProps(datePickerProps)
+
+const emit = defineEmits(['update:value'])
+
+dayjs.extend(customParseFormat)
+
 const props = useProps('date-picker', _props, {
   placement: {
     default: 'bottom-start',
-    validator: value => placementWhiteList.includes(value)
+    validator: value => placementWhiteList.includes(value),
   },
   value: '',
   transitionName: () => ns.ns('drop'),
   presets: {},
   type: 'static',
   valueFormat: '',
+  format: 'YMD Hms',
   typing: null,
-  to: 'body'
+  to: '',
 })
 const ns = useNamespace('date-picker')
+const icons = useIcons()
 
-const referenceEl = computed(() => {
-  return originTriggerRef.value
-})
 const isRange = computed(() => {
-  return props.type === 'range'
+  return props.type === 'range' || props.type === 'dateTimeRange'
 })
 
 const panelRef = ref()
 const popperRef = ref<PopperExposed>()
-const originTriggerRef = ref<HTMLElement>()
 
 const panelEle = computed(() => panelRef.value?.wrapper)
 const popperEl = computed(() => popperRef.value?.wrapper)
 
 const visible = ref(false)
-const startMeta = createDateMeta()
-const endMeta = createDateMeta()
+const startMeta = createDateMeta(0)
+const endMeta = createDateMeta(1)
 
+const isTime = computed(() => props.type === 'dateTime' || props.type === 'dateTimeRange')
 const currentValue = computed(() => {
-  const values = [startMeta, endMeta].map(state => {
-    const values = Object.values(state.dateMeta).map(doubleDigits)
+  const values = [startMeta, endMeta].map((state) => {
+    const format = getValueFormat()
+    const values = state.getDate()
 
-    return `${values.slice(0, 3).join('-')}`
+    return dayjs(values).format(format)
   })
 
   return isRange.value ? values : values[0]
 })
+
 const placement = toRef(props, 'placement')
 
 const popperClass = computed(() => {
   return [
+    ns.b(),
+    ns.bs('vars'),
     ns.be('popper'),
     {
-      [ns.bm('inherit')]: true
-    }
+      [ns.bm('inherit')]: props.inherit,
+    },
   ]
 })
 
-const { x, y } = usePopper({
-  referenceEl,
-  popperEl,
-  placement
+const { reference, transferTo, updatePopper } = usePopper({
+  popper: popperEl,
+  placement,
+  transfer: toRef(props, 'to'),
+  isDrop: true,
 })
 
 const getIndex = useZIndex()
 const zIndex = computed(() => getIndex())
 const popperStyle = computed(() => {
   return {
-    position: 'absolute',
-    left: `${x.value || 0}px`,
-    top: `${y.value || 0}px`,
     zIndex: zIndex.value,
-    'transform-origin': 'center top'
   }
 })
 
-function createDateMeta() {
-  const dateMeta = reactive<DateMeta>({
-    year: dayjs().year(),
-    month: dayjs().month() + 2,
-    day: 0
-  })
-  const extraMeta = reactive({
-    allocated: false
-  })
-  if (props.value && isRange.value) {
-    extraMeta.allocated = true
+function createMeta(data?: any) {
+  return {
+    year: dayjs(data).year(),
+    month: dayjs(data).month(),
+    day: dayjs(data).date(),
+    hour: dayjs(data).hour(),
+    minute: dayjs(data).minute(),
+    second: dayjs(data).second(),
   }
-
-  return reactive({
-    dateMeta,
-    extraMeta,
-    setDate: (date: Dateable | Dayjs) => {
-      if (!date) return
-      dateMeta.year = dayjs(date).year()
-      dateMeta.month = dayjs(date).month() + 1
-      dateMeta.day = dayjs(date).date()
-    },
-    getDate: () => {
-      return new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day)
-    },
-    getDayjs: () => {
-      return dayjs(new Date(dateMeta.year, dateMeta.month - 1, dateMeta.day))
-    }
-  })
 }
 
-function togglePanel() {
-  visible.value = !visible.value
+function createDateMeta(idx: number) {
+  const date = props.value as any
+  const { enabled } = useColumn<keyof DateMeta>(['year', 'month', 'day', 'hour', 'minute', 'second'])
+
+  let dateMeta = reactive<DateMeta>(createMeta())
+
+  if (!isRange.value && date && isString(date))
+    dateMeta = reactive(createMeta(date))
+
+  if (isRange.value && date && Array.isArray(date))
+    dateMeta = reactive(createMeta(date[idx]))
+
+  const extraMeta = reactive({
+    allocated: false,
+  })
+
+  return reactive({
+    enabled,
+    dateMeta,
+    extraMeta,
+    // 你只应该在处理外部时间时使用该方法, 其余你应该使用setDateMeta来控制组件的输出值
+    setDate: (date: Dateable | Dayjs, changeByClick = true) => {
+      if (!date)
+        return
+      dateMeta.year = dayjs(date).get('year')
+      dateMeta.month = dayjs(date).get('month')
+      dateMeta.day = dayjs(date).get('date')
+      dateMeta.hour = dayjs(date).get('hour')
+      dateMeta.minute = dayjs(date).get('minute')
+      dateMeta.second = dayjs(date).get('second')
+
+      changeByClick && (extraMeta.allocated = true)
+    },
+    setDateMeta: (meta: Partial<DateMeta>) => {
+      const keys = Object.keys(meta).filter(unit => enabled[unit as keyof DateMeta]) as (keyof Partial<DateMeta>)[]
+
+      keys.forEach((key) => {
+        dateMeta[key] = meta[key]!
+      })
+    },
+    getDate: () => {
+      return new Date(
+        dateMeta.year,
+        dateMeta.month,
+        dateMeta.day,
+        dateMeta.hour,
+        dateMeta.minute,
+        dateMeta.second,
+      )
+    },
+    getDayjs: () => {
+      return dayjs(new Date(dateMeta.year, dateMeta.month, dateMeta.day))
+    },
+  })
+}
+function getValueFormat() {
+  if (props.valueFormat)
+    return props.valueFormat
+
+  if (isTime.value)
+    return config.timeFormat
+
+  return config.defaultFormat
+}
+
+function showPanel() {
+  togglePanel(true)
+  parseValue()
+}
+
+function parseValue() {
+  const noValue = !props.value || (Array.isArray(props.value) && !props.value.length)
+
+  // 没有值则重置
+  if (noValue) {
+    startMeta.extraMeta.allocated = false
+    endMeta.extraMeta.allocated = false
+
+    return
+  }
+
+  // 如果是范围选择, 并且值有效
+  if (Array.isArray(props.value) && isRange.value) {
+    const startValid = dayjs(props.value[0]).isValid()
+    const endValid = dayjs(props.value[1]).isValid()
+
+    startValid && startMeta.setDate(props.value[0], false)
+    endValid && endMeta.setDate(props.value[1], false)
+  }
+  else if (!Array.isArray(props.value)) {
+    const startValid = dayjs(props.value).isValid()
+    startValid && startMeta.setDate(props.value, false)
+  }
+}
+
+function togglePanel(value = !visible.value) {
+  visible.value = value
 }
 
 function handleClickOutside() {
@@ -140,134 +225,156 @@ function handleClickOutside() {
 function patchDateMeta(d: Dateable | Dateable[]) {
   if (!Array.isArray(d)) {
     startMeta.setDate(d)
-    updateModelValue(startMeta.getDate())
-    return
+  }
+  else {
+    startMeta.setDate(d[0])
+    endMeta.setDate(d[1])
   }
 
-  startMeta.setDate(d[0])
-  endMeta.setDate(d[1])
-  updateModelValue([startMeta.getDate(), endMeta.getDate()])
+  emitValue()
 }
 function handlePresetClick(value: Dateable | Dateable[]) {
-  if (props.type === 'static') {
+  if (props.type === 'static')
     patchDateMeta(value)
-  }
-  if (isRange.value) {
+
+  if (isRange.value)
     patchDateMeta(value)
-  }
 }
 
-function handlePickDate(date: OriginDate) {
-  visible.value = false
-  startMeta.dateMeta = date
-  updateModelValue(new Date(date.year, date.month - 1, date.day))
+const startFormattedValue = computed(() => {
+  if (!startMeta.extraMeta.allocated && !props.value)
+    return isRange.value ? '开始时间' : '手动'
+
+  const startProps = startMeta.getDate()
+
+  return dayjs(startProps).format(getValueFormat())
+})
+const endModelValue = computed(() => {
+  if (!endMeta.extraMeta.allocated && !props.value)
+    return '结束时间'
+
+  const endProps = endMeta.getDate()
+
+  return dayjs(endProps).format(getValueFormat())
+})
+const placeholder = computed(() => {
+  return isRange.value ? `${startFormattedValue.value} - ${endModelValue.value}` : startFormattedValue.value
+})
+
+function parseFormat() {
+  ;[startMeta, endMeta].forEach((state) => {
+    state.enabled.year = props.format.includes('Y')
+    state.enabled.month = props.format.includes('M')
+    state.enabled.day = props.format.includes('D')
+    state.enabled.hour = props.format.toLowerCase().includes('h')
+    state.enabled.minute = props.format.includes('m')
+    state.enabled.second = props.format.includes('s')
+  })
 }
 
-const updateModelValue = (val: Dateable | Dateable[]) => {
-  let emitValue = val
-  // if (props.valueFormat) {
-  //   if (isRange && Array.isArray(val)) {
-  //     emitValue = val
-  //   } else {
-  //     emitValue = val
-  //   }
-  // }
+function emitValue() {
+  const emitValue = isRange.value
+    ? [startMeta.getDate().getTime(), endMeta.getDate().getTime()]
+    : startMeta.getDate().getTime()
 
   emit('update:value', emitValue)
   emitEvent(props.onChange, emitValue)
 }
-const parseDate = function (
-  date: string | number | Date,
-  format: string | undefined,
-  lang: string
-) {
-  const day = dayjs(date, format).locale(lang)
-  return day.isValid() ? day : undefined
+
+function handleConfirm() {
+  emitValue()
+  togglePanel(false)
 }
-const startModelValue = computed(() => {
-  if (!Array.isArray(props.value)) return ''
 
-  const startProps = props.value[0]
-  return dayjs(startProps).format(config.defaultFormat)
-})
-const endModelValue = computed(() => {
-  if (!Array.isArray(props.value)) return ''
+function ensureStartIsBefor() {
+  const startDate = startMeta.getDate()
+  const endDate = endMeta.getDate()
+  const needChange = dayjs(endDate).isSameOrBefore(startDate)
 
-  const endProps = props.value[1]
-  return dayjs(endProps).format(config.defaultFormat)
-})
+  if (!needChange)
+    return
+
+  startMeta.setDate(endDate)
+  endMeta.setDate(startDate)
+}
 
 watch(
   () => props.value,
-  value => {
-    if (!value) return
+  (value) => {
+    if (!value)
+      return
 
-    const startValue = Array.isArray(value) ? value[0] : value
-    const endValue = Array.isArray(value) ? value[1] : value
-    const parsedStartDate = parseDate(startValue, props.valueFormat, 'zh-cn')
-    const parsedEndDate = parseDate(endValue, props.valueFormat, 'zh-cn')
-
-    parsedStartDate && startMeta.setDate(parsedStartDate)
-    parsedEndDate && endMeta.setDate(parsedEndDate)
+    parseValue()
   },
-  { immediate: true }
+  { immediate: true },
 )
+
+watch(() => props.valueFormat, parseFormat, { immediate: true })
+
+watch(visible, (value) => {
+  parseValue()
+  if (value)
+    updatePopper()
+})
+watch(
+  () => endMeta.dateMeta,
+  () => {
+    ensureStartIsBefor()
+  },
+  { deep: true },
+)
+
 provide(DATE_PICKER_INJECTION_KEY, {
   currentValue,
   isRange,
   startMeta,
   endMeta,
-  updateModelValue
 })
-useClickOutside(handleClickOutside, { ignore: [panelEle] }, originTriggerRef)
+useClickOutside(handleClickOutside, { ignore: [panelEle] }, reference)
 </script>
 
 <template>
-  <div
-    :class="ns.bs('trigger')"
-    ref="originTriggerRef"
-    @click="togglePanel"
-    style="display: inline-block"
-  >
+  <div ref="reference" :class="ns.bs('trigger')" style="display: inline-block" @click="showPanel">
     <slot v-if="$slots.trigger" name="trigger" />
-    <ButtonGroup v-else-if="presets">
+    <ButtonGroup v-else-if="presets" v-bind="$attrs">
       <Button>
         <template #icon>
-          <Icon :icon="CalendarR" :scale="1.4"></Icon>
+          <Icon v-bind="icons.calendar" />
         </template>
-        {{
-          isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动'
-        }}
+        {{ placeholder }}
       </Button>
       <Button
         v-for="preset in Object.keys(presets)"
+        :key="preset"
         @click.stop="handlePresetClick(presets[preset])"
       >
         {{ preset }}
       </Button>
     </ButtonGroup>
 
-    <Button v-else>
+    <Button v-else v-bind="$attrs">
       <template #icon>
-        <Icon :icon="CalendarR" :scale="1.4"></Icon>
+        <Icon v-bind="icons.calendar" />
       </template>
-      {{ isRange ? `${startModelValue} - ${endModelValue}` : props.value ? currentValue : '手动' }}
+      {{ placeholder }}
     </Button>
   </div>
 
   <Popper
-    :class="popperClass"
-    :to="props.to"
     ref="popperRef"
+    :class="popperClass"
+    :to="transferTo"
     :visible="visible"
     :transition="props.transitionName"
     :style="popperStyle"
+    :inherit="props.inherit"
+    @click.stop
   >
     <DatePickerPanel
       ref="panelRef"
+      :type="props.type"
       :typing="props.typing"
-      @pick="handlePickDate"
-      @confirm="togglePanel"
+      @confirm="handleConfirm"
       @cancel="togglePanel"
     />
   </Popper>

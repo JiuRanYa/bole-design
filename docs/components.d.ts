@@ -17,6 +17,8 @@ declare module '@vue/runtime-core' {
     BlFooter: typeof import('./.vitepress/vitepress/components/bl-footer.vue')['default']
     BlHeader: typeof import('./.vitepress/vitepress/components/bl-header.vue')['default']
     BlHomepage: typeof import('./.vitepress/vitepress/components/panda-ui/bl-homepage.vue')['default']
+    BlSelectPro: typeof import('./.vitepress/vitepress/components/bl-select-pro.vue')['default']
+    CardStack: typeof import('./.vitepress/vitepress/components/card-stack.vue')['default']
     CtHomepage: typeof import('./.vitepress/vitepress/components/chat/ct-homepage.vue')['default']
     DemoFour: typeof import('./.vitepress/vitepress/components/panda-ui/home-navbar/demoFour/index.vue')['default']
     DemoOne: typeof import('./.vitepress/vitepress/components/panda-ui/home-navbar/demoOne/index.vue')['default']
@@ -28,6 +30,7 @@ declare module '@vue/runtime-core' {
     Sidebar: typeof import('./.vitepress/vitepress/components/common/sidebar/sidebar.vue')['default']
     SidebarLink: typeof import('./.vitepress/vitepress/components/common/sidebar/sidebar-link.vue')['default']
     SourceCode: typeof import('./.vitepress/vitepress/components/source-code.vue')['default']
+    SsoHomepage: typeof import('./.vitepress/vitepress/components/sso/sso-homepage.vue')['default']
     SwitchProject: typeof import('./.vitepress/vitepress/components/common/switch-project/index.vue')['default']
     TableContent: typeof import('./.vitepress/vitepress/components/common/doc-content/table-content.vue')['default']
   }

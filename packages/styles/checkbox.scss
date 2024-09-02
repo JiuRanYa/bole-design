@@ -30,6 +30,7 @@ $checkbox: map.merge((), $checkbox);
   }
 
   &--checked &--inner {
+    border-color: get-css-var(color-primary-base);
     background: get-css-var(color-primary-base);
 
     &::after {
@@ -47,9 +48,12 @@ $checkbox: map.merge((), $checkbox);
     height: 16px;
     display: inline-block;
 
-    border: get-css-var(border-shape) get-css-var(color-primary-base);
-    border-radius: calc(0.5rem - get-css-var(radius-small));
+    border: get-css-var(border-shape) get-css-var(border-color-base);
+    border-radius: get-css-var(radius-small);
     cursor: pointer;
+
+    &:hover {
+    }
 
     &::after {
       content: '';
@@ -58,6 +62,18 @@ $checkbox: map.merge((), $checkbox);
       left: 50%;
       width: 4px;
       height: 8px;
+    }
+  }
+
+  &--indeterminate &--inner {
+    border-color: get-css-var(color-primary-base);
+    background: get-css-var(color-primary-base);
+
+    &::after {
+      width: 8px;
+      height: 1px;
+      transform: translate(-50%, 0%) scaleY(1);
+      border-top: 1px get-css-var(border-style) get-css-var(content-color-reverse);
     }
   }
 

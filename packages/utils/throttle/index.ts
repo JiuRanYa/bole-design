@@ -1,5 +1,6 @@
 export function throttle<T extends (...args: any[]) => any>(method: T, delay: number = 100) {
-  if (typeof method !== 'function') return
+  if (typeof method !== 'function')
+    return
 
   let start = Date.now()
   let timer: ReturnType<typeof setTimeout>
@@ -13,7 +14,8 @@ export function throttle<T extends (...args: any[]) => any>(method: T, delay: nu
     if (remaining <= 0) {
       method(...args)
       start = Date.now()
-    } else {
+    }
+    else {
       timer = setTimeout(() => {
         method(...args)
       }, delay)

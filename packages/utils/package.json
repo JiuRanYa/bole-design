@@ -2,11 +2,11 @@
   "name": "@panda-ui/utils",
   "version": "1.0.2",
   "description": "Panda UI utils",
+  "author": "Tong Siyuan",
+  "license": "ISC",
+  "keywords": [],
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Tong Siyuan",
-  "license": "ISC"
+  }
 }

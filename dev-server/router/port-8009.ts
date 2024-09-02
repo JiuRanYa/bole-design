@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-document.title = 'tooltip | Panda UI'
+document.title = 'filter | Panda UI'
 
 export const router = createRouter({
   history: createWebHistory('/'),
@@ -8,27 +8,37 @@ export const router = createRouter({
     {
       path: '/',
       name: 'basic',
-      component: () => import('../../docs/demos/panda-ui/tooltip/basic/index.vue')
+      component: () => import('../../docs/demos/panda-ui/filter/basic/index.vue')
     },
     {
-      path: '/placement',
-      name: 'placement',
-      component: () => import('../../docs/demos/panda-ui/tooltip/placement/index.vue')
+      path: '/custom',
+      name: 'custom',
+      component: () => import('../../docs/demos/panda-ui/filter/custom/index.vue')
     },
     {
-      path: '/reverse',
-      name: 'reverse',
-      component: () => import('../../docs/demos/panda-ui/tooltip/reverse/index.vue')
+      path: '/default',
+      name: 'default',
+      component: () => import('../../docs/demos/panda-ui/filter/default/index.vue')
     },
     {
-      path: '/trigger',
-      name: 'trigger',
-      component: () => import('../../docs/demos/panda-ui/tooltip/trigger/index.vue')
+      path: '/nested',
+      name: 'nested',
+      component: () => import('../../docs/demos/panda-ui/filter/nested/index.vue')
     },
     {
-      path: '/visible',
-      name: 'visible',
-      component: () => import('../../docs/demos/panda-ui/tooltip/visible/index.vue')
+      path: '/props',
+      name: 'props',
+      component: () => import('../../docs/demos/panda-ui/filter/props/index.vue')
+    },
+    {
+      path: '/readonly',
+      name: 'readonly',
+      component: () => import('../../docs/demos/panda-ui/filter/readonly/index.vue')
+    },
+    {
+      path: '/validation',
+      name: 'validation',
+      component: () => import('../../docs/demos/panda-ui/filter/validation/index.vue')
     },
     {
       path: '/:catchAll(.*)',
@@ -38,5 +48,5 @@ export const router = createRouter({
 })
 
 router.afterEach(to => {
-  document.title = `tooltip - ${typeof to.name === 'string' ? to.name : 'dev'} | Panda UI`
+  document.title = `filter - ${typeof to.name === 'string' ? to.name : 'dev'} | Panda UI`
 })

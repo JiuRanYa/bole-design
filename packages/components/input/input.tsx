@@ -1,8 +1,8 @@
 import { useNamespace } from '@panda-ui/hooks'
 import { emitEvent, isNull, useProps } from '@panda-ui/common'
 import { computed, defineComponent, ref, toRef, watch } from 'vue'
-import { inputProps } from './props'
 import { debounce, throttle } from '@panda-ui/utils'
+import { inputProps } from './props'
 
 export default defineComponent({
   name: 'Input',
@@ -11,7 +11,7 @@ export default defineComponent({
   setup(_props, { slots, emit, expose }) {
     const ns = useNamespace('input')
     const className = computed(() => {
-      return [ns.b(), ns.bs('vars')]
+      return [ns.b(), ns.bs('vars'), ns.bm(props.size)]
     })
     const inputClass = computed(() => {
       return [ns.bm('control')]
@@ -23,7 +23,8 @@ export default defineComponent({
       type: 'secondary',
       autofocus: false,
       disabled: false,
-      readonly: false
+      readonly: false,
+      size: 'middle',
     })
 
     const inputRef = ref<HTMLInputElement>()
@@ -58,6 +59,7 @@ export default defineComponent({
     }
 
     const handleInput = props.debounce ? debounce(handleChange) : throttle(handleChange)
+    const handleBlur = (event: FocusEvent) => emitEvent(props.onBlur, currentValue.value, event)
 
     function renderInput() {
       return (
@@ -66,6 +68,7 @@ export default defineComponent({
           class={inputClass.value}
           value={currentValue.value}
           onInput={handleInput}
+          onBlur={handleBlur}
           autofocus={props.autofocus}
           disabled={inputDisabled.value}
           readonly={props.readonly}
@@ -90,37 +93,39 @@ export default defineComponent({
       () => props.value,
       () => {
         currentValue.value = String(props.value)
-      }
+      },
     )
 
     expose({
-      inputRef: inputRef,
+      inputRef,
       focus: () => {
         inputRef.value?.focus()
       },
       blur: () => {
         inputRef.value?.blur()
-      }
+      },
     })
 
     return () => {
-      return hasBefore.value || hasAfter.value ? (
-        <div class={[ns.bm('wrapper')]}>
-          {hasBefore.value ? renderBefore() : null}
+      return hasBefore.value || hasAfter.value
+        ? (
+          <div class={[ns.bm('wrapper')]}>
+            {hasBefore.value ? renderBefore() : null}
+            <div class={className.value}>
+              {hasPrefix.value ? renderPrefix() : null}
+              {renderInput()}
+              {hasSuffix.value ? renderSuffix() : null}
+            </div>
+            {hasAfter.value ? renderAfter() : null}
+          </div>
+          )
+        : (
           <div class={className.value}>
             {hasPrefix.value ? renderPrefix() : null}
             {renderInput()}
             {hasSuffix.value ? renderSuffix() : null}
           </div>
-          {hasAfter.value ? renderAfter() : null}
-        </div>
-      ) : (
-        <div class={className.value}>
-          {hasPrefix.value ? renderPrefix() : null}
-          {renderInput()}
-          {hasSuffix.value ? renderSuffix() : null}
-        </div>
-      )
+          )
     }
-  }
+  },
 })

@@ -1,0 +1,84 @@
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+$radio-map: (
+  size: '16px',
+  inner-size: '10px'
+) !default;
+$radio-map: map.merge((),
+    $radio-map
+);
+
+.#{$namespace}-radio {
+  &-vars {
+    @include define-preset-values('radio', $radio-map);
+  }
+
+  $self: &;
+
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  margin-inline-end: get-css-var(margin-xs);
+
+  &--signal {
+    display: block;
+    position: relative;
+  }
+  &--input {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  &--disabled {
+    color: get-css-var(fill-color-disabled);
+    cursor: not-allowed;
+
+    #{$self}__label {
+      color: get-css-var(fill-color-disabled);
+    }
+  }
+
+  &--selected {
+    #{$self}--inner {
+      border-color: get-css-var(color-primary-base);
+
+      &::after {
+        background: get-css-var(color-primary-base);
+      }
+    }
+  }
+
+  &--inner {
+    border: get-css-var(border-base);
+    border-radius: 50%;
+    width: get-css-var(radio-size);
+    height: get-css-var(radio-size);
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    &::after {
+      content: '';
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%) scale(1);
+      border-radius: 50%;
+      position: absolute;
+      display: block;
+      width: get-css-var(radio-inner-size);
+      height: get-css-var(radio-inner-size);
+    }
+  }
+
+  &__label {
+    padding: 0 get-css-var(padding-xs);
+    font-size: 16px;
+  }
+}

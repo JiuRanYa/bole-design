@@ -11,6 +11,8 @@ $tabs-list: map.merge((), $tabs-list);
   padding: 4px;
   border-radius: get-css-var('radius-base');
 	width: auto;
+  background: get-css-var('fill-color-humble');
+  position: relative;
 
   &-vars {
     @include define-preset-values('tabs-list', $tabs-list);

@@ -45,9 +45,9 @@ $message: map.merge(
 	&__header {
 		display: flex;
 		align-items: center;
+		margin-bottom: 6px;
 	}
 	&__description {
-		margin-top: 6px;
 		font-size: 14px;
 	}
   &__icon {

@@ -1,24 +1,25 @@
-import { computed, ExtractPropTypes, ref } from 'vue'
-import { OptionState, RawOption } from '../option/props'
-import { selectProps } from './props'
-import { SelectStates } from './useSelect'
+import type { ExtractPropTypes } from 'vue'
+import { computed } from 'vue'
+import type { SelectOption } from '../option/props'
+import type { selectProps } from './props'
+import type { SelectStates } from './useSelect'
 
 export function useCreatable(props: ExtractPropTypes<typeof selectProps>, states: SelectStates) {
-  const cachedSelectedOption = ref<OptionState>()
+  // const cachedSelectedOption = ref<OptionState>()
 
   const toggleCreatableMode = computed(() => {
     return props.filterable && props.creatable
   })
 
   function hasExistingOption(label: string) {
-    const hasValue = (option: OptionState) => option.value === label
+    const hasValue = (option: SelectOption) => option.value === label
     return props.options && props.options.some(hasValue)
   }
 
   function createNewOption(label: string) {
-    if (!toggleCreatableMode.value) {
+    if (!toggleCreatableMode.value)
       return
-    }
+
     if (!label || label.length <= 0 || hasExistingOption(label)) {
       states.createdOption = {}
       return
@@ -26,15 +27,15 @@ export function useCreatable(props: ExtractPropTypes<typeof selectProps>, states
 
     const newOption = {
       value: label,
-      label: label,
+      label,
       created: true,
-      disabled: false
+      disabled: false,
     }
 
     states.createdOption = newOption
   }
 
   return {
-    createNewOption
+    createNewOption,
   }
 }

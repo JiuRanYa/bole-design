@@ -1,5 +1,5 @@
-import { Ref } from 'vue'
-import { PanelData } from '../panel/types'
+import type { Ref } from 'vue'
+import type { PanelData } from '../panel/types'
 
 export type PanelDirection = 'horizontal' | 'vertical'
 

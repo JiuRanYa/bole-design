@@ -1,17 +1,23 @@
-<template>
-  <ContextMenu @show="handleShow">
-    <template #trigger>
-      <div class="context-menu-trigger">Click here</div>
-    </template>
-    <template #content> <div class="menu-content">content</div> </template>
-  </ContextMenu>
-</template>
-
 <script setup lang="ts">
 function handleShow(params) {
   console.log(params)
 }
 </script>
+
+<template>
+  <ContextMenu @show="handleShow">
+    <template #trigger>
+      <div class="context-menu-trigger">
+        Click here
+      </div>
+    </template>
+    <template #content>
+      <div class="menu-content">
+        content
+      </div>
+    </template>
+  </ContextMenu>
+</template>
 
 <style lang="scss" scoped>
 .context-menu-trigger {
@@ -27,5 +33,7 @@ function handleShow(params) {
 .menu-content {
   border: 1px dashed var(--bl-border-color-base);
   padding: 20px;
+  z-index: 100;
+  background: var(--bl-fill-color-base);
 }
 </style>

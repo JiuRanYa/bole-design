@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     CardFooter: typeof import('panda-ui')['CardFooter']
     CardHeader: typeof import('panda-ui')['CardHeader']
     CardTitle: typeof import('panda-ui')['CardTitle']
+    Cascader: typeof import('panda-ui')['Cascader']
     Checkbox: typeof import('panda-ui')['Checkbox']
     Col: typeof import('panda-ui')['Col']
     CollapseTransition: typeof import('panda-ui')['CollapseTransition']
@@ -25,6 +26,7 @@ declare module '@vue/runtime-core' {
     FullScreen: typeof import('panda-ui')['FullScreen']
     Icon: typeof import('panda-ui')['Icon']
     Input: typeof import('panda-ui')['Input']
+    InputNumber: typeof import('panda-ui')['InputNumber']
     Label: typeof import('panda-ui')['Label']
     Masker: typeof import('panda-ui')['Masker']
     Menu: typeof import('panda-ui')['Menu']
@@ -37,6 +39,8 @@ declare module '@vue/runtime-core' {
     Popper: typeof import('panda-ui')['Popper']
     Portal: typeof import('panda-ui')['Portal']
     Radio: typeof import('panda-ui')['Radio']
+    RadioGroup: typeof import('panda-ui')['RadioGroup']
+    Renderer: typeof import('panda-ui')['Renderer']
     Row: typeof import('panda-ui')['Row']
     ScrollArea: typeof import('panda-ui')['ScrollArea']
     Select: typeof import('panda-ui')['Select']
@@ -48,6 +52,7 @@ declare module '@vue/runtime-core' {
     TabsPane: typeof import('panda-ui')['TabsPane']
     TabsTrigger: typeof import('panda-ui')['TabsTrigger']
     Tag: typeof import('panda-ui')['Tag']
+    TimePicker: typeof import('panda-ui')['TimePicker']
     Tooltip: typeof import('panda-ui')['Tooltip']
   }
 

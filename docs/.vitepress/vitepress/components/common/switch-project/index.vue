@@ -1,42 +1,21 @@
-<template>
-  <div
-    class="switch-project-wrapper"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-    :class="{ isHover: isHover }"
-  >
-    <Button type="primary">
-      <Icon :icon="HouseChimneyWindow" :scale="1.4" />
-    </Button>
-    <div class="drop-list" v-if="showList">
-      <div
-        class="drop-list-item"
-        v-for="project in supportProjects"
-        @click="switchProject(project)"
-      >
-        <Icon :icon="ChevronDown" v-if="project === currentPro"></Icon>
-        {{ project }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, defineComponent, onMounted } from 'vue'
-import { HouseChimneyWindow, ChevronDown } from '@panda-ui/icons'
+import { defineComponent, onMounted, ref } from 'vue'
+import { ChevronDown, HouseChimneyWindow } from '@panda-ui/icons'
+import { useRouter } from 'vitepress'
 import { BL_PROJECT_STORAGE, supportProjects } from '@/.vitepress/vitepress/tookens'
 
 defineComponent({
-  name: 'switch-project'
+  name: 'SwitchProject',
 })
 
 const isHover = ref(false)
 const showList = ref(false)
 const currentPro = ref()
+const router = useRouter()
 
 function switchProject(project: string) {
   localStorage.setItem(BL_PROJECT_STORAGE, project)
-  window.location.pathname = `/projects/${project}/`
+  router.go(`/projects/${project}/`)
 }
 
 function handleMouseEnter() {
@@ -57,6 +36,29 @@ onMounted(() => {
   currentPro.value = localStorage.getItem(BL_PROJECT_STORAGE)
 })
 </script>
+
+<template>
+  <div
+    class="switch-project-wrapper"
+    :class="{ isHover }"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+  >
+    <Button type="primary">
+      <Icon :icon="HouseChimneyWindow" :scale="1.4" />
+    </Button>
+    <div v-if="showList" class="drop-list">
+      <div
+        v-for="project in supportProjects"
+        class="drop-list-item"
+        @click="switchProject(project)"
+      >
+        <Icon v-if="project === currentPro" :icon="ChevronDown" />
+        {{ project }}
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .switch-project-wrapper {

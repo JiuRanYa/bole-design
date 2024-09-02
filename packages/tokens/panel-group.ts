@@ -1,7 +1,7 @@
-import { PanelGroupProps } from 'packages/components/panel-group/props'
-import { DragStates } from 'packages/components/panel-group/types'
-import { PanelData } from 'packages/components/panel/types'
-import { CSSProperties, InjectionKey, Ref } from 'vue'
+import type { PanelGroupProps } from 'packages/components/panel-group/props'
+import type { DragStates } from 'packages/components/panel-group/types'
+import type { PanelData } from 'packages/components/panel/types'
+import type { CSSProperties, InjectionKey, Ref } from 'vue'
 
 export interface PanelGroupContext {
   groupId: string

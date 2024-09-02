@@ -1,9 +1,9 @@
-import { resolve, basename } from 'node:path'
+import { basename, resolve } from 'node:path'
 import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
 import { execa } from 'execa'
-import { red, cyan, green } from 'kolorist'
+import { cyan, green, red } from 'kolorist'
 import glob from 'fast-glob'
 import { format } from 'prettier'
 
@@ -71,7 +71,7 @@ async function main() {
   await writeFile(
     resolve(rootDir, 'types', 'index.d.ts'),
     format(types, { parser: 'typescript', semi: false, singleQuote: true }),
-    'utf-8'
+    'utf-8',
   )
 
   console.log()
@@ -82,13 +82,12 @@ async function main() {
 async function generateVueIcons(dir: string, out: string, suffix: string) {
   const outDir = resolve(rootDir, 'vue', out)
 
-  if (!existsSync(outDir)) {
+  if (!existsSync(outDir))
     mkdirSync(outDir)
-  }
 
   const svgFiles = await glob('*.svg', {
     cwd: resolve(rootDir, 'src', dir),
-    absolute: true
+    absolute: true,
   })
 
   suffix = suffix.toLocaleUpperCase()
@@ -97,7 +96,7 @@ async function generateVueIcons(dir: string, out: string, suffix: string) {
   let types = ''
 
   await Promise.all(
-    svgFiles.map(async svgFile => {
+    svgFiles.map(async (svgFile) => {
       const fileName = basename(svgFile, '.svg')
       const svg = (await readFile(svgFile, 'utf-8'))
         .replace(/<!--[\s\S]*-->/, '')
@@ -118,12 +117,12 @@ async function generateVueIcons(dir: string, out: string, suffix: string) {
       await writeFile(
         resolve(outDir, `${fileName}.vue`),
         format(vue, { parser: 'vue', semi: false, singleQuote: true }),
-        'utf-8'
+        'utf-8',
       )
 
       exports += `export { default as ${name} } from '.${out ? `/${out}` : ''}/${fileName}.vue'\n`
       types += `export const ${name}: SvgIcon\n`
-    })
+    }),
   )
 
   console.log(cyan(`generated icon vue components for: ${dir}`))
@@ -132,21 +131,20 @@ async function generateVueIcons(dir: string, out: string, suffix: string) {
 }
 
 function ensureEmptyDir(dir: string) {
-  if (existsSync(dir)) {
+  if (existsSync(dir))
     emptyDir(dir)
-  } else {
+  else
     mkdirSync(dir)
-  }
 }
 
 function toCapitalCase(value: string) {
   return (
-    value.charAt(0).toUpperCase() +
-    value.slice(1).replace(/-([a-z])/g, (_, char) => (char ? char.toUpperCase() : ''))
+    value.charAt(0).toUpperCase()
+    + value.slice(1).replace(/-([a-z])/g, (_, char) => (char ? char.toUpperCase() : ''))
   )
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error(red(error))
   process.exit(1)
 })

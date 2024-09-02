@@ -1,8 +1,9 @@
-import { ExtractPropTypes, Ref, reactive, ref, CSSProperties, watch } from 'vue'
-import { PanelConstraints, PanelData } from '../panel/types'
-import { panelGroupProps } from './props'
-import { PanelGroupStates } from './panel-group-states'
-import { DragStates, PanelDirection, ResizeEvent } from './types'
+import type { CSSProperties, ExtractPropTypes, Ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
+import type { PanelConstraints, PanelData } from '../panel/types'
+import type { panelGroupProps } from './props'
+import type { PanelGroupStates } from './panel-group-states'
+import type { DragStates, PanelDirection, ResizeEvent } from './types'
 
 export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupId: string) {
   const gridCol = 12
@@ -17,13 +18,14 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     gridColToFlexGrowMap: [],
     resizeHandleCount: 0,
     direction: props.direction as PanelDirection,
-    showPreviewDots: false
+    showPreviewDots: false,
+    previewDots: [],
   })
   const dragStates = ref<DragStates>({
     isDragging: false,
     dragHandleId: '',
     initialLayout: [],
-    pivotIndice: []
+    pivotIndice: [],
   })
 
   function registerPanel(panelData: Ref<PanelData>) {
@@ -38,16 +40,16 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
    * 备注：此处的18为单个resizeHandle的左边距和中心到右边panel的距离总和，如果你需要自定义resizeHandle，需要重新计算该值
    * */
   function transferGridColToFlexGrow(col: number) {
-    const totalWidth =
-      (props.direction === 'horizontal'
+    const totalWidth
+      = (props.direction === 'horizontal'
         ? container.value?.clientWidth
         : container.value?.clientHeight) ?? 0
     const resizeHandleWidth = 18
 
     return (
-      (((totalWidth + resizeHandleWidth) / (gridCol / col) - 18) /
-        (totalWidth - resizeHandleWidth * states.resizeHandleCount)) *
-      100
+      (((totalWidth + resizeHandleWidth) / (gridCol / col) - 18)
+      / (totalWidth - resizeHandleWidth * states.resizeHandleCount))
+      * 100
     )
   }
 
@@ -56,34 +58,33 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
 
     // 如果开启了grid布局，所有配置会失效
     if (props.grid) {
-      states.panelDataArray.forEach(panel => {
+      states.panelDataArray.forEach((panel) => {
         const eachPanelDefaultSize = 100 / panelLength
         const minGridCol = panel.value.constraints.minGridCol ?? 3
 
         panel.value.constraints.defaultSizePercentage = eachPanelDefaultSize
         panel.value.constraints.minSizePercentage = transferGridColToFlexGrow(minGridCol)
         panel.value.constraints.maxSizePercentage = transferGridColToFlexGrow(
-          gridCol - states.panelDataArray.length
+          gridCol - states.panelDataArray.length,
         )
 
-        states.gridLayout =
-          props.gridLayout ?? (Array(panelLength).fill(gridCol / panelLength) as number[])
+        states.gridLayout
+          = props.gridLayout ?? (Array(panelLength).fill(gridCol / panelLength) as number[])
       })
 
-      for (let i = 0; i < gridCol; i++) {
+      for (let i = 0; i < gridCol; i++)
         states.gridColToFlexGrowMap[i] = transferGridColToFlexGrow(i)
-      }
 
-      if (props.gridLayout) {
+      if (props.gridLayout)
         return props.gridLayout.map(col => states.gridColToFlexGrowMap[col])
-      }
+
       return Array<number>(panelLength).fill(100 / panelLength)
     }
 
     const layout = props.layout ?? Array<number>(states.panelDataArray.length).fill(0)
     const panelTempData = {
       count: 0,
-      remainingSize: 100
+      remainingSize: 100,
     }
 
     // we should Distribute default sizes first, exculde defaultSizePercentage size
@@ -103,7 +104,8 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     for (let i = 0; i < layout.length; i++) {
       const size = layout[i]
 
-      if (size !== 0) continue
+      if (size !== 0)
+        continue
 
       layout[i] = panelTempData.remainingSize / panelTempData.count
     }
@@ -117,7 +119,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     return computePanelFlexBoxStyle({
       layout: states.layout,
       panelDataArray: states.panelDataArray,
-      panelIndex: panelIndex
+      panelIndex,
     })
   }
 
@@ -125,7 +127,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     layout,
     panelDataArray,
     panelIndex,
-    precision = 12
+    precision = 12,
   }: {
     layout: number[]
     panelDataArray: Ref<PanelData>[]
@@ -136,13 +138,12 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
 
     let flexGrow = size ? Number(size.toPrecision(precision)) : 0
 
-    if (panelDataArray.length === 1) flexGrow = 100
+    if (panelDataArray.length === 1)
+      flexGrow = 100
 
     return {
-      flexBasis: 0,
-      flexGrow,
-      flexShrink: 1,
-      overflow: 'hidden'
+      flex: `${flexGrow} 1 0`,
+      overflow: 'hidden',
     }
   }
   function setLayout(layout: number[]) {
@@ -151,7 +152,8 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
 
   // panel-resize-handle
   function startDragging(event: ResizeEvent, resizeHandleId: string) {
-    if (props.disabled) return
+    if (props.disabled)
+      return
 
     const initialCursorPosition = getResizeEventCursorPosition(states.direction, event)
 
@@ -160,23 +162,63 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     dragStates.value.initialLayout = states.layout
     dragStates.value.initialCursorPosition = initialCursorPosition
     dragStates.value.dragHandleId = resizeHandleId
+
+    // 计算需要展示的dot数量
+    const pivotIndice = getPivotIndiceByResizeId(groupId, resizeHandleId)
+
+    if (!props.grid || pivotIndice[0] === -1)
+      return
+
+    let preTotalMinCol = 0
+    let afterTotalMinCol = 0
+
+    let preDispatchedCol = 0
+    let afterDispatchedCol = 0
+
+    const barPivotIndice = pivotIndice[0]
+
+    // 根据枢轴索引计算前后限制条件
+    for (let i = 0; i < states.layout.length; i++) {
+      const panelStateDate = states.panelDataArray[i]
+
+      // 增量和为：flex系数 - 限制条件的最小col
+      const currentCol = states.gridColToFlexGrowMap.findIndex((flexCol) => {
+        return fuzzyCompareNumbers(flexCol, states.layout[i] ?? -1) === 0
+      })
+      const delta = currentCol - (panelStateDate.value.constraints.minGridCol ?? 0)
+
+      if (i <= barPivotIndice) {
+        preTotalMinCol += delta
+        preDispatchedCol += currentCol
+        continue
+      }
+
+      afterDispatchedCol += currentCol
+      afterTotalMinCol += panelStateDate.value.constraints.minGridCol ?? 0
+    }
+
+    const startDotPos = preDispatchedCol - preTotalMinCol
+    const endDotPos = preDispatchedCol + (afterDispatchedCol - afterTotalMinCol)
+
+    states.previewDots = [startDotPos, endDotPos]
   }
 
   function stopDragging() {
-    if (props.disabled) return
+    if (props.disabled)
+      return
 
     states.showPreviewDots = false
     dragStates.value.isDragging = false
     dragStates.value.initialCursorPosition = 0
     dragStates.value.dragHandleId = ''
 
-    if (props.grid) {
+    if (props.grid)
       adjustGridLayout(states.layout)
-    }
   }
 
   function adjustGridLayout(layout: number[]) {
-    if (!props.grid) return
+    if (!props.grid)
+      return
 
     for (let i = 0; i < layout.length; i++) {
       let minDelta = 999
@@ -201,20 +243,18 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
         }
       }
 
-      if (shouldPatch) {
+      if (shouldPatch)
         layout[i] = states.gridColToFlexGrowMap[targetPivotIndice]
-      }
     }
   }
 
   function getResizeEventCursorPosition(direction: PanelDirection, event: ResizeEvent): number {
     const isHorizontal = direction === 'horizontal'
 
-    if (isMouseEvent(event)) {
+    if (isMouseEvent(event))
       return isHorizontal ? event.clientX : event.clientY
-    } else {
-      throw Error(`Unsupported event type "${event.type}"`)
-    }
+    else
+      throw new Error(`Unsupported event type "${event.type}"`)
   }
 
   function registerResizeHandler(resizeHandleId: string) {
@@ -223,19 +263,18 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     return function resizeHandler(event: MouseEvent) {
       event.preventDefault()
 
-      if (dragStates.value.dragHandleId !== resizeHandleId || props.disabled) {
+      if (dragStates.value.dragHandleId !== resizeHandleId || props.disabled)
         return
-      }
 
       const { initialLayout } = dragStates.value
 
       const initialCursorPosition = dragStates.value.initialCursorPosition ?? 0
       const movedCursorPosition = getResizeEventCursorPosition(states.direction, event)
 
-      let delatPercentage = calculateDeltaPercentage(
+      const delatPercentage = calculateDeltaPercentage(
         initialCursorPosition,
         movedCursorPosition,
-        groupId
+        groupId,
       )
 
       const panelsConstraints = states.panelDataArray.map(data => data.value.constraints)
@@ -248,12 +287,11 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
         delatPercentage,
         initialLayout,
         panelsConstraints,
-        pivotIndice
+        pivotIndice,
       )
 
-      if (!compareLayouts(states.layout, nextLayout)) {
+      if (!compareLayouts(states.layout, nextLayout))
         states.layout = nextLayout
-      }
     }
   }
   function getPivotIndiceByResizeId(groupId: string, resizeHandleId: string) {
@@ -264,14 +302,14 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
 
   function getResizeHandleElementsForGroup(groupId: string) {
     return Array.from(
-      document.querySelectorAll(`[data-panel-resize-handle][data-panel-group-id="${groupId}"]`)
+      document.querySelectorAll(`[data-panel-resize-handle][data-panel-group-id="${groupId}"]`),
     )
   }
 
   function findResizeHandleIndex(groupId: string, resizeHandleId: string) {
     const handles = getResizeHandleElementsForGroup(groupId)
     const index = handles.findIndex(
-      handle => handle.getAttribute('data-panel-resize-handle-id') === resizeHandleId
+      handle => handle.getAttribute('data-panel-resize-handle-id') === resizeHandleId,
     )
     return index ?? null
   }
@@ -279,7 +317,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
   // 计算panel的限制条件: 最大尺寸和最小尺寸
   function computePercentagePanelConstraints(
     panelIndex: number,
-    panelsConstraints: PanelConstraints[]
+    panelsConstraints: PanelConstraints[],
   ) {
     let totalMinConstraints = 0
     let totalMaxConstraints = 0
@@ -303,7 +341,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
       minSizePercentage:
         panelsConstraints.length > 1
           ? Math.max(minSizePercentage, 100 - totalMaxConstraints)
-          : minSizePercentage
+          : minSizePercentage,
     }
   }
 
@@ -311,7 +349,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     delta: number,
     layout: number[],
     panelConstraints: PanelConstraints[],
-    pivotIndices: number[]
+    pivotIndices: number[],
   ) {
     const nextLayout = [...layout]
 
@@ -324,16 +362,15 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
       let maxAvailableDelta = 0
 
       while (true) {
-        let presize = layout[index]
-        let { maxSizePercentage } = computePercentagePanelConstraints(index, panelConstraints)
+        const presize = layout[index]
+        const { maxSizePercentage } = computePercentagePanelConstraints(index, panelConstraints)
 
         const delta = maxSizePercentage - presize
         maxAvailableDelta += delta
         index += increment
 
-        if (index < 0 || index >= panelConstraints.length) {
+        if (index < 0 || index >= panelConstraints.length)
           break
-        }
       }
 
       const minAbsDelta = Math.min(Math.abs(delta), Math.abs(maxAvailableDelta))
@@ -349,7 +386,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
       while (index >= 0 && index < panelConstraints.length) {
         const deltaRemaining = Math.abs(delta) - Math.abs(deltaApplied)
         const presize = layout[index]
-        let { minSizePercentage } = computePercentagePanelConstraints(index, panelConstraints)
+        const { minSizePercentage } = computePercentagePanelConstraints(index, panelConstraints)
 
         const panelDeltaAvailable = presize - minSizePercentage
 
@@ -357,7 +394,8 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
           nextLayout[index] = presize - deltaRemaining
           deltaApplied += deltaRemaining
           break
-        } else {
+        }
+        else {
           nextLayout[index] = minSizePercentage
           deltaApplied += panelDeltaAvailable
         }
@@ -373,7 +411,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
       while (index >= 0 && index < panelConstraints.length) {
         const deltaRemaining = Math.abs(deltaApplied)
         const presize = layout[index]
-        let { maxSizePercentage } = computePercentagePanelConstraints(index, panelConstraints)
+        const { maxSizePercentage } = computePercentagePanelConstraints(index, panelConstraints)
 
         const panelDeltaAvailable = maxSizePercentage
 
@@ -381,7 +419,8 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
           nextLayout[index] = presize + deltaRemaining
           deltaApplied -= deltaRemaining
           break
-        } else {
+        }
+        else {
           nextLayout[index] = maxSizePercentage
           deltaApplied -= panelDeltaAvailable
         }
@@ -392,9 +431,9 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
 
     const totalPanelSize = nextLayout.reduce((total, size) => size + total, 0)
 
-    if (fuzzyCompareNumbers(totalPanelSize, 100) !== 0) {
+    if (fuzzyCompareNumbers(totalPanelSize, 100) !== 0)
       return layout
-    }
+
     return nextLayout
   }
 
@@ -402,7 +441,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     initialCursorPosition: number,
     movedCursorPosition: number,
     groupId: string,
-    precision = 12
+    precision = 12,
   ) {
     const delatPixel = calculateDeltaPixel(initialCursorPosition, movedCursorPosition)
     const panelGroupInPixel = getPanelGroupMainAxiosPixel(groupId) ?? 1
@@ -431,12 +470,11 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
   watch(
     () => props.layout,
     () => {
-      if (props.layout?.length) {
+      if (props.layout?.length)
         states.layout = props.layout
-      } else {
+      else
         states.layout = caculateDefaultLayout()
-      }
-    }
+    },
   )
 
   return {
@@ -452,7 +490,7 @@ export function useSplit(props: ExtractPropTypes<typeof panelGroupProps>, groupI
     stopDragging,
     startDragging,
     registerResizeHandler,
-    computePanelFlexBoxStyle
+    computePanelFlexBoxStyle,
   }
 }
 
@@ -460,24 +498,23 @@ function isMouseEvent(event: MouseEvent) {
   return event.type.startsWith('mouse')
 }
 function fuzzyCompareNumbers(actual: number, expected: number, fractionDigits: number = 6): number {
-  actual = parseFloat(actual.toFixed(fractionDigits))
-  expected = parseFloat(expected.toFixed(fractionDigits))
+  actual = Number.parseFloat(actual.toFixed(fractionDigits))
+  expected = Number.parseFloat(expected.toFixed(fractionDigits))
 
   const delta = actual - expected
-  if (delta === 0) {
+  if (delta === 0)
     return 0
-  } else {
+  else
     return delta > 0 ? 1 : -1
-  }
 }
 function compareLayouts(a: number[], b: number[]) {
   if (a.length !== b.length) {
     return false
-  } else {
+  }
+  else {
     for (let index = 0; index < a.length; index++) {
-      if (a[index] != b[index]) {
+      if (a[index] !== b[index])
         return false
-      }
     }
   }
   return true

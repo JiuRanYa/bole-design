@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const fullScreen = ref()
+</script>
+
 <template>
   <FullScreen ref="fullScreen" v-slot="{ toggle, full }" class="modal-full-screen">
     <div class="container" :class="{ 'is-full': full }">
@@ -5,8 +11,8 @@
         需要全屏展示的元素，当前全屏状态状态：
         <strong>{{ full }}</strong>
       </span>
-      <br />
-      <br />
+      <br>
+      <br>
       <div>
         <Button type="primary" @click="toggle('window')">
           {{ !full ? '网页全屏' : '退出全屏' }}
@@ -18,12 +24,6 @@
     </div>
   </FullScreen>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const fullScreen = ref()
-</script>
 
 <style lang="scss">
 .container {

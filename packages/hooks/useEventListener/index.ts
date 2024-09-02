@@ -1,26 +1,25 @@
-import { MaybeRef, noop } from '@panda-ui/common'
+import type { MaybeRef } from '@panda-ui/common'
+import { noop } from '@panda-ui/common'
 import { getCurrentScope, onScopeDispose, unref, watch } from 'vue'
 
 export function useEventListener<E = Event>(
   target: MaybeRef<EventTarget | null | undefined>,
   event: string,
   listener: (event: E) => any,
-  options?: AddEventListenerOptions | boolean
+  options?: AddEventListenerOptions | boolean,
 ) {
-  if (!target) {
+  if (!target)
     return
-  }
 
   let remove = noop
 
   const stopWatch = watch(
     () => unref(target),
-    el => {
+    (el) => {
       remove()
 
-      if (!el) {
+      if (!el)
         return
-      }
 
       el.addEventListener(event, listener as any, options)
 
@@ -29,7 +28,7 @@ export function useEventListener<E = Event>(
         remove = noop
       }
     },
-    { immediate: true, flush: 'post' }
+    { immediate: true, flush: 'post' },
   )
 
   const stop = () => {

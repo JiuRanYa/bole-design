@@ -1,30 +1,17 @@
-<template>
-  <div
-    v-show="active"
-    :class="classNames"
-    :id="`pane-${paneName}`"
-    role="tabpanel"
-    :aria-hidden="!active"
-    :aria-labelledby="`tab-${paneName}`"
-  >
-    <slot></slot>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useNamespace } from '@panda-ui/hooks'
 import { computed, inject } from 'vue'
-import { tabsPaneProps } from './props'
 import { useProps } from '@panda-ui/common'
 import { tabsContextKey } from '@panda-ui/tokens/tabs'
+import { tabsPaneProps } from './props'
 
 defineOptions({
-  name: 'TabsPane'
+  name: 'TabsPane',
 })
 
 const _props = defineProps(tabsPaneProps)
 const props = useProps('tabs-pane', _props, {
-  value: ''
+  value: '',
 })
 const ns = useNamespace('tabs-pane')
 
@@ -38,3 +25,16 @@ const active = computed(() => {
 
 const tabsRoot = inject(tabsContextKey)
 </script>
+
+<template>
+  <div
+    v-show="active"
+    :id="`pane-${paneName}`"
+    :class="classNames"
+    role="tabpanel"
+    :aria-hidden="!active"
+    :aria-labelledby="`tab-${paneName}`"
+  >
+    <slot />
+  </div>
+</template>

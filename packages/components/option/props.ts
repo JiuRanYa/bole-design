@@ -1,40 +1,39 @@
-import { PropType } from 'vue'
-import { SelectValue } from '../select/.symbol'
+import type { PropType } from 'vue'
+import type { SelectValue } from '../select/.symbol'
 
-export type RawOption<T = any> = {
+export interface RawOption<T = any> {
   value: T
   label: string
-  disabled: boolean
+  disabled?: boolean
 }
 
-export interface OptionState<T = any> extends Partial<RawOption<T>> {
+export interface SelectOption<T = any> extends Partial<RawOption<T>> {
   created?: boolean
 }
 
 export const optionProps = Object.freeze({
   value: {
     type: [String, Number, Array] as PropType<SelectValue>,
-    default: null
+    default: null,
   },
   label: {
     type: String,
-    default: ''
+    default: '',
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   noTitle: {
     type: Boolean,
-    default: false
+    default: false,
   },
   selected: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  index: {
-    type: Number,
-    required: true
+  onSelect: Function,
+  expandable: {
+    type: Boolean,
   },
-  onSelect: Function
 })

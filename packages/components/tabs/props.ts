@@ -1,10 +1,16 @@
-import { buildProps } from '@panda-ui/common'
-import { Side } from '@panda-ui/common'
-import { PropType } from 'vue'
+import type { Side } from '@panda-ui/common'
+import { buildProps, eventProp } from '@panda-ui/common'
+import type { PropType } from 'vue'
+
+export interface TabTriggerEmitState {
+  name: string
+  disabled: boolean
+}
 
 export const tabsProps = buildProps({
   value: String,
   tabPosition: {
-    type: String as PropType<Side>
-  }
+    type: String as PropType<Side>,
+  },
+  onTabClick: eventProp<(state: TabTriggerEmitState) => void>(),
 })

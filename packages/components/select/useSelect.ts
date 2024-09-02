@@ -1,11 +1,22 @@
-import { Placement } from '@floating-ui/dom'
-import { emitEvent, isNull, warnWithPrefix } from '@panda-ui/common'
+import type { Placement } from '@floating-ui/dom'
+import { emitEvent, isNull } from '@panda-ui/common'
 import { useHover, usePopper } from '@panda-ui/hooks'
-import { onMounted, reactive, nextTick, watch, computed, ExtractPropTypes, ref, toRaw } from 'vue'
-import { OptionState } from '../option/props'
-import { PopperExposed } from '../popper'
-import { SelectRawOption, SelectValue } from './.symbol'
-import { selectProps } from './props'
+import type {
+  ExtractPropTypes,
+} from 'vue'
+import {
+  computed,
+  onMounted,
+  reactive,
+  ref,
+  toRaw,
+  toRef,
+  watch,
+} from 'vue'
+import type { SelectOption } from '../option/props'
+import type { PopperExposed } from '../popper'
+import type { SelectRawOption, SelectValue } from './.symbol'
+import type { selectProps } from './props'
 import { useCreatable } from './useCreatable'
 
 export const DEFAULT_INPUT_PLACEHOLDER = '请填写'
@@ -14,19 +25,23 @@ function isSameValue(newValue?: SelectValue, oldValue?: SelectValue) {
   const isNewArray = Array.isArray(newValue)
   const isOldArray = Array.isArray(oldValue)
 
-  if (isNewArray !== isOldArray) return false
+  if (isNewArray !== isOldArray)
+    return false
 
   if (isNewArray && isOldArray) {
-    if (newValue.length !== oldValue.length) return false
+    if (newValue.length !== oldValue.length)
+      return false
 
     for (let i = 0, len = newValue.length; i < len; ++i) {
-      if (newValue[i] !== oldValue[i]) return false
+      if (newValue[i] !== oldValue[i])
+        return false
     }
 
     return true
   }
 
-  if (isNull(newValue)) return isNull(oldValue)
+  if (isNull(newValue))
+    return isNull(oldValue)
 
   return newValue === oldValue
 }
@@ -36,56 +51,64 @@ export interface SelectStates {
   selectedLabel: string
   emittedValue: any
   currentVisible: boolean
-  createdOption: Partial<OptionState>
+  createdOption: Partial<SelectOption>
   // filterable模式下搜索的关键字
   searchKey: string
   currentIdx: number
 }
 
-export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any) => {
+export function useSelect(props: ExtractPropTypes<typeof selectProps>, emit: any) {
   const wrapper = ref()
-  const reference = ref()
+
+  const input = ref()
   const popper = ref<PopperExposed>()
-  const referenceEl = computed(() => reference.value)
   const popperEl = computed(() => popper.value?.wrapper)
   const placement = ref<Placement>(props.placement ?? 'bottom')
-  const { x, y, update } = usePopper({ referenceEl, popperEl, placement })
+
+  const { reference, updatePopper, transferTo } = usePopper({
+    popper: popperEl,
+    placement,
+    transfer: toRef(props, 'to'),
+    isDrop: true,
+  })
 
   const { isHover } = useHover(reference)
 
   const states = reactive<SelectStates>({
-    inputValue: '',
+    inputValue: props.value,
     selectedLabel: props.placeholder ?? DEFAULT_INPUT_PLACEHOLDER,
     emittedValue: props.value as typeof props.value | null,
-    currentVisible: false,
+    currentVisible: props.visible,
     createdOption: {},
     searchKey: '',
-    currentIdx: props.defaultFirstOption ? 0 : -1
+    currentIdx: props.defaultFirstOption ? 0 : -1,
   })
 
   const { createNewOption } = useCreatable(props, states)
 
   const filteredOptions = computed(() => {
-    if (!props.filterable) return props.options
+    if (!props.filterable)
+      return props.options
 
     const currentOptions = states.createdOption.label
       ? [states.createdOption].concat(props.options)
       : props.options
-    return currentOptions.filter(option => option.label?.includes(states.inputValue))
+    return currentOptions.filter((option: any) => option.label?.includes(states.searchKey))
   })
 
   const showClearIcon = computed(() => isHover.value && states.emittedValue && props.clearable)
 
-  function handleOptionClick(option: OptionState, isClick = true) {
+  function handleOptionClick(option: SelectOption, isClick = true) {
     const value = option.value
 
-    if (isClick) {
+    if (isClick)
       setVisible(false)
-    }
 
     if (!isSameValue(value, states.emittedValue)) {
       setSelectedLabel(option.label)
       emit('update:value', value)
+      emitEvent(props.onSelect!, option)
+      states.emittedValue = value
     }
 
     states.createdOption = {}
@@ -93,9 +116,8 @@ export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any
   }
 
   function emitChangeEvent(newValue: SelectValue | undefined, oldValue: SelectValue | undefined) {
-    if (props.onChange) {
+    if (props.onChange)
       emitEvent(props.onChange, newValue, oldValue)
-    }
   }
 
   function handleClearEmitValue() {
@@ -110,10 +132,13 @@ export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any
   function setSelectedLabel(label?: string) {
     const val = toRaw(props.value)
 
-    const selectedOption = filteredOptions.value.find(opt => opt.value === val)
+    const selectedOption = filteredOptions.value.find((opt: any) => opt.value === val)
 
-    states.selectedLabel =
-      label ?? selectedOption?.label ?? props.placeholder ?? DEFAULT_INPUT_PLACEHOLDER
+    if (!label && selectedOption)
+      emit('select', selectedOption)
+
+    states.selectedLabel
+      = label ?? selectedOption?.label ?? props.placeholder ?? DEFAULT_INPUT_PLACEHOLDER
     states.inputValue = ''
   }
 
@@ -121,25 +146,24 @@ export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any
     states.currentVisible = visible
   }
 
-  function isSelected(option: SelectRawOption) {
+  function isSelected(option: SelectRawOption | SelectOption) {
     return states.emittedValue === option.value
   }
 
   function onKeyboardSelect() {
     const option = filteredOptions.value[states.currentIdx]
 
-    if (!option) {
+    if (!option)
       return
-    }
+
     if (!states.currentVisible) {
       setVisible(true)
       return
     }
-    if (option.created) {
+    if (option.created)
       states.createdOption = option
-    }
 
-    update()
+    updatePopper()
     handleOptionClick(option, false)
   }
 
@@ -153,10 +177,10 @@ export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any
     states.currentIdx = idx < filteredOptions.value.length - 1 ? states.currentIdx + 1 : 0
   }
 
-  function onKeyboardDelete(e: KeyboardEvent) {
+  function onKeyboardDelete() {
     if (states.searchKey.length === 0) {
       if (states.createdOption.label) {
-        update()
+        updatePopper()
         states.createdOption = {}
       }
     }
@@ -166,16 +190,15 @@ export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any
     const value = event.target.value
     states.inputValue = value
 
-    return onInputChange()
+    onInputChange()
   }
 
   function onInputChange() {
-    if (props.filterable) {
+    if (props.filterable)
       states.searchKey = states.inputValue
-    }
 
     if (props.creatable) {
-      return nextTick(() => {
+      requestAnimationFrame(() => {
         createNewOption(states.inputValue)
       })
     }
@@ -184,48 +207,62 @@ export const useSelect = (props: ExtractPropTypes<typeof selectProps>, emit: any
   function initCurrentIdx() {
     states.currentIdx = props.defaultFirstOption ? 0 : -1
   }
+  function syncInputValue() {
+    if (!input.value)
+      return
+
+    const visible = states.currentVisible
+
+    input.value.value = visible ? '' : states.selectedLabel || ''
+
+    visible ? input.value.focus() : input.value.blur()
+  }
 
   watch(
     () => props.value,
-    value => {
-      if (!states.emittedValue || !isSameValue(value, states.emittedValue)) {
-        emitChangeEvent(value, states.emittedValue)
+    (value, oldValue) => {
+      if (!oldValue || !isSameValue(value, oldValue)) {
+        emitChangeEvent(value, oldValue)
+        states.inputValue = props.options.find(i => i.value === value)?.label ?? ''
         states.emittedValue = value
+        setSelectedLabel()
+        syncInputValue()
       }
-    }
+    },
   )
   watch(
     () => states.currentVisible,
-    value => {
+    (value) => {
       value && initCurrentIdx()
-    }
+    },
   )
 
   onMounted(() => {
+    syncInputValue()
     props.value && setSelectedLabel()
   })
 
   return {
-    x,
-    y,
+    states,
+    input,
     wrapper,
     reference,
     popper,
     popperEl,
-    referenceEl,
+    transferTo,
     showClearIcon,
+    filteredOptions,
 
-    states,
     onInput,
     setVisible,
     isSelected,
-    filteredOptions,
+    updatePopper,
     onKeyboardUp,
     onKeyboardDown,
     onKeyboardDelete,
     onKeyboardSelect,
     handleOptionClick,
     handleClickOutSide,
-    handleClearEmitValue
+    handleClearEmitValue,
   }
 }

@@ -1,17 +1,17 @@
+<script setup lang="ts">
+import { Cat, Flag, Moon, Sun } from '@panda-ui/icons'
+</script>
+
 <template>
-  <Icon :icon="Sun"></Icon>
-  <Icon :icon="Moon"></Icon>
+  <Icon :icon="Sun" />
+  <Icon :icon="Moon" />
   <Icon>
-    <Flag></Flag>
+    <Flag />
   </Icon>
   <Icon>
-    <Cat></Cat>
+    <Cat />
   </Icon>
 </template>
-
-<script setup lang="ts">
-import { Sun, Moon, Flag, Cat } from '@panda-ui/icons'
-</script>
 
 <style scoped>
 .bl-icon {

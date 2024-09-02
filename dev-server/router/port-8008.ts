@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-document.title = 'tooltip | Panda UI'
+document.title = 'modal | Panda UI'
 
 export const router = createRouter({
   history: createWebHistory('/'),
@@ -8,32 +8,17 @@ export const router = createRouter({
     {
       path: '/',
       name: 'basic',
-      component: () => import('../../docs/demos/panda-ui/tooltip/basic/index.vue')
+      component: () => import('../../docs/demos/panda-ui/modal/basic/index.vue')
     },
     {
-      path: '/overflow',
-      name: 'overflow',
-      component: () => import('../../docs/demos/panda-ui/tooltip/overflow/index.vue')
-    },
-    {
-      path: '/placement',
-      name: 'placement',
-      component: () => import('../../docs/demos/panda-ui/tooltip/placement/index.vue')
+      path: '/custom',
+      name: 'custom',
+      component: () => import('../../docs/demos/panda-ui/modal/custom/index.vue')
     },
     {
       path: '/reverse',
       name: 'reverse',
-      component: () => import('../../docs/demos/panda-ui/tooltip/reverse/index.vue')
-    },
-    {
-      path: '/trigger',
-      name: 'trigger',
-      component: () => import('../../docs/demos/panda-ui/tooltip/trigger/index.vue')
-    },
-    {
-      path: '/visible',
-      name: 'visible',
-      component: () => import('../../docs/demos/panda-ui/tooltip/visible/index.vue')
+      component: () => import('../../docs/demos/panda-ui/modal/reverse/index.vue')
     },
     {
       path: '/:catchAll(.*)',
@@ -43,5 +28,5 @@ export const router = createRouter({
 })
 
 router.afterEach(to => {
-  document.title = `tooltip - ${typeof to.name === 'string' ? to.name : 'dev'} | Panda UI`
+  document.title = `modal - ${typeof to.name === 'string' ? to.name : 'dev'} | Panda UI`
 })

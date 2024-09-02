@@ -7,7 +7,8 @@ $select: () !default;
 $select: map.merge(
   (
     list-b: get-css-var('border-shape') get-css-var('select-list-b-color'),
-    list-b-color: get-css-var('border-color-base')
+    list-b-color: get-css-var('border-color-base'),
+    height: get-css-var(input-height)
   ),
   $select
 );
@@ -22,24 +23,45 @@ $select: map.merge(
   display: inline-flex;
   width: 100%;
   cursor: pointer;
-  border: get-css-var(select-list-b);
-  border-radius: get-css-var(radius-base);
   transition: get-css-var(transition-background);
   background-color: get-css-var(bg-color-base);
 	position: relative;
-	// height: get-css-var('input-height');
+	height: get-css-var(select-height);
 
 
 	&--popper {
-		margin: 5px 0;
+		padding: 5px 0;
+	}
+
+	&__wrapper {
+    width: 100%;
     box-shadow: get-css-var('shadow-base');
     border-radius: get-css-var(radius-base);
 		background: get-css-var(bg-color-base)
 	}
 
-  &:hover {
-    // color: get-css-var(color-primary-text);
-    // background-color: get-css-var('color-primary-bg');
+  &--small {
+    @include define-preset-values('select',
+      (
+        height: get-css-var(input-height-small),
+      )
+    );
+  }
+
+  &--middle {
+    @include define-preset-values('select',
+      (
+        height: get-css-var(input-height-middle),
+      )
+    );
+  }
+
+  &--large {
+    @include define-preset-values('select',
+      (
+        height: get-css-var(input-height-large),
+      )
+    );
   }
 
   &__selector--focused &__arrow {
@@ -50,6 +72,8 @@ $select: map.merge(
     display: flex;
     padding: 8px 10px;
     width: 100%;
+		border: get-css-var(select-list-b);
+		border-radius: get-css-var(radius-base);
 		font-size: get-css-var(font-size-base);
 		line-height: get-css-var(line-height-base);
 		border-radius: get-css-var(radius-base);
@@ -57,12 +81,13 @@ $select: map.merge(
   }
 
 	&__input { 
-		height: 18px;
 		display: inline-block;
+    height: 100%;
 		border: none;
 		width: 100%;
 		padding: 0;
 		outline: none;
+		color: inherit;
 		background: inherit;
 
 		&:hover {
@@ -115,4 +140,13 @@ $select: map.merge(
   &__clear {
 		position: absolute;
   }
+
+	&--empty {
+		padding: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: auto;
+		color: get-css-var(content-color-disabled);
+	}
 }

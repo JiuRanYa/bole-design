@@ -55,17 +55,33 @@ $option: map.merge(
     background-color: get-css-var(option-bg-color-hover);
 	}
 
-  &:hover {
+	&__arrow {
+		position: absolute;
+		right: 12px;
+		color: get-css-var(option-color-hover);
+	}
+
+  &:hover:not(&--disabled) {
 		color: get-css-var(option-color-hover);
     background-color: get-css-var(option-bg-color-hover);
   }
 
   &__icon + &__label {
-    position: absolute;
+		margin-left: 12px;
   }
+
+	&--disabled {
+		cursor: not-allowed;
+		color: get-css-var(content-color-disabled);
+	}
+
   &__label {
-    display: flex;
+    display: inline-block;
     line-height: 1;
-    margin-left: 24px;
+    margin: 0 26px; 
+		overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

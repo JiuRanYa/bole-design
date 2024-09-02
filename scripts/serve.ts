@@ -1,9 +1,9 @@
-import { logger, prettierConfig, queryIdlePort, rootDir, run } from './utils'
-import minimist from 'minimist'
 import { resolve } from 'node:path'
 import { existsSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import minimist from 'minimist'
 import prompts from 'prompts'
 import { format } from 'prettier'
+import { logger, prettierConfig, queryIdlePort, rootDir, run } from './utils'
 
 const args = minimist<{
   l?: string
@@ -17,7 +17,7 @@ const langs = ['zh-CN', 'en-US']
 const lang = args.lang || args.l
 const prodMode = args.prod
 
-let port = parseFloat(argPort) || 8008
+let port = Number.parseFloat(argPort) || 8008
 
 const devDir = resolve(rootDir, 'dev-server')
 
@@ -30,7 +30,7 @@ async function main() {
 async function serveComponent() {
   const demosDir = resolve(rootDir, 'docs/demos/panda-ui')
   const allComponents = readdirSync(demosDir).filter(f =>
-    statSync(resolve(demosDir, f)).isDirectory()
+    statSync(resolve(demosDir, f)).isDirectory(),
   )
 
   const target = await selectComponent(allComponents)
@@ -71,7 +71,7 @@ async function serveComponent() {
   writeFileSync(
     resolve(devDir, 'router', `port-${port}.ts`),
     format(router, { ...prettierConfig, parser: 'typescript' }),
-    'utf-8'
+    'utf-8',
   )
 
   await run('pnpm', ['serve'], {
@@ -81,8 +81,8 @@ async function serveComponent() {
       NODE_ENV: prodMode ? 'production' : 'development',
       TARGET: target,
       DEMOS: JSON.stringify(demos),
-      PORT: `${port}`
-    }
+      PORT: `${port}`,
+    },
   })
 }
 
@@ -95,37 +95,36 @@ async function selectComponent(allComponents: string[]) {
         message: 'Select a component:',
         choices: allComponents.map(comp => ({
           title: comp,
-          value: comp
+          value: comp,
         })),
-        onState: function (this: any) {
+        onState(this: any) {
           this.fallback = { title: this.input, value: this.input }
 
-          if (this.suggestions.length === 0) {
+          if (this.suggestions.length === 0)
             this.value = this.fallback.value
-          }
-        }
+        },
       },
       {
         onCancel: () => {
           console.log('Canceled by user, exiting...')
           process.exit(1)
-        }
-      }
+        },
+      },
     )
   ).component
 
   return component
 }
 
-function queryDemoFile(component: string, lang: string) {
+function queryDemoFile(component: string, _lang: string) {
   const compDir = resolve(rootDir, 'docs/demos/panda-ui', component)
 
   return readdirSync(compDir).filter(
-    f => statSync(resolve(compDir, f)).isDirectory() && existsSync(resolve(compDir, f, `index.vue`))
+    f => statSync(resolve(compDir, f)).isDirectory() && existsSync(resolve(compDir, f, `index.vue`)),
   )
 }
 
-main().catch(error => {
+main().catch((error) => {
   logger.error(error)
   process.exit(1)
 })

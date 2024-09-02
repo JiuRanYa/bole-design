@@ -1,0 +1,6 @@
+@use '../shared' as *;
+@use '../design' as *;
+
+.#{$namespace}-root-hidden {
+	overflow: hidden;
+}

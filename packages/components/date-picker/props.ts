@@ -1,18 +1,24 @@
-import { PropType } from 'vue'
-import { buildProps, Dateable, eventProp, Placement } from '@panda-ui/common'
-import { datePickerSharedProps } from './shared'
+import type { PropType } from 'vue'
+import type { Dateable, Placement } from '@panda-ui/common'
+import { buildProps, eventProp } from '@panda-ui/common'
 import type { Dayjs } from 'dayjs'
+import type { TimeType } from '../time-picker/symbol'
+import { datePickerSharedProps } from './shared'
 
-export type OriginDate = {
+export interface OriginDate {
   year: number
   month: number
   day: number
+  hour: number
+  minute: number
+  second: number
 }
-export type DatePickerType = 'static' | 'range'
+export type DatePickerType = 'static' | 'range' | 'dateTime' | 'dateTimeRange'
 export type DatePickerTyping = 'fixed' | 'since' | 'last'
+export type DateTimeType = 'year' | 'month' | 'day' | TimeType
 
 export const datePickerPanelProps = buildProps({
-  ...datePickerSharedProps
+  ...datePickerSharedProps,
 })
 
 export const datePickerProps = buildProps({
@@ -20,19 +26,20 @@ export const datePickerProps = buildProps({
   placement: String as PropType<Placement>,
   transitionName: String || Function,
   presets: Object as PropType<Record<string, Dateable>>,
-  type: String as PropType<DatePickerType>,
-  value: [Number, String, Date, Array] as PropType<Dateable | Dateable[]>,
+  value: [Number, String, Date, Array, Object] as PropType<Dateable | Dateable[]>,
   valueFormat: String,
+  format: String,
   onChange: eventProp<(value: string | number | string[] | number[] | null) => void>(),
   to: String,
+  timezone: String,
 })
 
 export const calendarProps = buildProps({
-  value: String
+  value: String,
 })
 
 export const monthGridProps = buildProps({
-  value: String
+  value: String,
 })
 
 export interface DateCell {
@@ -41,21 +48,30 @@ export interface DateCell {
   isCurrent?: boolean
   text?: string
   dayjs: Dayjs
-  date: Date
+  date?: Date
   dateStr: string
 }
 
 export interface Meta {
+  enabled: Record<keyof DateMeta, boolean>
   dateMeta: DateMeta
   extraMeta: ExtraMeta
   setDate: (date: Dateable) => void
-  getDate: () => string
+  getDate: () => Date
   getDayjs: () => Dayjs
+
+  setDateMeta: (meta: Partial<DateMeta>) => void
 }
+
+export type MetaType = 'start' | 'end'
+
 export interface DateMeta {
   year: number
   month: number
   day: number
+  hour: number
+  minute: number
+  second: number
 }
 
 export interface ExtraMeta {

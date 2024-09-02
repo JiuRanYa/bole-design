@@ -1,6 +1,8 @@
 <template>
   <Dropdown>
-    <Button type="primary"> 下拉菜单 </Button>
+    <Button type="primary">
+      下拉菜单
+    </Button>
 
     <template #drop>
       <DropdownList>

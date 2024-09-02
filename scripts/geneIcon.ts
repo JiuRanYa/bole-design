@@ -1,8 +1,8 @@
 import path from 'node:path'
-import prettier from 'prettier'
-import { ESLint } from 'eslint'
 import { readdirSync, statSync } from 'node:fs'
 import { readFile, writeFile } from 'node:fs/promises'
+import prettier from 'prettier'
+import { ESLint } from 'eslint'
 import { iconDir, logger, prettierConfig } from './utils'
 
 async function main() {
@@ -16,7 +16,7 @@ async function main() {
   await writeFile(
     iconPath,
     prettier.format(iconTemp, { ...prettierConfig, parser: 'json' }),
-    'utf-8'
+    'utf-8',
   )
 
   await ESLint.outputFixes(await eslint.lintFiles(iconPath))
@@ -41,12 +41,14 @@ async function geneIconMap() {
           const svgFile = await readFileAsync(filePath)
           result[parentDir].push({
             name: file,
-            show_svg: svgFile
+            show_svg: svgFile,
           })
-        } else {
+        }
+        else {
           result[parentDir] = []
         }
-      } else {
+      }
+      else {
         await traverseFileTree(filePath, path.join(parentDir, file))
       }
     }
@@ -57,7 +59,7 @@ async function geneIconMap() {
   return result
 }
 
-main().catch(error => {
+main().catch((error) => {
   logger.error(error)
   process.exit(1)
 })

@@ -1,21 +1,23 @@
 <template>
   <div class="wrapper">
     <PanelGroup>
-      <Panel :defaultSizePercentage="30" :maxSizePercentage="30">
+      <Panel :default-size-percentage="30" :max-size-percentage="30">
         <div class="inner">
           <div>MaxSize: 30</div>
           <div>DefaultSize: 30</div>
         </div>
       </Panel>
       <PanelResizeHandle />
-      <Panel :minSizePercentage="30">
+      <Panel :min-size-percentage="30">
         <div class="inner">
           <div>MinSize: 30</div>
         </div>
       </Panel>
       <PanelResizeHandle />
       <Panel>
-        <div class="inner">No constraints</div>
+        <div class="inner">
+          No constraints
+        </div>
       </Panel>
     </PanelGroup>
   </div>

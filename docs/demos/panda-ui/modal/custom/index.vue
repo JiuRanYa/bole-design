@@ -1,22 +1,32 @@
-<template>
-  <Button type="primary" @click="active = !active">打开Modal</Button>
-
-  <Modal width="80vw" height="80vh" top="10vh" v-model:active="active">
-    <div class="modal-title">标题</div>
-    <div class="modal-desc">你可以在modal中定义任何你想要的内容</div>
-
-    <div class="modal-action">
-      <Button type="secondary">Cancel</Button>
-      <Button type="primary">Save</Button>
-    </div>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const active = ref(false)
 </script>
+
+<template>
+  <Button type="primary" @click="active = !active">
+    打开Modal
+  </Button>
+
+  <Modal v-model:active="active" width="80vw" height="80vh" top="10vh">
+    <div class="modal-title">
+      标题
+    </div>
+    <div class="modal-desc">
+      你可以在modal中定义任何你想要的内容
+    </div>
+
+    <div class="modal-action">
+      <Button type="secondary">
+        Cancel
+      </Button>
+      <Button type="primary">
+        Save
+      </Button>
+    </div>
+  </Modal>
+</template>
 
 <style lang="scss" scoped>
 .modal-title {

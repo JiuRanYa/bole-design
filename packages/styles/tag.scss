@@ -6,7 +6,8 @@ $tag-map: () !default;
 $tag-map: map.merge(
 	(
 		color: get-css-var(primary-color-foreground),
-		bg-color: get-css-var(border-color-base)
+		bg-color: get-css-var(border-color-base),
+		font-size: get-css-var(font-size-secondary)
 	),
 	$tag-map
 );
@@ -17,8 +18,9 @@ $tag-map: map.merge(
 	justify-content: center;
 	background: get-css-var(tag-bg-color);
 	align-items: center;
-	line-height: 1.2;
-	padding: 2px 10px;
+	line-height: 1.6;
+	padding: 0 10px;
+  font-size: get-css-var(tag-font-size);
   border-radius: 999px;
 	color: get-css-var(tag-color);
 
@@ -33,6 +35,14 @@ $tag-map: map.merge(
 	& + & {
 		margin-inline-start: 6px;
 	}
+
+  &__large {
+    line-height: 1.8;
+  }
+  &__small {
+    line-height: 1.4;
+  }
+
 
 	@mixin define-tag-style ($style-map) {
     @include define-preset-style('tag', $style-map);

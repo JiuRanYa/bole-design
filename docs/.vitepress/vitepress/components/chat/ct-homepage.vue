@@ -3,7 +3,7 @@ import { useRouter } from 'vitepress'
 import { defineComponent } from 'vue'
 
 defineComponent({
-  name: 'ct-home-page'
+  name: 'CtHomePage',
 })
 const router = useRouter()
 
@@ -16,14 +16,18 @@ function handleStartClick() {
   <div class="homepage">
     <div class="homepage-main">
       <div class="homepage-main-one">
-        <div class="homepage-main-title">BI Chat</div>
+        <div class="homepage-main-title">
+          BI Chat
+        </div>
         <div class="homepage-main-desc">
           一款高效、安全、易用的
           <span class="homepage-en"> Chat </span>
           智能聊天工具
         </div>
         <div class="homepage-main-btn">
-          <Button type="primary" size="middle" @click="handleStartClick"> 开始使用 </Button>
+          <Button type="primary" size="middle" @click="handleStartClick">
+            开始使用
+          </Button>
         </div>
       </div>
     </div>

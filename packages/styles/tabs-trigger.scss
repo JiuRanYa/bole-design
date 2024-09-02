@@ -15,9 +15,12 @@ $tabs-trigger: map.merge(
   .#{$namespace}-tabs-trigger {
     @include basis;
 
+    width: 100%;
     color: get-css-var('content-color-secondary');
     line-height: 1.25rem;
 		text-align: center;
+    text-wrap: nowrap;
+    z-index: 1;
 
     &-vars {
       @include define-preset-values('tabs-trigger', $tabs-trigger);
@@ -27,9 +30,13 @@ $tabs-trigger: map.merge(
     border-radius: inherit;
     cursor: pointer;
 
+    transition: color,background-color,border-color,text-decoration-color,fill,stroke .25s ease-in-out;
+
     &__active {
-			background-color: get-css-var('color-secondary-base');
-      color: get-css-var('content-color-base');
+      color: get-css-var(content-color-primary);
+    }
+    &__disabled {
+      cursor: not-allowed;
     }
   }
 }

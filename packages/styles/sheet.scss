@@ -36,6 +36,7 @@ $sheet: map.merge((), $sheet);
     color: get-css-var(color-primary-light-6);
     transition: get-css-var(transition-base);
     cursor: pointer;
+		z-index: 1000;
 
     &:hover {
       color: get-css-var(color-primary-light-4);

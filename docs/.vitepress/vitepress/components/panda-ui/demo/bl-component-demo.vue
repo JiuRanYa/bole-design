@@ -1,3 +1,76 @@
+<script setup lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+import DemoOne from '../home-navbar/demoOne/index.vue'
+import DemoTwo from '../home-navbar/demoTwo/index.vue'
+import DemoThree from '../home-navbar/demoThree/index.vue'
+import DemoFour from '../home-navbar/demoFour/index.vue'
+
+defineComponent({
+  name: 'BlComponentDemo',
+})
+
+const currentNav = ref('Button')
+const currentNavIndex = computed(() =>
+  navbar.value.findIndex(item => item.nav === currentNav.value),
+)
+const allDemos = [DemoOne, DemoTwo, DemoThree, DemoFour]
+
+function isActive(nav: string) {
+  if (nav === currentNav.value)
+    return true
+
+  return false
+}
+function switchNav(nav: string) {
+  currentNav.value = nav
+}
+function computedStyle(nav: string) {
+  if (nav === 'Button') {
+    return {
+      '--closed': '78px',
+      '--open': '168px',
+    }
+  }
+  if (nav === 'Cards') {
+    return {
+      '--closed': '74px',
+      '--open': '224px',
+    }
+  }
+  if (nav === 'DatePicker') {
+    return {
+      '--closed': '104px',
+      '--open': '234px',
+    }
+  }
+  if (nav === 'Tooltip') {
+    return {
+      '--closed': '78px',
+      '--open': '226px',
+    }
+  }
+}
+
+const navbar = ref([
+  {
+    nav: 'Button',
+    desc: 'User action',
+  },
+  {
+    nav: 'Cards',
+    desc: 'Component compose',
+  },
+  {
+    nav: 'DatePicker',
+    desc: 'Fincy Date Picker',
+  },
+  {
+    nav: 'Tooltip',
+    desc: 'Fluent Prompt comp',
+  },
+])
+</script>
+
 <template>
   <div class="demo-wrapper">
     <div class="demo-navbar">
@@ -17,83 +90,10 @@
     </div>
 
     <div class="demo-code">
-      <component :is="allDemos[currentNavIndex]"></component>
+      <component :is="allDemos[currentNavIndex]" />
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, defineComponent, ref } from 'vue'
-import DemoOne from '../home-navbar/demoOne/index.vue'
-import DemoTwo from '../home-navbar/demoTwo/index.vue'
-import DemoThree from '../home-navbar/demoThree/index.vue'
-import DemoFour from '../home-navbar/demoFour/index.vue'
-
-defineComponent({
-  name: 'bl-component-demo'
-})
-
-const currentNav = ref('Button')
-const currentNavIndex = computed(() =>
-  navbar.value.findIndex(item => item.nav === currentNav.value)
-)
-const allDemos = [DemoOne, DemoTwo, DemoThree, DemoFour]
-
-function isActive(nav: string) {
-  if (nav === currentNav.value) {
-    return true
-  }
-  return false
-}
-function switchNav(nav: string) {
-  currentNav.value = nav
-}
-function computedStyle(nav: string) {
-  if (nav === 'Button') {
-    return {
-      '--closed': '78px',
-      '--open': '168px'
-    }
-  }
-  if (nav === 'Cards') {
-    return {
-      '--closed': '74px',
-      '--open': '224px'
-    }
-  }
-  if (nav === 'DatePicker') {
-    return {
-      '--closed': '104px',
-      '--open': '234px'
-    }
-  }
-  if (nav === 'Tooltip') {
-    return {
-      '--closed': '78px',
-      '--open': '226px'
-    }
-  }
-}
-
-const navbar = ref([
-  {
-    nav: 'Button',
-    desc: 'User action'
-  },
-  {
-    nav: 'Cards',
-    desc: 'Component compose'
-  },
-  {
-    nav: 'DatePicker',
-    desc: 'Fincy Date Picker'
-  },
-  {
-    nav: 'Tooltip',
-    desc: 'Fluent Prompt comp'
-  }
-])
-</script>
 
 <style lang="scss" scoped>
 .demo-wrapper {

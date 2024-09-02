@@ -8,6 +8,7 @@ import { CardDescription } from './card-description'
 import { CardFooter } from './card-footer'
 import { CardHeader } from './card-header'
 import { CardTitle } from './card-title'
+import { Cascader } from './cascader'
 import { Checkbox } from './checkbox'
 import { Col } from './col'
 import { CollapseTransition } from './collapse-transition'
@@ -22,6 +23,7 @@ import { FilterGroup } from './filter-group'
 import { FullScreen } from './full-screen'
 import { Icon } from './icon'
 import { Input } from './input'
+import { InputNumber } from './input-number'
 import { Label } from './label'
 import { Masker } from './masker'
 import { Menu } from './menu'
@@ -34,6 +36,8 @@ import { PanelResizeHandle } from './panel-resize-handle'
 import { Popper } from './popper'
 import { Portal } from './portal'
 import { Radio } from './radio'
+import { RadioGroup } from './radio-group'
+import { Renderer } from './renderer'
 import { Row } from './row'
 import { ScrollArea } from './scroll-area'
 import { Select } from './select'
@@ -45,6 +49,7 @@ import { TabsList } from './tabs-list'
 import { TabsPane } from './tabs-pane'
 import { TabsTrigger } from './tabs-trigger'
 import { Tag } from './tag'
+import { TimePicker } from './time-picker'
 import { Tooltip } from './tooltip'
 
 import { buildInstall } from './create'
@@ -62,6 +67,7 @@ const components = [
   CardFooter,
   CardHeader,
   CardTitle,
+  Cascader,
   Checkbox,
   Col,
   CollapseTransition,
@@ -76,6 +82,7 @@ const components = [
   FullScreen,
   Icon,
   Input,
+  InputNumber,
   Label,
   Masker,
   Menu,
@@ -88,6 +95,8 @@ const components = [
   Popper,
   Portal,
   Radio,
+  RadioGroup,
+  Renderer,
   Row,
   ScrollArea,
   Select,
@@ -99,7 +108,8 @@ const components = [
   TabsPane,
   TabsTrigger,
   Tag,
-  Tooltip
+  TimePicker,
+  Tooltip,
 ]
 
 export const install = buildInstall(components)
@@ -114,6 +124,7 @@ export * from './card-description'
 export * from './card-footer'
 export * from './card-header'
 export * from './card-title'
+export * from './cascader'
 export * from './checkbox'
 export * from './col'
 export * from './collapse-transition'
@@ -128,6 +139,7 @@ export * from './filter-group'
 export * from './full-screen'
 export * from './icon'
 export * from './input'
+export * from './input-number'
 export * from './label'
 export * from './masker'
 export * from './menu'
@@ -140,6 +152,8 @@ export * from './panel-resize-handle'
 export * from './popper'
 export * from './portal'
 export * from './radio'
+export * from './radio-group'
+export * from './renderer'
 export * from './row'
 export * from './scroll-area'
 export * from './select'
@@ -151,4 +165,5 @@ export * from './tabs-list'
 export * from './tabs-pane'
 export * from './tabs-trigger'
 export * from './tag'
+export * from './time-picker'
 export * from './tooltip'

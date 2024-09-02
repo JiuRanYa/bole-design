@@ -1,11 +1,15 @@
-<template>
-  <div>DatePicker</div>
-</template>
-
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+
+const currentDate = ref()
 
 defineComponent({
-  name: ''
+  name: '',
 })
 </script>
+
+<template>
+  <div>
+    <DatePicker v-model:value="currentDate" />
+  </div>
+</template>

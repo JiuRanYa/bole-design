@@ -1,6 +1,6 @@
 <template>
   <Card title="Create project" desc="Deploy your new project in one-click.">
-    <CardBody> </CardBody>
-    <CardFooter> </CardFooter>
+    <CardBody />
+    <CardFooter />
   </Card>
 </template>

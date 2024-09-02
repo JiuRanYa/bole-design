@@ -1,21 +1,3 @@
-<template>
-  <div
-    ref="resizeHandleRef"
-    :class="classNames"
-    data-panel-resize-handle
-    :data-panel-resize-handle-id="resizeHandleId"
-    :data-panel-group-id="groupId"
-    @mouseenter="resizeHandleMouseEnter"
-    @mouseleave="resizeHandleMouseLeave"
-    @mousemove="resizeHandleMouseMove"
-    @mousedown="startDraggingInner"
-    @mouseup="stopDraggingInner"
-  >
-    <div :class="ns.bm('bar')"></div>
-    <div :class="ns.bm('preview')" :style="previewStyle"></div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useNamespace } from '@panda-ui/hooks'
 import { panelGroupKey } from '@panda-ui/tokens/panel-group'
@@ -23,7 +5,7 @@ import { computed, inject, onMounted, reactive, ref, watch } from 'vue'
 import { useUniqueId } from '../panel-group/utils'
 
 defineOptions({
-  name: 'PanelResizeHandle'
+  name: 'PanelResizeHandle',
 })
 
 const ns = useNamespace('panel-resize-handle')
@@ -31,8 +13,8 @@ const classNames = computed(() => {
   return [
     ns.b(),
     {
-      [ns.be('dragging')]: isDragging.value
-    }
+      [ns.be('dragging')]: isDragging.value,
+    },
   ]
 })
 const resizeHandleId = useUniqueId()
@@ -49,7 +31,7 @@ const groupId = computed(() => panelRoot?.groupId)
 const previewStyle = reactive({
   top: '0px',
   left: '',
-  opacity: 0
+  opacity: 0,
 })
 function startDraggingInner(event: MouseEvent) {
   panelRoot?.startDragging(event, resizeHandleId)
@@ -59,23 +41,22 @@ function stopDraggingInner(event: MouseEvent) {
   panelRoot?.stopDragging(event, resizeHandleId)
 }
 
-function resizeHandleMouseEnter(e) {
+function resizeHandleMouseEnter() {
   previewStyle.opacity = 1
 }
 const isVertical = computed(() => {
   return panelRoot?.groupProps.direction === 'vertical'
 })
 function resizeHandleMouseMove(e: MouseEvent) {
-  if (isVertical.value) {
+  if (isVertical.value)
     previewStyle.left = `${e.offsetX}px`
-  } else {
+  else
     previewStyle.top = `${e.offsetY - 16}px`
-  }
 }
-function resizeHandleMouseLeave(e) {
-  if (isDragging.value) {
+function resizeHandleMouseLeave() {
+  if (isDragging.value)
     return
-  }
+
   previewStyle.opacity = 0
 }
 
@@ -99,14 +80,33 @@ watch(
 
       document?.body.addEventListener('mousemove', onMove)
       window.addEventListener('mouseup', stopDraggingInner)
-    } else {
+    }
+    else {
       previewStyle.opacity = 0
       document?.body.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', stopDraggingInner)
     }
-  }
+  },
 )
 onMounted(() => {
   resizeHandler = panelRoot?.registerResizeHandler(resizeHandleId)
 })
 </script>
+
+<template>
+  <div
+    ref="resizeHandleRef"
+    :class="classNames"
+    data-panel-resize-handle
+    :data-panel-resize-handle-id="resizeHandleId"
+    :data-panel-group-id="groupId"
+    @mouseenter="resizeHandleMouseEnter"
+    @mouseleave="resizeHandleMouseLeave"
+    @mousemove="resizeHandleMouseMove"
+    @mousedown="startDraggingInner"
+    @mouseup="stopDraggingInner"
+  >
+    <div :class="ns.bm('bar')" />
+    <div :class="ns.bm('preview')" :style="previewStyle" />
+  </div>
+</template>

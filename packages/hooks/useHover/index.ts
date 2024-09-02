@@ -1,8 +1,7 @@
 import { ref } from 'vue'
 
-import { useEventListener } from '../useEventListener'
-
 import type { Ref } from 'vue'
+import { useEventListener } from '../useEventListener'
 
 export function useHover(wrapper: Ref<HTMLElement | null | undefined> = ref(null)) {
   const isHover = ref(false)

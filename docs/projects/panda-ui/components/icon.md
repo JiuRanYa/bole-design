@@ -1,11 +1,8 @@
 ---
 title: Icon
 lang: zh-CN
+description: Icon组件
 ---
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/icon/*/*.vue')
-</script>
 
 # Icon
 

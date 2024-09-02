@@ -16,7 +16,7 @@ $scroll-area-map: map.merge(
 	height: 100%;
 
 	&:hover {
-	.#{$namespace}-scroll-bar 	{
+		.#{$namespace}-scroll-bar 	{
 			opacity: 1;
 		}
 	}

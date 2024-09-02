@@ -1,20 +1,12 @@
-<template>
-  <Portal :to="transferTo">
-    <div ref="rootRef" :class="className" v-bind="$attrs" :style="style">
-      <slot :enter="enter" :exit="exit" :toggle="toggle" :full="isEntered"></slot>
-    </div>
-  </Portal>
-</template>
-
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { Portal } from '../portal'
-import { useNamespace, useFullScreen } from '@panda-ui/hooks'
-import { FullScreenType } from './types'
+import { useFullScreen, useNamespace } from '@panda-ui/hooks'
 import { useZIndex } from '@panda-ui/common'
+import { Portal } from '../portal'
+import type { FullScreenExposed, FullScreenType } from './types'
 
 defineOptions({
-  name: 'FullScreen'
+  name: 'FullScreen',
 })
 
 const getIndex = useZIndex()
@@ -25,7 +17,7 @@ const transferTo = computed(() => (isEntered.value ? 'body' : ''))
 
 const style = computed(() => {
   return {
-    [ns.cv('z-index')]: getIndex()
+    [ns.cv('z-index')]: getIndex(),
   }
 })
 
@@ -34,19 +26,17 @@ const {
   enter: browserEnter,
   exit: browserExit,
   target: rootRef,
-  full: browserFull
+  full: browserFull,
 } = useFullScreen()
 
-function enter(type: FullScreenType = 'window', zIndex?: number) {
-  if (isEntered.value) {
+function enter(type: FullScreenType = 'window') {
+  if (isEntered.value)
     exit()
-  }
 
   isEntered.value = true
 
-  if (type !== 'window') {
+  if (type !== 'window')
     browserEnter()
-  }
 
   currentType.value = type
 }
@@ -57,24 +47,32 @@ function exit() {
   browserExit()
 }
 
-function toggle(type: FullScreenType = 'window', zIndex?: number) {
+function toggle(type: FullScreenType = 'window') {
   if (isEntered.value) {
-    if (currentType.value !== type) {
-      enter(type, zIndex)
-    } else {
+    if (currentType.value !== type)
+      enter(type)
+    else
       exit()
-    }
-  } else {
-    enter(type, zIndex)
+  }
+  else {
+    enter(type)
   }
 }
 
-defineExpose({
-  toggle
+defineExpose<FullScreenExposed>({
+  toggle,
 })
-watch(browserFull, value => {
-  if (!value) {
+
+watch(browserFull, (value) => {
+  if (!value)
     isEntered.value = false
-  }
 })
 </script>
+
+<template>
+  <Portal :to="transferTo">
+    <div ref="rootRef" :class="className" v-bind="$attrs" :style="style">
+      <slot :enter="enter" :exit="exit" :toggle="toggle" :full="isEntered" />
+    </div>
+  </Portal>
+</template>

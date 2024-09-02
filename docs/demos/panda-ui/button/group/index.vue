@@ -1,11 +1,15 @@
+<script setup lang="ts">
+import { FaceGrinBeamR, FaceSurpriseR, MoonR, SunR } from '@panda-ui/icons'
+</script>
+
 <template>
   <Row :gap="[0, 18]">
     <Col>
       <ButtonGroup circle>
-        <Button :icon="SunR"></Button>
-        <Button :icon="MoonR"></Button>
-        <Button :icon="FaceGrinBeamR"></Button>
-        <Button :icon="FaceSurpriseR"></Button>
+        <Button :icon="SunR" />
+        <Button :icon="MoonR" />
+        <Button :icon="FaceGrinBeamR" />
+        <Button :icon="FaceSurpriseR" />
       </ButtonGroup>
     </Col>
 
@@ -26,7 +30,3 @@
     </Col>
   </Row>
 </template>
-
-<script setup lang="ts">
-import { FaceGrinBeamR, FaceSurpriseR, SunR, MoonR } from '@panda-ui/icons'
-</script>

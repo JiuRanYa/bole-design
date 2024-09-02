@@ -1,16 +1,6 @@
-<template>
-  <ScrollArea height="400px" ref="scrollAreaRef">
-    <div v-for="t in tags" class="scroll-area-item">
-      {{ t }}
-    </div>
-  </ScrollArea>
-
-  <Button type="primary" @click="handleScrollToTop"> 回到顶部 </Button>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ScrollAreaInstance } from 'panda-ui'
+import type { ScrollAreaInstance } from 'panda-ui'
 
 const tags = Array.from({ length: 50 }).map((_, i, a) => `${i + 1}`)
 
@@ -19,12 +9,24 @@ const scrollAreaRef = ref<ScrollAreaInstance>()
 function handleScrollToTop() {
   scrollAreaRef.value?.scrollTo({
     top: 0,
-    behavior: 'smooth'
+    behavior: 'smooth',
   })
 }
 </script>
 
-<style lang="scss">
+<template>
+  <ScrollArea ref="scrollAreaRef" height="400px">
+    <div v-for="t in tags" class="scroll-area-item">
+      {{ t }}
+    </div>
+  </ScrollArea>
+
+  <Button type="primary" @click="handleScrollToTop">
+    回到顶部
+  </Button>
+</template>
+
+<style lang="scss" scoped>
 .scroll-area-item {
   height: 60px;
   margin: 10px;

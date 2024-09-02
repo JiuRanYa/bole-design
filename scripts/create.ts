@@ -1,15 +1,15 @@
+import { mkdir, writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 import prompts from 'prompts'
 import prettier from 'prettier'
 import { ESLint } from 'eslint'
 import { logger, prettierConfig, run, toCapitalCase } from './utils'
-import { mkdir, writeFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
 
 async function main() {
   const comp = await prompts({
     type: 'text',
     name: 'name',
-    message: 'Please input your component name: '
+    message: 'Please input your component name: ',
   })
 
   const compName = toCapitalCase(comp.name)
@@ -17,16 +17,17 @@ async function main() {
   const confirm = await prompts({
     type: 'confirm',
     name: 'create',
-    message: `Are you sure you want to create ${compName} component?`
+    message: `Are you sure you want to create ${compName} component?`,
   })
 
-  if (!confirm.create) return
+  if (!confirm.create)
+    return
 
   const demoTemp = `
-  		<template>
+  	<template>
   			<${compName} />
   		</template>
-  	`
+  `
   const demoRoot = resolve('docs/demos/panda-ui')
   const demoPath = resolve('docs/demos/panda-ui', comp.name, 'basic')
 
@@ -76,7 +77,7 @@ ${comp.name}/basic
   await writeFile(
     resolve(demoPath, 'index.vue'),
     prettier.format(demoTemp, { ...prettierConfig, parser: 'vue' }),
-    'utf-8'
+    'utf-8',
   )
 
   logger.success(`Demo file created `)
@@ -84,7 +85,7 @@ ${comp.name}/basic
   await writeFile(
     resolve(markdownPath, `${comp.name}.md`),
     prettier.format(markdownTemp, { ...prettierConfig, parser: 'markdown' }),
-    'utf-8'
+    'utf-8',
   )
 
   logger.success(`Init ${compName} component docs`)
@@ -92,13 +93,13 @@ ${comp.name}/basic
   await writeFile(
     resolve(componentPath, 'index.ts'),
     prettier.format(componentIndexTemp, { ...prettierConfig, parser: 'typescript' }),
-    'utf-8'
+    'utf-8',
   )
 
   await writeFile(
     resolve(componentPath, `${comp.name}.vue`),
     prettier.format(componentVueTemp, { ...prettierConfig, parser: 'vue' }),
-    'utf-8'
+    'utf-8',
   )
 
   logger.success(`Generate ${compName} template`)
@@ -112,7 +113,7 @@ ${comp.name}/basic
   await run('pnpm', ['bootstrap'])
 }
 
-main().catch(error => {
+main().catch((error) => {
   logger.error(error)
   process.exit(1)
 })

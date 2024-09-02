@@ -1,0 +1,15 @@
+
+@use 'sass:map';
+
+@use './shared' as *;
+@use './design' as *;
+
+
+.#{$namespace}-radio-group {
+  display: inline-flex;
+
+  &--vertical {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

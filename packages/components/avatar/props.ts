@@ -1,5 +1,6 @@
-import { booleanProps, buildProps, ComponentSize } from '@panda-ui/common'
-import { PropType } from 'vue'
+import type { ComponentSize } from '@panda-ui/common'
+import { booleanProps, buildProps } from '@panda-ui/common'
+import type { PropType } from 'vue'
 
 export const avatarProps = buildProps({
   src: String,
@@ -7,5 +8,5 @@ export const avatarProps = buildProps({
   icon: Object,
   alt: String,
   size: [Number, String] as PropType<number | ComponentSize>,
-  iconScale: Number
+  iconScale: Number,
 })

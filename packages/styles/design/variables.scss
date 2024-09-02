@@ -165,6 +165,20 @@ $fill-color-map: map.merge(
 $padding-map: () !default;
 $padding-map: map.merge(
   (
+    xxs: 4px,
+    xs: 8px,
+    sm: 12px,
+    base: 18px,
+    lg: 24px
+  ),
+  $padding-map
+);
+
+$margin-map: () !default;
+$margin-map: map.merge(
+  (
+    xxs: 4px,
+    xs: 8px,
     sm: 12px,
     base: 18px,
     lg: 24px
@@ -210,6 +224,21 @@ $shadow-base: get-css-var('shadow-shape') get-css-var('border-color-base') !defa
 $shadow-border: 0 0 0 1px !default;
 $shadow-focus: 0 0 2px 2px !default;
 
+// input design
+$input-height-map: () !default;
+$input-height-map: map.merge(
+  (
+    small: 30px,
+    middle: 34px,
+    large: 38px
+  ),
+  $input-height-map
+);
+
+$input-v-padding: 8px !default;
+$input-h-padding: 10px !default;
+$input-hover-bg: hsl(240 4.8% 94%) !default;
+
 // font-size-session
 $font-size-map: () !default;
 $font-size-map: map.merge(
@@ -235,16 +264,20 @@ $line-height-map: map.merge(
 $font-family-map: () !default;
 $font-family-map: map.merge(
   (
-    base: #{-apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji'},
+    base: #{
+      -apple-system, 
+      BlinkMacSystemFont, 
+      'Segoe UI', 
+      Roboto, 
+      'Helvetica Neue', 
+      Arial,
+      'Noto Sans', 
+      sans-serif, 
+      'Apple Color Emoji', 
+      'Segoe UI Emoji', 
+      'Segoe UI Symbol',
+      'Noto Color Emoji'
+    },
     mono: #{ui-monospace,
     SFMono-Regular,
     'SF Mono',

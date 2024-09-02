@@ -3,7 +3,7 @@ import { useRouter } from 'vitepress'
 import { defineComponent } from 'vue'
 
 defineComponent({
-  name: 'pd-home-page'
+  name: 'PdHomePage',
 })
 const router = useRouter()
 
@@ -16,14 +16,18 @@ function handleStartClick() {
   <div class="homepage">
     <div class="homepage-main">
       <div class="homepage-main-one">
-        <div class="homepage-main-title">Panda</div>
+        <div class="homepage-main-title">
+          Panda
+        </div>
         <div class="homepage-main-desc">
           Boost your productivity with us,
           <span class="homepage-en"> empower </span>
           your workflow and achieve more.
         </div>
         <div class="homepage-main-btn">
-          <Button type="primary" size="middle" @click="handleStartClick"> 开始使用 </Button>
+          <Button type="primary" size="middle" @click="handleStartClick">
+            开始使用
+          </Button>
         </div>
       </div>
     </div>

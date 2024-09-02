@@ -1,5 +1,5 @@
-import { booleanProps, buildProps } from '@panda-ui/common'
-import { PropType } from 'vue'
+import { buildProps } from '@panda-ui/common'
+import type { PropType } from 'vue'
 
 export type AlignType =
   | 'top'
@@ -7,8 +7,8 @@ export type AlignType =
   | 'bottom'
   | 'stretch'
   | {
-      [key in 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl']: 'top' | 'middle' | 'bottom' | 'stretch'
-    }
+    [key in 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl']: 'top' | 'middle' | 'bottom' | 'stretch'
+  }
 
 export type JustifyType =
   | 'start'
@@ -18,21 +18,21 @@ export type JustifyType =
   | 'space-between'
   | 'space-evenly'
   | {
-      [key in 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl']:
-        | 'start'
-        | 'end'
-        | 'center'
-        | 'space-around'
-        | 'space-between'
-        | 'space-evenly'
-    }
+    [key in 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl']:
+      | 'start'
+      | 'end'
+      | 'center'
+      | 'space-around'
+      | 'space-between'
+      | 'space-evenly'
+  }
 
 export const rowProps = buildProps({
   align: {
     default: 'top',
-    type: String as PropType<AlignType>
+    type: String as PropType<AlignType>,
   },
   justify: String as PropType<JustifyType>,
-  gap: [Number, Array] as PropType<Number | Number[]>,
-  tag: String
+  gap: [Number, Array] as PropType<number | number[]>,
+  tag: String,
 })

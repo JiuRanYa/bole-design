@@ -1,13 +1,13 @@
 {
   "name": "@panda-ui/tokens",
-  "private": true,
   "version": "1.0.1",
+  "private": true,
   "description": "",
-  "main": "index.js",
-  "keywords": [],
   "author": "Tong Siyuan",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
   "peerDependencies": {
     "vue": "^3.2.0"
-  },
-  "license": "ISC"
+  }
 }

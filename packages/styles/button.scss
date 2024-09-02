@@ -7,9 +7,9 @@
 $button-size-map: () !default;
 $button-size-map: map.merge(
   (
-    lg: 46px,
-    md: 40px,
-    sm: 34px
+    lg: 38px,
+    md: 34px,
+    sm: 30px
   ),
   $button-size-map
 );
@@ -64,7 +64,7 @@ $button: map.merge(
   outline: 0;
   border-radius: get-css-var('button-radius');
   background-color: get-css-var('button-bg-color');
-  border: none;
+  border: 1px solid transparent;
   padding: get-css-var('button-v-padding') get-css-var('button-h-padding');
 
   transition: get-css-var('transition-color'), get-css-var('transition-background'),
@@ -122,6 +122,9 @@ $button: map.merge(
       }
     }
   }
+	&--primary {
+		font-weight: 600;
+	}
 	&--outline {
 		color: get-css-var(color-secondary-foreground);
 		background: get-css-var(bg-color-base);
@@ -151,7 +154,8 @@ $button: map.merge(
       'button',
       (
         height: map.get($button-size-map, 'sm'),
-        h-padding: map.get($button-padding-map, 'sm')
+        h-padding: map.get($button-padding-map, 'sm'),
+        v-padding: 8px,
       )
     );
   }

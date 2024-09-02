@@ -1,4 +1,5 @@
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
+import type { ComponentSize } from '@panda-ui/common/index'
 import { booleanProps, buildProps } from '@panda-ui/common/index'
 
 export type ButtonType =
@@ -11,15 +12,13 @@ export type ButtonType =
   | 'secondary'
   | 'ghost'
 
-export type ButtonSize = 'large' | 'middle' | 'small'
-
 export const buttonProps = buildProps({
   disabled: booleanProps,
   type: String as PropType<ButtonType>,
-  size: String as PropType<ButtonSize>,
-  icon: Object
+  size: String as PropType<ComponentSize>,
+  icon: Object,
 })
 
 export const buttonGroupProps = buildProps({
-  circle: booleanProps
+  circle: booleanProps,
 })

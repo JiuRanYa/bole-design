@@ -1,36 +1,20 @@
-<template>
-  <BasicFilterPanel
-    :isAddActive="isActive"
-    :currentFilterValue="emmitedValue"
-    @back="emit('back')"
-    @renderBetween="renderBetween"
-  >
-    <div :class="inputClass">
-      <Input v-model:value="inputValue[0]" @change="value => handleChange(value)" />
-      <Input
-        v-if="isBetween"
-        :class="ns.be('input__between')"
-        v-model:value="inputValue[1]"
-        @change="value => handleChange(value)"
-      />
-    </div>
-    <div v-if="!isValid" :class="ns.be('error')">{{ errorMessage }}</div>
-  </BasicFilterPanel>
-</template>
-
 <script setup lang="ts">
-import { computed, ref, watch, inject } from 'vue'
+// TODO: This component need to refact, validationSchema and error message:
+import { computed, inject, ref, watch } from 'vue'
 import { useNamespace } from '@panda-ui/hooks'
-import BasicFilterPanel from './basic-filter-panel.vue'
-import { FILTER_INJECTION_KEY, InputType } from '../types'
 import { Input } from '@panda-ui/components'
-
-const { editData, currentOption } = inject(FILTER_INJECTION_KEY)
+import { ensureArray } from '@panda-ui/common'
+import type { Operator } from '../types'
+import { FILTER_INJECTION_KEY, InputType } from '../types'
+import BasicFilterPanel from './basic-filter-panel.vue'
 
 defineOptions({
-  name: 'InputFilterPanel'
+  name: 'InputFilterPanel',
 })
+
 const emit = defineEmits(['back'])
+
+const { editData, currentOption } = inject(FILTER_INJECTION_KEY)!
 
 const ns = useNamespace('filter__panel')
 
@@ -38,15 +22,14 @@ const isValid = ref(true)
 const isBetween = ref(
   editData.value && editData.value.inputType === InputType.INPUT
     ? !!editData.value.operator.isBetween
-    : false
+    : false,
 )
 const errorMessage = ref<string>('请检查输入格式')
 
-const formatValue = (value: any) => (Array.isArray(value) ? value : [value])
 const inputValue = ref(
-  editData.value && editData.value.inputType === InputType.INPUT
-    ? formatValue(editData.value.value)
-    : []
+  currentOption.value?.field === editData.value?.field
+    ? ensureArray(editData.value?.val)
+    : [''],
 )
 
 const emmitedValue = computed(() => {
@@ -62,23 +45,24 @@ const inputClass = computed(() => {
   return [
     ns.be('input'),
     {
-      [ns.bem('input', 'error')]: !isValid.value
-    }
+      [ns.bem('input', 'error')]: !isValid.value,
+    },
   ]
 })
 
-const renderBetween = (value: boolean) => {
-  isBetween.value = value
+function setBetween(operator: Operator) {
+  isBetween.value = !!operator.isBetween
 }
 
-const handleChange = async (value: any) => {
-  if (!currentOption.value?.validationSchema || value === '') {
+async function handleBlur(value: string) {
+  if (!currentOption.value?.validationSchema || value === '')
     return
-  }
+
   try {
     await currentOption.value?.validationSchema.validate(value)
     isValid.value = true
-  } catch (err: any) {
+  }
+  catch (err: any) {
     errorMessage.value = err.type === 'typeError' ? '请检查输入格式' : err.message
     isValid.value = false
   }
@@ -87,12 +71,29 @@ const handleChange = async (value: any) => {
 watch(
   editData,
   () => {
-    if (editData.value && editData.value.inputType === InputType.INPUT) {
-      inputValue.value = formatValue(editData.value.value)
-    }
+    if (editData.value && editData.value.inputType === InputType.INPUT)
+      inputValue.value = ensureArray(editData.value.val)
   },
   {
-    deep: true
-  }
+    deep: true,
+  },
 )
 </script>
+
+<template>
+  <BasicFilterPanel
+    :is-add-active="isActive" :current-filter-value="emmitedValue" @back="emit('back')"
+    @operator-selected="setBetween"
+  >
+    <div :class="inputClass">
+      <Input v-model:value="inputValue[0]" v-bind="currentOption?.optionProps" @blur="handleBlur" />
+      <Input
+        v-if="isBetween" v-model:value="inputValue[1]" :class="ns.be('input__between')" v-bind="currentOption?.optionProps"
+        @blur="handleBlur"
+      />
+    </div>
+    <div v-if="!isValid" :class="ns.be('error')">
+      {{ errorMessage }}
+    </div>
+  </BasicFilterPanel>
+</template>

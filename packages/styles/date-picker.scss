@@ -25,11 +25,31 @@ $date-picker: map.merge(
   }
 
   &__panel {
-    width: var(--bl-date-picker-panel-width);
+    display: flex;
+    flex-direction: column;
     box-shadow: var(--bl-date-picker-panel-shadow);
-    // border: get-css-var(border-shape) get-css-var(border-color-light-1);
+    border: get-css-var(border-shape) get-css-var(border-color-light-1);
     border-radius: 12px;
     background: var(--bl-date-picker-panel-bg-color);
+  }
+
+  &__panels {
+    display: flex;
+    height: 482px;
+  }
+  &__data--panel {
+    width: var(--bl-date-picker-panel-width);
+  }
+
+  &__time--panel {
+    display: flex;
+    flex-direction: column;
+    border-left: get-css-var(border-shape) get-css-var(border-color-light-1);
+  }
+  &__time--range {
+    .bl-time-picker__list {
+      height: 50%;
+    }
   }
 
   &__panel--body {
@@ -39,6 +59,7 @@ $date-picker: map.merge(
   &__action {
     display: flex;
     padding: 8px 24px;
+    border-top: get-css-var(border-shape) get-css-var(border-color-light-1);
     justify-content: flex-end;
     .#{$namespace}-button {
       --#{$namespace}-button-b-color: none;
@@ -67,6 +88,7 @@ $date-picker: map.merge(
   }
 
   &__typing {
+    width: var(--bl-date-picker-panel-width);
     padding: 22px;
     display: flex;
     justify-content: space-between;

@@ -1,16 +1,22 @@
 <template>
   <div class="wrapper">
-    <PanelGroup grid :gridLayout="[2, 5, 5]">
-      <Panel :minGridCol="2">
-        <div class="inner">1</div>
+    <PanelGroup grid :grid-layout="[2, 5, 5]">
+      <Panel :min-grid-col="2">
+        <div class="inner">
+          1
+        </div>
       </Panel>
       <PanelResizeHandle />
       <Panel>
-        <div class="inner">2</div>
+        <div class="inner">
+          2
+        </div>
       </Panel>
       <PanelResizeHandle />
-      <Panel :minGridCol="2">
-        <div class="inner">3</div>
+      <Panel :min-grid-col="2">
+        <div class="inner">
+          3
+        </div>
       </Panel>
     </PanelGroup>
   </div>

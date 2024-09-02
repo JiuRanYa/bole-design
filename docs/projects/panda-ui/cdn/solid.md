@@ -4,7 +4,7 @@ page: true
 ---
 
 <script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/cdn/*/*.vue')
+const demos = import.meta.glob('../../../demos/panda-ui/cdn/*/*.vue')
 </script>
 
 # Solid

@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, provide, reactive, toRef } from 'vue'
-import { rowProps } from './props'
 import { useNamespace } from '@panda-ui/hooks'
+import { rowProps } from './props'
 import { ROW_STATE } from './symbol'
 
 export default defineComponent({
@@ -14,17 +14,18 @@ export default defineComponent({
         ns.b(),
         ns.bs('vars'),
         {
-          [ns.bm(props.justify)]: props.justify
-        }
+          [ns.bm(props.justify)]: props.justify,
+        },
       ]
     })
 
     const styles = computed(() => {
-      if (!props.gap) return null
+      if (!props.gap)
+        return null
 
       if (typeof props.gap === 'number') {
         return {
-          [ns.cv('h-gap')]: `${props.gap}px`
+          [ns.cv('h-gap')]: `${props.gap}px`,
         }
       }
 
@@ -33,7 +34,7 @@ export default defineComponent({
 
         return {
           [ns.cv('h-gap')]: `${horizontal}px`,
-          [ns.cv('v-gap')]: `${vertical}px`
+          [ns.cv('v-gap')]: `${vertical}px`,
         }
       }
 
@@ -43,8 +44,8 @@ export default defineComponent({
     provide(
       ROW_STATE,
       reactive({
-        gap: toRef(props, 'gap')
-      })
+        gap: toRef(props, 'gap'),
+      }),
     )
 
     return () =>
@@ -52,11 +53,11 @@ export default defineComponent({
         props.tag || 'div',
         {
           class: classNames.value,
-          style: styles.value
+          style: styles.value,
         },
         {
-          default: () => slots.default && slots.default()
-        }
+          default: () => slots.default && slots.default(),
+        },
       )
-  }
+  },
 })

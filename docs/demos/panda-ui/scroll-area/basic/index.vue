@@ -1,16 +1,20 @@
+<script setup lang="ts">
+const tags = Array.from({ length: 50 }).map((_, i, a) => `${i + 1}`)
+
+function handleScroll(e) {
+  console.log(e)
+}
+</script>
+
 <template>
-  <ScrollArea height="400px">
+  <ScrollArea height="400px" @scroll="handleScroll">
     <div v-for="t in tags" class="scroll-area-item">
       {{ t }}
     </div>
   </ScrollArea>
 </template>
 
-<script setup lang="ts">
-const tags = Array.from({ length: 50 }).map((_, i, a) => `${i + 1}`)
-</script>
-
-<style lang="scss">
+<style lang="scss" scoped>
 .scroll-area-item {
   height: 60px;
   margin: 10px;

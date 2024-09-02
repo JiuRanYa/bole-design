@@ -1,13 +1,10 @@
 ---
-title: Button
+title: Input
 lang: zh-CN
+description: Input输入框
 ---
 
 # Input
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/input/*/*.vue')
-</script>
 
 ## 基础用法
 
@@ -16,6 +13,16 @@ const demos = import.meta.globEager('../../../demos/panda-ui/input/*/*.vue')
 :::demo
 
 input/basic
+
+:::
+
+## 不同大小
+
+通过设置`size`属性可控制输入框的大小
+
+:::demo
+
+input/size
 
 :::
 
@@ -37,7 +44,7 @@ input/prefix
 
 :::
 
-## before元素
+## before 元素
 
 配合`Label`标签可以实现简单的表单
 :::demo
@@ -46,7 +53,7 @@ input/before
 
 :::
 
-## after元素
+## after 元素
 
 :::demo
 
@@ -56,11 +63,12 @@ input/after
 
 ## Input 参数
 
-| 名称        | 说明            | 类型      | 默认值 | 始于 |
-| ----------- | --------------- | --------- | ------ | ---- |
-| value       | 绑定的值        | `string`  | ``     | -    |
-| debounce    | 是否开启防抖    | `boolean` | `true` | -    |
-| placeholder | placeholder内容 | `string`  | ``     | -    |
+| 名称        | 说明             | 类型      | 默认值  | 始于 |
+| ----------- | ---------------- | --------- | ------- | ---- |
+| value       | 绑定的值         | `string`  | ``      | -    |
+| autofocus   | 是否自动聚焦     | `boolean` | `false` | -    |
+| debounce    | 是否开启防抖     | `boolean` | `true`  | -    |
+| placeholder | placeholder 内容 | `string`  | ``      | -    |
 
 ## Input 事件
 

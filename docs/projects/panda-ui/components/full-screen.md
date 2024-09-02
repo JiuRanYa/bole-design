@@ -1,13 +1,10 @@
 ---
 title: FullScreen
 lang: zh-CN
+description: 全屏组件
 ---
 
 # FullScreen
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/full-screen/*/*.vue')
-</script>
 
 ## 基础用法
 

@@ -7,7 +7,7 @@
 html,
 body,
 #app {
-  height: 100%;
+  height: auto;
 }
 
 body {
@@ -21,7 +21,9 @@ body {
 ul {
   padding: 0;
 }
-
+li {
+  list-style: none;
+}
 code {
   font-family: var(--bl-font-family-mono);
   line-height: 2;

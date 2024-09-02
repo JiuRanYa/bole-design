@@ -46,7 +46,14 @@
   @include define-css-var('shadow-base', $shadow-base);
 
   @include define-preset-values('shadow-color', $shadow-color-map);
+
+  @include define-css-var('input-v-padding', $input-v-padding);
+  @include define-css-var('input-h-padding', $input-h-padding);
+  @include define-css-var('input-hover-bg', $input-hover-bg);
+
   @include define-preset-values('padding', $padding-map);
+  @include define-preset-values('margin', $margin-map);
+  @include define-preset-values('input-height', $input-height-map);
 
   @each $name in map.keys($shadow-color-map) {
     @include define-css-var(

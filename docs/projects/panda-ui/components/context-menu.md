@@ -1,15 +1,12 @@
 ---
 title: ContextMenu
 lang: zh-CN
+description: 右键菜单
 ---
 
 # ContextMenu
 
 右键显示一个用户菜单 , 例如一组操作或功能 , 由特定的trigger元素触发。
-
-<script setup>
-const demos = import.meta.globEager('../../../demos/panda-ui/context-menu/*/*.vue')
-</script>
 
 ## 基础用法
 

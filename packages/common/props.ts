@@ -1,15 +1,16 @@
-import { App, ComponentPropsOptions, unref } from 'vue'
-import { isObject, has, isFunction, isNull, warnWithPrefix } from './utils'
-import { computed, ComputedRef, inject, reactive, watch } from 'vue'
+import type { App, ComponentPropsOptions, ComputedRef } from 'vue'
+import { computed, inject, reactive, unref, watch } from 'vue'
+import { has, isFunction, isNull, isObject, warnWithPrefix } from './utils'
 
-import { booleanProps, EnsureValue, Expand, MaybeRef } from './types'
+import type { EnsureValue, Expand, MaybeRef } from './types'
+import { booleanProps } from './types'
 
 const eventPropRE = /^on[A-Z]/
 const PROVIDED_PROPS = '__bl-provided-props'
 
 export function buildProps<T extends ComponentPropsOptions>(props: T) {
   const common = {
-    inherit: booleanProps
+    inherit: booleanProps,
   }
 
   return Object.freeze({ ...common, ...props }) as Expand<typeof common & T>
@@ -19,9 +20,10 @@ export function configProps<T>(props: MaybeRef<T>, app: App) {
   if (app) {
     app.provide(
       PROVIDED_PROPS,
-      computed(() => unref(props))
+      computed(() => unref(props)),
     )
-  } else {
+  }
+  else {
     // TODO: support SSR
   }
 }
@@ -48,14 +50,14 @@ type PropsConfigOptions<T> = {
 export function useProps<T extends Record<string, any>>(
   name: string,
   sourceProps: T,
-  config: PropsConfigOptions<T> = {}
+  config: PropsConfigOptions<T> = {},
 ) {
   const props: {
     [P in keyof T]?: ComputedRef<T[P]>
   } = {}
   const providedProps = inject<ComputedRef<Record<string, PropsConfigOptions<T>>> | null>(
     PROVIDED_PROPS,
-    null
+    null,
   )
 
   // all comps default config
@@ -69,7 +71,7 @@ export function useProps<T extends Record<string, any>>(
 
   const keys = Object.keys(sourceProps) as (keyof T)[]
 
-  keys.forEach(key => {
+  keys.forEach((key) => {
     const defP = config[key]
 
     const propsOptions = (
@@ -85,34 +87,34 @@ export function useProps<T extends Record<string, any>>(
 
     const isFunc = isNull(propsOptions.isFunc) ? eventPropRE.test(String(key)) : propsOptions.isFunc
 
-    validator &&
-      watch(
-        () => sourceProps[key],
-        value => {
-          if (isNull(value)) return
+    validator
+    && watch(
+      () => sourceProps[key],
+      (value) => {
+        if (isNull(value))
+          return
 
-          const result = validator(value)
+        const result = validator(value)
 
-          if (result === false) {
-            warnWithPrefix(name, `an invalid value is set to '${key as string}' prop`)
-          }
-        },
-        {
-          immediate: true
-        }
-      )
+        if (result === false)
+          warnWithPrefix(name, `an invalid value is set to '${key as string}' prop`)
+      },
+      {
+        immediate: true,
+      },
+    )
 
     if (props.static) {
       props[key] = computed(() => sourceProps[key] ?? getDefault())
-    } else {
+    }
+    else {
       props[key] = computed(() => {
         if (isNull(sourceProps[key])) {
-          if (!isNull(configProps.value[key])) {
+          if (!isNull(configProps.value[key]))
             return getValue(configProps.value[key])
-          }
-          if (!isNull(commonProps.value[key])) {
+
+          if (!isNull(commonProps.value[key]))
             return getValue(commonProps.value[key])
-          }
 
           return getDefault()
         }

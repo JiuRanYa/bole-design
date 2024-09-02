@@ -1,30 +1,39 @@
-<template>
-  <div class="wrapper">
-    <PanelGroup :layout="layout" disabled>
-      <Panel>
-        <div class="inner">1</div>
-      </Panel>
-      <PanelResizeHandle />
-      <Panel>
-        <div class="inner">1</div>
-      </Panel>
-      <PanelResizeHandle />
-      <Panel>
-        <div class="inner">2</div>
-      </Panel>
-      <PanelResizeHandle />
-      <Panel>
-        <div class="inner">3</div>
-      </Panel>
-    </PanelGroup>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const layout = ref([40, 10, 25, 25])
 </script>
+
+<template>
+  <div class="wrapper">
+    <PanelGroup :layout="layout" disabled>
+      <Panel>
+        <div class="inner">
+          1
+        </div>
+      </Panel>
+      <PanelResizeHandle />
+      <Panel>
+        <div class="inner">
+          1
+        </div>
+      </Panel>
+      <PanelResizeHandle />
+      <Panel>
+        <div class="inner">
+          2
+        </div>
+      </Panel>
+      <PanelResizeHandle />
+      <Panel>
+        <div class="inner">
+          3
+        </div>
+      </Panel>
+    </PanelGroup>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .wrapper {
   width: 100%;
